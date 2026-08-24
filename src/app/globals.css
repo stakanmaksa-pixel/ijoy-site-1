@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+/* Фирменная палитра — снята с реального сайта на Тильде
+   (project7320453.tilda.ws), чтобы новый движок выглядел как продолжение
+   того же бренда: тёмно-фиолетовый текст/кнопки, яркий фиолетовый акцент,
+   коралловый — для вторичных ссылок. */
+:root {
+  --background: #ffffff;
+  --foreground: #13111d;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  /* Значения фиксированные (не завязаны на :root), поэтому объявляем их
+     прямо здесь — раньше эти же имена были и в :root, и здесь, что давало
+     циклическую ссылку var(--color-brand) на саму себя и "ломало" цвет. */
+  --color-brand: #52487e;
+  --color-brand-dark: #3d355c;
+  --color-accent: #b751ff;
+  --color-coral: #ff8562;
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+}

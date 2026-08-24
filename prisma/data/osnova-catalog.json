@@ -1,0 +1,1094 @@
+{
+  "apple": {
+    "name": "Apple",
+    "subcategories": {
+      "iphone": {
+        "name": "iPhone",
+        "products": [
+          {
+            "name": "17 Pro Max",
+            "hasMemory": true,
+            "prices": {
+              "256GB": {
+                "Blue": {
+                  "ESIM": 97000,
+                  "SIM_ESIM": 105200
+                },
+                "Orange": {
+                  "ESIM": 97100,
+                  "SIM_ESIM": 105400
+                },
+                "Silver": {
+                  "ESIM": 98100,
+                  "SIM_ESIM": 107500
+                }
+              },
+              "512GB": {
+                "Blue": {
+                  "ESIM": 115000,
+                  "SIM_ESIM": 124500
+                },
+                "Orange": {
+                  "ESIM": 113200,
+                  "SIM_ESIM": 121800
+                },
+                "Silver": {
+                  "ESIM": 113100,
+                  "SIM_ESIM": 124800
+                }
+              },
+              "1TB": {
+                "Blue": {
+                  "ESIM": 128400,
+                  "SIM_ESIM": 138600
+                },
+                "Orange": {
+                  "ESIM": 128900,
+                  "SIM_ESIM": 140600
+                },
+                "Silver": {
+                  "ESIM": 129700,
+                  "SIM_ESIM": 139100
+                }
+              },
+              "2TB": {
+                "Blue": {
+                  "ESIM": 143800,
+                  "SIM_ESIM": 165200
+                },
+                "Orange": {
+                  "ESIM": 142700,
+                  "SIM_ESIM": 163600
+                },
+                "Silver": {
+                  "ESIM": 156000,
+                  "SIM_ESIM": 168000
+                }
+              }
+            },
+            "regionLabel": "Тип SIM-карты",
+            "description": "iPhone 17 Pro Max — самый мощный iPhone с титановым корпусом и камерой профессионального уровня.\n\nБольшой дисплей ProMotion с частотой обновления до 120 Гц, чип A19 Pro для игр и тяжёлых задач, а также улучшенная система камер для съёмки фото и видео в любых условиях.",
+            "specs": {
+              "Экран": "6.9\", OLED, ProMotion 120 Гц",
+              "Процессор": "Apple A19 Pro",
+              "Основная камера": "48 + 48 + 12 Мп",
+              "Фронтальная камера": "18 Мп",
+              "Аккумулятор": "до 33 часов видео",
+              "Материал корпуса": "Титан",
+              "Защита": "IP68",
+              "Разъём": "USB-C"
+            }
+          },
+          {
+            "name": "17 Pro",
+            "hasMemory": true,
+            "regionLabel": "Тип SIM-карты",
+            "prices": {
+              "256GB": {
+                "Blue": {
+                  "ESIM": 96400,
+                  "SIM_ESIM": 99300
+                },
+                "Orange": {
+                  "ESIM": 93000,
+                  "SIM_ESIM": 96200
+                },
+                "Silver": {
+                  "ESIM": 96400,
+                  "SIM_ESIM": 100300
+                }
+              },
+              "512GB": {
+                "Blue": {
+                  "ESIM": 113800,
+                  "SIM_ESIM": 117400
+                },
+                "Orange": {
+                  "ESIM": 110700,
+                  "SIM_ESIM": 114500
+                },
+                "Silver": {
+                  "ESIM": 111800,
+                  "SIM_ESIM": 117500
+                }
+              },
+              "1TB": {
+                "Blue": {
+                  "ESIM": 124900,
+                  "SIM_ESIM": 137000
+                },
+                "Orange": {
+                  "ESIM": 123200,
+                  "SIM_ESIM": 131200
+                },
+                "Silver": {
+                  "ESIM": 127500,
+                  "SIM_ESIM": 136000
+                }
+              }
+            }
+          },
+          {
+            "name": "17",
+            "hasMemory": true,
+            "regionLabel": "Тип SIM-карты",
+            "prices": {
+              "256GB": {
+                "Black": {
+                  "ESIM": 71500,
+                  "SIM_ESIM": 72400
+                },
+                "Blue": {
+                  "ESIM": 71500,
+                  "SIM_ESIM": 71700
+                },
+                "Lavender": {
+                  "ESIM": 72000,
+                  "SIM_ESIM": 73400
+                },
+                "White": {
+                  "SIM_ESIM": 72500
+                },
+                "Sage": {
+                  "SIM_ESIM": 72400
+                }
+              },
+              "512GB": {
+                "Black": {
+                  "ESIM": 84500,
+                  "SIM_ESIM": 87000
+                },
+                "Blue": {
+                  "SIM_ESIM": 88000
+                },
+                "White": {
+                  "SIM_ESIM": 88300
+                },
+                "Lavender": {
+                  "SIM_ESIM": 89300
+                }
+              }
+            }
+          },
+          {
+            "name": "17e",
+            "hasMemory": true,
+            "regionLabel": "Тип SIM-карты",
+            "prices": {
+              "256GB": {
+                "Black": {
+                  "SIM_ESIM": 55000
+                },
+                "White": {
+                  "SIM_ESIM": 54000
+                },
+                "Pink": {
+                  "SIM_ESIM": 54500
+                }
+              },
+              "512GB": {
+                "Black": {
+                  "ESIM": 65500,
+                  "SIM_ESIM": 71800
+                },
+                "White": {
+                  "ESIM": 66500,
+                  "SIM_ESIM": 71900
+                },
+                "Soft Pink": {
+                  "ESIM": 66500
+                },
+                "Pink": {
+                  "SIM_ESIM": 72800
+                }
+              }
+            }
+          },
+          {
+            "name": "Air",
+            "hasMemory": true,
+            "regionLabel": "Тип SIM-карты",
+            "prices": {
+              "256GB": {
+                "Black": {
+                  "ESIM": 71000
+                },
+                "Blue": {
+                  "ESIM": 70000
+                },
+                "White": {
+                  "ESIM": 71800
+                },
+                "Gold": {
+                  "ESIM": 71800
+                }
+              },
+              "512GB": {
+                "Black": {
+                  "ESIM": 81000
+                },
+                "Blue": {
+                  "ESIM": 76700
+                },
+                "White": {
+                  "ESIM": 83300
+                },
+                "Gold": {
+                  "ESIM": 77200
+                }
+              },
+              "1TB": {
+                "Black": {
+                  "ESIM": 86000
+                },
+                "Blue": {
+                  "ESIM": 83000
+                },
+                "White": {
+                  "ESIM": 93500
+                },
+                "Gold": {
+                  "ESIM": 86800
+                }
+              }
+            }
+          },
+          {
+            "name": "16 Pro Max",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "256GB": {
+                "Natural": {
+                  "US": 94000,
+                  "IN": 98200
+                },
+                "White": {
+                  "US": 94500
+                },
+                "Desert": {
+                  "IN": 94000
+                }
+              },
+              "512GB": {
+                "Black": {
+                  "US": 105300,
+                  "IN": 116000
+                },
+                "Desert": {
+                  "US": 105000,
+                  "IN": 114200
+                },
+                "Natural": {
+                  "US": 104900
+                },
+                "White": {
+                  "US": 105200,
+                  "IN": 116000
+                },
+                "White (2 SIM)": {
+                  "HK": 115300
+                }
+              },
+              "1TB": {
+                "Black": {
+                  "IN": 121000
+                },
+                "Desert": {
+                  "IN": 120700
+                },
+                "Natural": {
+                  "IN": 120700
+                },
+                "White": {
+                  "IN": 122500
+                }
+              }
+            }
+          },
+          {
+            "name": "16 Pro",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "128GB": {
+                "Black": {
+                  "CN_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_SIM": 85000
+                },
+                "Desert": {
+                  "CN_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_SIM": 84200
+                },
+                "Natural": {
+                  "CN_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_SIM": 83200
+                },
+                "White": {
+                  "CN_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_SIM": 78000
+                }
+              },
+              "512GB": {
+                "Desert": {
+                  "IN": 118000
+                }
+              },
+              "1TB": {
+                "White": {
+                  "AE": 116000
+                }
+              }
+            }
+          },
+          {
+            "name": "16 Plus",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "128GB": {
+                "Black": {
+                  "IN": 65000
+                },
+                "Pink": {
+                  "IN": 66300
+                },
+                "Teal": {
+                  "IN": 66300
+                },
+                "Ultramarine": {
+                  "IN": 66300
+                },
+                "White": {
+                  "IN": 65000
+                }
+              },
+              "256GB": {
+                "Black": {
+                  "IN": 77000
+                },
+                "Pink": {
+                  "IN": 75500
+                },
+                "Teal": {
+                  "IN": 75200
+                },
+                "White": {
+                  "IN": 77200
+                },
+                "Ultramarine": {
+                  "IN": 76000
+                }
+              },
+              "512GB": {
+                "Black": {
+                  "US": 74600,
+                  "IN": 89500
+                },
+                "Pink": {
+                  "US": 75700,
+                  "IN": 90000
+                },
+                "Teal": {
+                  "JP": 90000
+                },
+                "Ultramarine": {
+                  "JP": 90000
+                },
+                "White": {
+                  "JP": 90000
+                }
+              }
+            }
+          },
+          {
+            "name": "16",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "128GB": {
+                "Black": {
+                  "US": 57200,
+                  "IN": 59700
+                },
+                "Ultramarine": {
+                  "US": 57800,
+                  "IN": 61500
+                },
+                "Pink": {
+                  "IN": 62500
+                },
+                "White": {
+                  "IN": 62500
+                },
+                "Teal": {
+                  "IN": 60400
+                }
+              },
+              "256GB": {
+                "Black": {
+                  "IN": 67800
+                },
+                "Pink": {
+                  "IN": 67800
+                },
+                "Teal": {
+                  "IN": 67700
+                },
+                "White": {
+                  "IN": 69000
+                }
+              },
+              "512GB": {
+                "Pink": {
+                  "IN": 83000
+                },
+                "Teal": {
+                  "IN": 81000
+                },
+                "Ultramarine": {
+                  "IN": 80000
+                }
+              }
+            }
+          },
+          {
+            "name": "16e",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "128GB": {
+                "Black": {
+                  "US": 43600
+                }
+              },
+              "256GB": {
+                "White": {
+                  "CN_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_ESIM": 45800,
+                  "CN_SIM_SIM": "Уточняйте у менеджера"
+                }
+              }
+            }
+          },
+          {
+            "name": "15 Pro Max",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "256GB": {
+                "White": {
+                  "CN_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_ESIM": "Уточняйте у менеджера",
+                  "CN_SIM_SIM": 85000
+                }
+              }
+            }
+          },
+          {
+            "name": "15 Pro",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "128GB": {
+                "Blue": {
+                  "AE_EU": 75400
+                },
+                "Natural": {
+                  "AE_EU": 70500
+                }
+              },
+              "512GB": {
+                "Blue": {
+                  "AE_EU": 93500
+                }
+              },
+              "1TB": {
+                "Natural": {
+                  "AE_EU": 100500
+                }
+              }
+            }
+          },
+          {
+            "name": "14/14 Plus"
+          },
+          {
+            "name": "13"
+          },
+          {
+            "name": "15",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "128GB": {
+                "Black": {
+                  "IN": 52000
+                },
+                "Blue": {
+                  "IN": 51200
+                }
+              },
+              "256GB": {
+                "Black": {
+                  "IN": 59700
+                },
+                "Blue": {
+                  "IN": 61500
+                }
+              }
+            }
+          },
+          {
+            "name": "15 Plus",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "128GB": {
+                "Pink": {
+                  "IN": 55000
+                }
+              },
+              "512GB": {
+                "Blue": {
+                  "IN": 65500
+                },
+                "Green": {
+                  "IN": 60700
+                },
+                "Pink": {
+                  "IN": 66000
+                },
+                "Yellow": {
+                  "AE_EU": 65000
+                }
+              }
+            }
+          }
+        ]
+      },
+      "ipad": {
+        "name": "iPad",
+        "products": []
+      },
+      "airpods": {
+        "name": "AirPods",
+        "products": [
+          {
+            "name": "AirPods 4",
+            "price": 11000
+          },
+          {
+            "name": "AirPods 4 ANC",
+            "price": 15000
+          },
+          {
+            "name": "AirPods Pro 2 Type-C",
+            "price": 15000
+          },
+          {
+            "name": "AirPods Pro 3",
+            "price": 17900
+          },
+          {
+            "name": "AirPods Max 2 2026",
+            "hasMemory": false,
+            "prices": {
+              "Синий": {
+                "RU": 42000
+              },
+              "Фиолетовый": {
+                "RU": 42000
+              },
+              "Полуночный": {
+                "RU": 42000
+              },
+              "Звёздный": {
+                "RU": 42000
+              },
+              "Оранжевый": {
+                "RU": 42000
+              }
+            },
+            "regionLabel": "Наличие"
+          }
+        ]
+      },
+      "watch": {
+        "name": "Watch",
+        "products": []
+      },
+      "macbook": {
+        "name": "MacBook",
+        "products": []
+      },
+      "mac-mini": {
+        "name": "Mac Mini",
+        "products": []
+      },
+      "apple-tv": {
+        "name": "Apple TV",
+        "products": [
+          {
+            "name": "Apple TV 4K 64 ГБ (3-го поколения)",
+            "price": 15900
+          },
+          {
+            "name": "Apple TV 4K 128 ГБ (3-го поколения)",
+            "price": 19900
+          }
+        ]
+      }
+    }
+  },
+  "samsung": {
+    "name": "Samsung",
+    "subcategories": {
+      "galaxy-a": {
+        "name": "Galaxy A",
+        "products": [
+          {
+            "name": "A16",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "8/256GB": {
+                "Black": {
+                  "AE": 16000,
+                  "EU": 16000
+                }
+              }
+            }
+          },
+          {
+            "name": "A17 4G",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "4/128GB": {
+                "Black": {
+                  "AE": 12500
+                },
+                "Blue": {
+                  "RU": 12500
+                },
+                "Gray": {
+                  "RU": 12500
+                }
+              },
+              "6/128GB": {
+                "Black": {
+                  "RU": 13800
+                },
+                "Blue": {
+                  "RU": 13800
+                },
+                "Gray": {
+                  "RU": 13800
+                }
+              },
+              "8/256GB": {
+                "Голубой": {
+                  "RU": 17700
+                }
+              }
+            }
+          },
+          {
+            "name": "A27 5G",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "6/128GB": {
+                "Black": {
+                  "RU": 21000
+                },
+                "Blue": {
+                  "RU": 21000
+                },
+                "Light Pink": {
+                  "RU": 21000
+                }
+              },
+              "8/256GB": {
+                "Light Pink": {
+                  "KZ": 23100,
+                  "MY": 23000
+                }
+              }
+            }
+          },
+          {
+            "name": "A37 5G",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "8/128GB": {
+                "Green": {
+                  "RU": 22900
+                },
+                "Lavander": {
+                  "RU": 22900
+                },
+                "White": {
+                  "RU": 22900
+                }
+              },
+              "8/256GB": {
+                "A.Greygreen": {
+                  "RU": 26000
+                },
+                "A.White": {
+                  "RU": 26000
+                },
+                "Black": {
+                  "RU": 26000
+                }
+              },
+              "12/256GB": {
+                "A.Greygreen": {
+                  "MY": 27000
+                }
+              }
+            }
+          },
+          {
+            "name": "A56 5G",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "8/128GB": {
+                "A.Lightgray": {
+                  "AE": 25500
+                }
+              }
+            }
+          },
+          {
+            "name": "A57 5G",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "8/128GB": {
+                "A.Gray": {
+                  "AE": 26900
+                },
+                "A.Icyblue": {
+                  "RU": 27000
+                },
+                "A.Lilac": {
+                  "AE": 26900
+                },
+                "Navi": {
+                  "RU": 27000,
+                  "KZ": 26800
+                }
+              },
+              "8/256GB": {
+                "A.Gray": {
+                  "AE": 32200,
+                  "RU": 32500,
+                  "KZ": 32300
+                },
+                "A.Lilac": {
+                  "AE": 32200,
+                  "RU": 32500
+                },
+                "A.Navy": {
+                  "AE": 32200,
+                  "RU": 32500
+                }
+              },
+              "12/256GB": {
+                "A.Gray": {
+                  "ID": 35500
+                },
+                "A.Icyblue": {
+                  "ID": 35500
+                },
+                "A.Navy": {
+                  "AE": 35500,
+                  "MY": 35400
+                }
+              },
+              "12/512GB": {
+                "A.Gray": {
+                  "MY": 39500
+                },
+                "A.Icyblue": {
+                  "MY": 39500
+                },
+                "A.Navy": {
+                  "MY": 39500
+                }
+              }
+            }
+          }
+        ]
+      },
+      "galaxy-m": {
+        "name": "Galaxy M",
+        "products": [
+          {
+            "name": "M56 5G",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "8/256GB": {
+                "Black": {
+                  "IN": 25500
+                },
+                "LightGreen": {
+                  "IN": 25500
+                }
+              }
+            }
+          }
+        ]
+      },
+      "galaxy-s": {
+        "name": "Galaxy S",
+        "products": [
+          {
+            "name": "S23+",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "8/512GB": {
+                "Black (SM-S916B)": {
+                  "AE": 42000
+                },
+                "Green (SM-S916B)": {
+                  "AE": 42000
+                }
+              }
+            }
+          },
+          {
+            "name": "S25",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "12/128GB": {
+                "Icyblue (SM-S931B)": {
+                  "IN": 42000
+                }
+              },
+              "12/256GB": {
+                "Icyblue (SM-S931B)": {
+                  "IN": 47000
+                },
+                "Mint (SM-S931B)": {
+                  "AE": 47500,
+                  "PA": 47500
+                },
+                "Navy (SM-S931B)": {
+                  "IN": 47200
+                },
+                "Silver Shadow (SM-S931B)": {
+                  "IN": 47800
+                }
+              }
+            }
+          },
+          {
+            "name": "S25 FE 5G",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "8/128GB": {
+                "White (SM-S731B)": {
+                  "IN": 38000
+                }
+              },
+              "8/256GB": {
+                "JetBlack (SM-S731B)": {
+                  "IN": 43500
+                },
+                "Navy (SM-S731B)": {
+                  "IN": 43500
+                }
+              }
+            }
+          },
+          {
+            "name": "S25 Ultra",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "12/1TB": {
+                "Titanium Gray (SM-S938B)": {
+                  "PA": 78000
+                }
+              },
+              "12/256GB": {
+                "Titanium Black (SM-S938B)": {
+                  "CL": 62500,
+                  "IN": 62500
+                },
+                "Titanium Silverblue (SM-S938B)": {
+                  "IN": 62500,
+                  "MY": 62500
+                },
+                "Titanium Whitesilver (SM-S938B)": {
+                  "IN": 62500
+                }
+              },
+              "12/512GB": {
+                "Titanium Black (SM-S938B)": {
+                  "CL": 72500,
+                  "PA": 72500
+                },
+                "Titanium Silverblue (SM-S938B)": {
+                  "MY": 72500,
+                  "PA": 72500
+                },
+                "Titanium Whitesilver (SM-S938B)": {
+                  "MY": 73000
+                }
+              }
+            }
+          },
+          {
+            "name": "S26",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "12/256GB": {
+                "Cobalt Violet (SM-S9420)": {
+                  "CN": 55000
+                },
+                "Sky Blue (SM-S9420)": {
+                  "CN": 55000
+                },
+                "Silver Shadow (SM-S942B)": {
+                  "IN": 55500
+                },
+                "Sky Blue (SM-S942B)": {
+                  "CL": 54000
+                }
+              },
+              "12/512GB": {
+                "Black (SM-S942B)": {
+                  "EU": 64000
+                },
+                "Cobalt Violet (SM-S942B)": {
+                  "CL": 64200
+                },
+                "Sky Blue (SM-S942B)": {
+                  "EU": 64200
+                },
+                "White (SM-S942B)": {
+                  "EU": 65300
+                }
+              }
+            }
+          },
+          {
+            "name": "S26+",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "12/256GB": {
+                "Blue (SM-S947B)": {
+                  "MY": 62900
+                },
+                "Белый (SM-S947B)": {
+                  "RU": 68500
+                }
+              },
+              "12/512GB": {
+                "Sky Blue (SM-S947B)": {
+                  "KZ": 72000
+                }
+              }
+            }
+          },
+          {
+            "name": "S26 Ultra",
+            "hasMemory": true,
+            "regionLabel": "Регион",
+            "prices": {
+              "16/1TB": {
+                "Black (SM-S948B)": {
+                  "EU": 108000,
+                  "ID": 107900,
+                  "TH": 107800
+                }
+              },
+              "12/256GB": {
+                "Cobalt Violet (SM-S948B)": {
+                  "SG": 73000
+                }
+              },
+              "12/512GB": {
+                "Black (SM-S948B)": {
+                  "EU": 88500,
+                  "MY": 88300
+                },
+                "Cobalt Violet (SM-S948B)": {
+                  "ID": 88500
+                },
+                "Белый (SM-S948B)": {
+                  "RU": 89500
+                },
+                "Голубой (SM-S948B)": {
+                  "RU": 88500
+                },
+                "Фиолетовый (SM-S948B)": {
+                  "RU": 89000
+                },
+                "Черный (SM-S948B)": {
+                  "RU": 89000
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "xiaomi": {
+    "name": "Xiaomi",
+    "products": []
+  },
+  "playstation": {
+    "name": "Игровые приставки",
+    "products": []
+  },
+  "dyson": {
+    "name": "Dyson",
+    "products": [
+      {
+        "name": "Airwrap",
+        "hasMemory": false,
+        "prices": {
+          "Nickel/Copper": {
+            "UK": 45000,
+            "JP": 42000
+          },
+          "Vinca Blue": {
+            "UK": 46000,
+            "JP": 43000
+          }
+        }
+      }
+    ]
+  },
+  "gopro": {
+    "name": "GoPro",
+    "products": []
+  },
+  "dji": {
+    "name": "DJI",
+    "products": []
+  },
+  "yandex": {
+    "name": "Яндекс",
+    "products": []
+  }
+}

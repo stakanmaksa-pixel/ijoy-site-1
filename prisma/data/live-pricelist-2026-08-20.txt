@@ -1,0 +1,355 @@
+AirPods:
+
+AirPods 4 9400
+AirPods 4 ANC 13200
+
+AirPods Pro 2-USB 13000
+
+AirPods Pro 3 17300
+
+Airpods Max Midnight 2024 USB-C MWW43 40000
+Airpods Max Purple 2024 USB-CMWW83 38200
+
+Airpods Max 2 Purple MHWP4 39400
+Airpods Max 2 Starlight MHWL4 40500
+AirPods Max 2 Blue MHWM4 40300
+Airpods Max 2 Orange 39500
+Airpods Max 2 Midnight 41200
+
+Apple Watch:
+
+Apple Watch SE 40 Midnight Ink SL MXEA3 2024 16500
+
+Apple Watch SE 3 40 Midnight 2025 M/L MEHC4 20500
+Apple Watch SE 3 40 Midnight 2025 S/M MEH94 20500
+
+Apple Watch SE 3 44 Midnight 2025 S/M MEHN4 22400
+
+Apple Watch S11 42 Jet Black Al Black SB M/L GPS MEQU4 28200
+Apple Watch S11 42 Jet Black Al Black SB S/M GPS MEQT4 28000
+Apple Watch S11 42 Rose Gold Al LB S/M GPS MEU04 28500
+
+Apple Watch S11 46 Rose Gold Al LB SB S/M GPS MEU04 30500
+Apple Watch S11 46 Jet Black Al Black SB M/L GPS MEUX4 30900
+Apple Watch S11 46 Jet Black S/M MEUW4 30900
+Apple Watch S11 46 Rose Gold M/L MEV74 30700
+Apple Watch S11 46 Space Gray M/L MEV44 30800
+Apple Watch S11 46 Silver Al Pur Fog SB M/L GPS MEVA4 31000
+
+Apple Watch Ultra 3 49 Black Ti Black Alpine Loop L MF0X4 58800
+Apple Watch Ultra 3 49 Black Black Charcoal Loop M/L MF1H4 57500
+Apple Watch Ultra 3 49 Black Ti Black Alp Lp M MF0V4 58500
+Apple Watch Ultra 3 49 Black Ti Black Ocean Band MF0J4 58800
+Apple Watch Ultra 3 49 Natural Bright Blue Loop M/L MEWU4 59000
+
+Apple Watch Ultra 3 49 Black Milanese M MF1Q4 70500
+Apple Watch Ultra 3 49 Natural Light Blue Loop S MEWK4 60000
+
+Apple Watch Ultra 3 49 Black Black Charcoal Loop S/M MF1D4 58000
+
+iPad:
+
+iPad Mini 7 128GB Blue Wi-Fi 43400
+iPad Mini 7 128GB Purple 44000
+
+iPad Mini 7 256GB Starlight 50900
+
+iPad 11 128GB Silver Wi-Fi (2025) 38000
+iPad 11 128GB Pink Wi-Fi (2025) 38300
+iPad 11 128GB Blue Wi-Fi (2025) 36900
+iPad 11 128GB Yellow Wi-Fi (2025) 36900
+
+iPad 11 256GB Silver Wi-Fi (2025) 47500
+iPad 11 256GB Blue Wi-Fi (2025) 45000
+iPad 11 256GB Pink Wi-Fi (2025) 47500
+
+iPad Air 11 256GB Purple Wi-Fi (2025)M3 64000
+
+iPad Air 11 512GB Blue Wi-Fi (2025) M3 79200
+iPad Air 11 512GB Purple Wi-Fi (2025) M3 79700
+
+iPad Air 11 2025 M3 Wi-Fi 1TB Starlight MCAQ4 85000
+iPad Air 11 2025 M3 Wi-Fi 1TB Blue MCAJ4 85000
+iPad Air 11 2025 M3 Wi-Fi 1TB Purple MCAU4 85000
+iPad Air 13 128GB Space Gray WIFI (2025) M3 66700
+iPad Air 13 128GB Blue WIFI (2025) M3 66900
+
+iPad Air 13 256GB Gray Wi-Fi (2025) M3 76500
+iPad Air 13 256GB Starlight Wi-Fi (2025) M3 76500
+
+iPad Pro 11 256GB Space black WIFI (2025) M5 MDWK4 96000
+iPad Pro 11 256GB Silver Wi-Fi (2025) M5 MDWL4 96500
+
+iPad Pro 11 512GB Space black WIFI M5 (2025) MDWM4 109000
+iPad Pro 11 512GB Silver WIFI M5 (2025) MDWN4 109000
+
+iPad Air 8 11 128GB Space Gray Wi-Fi MH304 60500
+iPad Air 8 11 128GB Blue WiFi MH314 58500
+iPad Air 8 11 128GB Purple Wi-Fi MH344 60500
+
+MacBook:
+
+MacBook MC7A4 Air 15 Sky Blue (M4, 16GB, 256GB) 2025 105000
+
+MacBook MDHE4 Air 13 Midnight (M5, 16GB, 512GB) 2026 120000
+MacBook MDHA4 Air 13 Starlight (M5, 16GB, 512GB) 2026 114000
+
+MacBook MDHF4 Air 13 Midnight (M5, 16GB, 1TB) 2026 128500
+MacBook MDHC4 Air 13 Starlight (M5, 16GB, 1TB) 2026 128500
+MacBook MDHJ4 Air 13 Sky Blue (M5, 16GB, 1TB) 2026 128500
+
+MacBook MDHG4 Air 13 Midnight (M5, 24GB, 1TB) 2026 165000
+MacBook MDHD4 Air 13 Starlight (M5, 24GB, 1TB) 2026 156000
+MacBook MDH94 Air 13 Silver (M5, 24GB, 1TB) 2026 166000
+
+MacBook MDVH4 Air 15 Midnight (M5, 16GB, 512GB) 2026 130500
+MacBook MDVD4 Air 15 Starlight (M5, 16GB, 512GB) 2026 130500
+MacBook MDVQ4 Air 15 Sky Blue (M5,16Gb ,512GB )2026 130500
+
+MacBook MDVE4 Air 15 Starlight (M5, 16GB, 1TB) 2026 154000
+MacBook MDVA4 Air 15 Silver (M5, 16GB, 1TB) 2026 158000
+MacBook MDVT4 Air 15 Sky Blue (M5, 16GB, 1TB) 2026 154500
+MacBook MDVK4 Air 15 Midnight (M5, 16GB, 1TB) 2026 157500
+
+MacBook MDE14 Pro 14 Space Black (M5, 16GB, 1TB) 2025 173000
+MacBook MDE54 Pro 14 Silver (M5, 16GB, 1TB) 2025 173000
+MacBook MDE34 Pro 14 Space Black (M5, 24GB, 1TB) 2025 193000
+
+MacBook MGDR4 Pro 14 Space Black (M5 Pro, 24GB, 1TB) 2026 210000
+MacBook MGDN4 Pro 14 Silver (M5 Pro, 24GB, 1TB) 2026 212000
+
+MacBook MGDT4 Pro 14 Space Black (M5 Pro, 24GB, 2TB) 2026 237000
+
+MacBook MHFD4 Neo Citrus (A18, 8GB, 256GB) 2026 61500
+
+MacBook MHFF4 Neo 13 Indigo (A18, 8GB, 256GB) 2026 60500
+MacBook MHFH4 Neo 13 Blush (A18, 8GB, 256GB) 2026 63500
+
+MacBook MHFC4 Neo Silver (A18, 8GB, 512GB) 2026 71000
+MacBook MHFG4 Neo Indigo (A18, 8GB, 512GB) 2026 70500
+MacBook MHFJ4 Neo 13 Blush (A18, 8GB, 512GB) 2026 71500
+MacBook MHFE4 Neo Citrus (A18, 8GB, 512GB) 2026 70500
+
+13:
+
+13 128GB Midnight 🇮🇳 43300
+14:
+
+14 128GB Midnight 🇺🇸 45800
+
+14 128GB Yellow 🇮🇳 44700
+
+14 512GB Midnight 🇮🇳 52200
+14 512GB Starlight 🇮🇳 52200
+14 512GB Blue 🇮🇳 52200
+14 512GB Purple 🇮🇳 52200
+14 512GB Red 🇮🇳 49000
+
+15:
+
+15 128GB Black 🇮🇳 52900
+15 128GB Blue 🇮🇳 51200
+
+15 256GB Black 🇮🇳 61300
+15 256GB Blue 🇮🇳 62600
+
+15 Plus 128GB Pink 🇮🇳 55100
+
+15 Plus 512GB Blue 🇮🇳 65000
+15 Plus 512GB Green 🇮🇳 61300
+
+15 Pro 128GB Blue 🇦🇪🇪🇺 77800
+15 Pro 128GB Natural 🇦🇪 75000
+
+15 Pro 512GB Blue 🇦🇪🇪🇺 93000
+
+15 Pro 1TB Natural 🇦🇪🇪🇺 105000
+
+16E/16:
+
+16e 128GB Black 🇺🇸 43900
+
+16e 128GB Black 🇮🇳 46800
+
+16e 128GB White 🇮🇳 46800
+
+16e 256GB White 🇨🇳 46000
+16e 256GB Black 🇨🇳 46000
+
+16e 256GB Black 🇮🇳 50000
+
+16 128GB Black 🇺🇸 60000
+16 128GB Ultramarine 🇺🇸 61000
+
+16 128GB Black 🇮🇳 60400
+16 128GB Pink 🇮🇳 62600
+16 128GB White 🇮🇳 61100
+16 128GB Teal 🇮🇳 60800
+16 128GB Ultramarine 🇮🇳 61400
+
+16 256GB Black 🇮🇳 66000
+16 256GB Pink 🇮🇳 66000
+16 256GB Teal 🇮🇳 66000
+
+16 512GB Teal 🇮🇳 82000
+16 512GB Ultramarine 🇮🇳 85000
+
+16 Plus:
+
+16 Plus 128GB Black 🇮🇳 65600
+16 Plus 128GB Pink 🇮🇳 66000
+16 Plus 128GB Teal 🇮🇳 66000
+16 Plus 128GB Ultramarine 🇮🇳 65600
+16 Plus 128GB White 🇮🇳 65600
+
+16 Plus 256GB Pink 🇮🇳 76800
+16 Plus 256GB Teal 🇮🇳 76600
+16 Plus 256GB White 🇮🇳 76800
+16 Plus 256GB Ultramarine 🇮🇳 76800
+
+16 Plus 512GB Black 🇺🇸 75000
+
+16 Plus 512GB Pink 🇺🇸 76200
+16 Plus 512GB Black 🇮🇳 93000
+16 Plus 512GB Pink 🇮🇳 91500
+16 Plus 512GB Teal 🇯🇵 89400
+16 Plus 512GB Ultramarine 🇮🇳 89400
+16 Plus 512GB White 🇯🇵 89400
+
+16 Pro:
+
+16 Pro 128GB Desert 2Sim 🇨🇳 84600
+16 Pro 128GB Natural 2Sim 🇨🇳 83900
+16 Pro 128GB White 2Sim 🇨🇳 78400
+
+16 Pro 512GB Desert 🇮🇳 119000
+
+16 Pro 1TB White 🇦🇪 117600
+
+16 Pro Max:
+
+16 Pro Max 256GB Natural 🇺🇸 94800
+16 Pro Max 256GB White 🇺🇸 95200
+
+16 Pro Max 256GB Desert 🇮🇳 94400
+16 Pro Max 256GB Natural 🇮🇳 100400
+
+16 Pro Max 512GB Black 🇺🇸 105800
+16 Pro Max 512GB Desert 🇺🇸 107000
+16 Pro Max 512GB Natural 🇺🇸 105500
+16 Pro Max 512GB White 🇺🇸 105800
+
+16 Pro Max 512GB Black 🇮🇳 117000
+16 Pro Max 512GB Desert 🇮🇳 112200
+16 Pro Max 512GB White 🇮🇳 115900
+
+16 Pro Max 1TB Desert 🇮🇳 119900
+16 Pro Max 1TB Natural 🇮🇳 119900
+16 Pro Max 1TB White 🇮🇳 120300
+
+17e:
+
+17e 256GB Black 🇮🇳 55600
+17e 256GB White 🇮🇳 54900
+17e 256GB Pink 🇮🇳 54700
+
+17e 512GB Black 🇯🇵 65900
+17e 512GB White 🇯🇵 67000
+17e 512GB Soft Pink 🇯🇵 65700
+
+17e 512GB Black 🇮🇳 71700
+17e 512GB White 🇮🇳 70300
+17e 512GB Pink 🇮🇳 72300
+
+17:
+
+17 256GB Black 🇮🇳 73500
+17 256GB Blue 🇮🇳 73200
+17 256GB White 🇮🇳 73200
+17 256GB Lavender 🇮🇳 73900
+17 256GB Sage 🇮🇳 73600
+
+17 512GB Blue 🇯🇵 86000
+17 512GB Sage eSim 🇯🇵 89000
+
+17 512GB Black 🇮🇳 87400
+17 512GB Blue 🇮🇳 87600
+17 512GB White 🇮🇳 90500
+17 512GB Lavender 🇮🇳 90200
+17 512GB Sage 🇮🇳 90200
+
+17 Air:
+
+17 Air 256GB Black 🇯🇵 72000
+17 Air 256GB Blue 🇯🇵 69800
+17 Air 256GB White 🇯🇵 73300
+17 Air 256GB Gold 🇯🇵 72000
+
+17 Air 512GB Black 🇯🇵 80500
+17 Air 512GB Blue 🇯🇵 76900
+17 Air 512GB White 🇯🇵 83400
+17 Air 512GB Gold 🇯🇵 77500
+
+17 Air 1TB Black 🇯🇵 86500
+17 Air 1TB Blue 🇯🇵 82800
+17 Air 1TB White 🇯🇵 89200
+17 Air 1TB Gold 🇯🇵 89000
+
+17 Pro:
+
+17 Pro 256GB Blue 🇯🇵 96100
+17 Pro 256GB Orange 🇯🇵 93800
+17 Pro 256GB Silver 🇯🇵 95900
+
+17 Pro 256GB Blue 🇭🇰 98500
+17 Pro 256GB Orange 🇭🇰 97200
+17 Pro 256GB Silver 🇭🇰 99700
+
+17 Pro 512GB Blue 🇯🇵 114300
+17 Pro 512GB Orange 🇯🇵 110200
+17 Pro 512GB Silver 🇯🇵 111000
+
+17 Pro 512GB Blue 🇭🇰 118300
+17 Pro 512GB Orange 🇭🇰 116800
+17 Pro 512GB Silver 🇭🇰 118300
+
+17 Pro 1TB Blue 🇯🇵 122900
+17 Pro 1TB Orange 🇯🇵 122200
+17 Pro 1TB Silver 🇯🇵 127700
+
+17 Pro 1TB Blue 🇭🇰 135000
+17 Pro 1TB Orange 🇭🇰 129900
+17 Pro 1TB Silver 🇭🇰 137000
+
+17 Pro Max:
+
+17 Pro Max 256GB Blue 🇯🇵 102200
+17 Pro Max 256GB Orange 🇯🇵 102400
+17 Pro Max 256GB Silver 🇯🇵 102900
+
+17 Pro Max 256GB Blue 🇭🇰 109800
+17 Pro Max 256GB Orange 🇭🇰 108400
+17 Pro Max 256GB Silver 🇭🇰 110400
+
+17 Pro Max 512GB Blue 🇯🇵 119200
+17 Pro Max 512GB Orange 🇯🇵 118800
+17 Pro Max 512GB Silver 🇯🇵 119600
+
+17 Pro Max 512GB Blue 🇭🇰 128200
+17 Pro Max 512GB Orange 🇭🇰 127800
+17 Pro Max 512GB Silver 🇭🇰 130300
+
+17 Pro Max 1TB Blue 🇯🇵 134600
+17 Pro Max 1TB Orange 🇯🇵 133900
+17 Pro Max 1TB Silver 🇯🇵 138000
+
+17 Pro Max 1TB Blue 🇭🇰 145500
+17 Pro Max 1TB Orange 🇭🇰 150000
+17 Pro Max 1TB Silver 🇭🇰 147700
+
+17 Pro Max 2TB Blue 🇯🇵 151300
+17 Pro Max 2TB Orange 🇯🇵 148000
+
+17 Pro Max 2TB Blue 🇭🇰 170900
+17 Pro Max 2TB Orange 🇭🇰 168500
+17 Pro Max 2TB Silver 🇭🇰 172800
