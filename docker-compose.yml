@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ijoy}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?укажите пароль в .env}
+      POSTGRES_DB: ${POSTGRES_DB:-ijoy}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ijoy}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Одноразовый сервис — применяет миграции перед запуском приложения.
+  migrate:
+    build:
+      context: .
+      target: builder
+    command: npx prisma migrate deploy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-ijoy}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-ijoy}?schema=public
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  app:
+    build:
+      context: .
+      target: runner
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-ijoy}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-ijoy}?schema=public
+      BOT_API_TOKEN: ${BOT_API_TOKEN:?укажите токен в .env}
+      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:?укажите секрет в .env}
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+
+volumes:
+  postgres_data:
