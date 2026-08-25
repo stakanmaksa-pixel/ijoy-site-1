@@ -8,12 +8,19 @@ export function ProductCard({
   brand,
   minPrice,
   hasStock,
+  defaultVariantId,
 }: {
   name: string;
   slug: string;
   brand?: string | null;
   minPrice: number | null;
   hasStock: boolean;
+  // Модификация, к которой привязано сердечко избранного на этой карточке
+  // (самая дешёвая из товара — см. toProductSummary в catalog.ts). На самой
+  // карточке нет выбора конкретной памяти/цвета, поэтому это разумное
+  // значение по умолчанию; на странице товара избранное уже привязывается
+  // к реально выбранной модификации.
+  defaultVariantId: string | null;
 }) {
   return (
     <Link
@@ -22,7 +29,9 @@ export function ProductCard({
     >
       <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
         <span className="text-sm">Фото</span>
-        <FavoriteButton slug={slug} className="absolute right-3 top-3" />
+        {defaultVariantId && (
+          <FavoriteButton variantId={defaultVariantId} className="absolute right-3 top-3" />
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
         {brand ? (

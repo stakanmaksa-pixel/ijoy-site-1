@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { formatPrice } from "@/lib/format";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 type Variant = {
   id: string;
@@ -20,18 +21,19 @@ function variantLabel(v: Variant) {
 // не выбрана. Клик ведёт на страницу этой же модели с already выбранной
 // модификацией (?variant=<id>).
 //
-// Без сердечка избранного: избранное привязано к товару (slug), а не к
-// конкретной модификации, и все карточки в этой сетке принадлежат одному и
-// тому же товару — сердечко здесь дублировалось бы одинаково на каждой
-// карточке и при клике "загоралось" сразу на всех.
+// Сердечко избранного здесь привязано к id именно этой модификации (variant),
+// а не к товару целиком — поэтому у разных карточек в этой сетке (один и тот
+// же телефон, но разная память/цвет) сердечки независимы и не "загораются"
+// все разом.
 export function VariantCard({ slug, variant }: { slug: string; variant: Variant }) {
   return (
     <Link
       href={`/product/${slug}?variant=${variant.id}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className="flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
+      <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
         <span className="text-sm">Фото</span>
+        <FavoriteButton variantId={variant.id} className="absolute right-3 top-3" />
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
         <div className="text-sm text-zinc-500">{variantLabel(variant)}</div>

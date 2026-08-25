@@ -351,8 +351,9 @@ export async function getProductBySlug(slug: string) {
   };
 }
 
-// Товары по списку слагов — для страницы /favorites (сам список избранного
-// хранится в localStorage браузера, известен только клиенту).
+// Товары по списку слагов — оставлено на случай, если понадобится подборка
+// товаров целиком по слагам (сейчас /favorites работает через
+// getFavoriteVariants ниже, т.к. избранное — по конкретным модификациям).
 export async function getProductsBySlugs(slugs: string[]) {
   if (slugs.length === 0) return [];
 
@@ -371,6 +372,42 @@ export async function getProductsBySlugs(slugs: string[]) {
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 }
 
+// Избранные модификации по их id (localStorage хранит id ProductVariant, а
+// не слаги товаров — избранное привязано к конкретной памяти/цвету/региону,
+// см. src/lib/favorites.ts) — для страницы /favorites.
+export async function getFavoriteVariants(variantIds: string[]) {
+  if (variantIds.length === 0) return [];
+
+  const variants = await prisma.productVariant.findMany({
+    where: { id: { in: variantIds } },
+    include: { product: true },
+  });
+
+  const byId = new Map(
+    variants
+      .filter((v) => v.product.status === "PUBLISHED")
+      .map((v) => [
+        v.id,
+        {
+          variantId: v.id,
+          memory: v.memory,
+          color: v.color,
+          region: v.region,
+          price: v.price !== null ? Number(v.price) : null,
+          inStock: v.inStock,
+          productSlug: v.product.slug,
+          productName: v.product.name,
+          brand: v.product.brand,
+        },
+      ]),
+  );
+
+  // Сохраняем порядок, в котором id пришли (порядок добавления в избранное).
+  return variantIds
+    .map((id) => byId.get(id))
+    .filter((v): v is NonNullable<typeof v> => Boolean(v));
+}
+
 function toProductSummary(
   product: Prisma.ProductGetPayload<{
     include: { category: true; variants: true };
@@ -378,11 +415,19 @@ function toProductSummary(
 ) {
   // Модификации с ценой "уточняйте у менеджера" (price: null) не участвуют
   // в подсчёте минимальной цены на карточке товара.
-  const prices = product.variants
-    .filter((v) => v.price !== null)
-    .map((v) => Number(v.price));
+  const priced = product.variants.filter((v) => v.price !== null);
+  const prices = priced.map((v) => Number(v.price));
   const minPrice = prices.length > 0 ? Math.min(...prices) : null;
   const hasStock = product.variants.some((v) => v.inStock);
+
+  // "Представительская" модификация карточки товара (сетка каталога/Новинки)
+  // — самая дешёвая (та же, что определяет minPrice выше), либо просто
+  // первая, если цены нет ни у одной. Именно её id получает сердечко
+  // избранного на карточке товара, где нет собственного выбора модификации.
+  const cheapest =
+    priced.length > 0
+      ? priced.reduce((min, v) => (Number(v.price) < Number(min.price) ? v : min))
+      : product.variants[0];
 
   return {
     id: product.id,
@@ -394,5 +439,6 @@ function toProductSummary(
     minPrice,
     hasStock,
     variantCount: product.variants.length,
+    defaultVariantId: cheapest?.id ?? null,
   };
 }

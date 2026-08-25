@@ -1,40 +1,52 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PageHero } from "@/components/PageHero";
-import { ProductCard } from "@/components/ProductCard";
-import { useFavoriteSlugs } from "@/lib/favorites";
+import { FavoriteButton } from "@/components/FavoriteButton";
+import { formatPrice } from "@/lib/format";
+import { useFavoriteVariantIds } from "@/lib/favorites";
 
-type FavoriteProduct = {
-  id: string;
-  name: string;
-  slug: string;
+type FavoriteItem = {
+  variantId: string;
+  memory: string | null;
+  color: string | null;
+  region: string | null;
+  price: number | null;
+  inStock: boolean;
+  productSlug: string;
+  productName: string;
   brand: string | null;
-  minPrice: number | null;
-  hasStock: boolean;
 };
 
-// Список избранного — сам список слагов хранится в localStorage браузера
-// (favorites.ts), а карточки товаров по этим слагам подгружаются с сервера
-// через /api/favorites. Поэтому страница целиком клиентская.
+function variantLabel(item: FavoriteItem) {
+  return (
+    [item.memory, item.color, item.region].filter(Boolean).join(" · ") || "Стандарт"
+  );
+}
+
+// Список избранного — сам список id модификаций хранится в localStorage
+// браузера (favorites.ts, ключ по id ProductVariant — конкретная память +
+// цвет + регион, а не товар целиком), а данные по этим id подгружаются с
+// сервера через /api/favorites. Поэтому страница целиком клиентская.
 export default function FavoritesPage() {
-  const slugs = useFavoriteSlugs();
-  const [products, setProducts] = useState<FavoriteProduct[]>([]);
+  const ids = useFavoriteVariantIds();
+  const [items, setItems] = useState<FavoriteItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const slugsKey = slugs.join(",");
+  const idsKey = ids.join(",");
 
   useEffect(() => {
     let cancelled = false;
-    if (slugs.length === 0) {
-      setProducts([]);
+    if (ids.length === 0) {
+      setItems([]);
       setLoading(false);
       return;
     }
     setLoading(true);
-    fetch(`/api/favorites?slugs=${encodeURIComponent(slugsKey)}`)
+    fetch(`/api/favorites?ids=${encodeURIComponent(idsKey)}`)
       .then((res) => res.json())
       .then((data) => {
-        if (!cancelled) setProducts(data.products ?? []);
+        if (!cancelled) setItems(data.items ?? []);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -43,7 +55,7 @@ export default function FavoritesPage() {
       cancelled = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slugsKey]);
+  }, [idsKey]);
 
   return (
     <div>
@@ -52,21 +64,43 @@ export default function FavoritesPage() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         {loading ? (
           <p className="text-sm text-zinc-500">Загрузка…</p>
-        ) : products.length === 0 ? (
+        ) : items.length === 0 ? (
           <p className="text-sm text-zinc-500">
             Пока пусто — добавляйте товары в избранное сердечком на карточке.
           </p>
         ) : (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {products.map((p) => (
-              <ProductCard
-                key={p.id}
-                name={p.name}
-                slug={p.slug}
-                brand={p.brand}
-                minPrice={p.minPrice}
-                hasStock={p.hasStock}
-              />
+            {items.map((item) => (
+              <Link
+                key={item.variantId}
+                href={`/product/${item.productSlug}?variant=${item.variantId}`}
+                className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
+              >
+                <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
+                  <span className="text-sm">Фото</span>
+                  <FavoriteButton
+                    variantId={item.variantId}
+                    className="absolute right-3 top-3"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col gap-1 p-4">
+                  {item.brand ? (
+                    <div className="text-xs uppercase tracking-wide text-zinc-400">
+                      {item.brand}
+                    </div>
+                  ) : null}
+                  <div className="font-medium text-foreground">{item.productName}</div>
+                  <div className="text-sm text-zinc-500">{variantLabel(item)}</div>
+                  <div className="mt-auto flex items-center justify-between pt-2">
+                    <span className="text-base font-semibold text-foreground">
+                      {item.price != null ? formatPrice(item.price) : "Уточняйте у менеджера"}
+                    </span>
+                    {!item.inStock && (
+                      <span className="text-xs text-zinc-400">Под заказ</span>
+                    )}
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         )}

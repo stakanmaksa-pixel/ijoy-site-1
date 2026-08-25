@@ -3,17 +3,19 @@
 import { toggleFavorite, useIsFavorite } from "@/lib/favorites";
 
 // Сердечко "добавить в избранное" — используется поверх карточек товара
-// (ProductCard) и на странице товара. Живёт внутри <Link>, поэтому
-// обязательно останавливает всплытие клика, иначе вместо переключения
-// избранного сработает переход по ссылке.
+// (ProductCard, VariantCard) и на странице товара. Привязано к id конкретной
+// модификации (память+цвет+регион), а не к товару целиком — у одного айфона
+// может быть избрана только чёрная 512ГБ версия, а не все подряд. Живёт
+// внутри <Link>, поэтому обязательно останавливает всплытие клика, иначе
+// вместо переключения избранного сработает переход по ссылке.
 export function FavoriteButton({
-  slug,
+  variantId,
   className = "",
 }: {
-  slug: string;
+  variantId: string;
   className?: string;
 }) {
-  const active = useIsFavorite(slug);
+  const active = useIsFavorite(variantId);
 
   return (
     <button
@@ -21,7 +23,7 @@ export function FavoriteButton({
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        toggleFavorite(slug);
+        toggleFavorite(variantId);
       }}
       aria-pressed={active}
       aria-label={active ? "Убрать из избранного" : "Добавить в избранное"}

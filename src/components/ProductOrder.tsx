@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatPrice } from "@/lib/format";
 import { colorToHex } from "@/lib/colorSwatch";
 
@@ -77,6 +77,7 @@ export function ProductOrder({
   productName,
   variants,
   initialVariantId,
+  onSelectedVariantChange,
 }: {
   productName: string;
   variants: Variant[];
@@ -84,6 +85,11 @@ export function ProductOrder({
   // конкретную память/цвет из карточки в сетке модификаций) — если задана,
   // именно она выбрана по умолчанию, а не первая в наличии.
   initialVariantId?: string;
+  // Сообщает наружу id реально выбранной сейчас модификации (память/цвет/
+  // регион переключаются внутри этого компонента) — родитель использует это,
+  // чтобы сердечко избранного над фото всегда относилось к тому, что сейчас
+  // выбрано, а не к товару вообще. См. ProductDetail.tsx.
+  onSelectedVariantChange?: (variantId: string | undefined) => void;
 }) {
   const hasMemory = variants.some((v) => v.memory);
   const hasColor = variants.some((v) => v.color);
@@ -120,6 +126,13 @@ export function ProductOrder({
   );
 
   const selected = findVariant(variants, selection) ?? variants[0];
+
+  useEffect(() => {
+    onSelectedVariantChange?.(selected?.id);
+    // onSelectedVariantChange обычно новая функция на каждый рендер родителя
+    // (инлайн setState) — зависим только от того, что реально меняется.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected?.id]);
 
   function pick(axis: Axis, value: string) {
     setSelection((prev) => {

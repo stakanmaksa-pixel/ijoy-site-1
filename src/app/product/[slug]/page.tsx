@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/lib/catalog";
-import { ProductOrder } from "@/components/ProductOrder";
+import { ProductDetail } from "@/components/ProductDetail";
 import { VariantCard } from "@/components/VariantCard";
-import { FavoriteButton } from "@/components/FavoriteButton";
 
 export async function generateMetadata({
   params,
@@ -97,37 +96,13 @@ export default async function ProductPage({
           </div>
         </>
       ) : (
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-          <div className="relative flex aspect-square items-center justify-center rounded-3xl bg-gradient-to-br from-zinc-50 to-accent/5 text-zinc-300">
-            Фото
-            <FavoriteButton slug={slug} className="absolute right-4 top-4" />
-          </div>
-
-          <div>
-            {product.brand && (
-              <div className="text-sm font-medium uppercase tracking-wide text-accent">
-                {product.brand}
-              </div>
-            )}
-            <h1 className="mt-1 font-display text-3xl font-semibold leading-tight text-foreground">
-              {product.name}
-            </h1>
-
-            {product.description && (
-              <p className="mt-4 text-sm leading-6 text-zinc-600">
-                {product.description}
-              </p>
-            )}
-
-            <div className="mt-6">
-              <ProductOrder
-                productName={product.name}
-                variants={product.variants}
-                initialVariantId={selectedVariant?.id}
-              />
-            </div>
-          </div>
-        </div>
+        <ProductDetail
+          productName={product.name}
+          brand={product.brand}
+          description={product.description}
+          variants={product.variants}
+          initialVariantId={selectedVariant?.id}
+        />
       )}
     </div>
   );

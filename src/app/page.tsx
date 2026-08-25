@@ -68,8 +68,12 @@ export default async function HomePage() {
 
   return (
     <div>
-      {/* Обложка — то же видео, что было на главной Тильды */}
-      <section className="relative flex min-h-[85vh] items-center overflow-hidden bg-brand-dark">
+      {/* Обложка — то же видео, что было на главной Тильды.
+          snap-start — блоки страницы мягко "прилипают" к экрану при
+          прокрутке (scroll-snap на <html>, см. layout.tsx), чтобы не
+          застревать на середине блока между Новинками и следующим тёмным
+          блоком. */}
+      <section className="relative flex min-h-[85vh] snap-start items-center overflow-hidden bg-brand-dark">
         <video
           autoPlay
           muted
@@ -156,7 +160,7 @@ export default async function HomePage() {
         </div>
 
         {/* Новинки */}
-        <section className="mt-20">
+        <section className="mt-20 snap-start">
           <div className="flex items-center justify-between">
             <h2 className="font-display text-xl font-semibold text-foreground">
               Новинки
@@ -179,6 +183,7 @@ export default async function HomePage() {
                   brand={p.brand}
                   minPrice={p.minPrice}
                   hasStock={p.hasStock}
+                  defaultVariantId={p.defaultVariantId}
                 />
               ))}
             </div>
@@ -187,7 +192,7 @@ export default async function HomePage() {
       </div>
 
       {/* Ваш надёжный продавец */}
-      <section className="bg-brand-dark px-4 py-16 text-white sm:px-6">
+      <section className="snap-start bg-brand-dark px-4 py-16 text-white sm:px-6">
         <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2 md:items-center">
           <div>
             <h2 className="font-display text-4xl font-semibold leading-tight sm:text-[42px]">

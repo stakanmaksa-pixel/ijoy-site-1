@@ -145,6 +145,7 @@ export default async function CatalogPage({
                     brand={p.brand}
                     minPrice={p.minPrice}
                     hasStock={p.hasStock}
+                    defaultVariantId={p.defaultVariantId}
                   />
                 ))}
               </div>
