@@ -1016,6 +1016,14 @@ function buildLiveAirpodsProducts(): SeedProduct[] {
 
 const WATCH_FAMILIES = ["SE 3", "SE", "S11", "Ultra 3"];
 
+// В прайсе линейка помечена сокращённо "S11" — официальное название у
+// Apple полное, "Apple Watch Series 11" (как и раньше на сайте, до
+// перехода на живой прайс) — используем его для названия/URL товара,
+// а "S11" остаётся только внутренним ключом для распознавания строк прайса.
+const WATCH_DISPLAY_NAME: Record<string, string> = {
+  "S11": "Series 11",
+};
+
 function buildLiveWatchProducts(): SeedProduct[] {
   const lines = sectionLines("Apple Watch:", "iPad:");
   const byFamily = new Map<string, SeedVariant[]>();
@@ -1044,10 +1052,11 @@ function buildLiveWatchProducts(): SeedProduct[] {
 
   const products: SeedProduct[] = [];
   for (const [family, variants] of byFamily) {
-    const name = `Apple Watch ${family}`;
+    const displayFamily = WATCH_DISPLAY_NAME[family] ?? family;
+    const name = `Apple Watch ${displayFamily}`;
     products.push({
       name,
-      slug: `apple-watch-${slugifyPart(family)}`,
+      slug: `apple-watch-${slugifyPart(displayFamily)}`,
       brand: "Apple",
       description: `${name}.`,
       variants,
@@ -1135,6 +1144,7 @@ const MACBOOK_CANONICAL_NAME: Record<string, string> = {
   "Air 15": "MacBook Air 15",
   "Air 15 (2025, M4)": "MacBook Air 15 (2025, M4)",
   "Pro 14": "MacBook Pro 14",
+  "Pro 14 (2025, M5)": "MacBook Pro 14 (2025, M5)",
   Neo: "MacBook Neo",
 };
 
@@ -1179,6 +1189,15 @@ function buildLiveMacbookProducts(): SeedProduct[] {
       groupKey = "Air 15 (2025, M4)";
     }
 
+    // Та же история с "Pro 14": в прайсе под одним названием смешаны чип
+    // M5 (2025) и более новый M5 Pro (2026) — это разные по цене и классу
+    // модели (173–193 тыс. против 210–237 тыс.), а не просто год выпуска.
+    // M5 Pro/2026 остаётся под обычным именем "MacBook Pro 14", M5/2025 —
+    // отдельным товаром с явной пометкой.
+    if (groupKey === "Pro 14" && !/^M5 Pro\b/.test(chip)) {
+      groupKey = "Pro 14 (2025, M5)";
+    }
+
     const name = MACBOOK_CANONICAL_NAME[groupKey] ?? `MacBook ${groupKey}`;
     if (!byName.has(name)) byName.set(name, []);
     byName.get(name)!.push({
@@ -1213,6 +1232,84 @@ function buildAccessoryProducts(): SeedProduct[] {
   return [...buildLiveAirpodsProducts(), ...buildAppleTvProducts()];
 }
 
+// Вынесены в переменные (а не сразу в массив ниже), потому что тот же
+// список названий нужен ещё раз — в pruneStaleProducts (main()), чтобы
+// вычистить из базы "осиротевшие" товары этих категорий: те, что раньше
+// сюда что-то сгенерировало (старая версия сидинга, ручная правка в
+// /admin), а сейчас в реальном прайсе такого названия уже нет. Пример —
+// "Apple Watch Series 11", оставшийся в базе после перехода на живой прайс
+// и дублировавший актуальный "Apple Watch S11".
+// Модели, которых сейчас нет ни одной строкой в живом прайсе, но которые
+// реально существуют в модельном ряду Apple и могут понадобиться клиенту —
+// по просьбе владельца показываем их в каталоге с ценой "Уточняйте у
+// консультанта" вместо того, чтобы прятать целиком (раньше так уже
+// делалось для отсутствующих В ПРАЙСЕ КОМБИНАЦИЙ памяти/цвета у iPhone —
+// здесь то же самое, только для целой модели). Специально НЕ включены сюда
+// модели, для которых я не уверен, что Apple их вообще выпускает в такой
+// конфигурации (например базового чипа M5 без приставки Pro в 16-дюймовом
+// MacBook Pro — у Apple там исторически только Pro/Max чипы) — эти лучше
+// уточнить у владельца, чем угадывать.
+function placeholderProduct(name: string, slug: string, description: string): SeedProduct {
+  return {
+    name,
+    slug,
+    brand: "Apple",
+    description,
+    variants: [
+      {
+        price: null,
+        inStock: false,
+        rawLabel: `${name} — сейчас нет в прайсе, уточняйте у консультанта`,
+      },
+    ],
+  };
+}
+
+const IPAD_PLACEHOLDER_PRODUCTS: SeedProduct[] = [
+  placeholderProduct(
+    "iPad Pro 13 (2025, M5)",
+    "ipad-pro-13-2025-m5",
+    "iPad Pro 13\" (2025, M5). Сейчас этой модели нет в прайсе — точная цена и наличие уточняются у консультанта.",
+  ),
+  placeholderProduct(
+    "iPad Air 11 (2026)",
+    "ipad-air-11-2026",
+    "iPad Air 11\" (2026). Сейчас этой модели нет в прайсе — точная цена и наличие уточняются у консультанта.",
+  ),
+  placeholderProduct(
+    "iPad Air 13 (2026)",
+    "ipad-air-13-2026",
+    "iPad Air 13\" (2026). Сейчас этой модели нет в прайсе — точная цена и наличие уточняются у консультанта.",
+  ),
+  placeholderProduct(
+    "iPad Air 11 (2024, M2)",
+    "ipad-air-11-2024-m2",
+    "iPad Air 11\" (2024, M2). Сейчас этой модели нет в прайсе — точная цена и наличие уточняются у консультанта.",
+  ),
+  placeholderProduct(
+    "iPad Air 13 (2024, M2)",
+    "ipad-air-13-2024-m2",
+    "iPad Air 13\" (2024, M2). Сейчас этой модели нет в прайсе — точная цена и наличие уточняются у консультанта.",
+  ),
+];
+
+const MACBOOK_PLACEHOLDER_PRODUCTS: SeedProduct[] = [
+  placeholderProduct(
+    "MacBook Air 13 (2025, M4)",
+    "macbook-air-13-2025-m4",
+    "MacBook Air 13\" (2025, M4). Сейчас этой модели нет в прайсе — точная цена и наличие уточняются у консультанта.",
+  ),
+  placeholderProduct(
+    "MacBook Pro 16 (2026, M5 Pro)",
+    "macbook-pro-16-2026-m5-pro",
+    "MacBook Pro 16\" (2026, M5 Pro). Сейчас этой модели нет в прайсе — точная цена и наличие уточняются у консультанта.",
+  ),
+];
+
+const watchProducts = buildLiveWatchProducts();
+const ipadProducts = [...buildLiveIpadProducts(), ...IPAD_PLACEHOLDER_PRODUCTS];
+const macbookProducts = [...buildLiveMacbookProducts(), ...MACBOOK_PLACEHOLDER_PRODUCTS];
+
 const categories: SeedCategory[] = [
   {
     name: "Телефоны",
@@ -1233,21 +1330,21 @@ const categories: SeedCategory[] = [
     slug: "chasy",
     icon: "watch",
     sortOrder: 2,
-    products: buildLiveWatchProducts(),
+    products: watchProducts,
   },
   {
     name: "Планшеты",
     slug: "planshety",
     icon: "tablet",
     sortOrder: 3,
-    products: buildLiveIpadProducts(),
+    products: ipadProducts,
   },
   {
     name: "Ноутбуки",
     slug: "noutbuki",
     icon: "laptop",
     sortOrder: 6,
-    products: buildLiveMacbookProducts(),
+    products: macbookProducts,
   },
   {
     name: "Дайсоны",
@@ -1281,8 +1378,45 @@ async function fixLegacyLabels() {
   });
 }
 
+// Убирает из категории товары, которых нет среди currentSlugs — реально
+// сгенерированных из текущего живого прайса (+ ручных "уточняйте у
+// консультанта" позиций) на этот запуск. Сверяем именно по slug, а не по
+// названию: slug — это то, по чему upsert ниже решает, обновить
+// существующий товар или создать новый, так что только slug однозначно
+// показывает, "тот ли это товар" (например, при переименовании "S11" →
+// "Series 11" совпадение по названию могло бы ложно посчитать переименованный
+// товар и старый дубль одним и тем же, а по факту это разные строки в базе).
+// Применяется только к категориям "Часы"/"Планшеты"/"Ноутбуки": там (в
+// отличие от Телефонов/Аксессуаров, где часть данных всё ещё из статического
+// osnova-catalog.json) весь ассортимент 1:1 приходит отсюда. Товар с
+// реальными заказами не удаляется физически (внешний ключ у OrderItem не
+// позволил бы, да и не нужно портить историю заказов) — прячется
+// (status: HIDDEN). Без заказов — удаляется вместе с модификациями.
+// Безопасно запускать повторно.
+async function pruneStaleProducts(categorySlug: string, currentSlugs: string[]) {
+  const category = await prisma.category.findUnique({ where: { slug: categorySlug } });
+  if (!category) return;
+
+  const stale = await prisma.product.findMany({
+    where: { categoryId: category.id, slug: { notIn: currentSlugs } },
+    include: { variants: { include: { orderItems: true } } },
+  });
+
+  for (const product of stale) {
+    const hasOrders = product.variants.some((v) => v.orderItems.length > 0);
+    if (hasOrders) {
+      await prisma.product.update({ where: { id: product.id }, data: { status: "HIDDEN" } });
+    } else {
+      await prisma.product.delete({ where: { id: product.id } });
+    }
+  }
+}
+
 async function main() {
   await fixLegacyLabels();
+  await pruneStaleProducts("chasy", watchProducts.map((p) => p.slug));
+  await pruneStaleProducts("planshety", ipadProducts.map((p) => p.slug));
+  await pruneStaleProducts("noutbuki", macbookProducts.map((p) => p.slug));
 
   for (const category of categories) {
     const cat = await prisma.category.upsert({

@@ -75,8 +75,9 @@ const MODEL_DISPLAY_ORDER = {
     "MacBook Air 15 (2025, M4)",
     "MacBook Air 13",
     "MacBook Pro 14",
+    "MacBook Pro 14 (2025, M5)",
   ],
-  watch: ["Apple Watch Ultra 3", "Apple Watch S11", "Apple Watch SE 3", "Apple Watch SE"],
+  watch: ["Apple Watch Ultra 3", "Apple Watch Series 11", "Apple Watch SE 3", "Apple Watch SE"],
   airpods: [
     "AirPods Pro 3",
     "AirPods Pro 2 Type-C",
