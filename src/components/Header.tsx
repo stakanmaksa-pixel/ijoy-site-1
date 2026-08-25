@@ -18,7 +18,11 @@ export async function Header() {
   const catalogTree = await getCatalogNavTree().catch(() => []);
 
   return (
-    <header className="border-b border-zinc-200 bg-white">
+    // sticky top-0 — шапка теперь всегда видна при прокрутке (не только в
+    // начале страницы). z-50, чтобы быть выше остального контента; scroll-pt
+    // на <html> (layout.tsx) компенсирует высоту шапки, чтобы блоки со
+    // scroll-snap не оказывались наполовину под ней при "прилипании".
+    <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4 sm:px-6">
         <Logo />
 
@@ -37,6 +41,41 @@ export async function Header() {
         >
           Позвонить
         </a>
+      </div>
+
+      {/* Поиск по каталогу — обычная GET-форма без JS, ведёт на /catalog?q=...
+          (там же живут фильтры по категории/бренду/цене, поиск — ещё один
+          такой же параметр, см. getPublishedProducts в catalog.ts). */}
+      <div className="border-t border-zinc-100 px-4 py-2.5 sm:px-6">
+        <form action="/catalog" method="get" className="mx-auto flex max-w-6xl items-center gap-2">
+          <div className="relative flex-1">
+            <svg
+              className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="text"
+              name="q"
+              placeholder="Искать телефон, часы, планшет…"
+              className="w-full rounded-full border border-zinc-300 py-2 pl-10 pr-4 text-sm text-zinc-700 focus:border-accent focus:outline-none"
+            />
+          </div>
+          <button
+            type="submit"
+            className="whitespace-nowrap rounded-full bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-accent hover:text-white"
+          >
+            Найти
+          </button>
+        </form>
       </div>
 
       {/* Мобильная навигация */}

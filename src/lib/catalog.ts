@@ -258,6 +258,8 @@ export type CatalogFilters = {
   brand?: string;
   minPrice?: number;
   maxPrice?: number;
+  // Поиск по названию/бренду товара (шапка сайта, форма без JS на /catalog).
+  search?: string;
 };
 
 export async function getPublishedProducts(filters: CatalogFilters = {}) {
@@ -267,6 +269,13 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
 
   if (filters.categorySlug) {
     where.category = { slug: filters.categorySlug };
+  }
+
+  if (filters.search) {
+    where.OR = [
+      { name: { contains: filters.search, mode: "insensitive" } },
+      { brand: { contains: filters.search, mode: "insensitive" } },
+    ];
   }
 
   if (filters.brand) {

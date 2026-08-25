@@ -26,6 +26,7 @@ export default async function CatalogPage({
   const brand = toSingle(params.brand);
   const minPrice = toSingle(params.minPrice);
   const maxPrice = toSingle(params.maxPrice);
+  const search = toSingle(params.q);
 
   const [categories, brands, products] = await Promise.all([
     getCategoriesWithCounts(),
@@ -35,6 +36,7 @@ export default async function CatalogPage({
       brand: brand || undefined,
       minPrice: minPrice ? Number(minPrice) : undefined,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
+      search: search || undefined,
     }),
   ]);
 
@@ -43,9 +45,20 @@ export default async function CatalogPage({
       <PageHero title="Каталог Гаджетов iJoy Gadget Store" highlight="Гаджетов" />
 
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        {search && (
+          <p className="mb-6 text-sm text-zinc-500">
+            Результаты поиска по запросу «{search}» — {products.length}{" "}
+            {products.length === 1 ? "товар" : "товаров"}.{" "}
+            <a href="/catalog" className="text-accent hover:underline">
+              Сбросить
+            </a>
+          </p>
+        )}
+
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[240px_1fr]">
           <aside>
             <form method="get" className="flex flex-col gap-7">
+              {search && <input type="hidden" name="q" value={search} />}
               <div>
                 <div className="mb-3 text-sm font-medium text-foreground">
                   Категория

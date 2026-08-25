@@ -39,7 +39,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
-      className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased snap-y snap-proximity`}
+      // scroll-pt компенсирует высоту закреплённой (sticky) шапки — без
+      // этого блоки со snap-start "прилипали" бы наполовину под шапкой.
+      // Значения разные для мобильных/десктопа, т.к. на мобильных у шапки
+      // ещё одна строка меню (см. Header.tsx).
+      className={`${bodyFont.variable} ${headingFont.variable} h-full antialiased snap-y snap-proximity scroll-pt-[184px] md:scroll-pt-[132px]`}
     >
       <body className="flex min-h-full flex-col bg-white text-foreground">
         <Header />
