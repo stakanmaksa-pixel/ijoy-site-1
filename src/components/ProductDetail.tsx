@@ -47,7 +47,12 @@ export function ProductDetail({
   const [selectedId, setSelectedId] = useState<string | undefined>(initial?.id);
 
   const specEntries = specs ? Object.entries(specs) : [];
-  const hasHighlights = Boolean(highlights && highlights.length > 0);
+  // На карточке товара (рядом с фото) показываем только самое важное —
+  // первые 3 пункта из highlights (они в prisma/seed.ts уже отсортированы
+  // по значимости). Полный список особенностей и так дублируется в
+  // характеристиках/сравнении ниже, незачем повторять всё дважды.
+  const topHighlights = (highlights ?? []).slice(0, 3);
+  const hasHighlights = topHighlights.length > 0;
   const hasComparison = Boolean(previousGenLabel && previousGenHighlights && previousGenHighlights.length > 0);
 
   return (
@@ -76,7 +81,7 @@ export function ProductDetail({
 
           {hasHighlights && (
             <ul className="mt-5 space-y-2">
-              {highlights!.map((item) => (
+              {topHighlights.map((item) => (
                 <li key={item} className="flex gap-2 text-sm leading-6 text-zinc-700">
                   <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                   {item}
@@ -96,28 +101,18 @@ export function ProductDetail({
         </div>
       </div>
 
-      {/* Характеристики и сравнение с предыдущим поколением — под основным
-          блоком, во всю ширину. Пока заполнено точечно (пилот iPhone 17 Pro
-          Max, см. prisma/seed.ts), поэтому блоки просто не рендерятся, если
-          данных нет — старые товары выглядят как раньше. */}
+      {/* Сравнение с предыдущим поколением и характеристики — под основным
+          блоком, во всю ширину. Сравнение — сначала (выше), характеристики —
+          после (ниже): по просьбе пользователя, чтобы сначала было видно
+          "чем лучше", а подробная таблица шла за ним. На мобильных это же
+          определяет порядок сверху вниз, т.к. на маленьком экране колонки
+          складываются в одну. Оба блока не рендерятся, если данных нет —
+          старые товары выглядят как раньше. */}
       {(specEntries.length > 0 || hasComparison) && (
-        <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2">
-          {specEntries.length > 0 && (
-            <div>
-              <h2 className="font-display text-xl font-semibold text-foreground">
-                Характеристики
-              </h2>
-              <dl className="mt-4 divide-y divide-zinc-100 rounded-2xl border border-zinc-100">
-                {specEntries.map(([label, value]) => (
-                  <div key={label} className="flex justify-between gap-4 px-4 py-3 text-sm">
-                    <dt className="text-zinc-500">{label}</dt>
-                    <dd className="text-right font-medium text-foreground">{value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          )}
-
+        // Специально в одну колонку (не side-by-side), чтобы характеристики
+        // гарантированно шли НИЖЕ сравнения на любом экране, а не просто
+        // слева/справа на десктопе.
+        <div className="mt-16 flex flex-col gap-10 md:max-w-2xl">
           {hasComparison && (
             <div>
               <h2 className="font-display text-xl font-semibold text-foreground">
@@ -131,6 +126,22 @@ export function ProductDetail({
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {specEntries.length > 0 && (
+            <div>
+              <h2 className="font-display text-xl font-semibold text-foreground">
+                Характеристики
+              </h2>
+              <dl className="mt-4 divide-y divide-zinc-100 rounded-2xl border border-zinc-100">
+                {specEntries.map(([label, value]) => (
+                  <div key={label} className="flex justify-between gap-4 px-4 py-3 text-sm">
+                    <dt className="text-zinc-500">{label}</dt>
+                    <dd className="text-right font-medium text-foreground">{value}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           )}
         </div>

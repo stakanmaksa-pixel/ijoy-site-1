@@ -3,6 +3,7 @@ import { NAV_LINKS } from "@/lib/nav";
 import { CONTACTS } from "@/lib/contacts";
 import { getCatalogNavTree } from "@/lib/catalog";
 import { CatalogMenu } from "@/components/CatalogMenu";
+import { CatalogMenuDesktop } from "@/components/CatalogMenuDesktop";
 import { Logo } from "@/components/Logo";
 
 // Заливка фона на ховере вместо простой смены цвета текста — так проще
@@ -27,7 +28,10 @@ export async function Header() {
         <Logo />
 
         <nav className="hidden flex-1 items-center justify-center gap-1 text-sm text-zinc-700 md:flex">
-          <CatalogMenu tree={catalogTree} />
+          {/* Десктоп — меню каталога открывается по наведению (см.
+              CatalogMenuDesktop.tsx). На мобильном наведения нет, там ниже
+              остаётся прежнее меню на клик (CatalogMenu.tsx). */}
+          <CatalogMenuDesktop tree={catalogTree} />
           {NAV_LINKS.map((link) => (
             <Link key={link.href} href={link.href} className={NAV_LINK_CLASS}>
               {link.label}
