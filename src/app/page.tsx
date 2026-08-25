@@ -103,8 +103,12 @@ export default async function HomePage() {
       </section>
 
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        {/* Каталог товаров — плитки категорий */}
-        <section>
+        {/* Каталог товаров — плитки категорий.
+            snap-start и здесь тоже: без этой точки прокрутка от обложки
+            "перепрыгивала" сразу к Новинкам, а сам каталог оставался не
+            виден — снапиться было ровно не на что между двумя далёкими
+            точками. */}
+        <section className="snap-start">
           <h2 className="font-display text-2xl font-semibold text-foreground">
             Каталог товаров
           </h2>

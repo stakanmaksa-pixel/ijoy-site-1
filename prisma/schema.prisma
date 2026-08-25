@@ -39,6 +39,18 @@ model Product {
   description String?
   brand       String?
   images      String[]       @default([])
+  // Характеристики для таблицы на странице товара — { "Дисплей": "6.9\"...", ... }.
+  // Необязательное поле: заполняется постепенно, товар без specs просто не
+  // показывает блок характеристик (см. ProductDetail.tsx).
+  specs                 Json?
+  // Ключевые особенности ("почему выбрать именно этот телефон") — короткие
+  // пункты списком.
+  highlights            String[] @default([])
+  // Название модели предыдущего поколения для блока сравнения
+  // ("iPhone 16 Pro Max") — просто подпись, без отдельной связи на товар.
+  previousGenLabel      String?
+  // Чем текущая модель лучше previousGenLabel — короткие пункты списком.
+  previousGenHighlights String[] @default([])
   status      ProductStatus  @default(DRAFT)
   category    Category       @relation(fields: [categoryId], references: [id])
   categoryId  String

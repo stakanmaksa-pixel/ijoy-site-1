@@ -26,6 +26,14 @@ type SeedProduct = {
   brand: string;
   description: string;
   variants: SeedVariant[];
+  // Ниже — необязательные поля для карточки товара (характеристики,
+  // особенности, сравнение с предыдущим поколением). Пока заполняются
+  // точечно (пилот — iPhone 17 Pro Max, см. IPHONE_CONTENT_OVERRIDES),
+  // у остальных товаров просто отсутствуют.
+  specs?: Record<string, string>;
+  highlights?: string[];
+  previousGenLabel?: string;
+  previousGenHighlights?: string[];
 };
 
 type SeedCategory = {
@@ -282,6 +290,54 @@ const IPHONE_DISPLAY_NAME_OVERRIDES: Record<string, string> = {
   "17 Air": "Air",
 };
 
+// Пилот: описание, характеристики, особенности и сравнение с предыдущим
+// поколением — сначала только для iPhone 17 Pro Max (по договорённости с
+// владельцем — тестируем на одной модели, потом расширяем на остальные).
+// Все данные — из официальной страницы характеристик Apple
+// (support.apple.com/en-us/125091) и сравнительной статьи М.Видео
+// (iPhone 17 Pro Max vs iPhone 16 Pro Max), ничего не придумано.
+const IPHONE_CONTENT_OVERRIDES: Record<
+  string,
+  {
+    description: string;
+    specs: Record<string, string>;
+    highlights: string[];
+    previousGenLabel: string;
+    previousGenHighlights: string[];
+  }
+> = {
+  "17 Pro Max": {
+    description:
+      "iPhone 17 Pro Max — флагман Apple с экраном ProMotion 6.9\", чипом A19 Pro и тройной 48-мегапиксельной камерой. Корпус из алюминия со стеклом Ceramic Shield 2 и защитой IP68.",
+    specs: {
+      "Дисплей": "6.9\" OLED, ProMotion до 120 Гц, до 3000 нит на солнце",
+      "Процессор": "Apple A19 Pro (6-ядерный CPU, 6-ядерный GPU, 16-ядерный Neural Engine)",
+      "Основная камера": "48 + 48 + 48 Мп (широкий, сверхширокий, телефото 4x), зум-диапазон эквивалентен 16x",
+      "Фронтальная камера": "18 Мп Center Stage, автофокус, видео 4K Dolby Vision",
+      "Автономность": "до 39 часов видео",
+      "Память": "256 ГБ / 512 ГБ / 1 ТБ / 2 ТБ",
+      "Защита": "IP68 (до 6 м, 30 минут), стекло Ceramic Shield 2",
+      "Корпус": "алюминий, 30% переработанных материалов",
+    },
+    highlights: [
+      "Экран ProMotion яркостью до 3000 нит — виден даже под ярким солнцем",
+      "Чип A19 Pro — запас производительности на годы вперёд",
+      "Тройная камера 48 Мп с оптическим экв. зумом до 16x",
+      "До 39 часов видео без подзарядки",
+      "Защита IP68 и стекло Ceramic Shield 2",
+    ],
+    previousGenLabel: "iPhone 16 Pro Max",
+    previousGenHighlights: [
+      "Чип A19 Pro быстрее A18 Pro на 10–15%, оперативной памяти больше (12 ГБ против 8 ГБ)",
+      "Впервые появилась камера-испаритель (vapor chamber) — меньше нагрева в играх и тяжёлых приложениях",
+      "Телефото-камера выросла до 48 Мп (было 12 Мп)",
+      "Фронтальная камера 18 Мп вместо 12 Мп, с оптической стабилизацией",
+      "Батарея ёмче (5088 мАч против 4685 мАч у версии с eSIM), заряжается быстрее: 40 Вт против 30 Вт по проводу, 25 Вт против 15 Вт беспроводная",
+      "Экран ярче — до 3000 нит против 2000 нит, новое стекло Ceramic Shield 2",
+    ],
+  },
+};
+
 const FLAG_RE = /\p{Regional_Indicator}{2}/gu;
 function extractFlagCodes(s: string): string[] {
   const REGIONAL_A = 0x1f1e6;
@@ -394,12 +450,20 @@ function buildLiveIphoneProducts(): SeedProduct[] {
       }
     }
 
+    const content = IPHONE_CONTENT_OVERRIDES[model];
+
     products.push({
       name: `iPhone ${displayModel}`,
       slug: `iphone-${slugifyPart(displayModel)}`,
       brand: "Apple",
-      description: `iPhone ${displayModel}.`,
+      description: content?.description ?? `iPhone ${displayModel}.`,
       variants,
+      ...(content && {
+        specs: content.specs,
+        highlights: content.highlights,
+        previousGenLabel: content.previousGenLabel,
+        previousGenHighlights: content.previousGenHighlights,
+      }),
     });
   }
   return products;
@@ -748,6 +812,10 @@ async function main() {
           name: product.name,
           brand: product.brand,
           description: product.description,
+          specs: product.specs ?? undefined,
+          highlights: product.highlights ?? [],
+          previousGenLabel: product.previousGenLabel ?? null,
+          previousGenHighlights: product.previousGenHighlights ?? [],
           status: "PUBLISHED",
           categoryId: cat.id,
         },
@@ -756,6 +824,10 @@ async function main() {
           slug: product.slug,
           brand: product.brand,
           description: product.description,
+          specs: product.specs ?? undefined,
+          highlights: product.highlights ?? [],
+          previousGenLabel: product.previousGenLabel ?? null,
+          previousGenHighlights: product.previousGenHighlights ?? [],
           status: "PUBLISHED",
           categoryId: cat.id,
         },

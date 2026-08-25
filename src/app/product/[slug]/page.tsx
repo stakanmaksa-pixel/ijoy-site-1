@@ -102,6 +102,10 @@ export default async function ProductPage({
           description={product.description}
           variants={product.variants}
           initialVariantId={selectedVariant?.id}
+          specs={product.specs}
+          highlights={product.highlights}
+          previousGenLabel={product.previousGenLabel}
+          previousGenHighlights={product.previousGenHighlights}
         />
       )}
     </div>

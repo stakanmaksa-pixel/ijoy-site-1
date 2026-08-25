@@ -338,6 +338,13 @@ export async function getProductBySlug(slug: string) {
     ...toProductSummary(product),
     description: product.description,
     images: product.images,
+    // Характеристики/особенности/сравнение с предыдущим поколением —
+    // пока заполнены точечно (пилот iPhone 17 Pro Max, см. prisma/seed.ts),
+    // у остальных товаров эти поля пустые и блок на странице не показывается.
+    specs: (product.specs as Record<string, string> | null) ?? null,
+    highlights: product.highlights,
+    previousGenLabel: product.previousGenLabel,
+    previousGenHighlights: product.previousGenHighlights,
     variants: product.variants.map((v) => ({
       id: v.id,
       memory: v.memory,
