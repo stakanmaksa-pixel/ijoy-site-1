@@ -136,9 +136,17 @@ export function ProductDetail({
               </h2>
               <dl className="mt-4 divide-y divide-zinc-100 rounded-2xl border border-zinc-100">
                 {specEntries.map(([label, value]) => (
-                  <div key={label} className="flex justify-between gap-4 px-4 py-3 text-sm">
-                    <dt className="text-zinc-500">{label}</dt>
-                    <dd className="text-right font-medium text-foreground">{value}</dd>
+                  // Раньше значение было прижато к правому краю и при переносе
+                  // на две строки текст "лесенкой" съезжал влево — из-за этого
+                  // таблица выглядела "криво". Теперь подпись и значение — два
+                  // отдельных ряда: подпись сверху мелким серым, значение
+                  // снизу обычным текстом с выравниванием по левому краю, так
+                  // длинные значения переносятся ровно, без лесенки.
+                  <div key={label} className="flex flex-col gap-1 px-4 py-3 text-sm sm:flex-row sm:items-baseline sm:gap-4">
+                    <dt className="shrink-0 text-xs uppercase tracking-wide text-zinc-400 sm:w-40 sm:text-sm sm:normal-case sm:tracking-normal sm:text-zinc-500">
+                      {label}
+                    </dt>
+                    <dd className="text-left font-medium leading-6 text-foreground">{value}</dd>
                   </div>
                 ))}
               </dl>

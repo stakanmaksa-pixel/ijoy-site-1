@@ -1,25 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import type { CatalogNavNode } from "@/lib/catalog";
 
-// Десктопная версия меню каталога — открывается и раскрывается по НАВЕДЕНИЮ
-// мыши (как в обычных интернет-магазинах), а не по клику: навёл на
-// "Каталог" — увидел категории, навёл на категорию (например "Телефоны") —
-// сбоку открылся список брендов/линеек, навёл на бренд (например "Apple") —
-// открылся список моделей. Клик работает только там, где он и должен вести
-// куда-то: по названию категории/бренда — на страницу со всем ассортиментом
-// этого раздела (у узла есть свой href), а по конкретной модели (лист без
-// children) — сразу на страницу товара.
+// Десктопная версия меню каталога, в духе STORE77: одна большая панель на
+// наведение, а не каскад из мелких выпадашек. Слева — список всех разделов
+// (Телефоны, Часы, Планшеты...), справа — сразу ВСЁ содержимое выбранного
+// раздела (бренды/линейки и конкретные модели), без дополнительных наведений
+// и без горизontальных полосок прокрутки у каждой колонки.
+//
+// Раньше здесь была версия с вложенными flyout-панелями (свой поповер на
+// каждый уровень вложенности) — на деле она "съезжала" за правый край экрана
+// и обрубала текст, если разделов/уровней было много. Эта версия — один
+// панель фиксированной ширины, которая гарантированно помещается на экране.
 //
 // На мобильных наведения нет (сенсорный экран), поэтому там остаётся
 // прежнее меню на клик — полноэкранная панель, см. CatalogMenu.tsx.
-//
-// Важно про group/group-hover: у каждого УРОВНЯ вложенности — свой
-// именованный Tailwind-group (l0/l1/l2/l3). Если бы все уровни делили одно
-// и то же имя, наведение на любой пункт первого уровня "поднимало" бы
-// hover-состояние до общего корня (CSS :hover распространяется на предков)
-// и по ошибке открывало бы подменю СРАЗУ у всех соседних пунктов первого
-// уровня одновременно. Разные имена на разных уровнях этого не допускают —
-// hover считается только по ближайшему предку с тем же именем.
 
 function BurgerIcon() {
   return (
@@ -29,69 +26,93 @@ function BurgerIcon() {
   );
 }
 
-// Явные варианты классов на каждый уровень — Tailwind должен видеть
-// написанные буквально имена классов в исходном тексте файла, поэтому
-// собирать имя вида `group/l${depth}` на лету нельзя.
-const LEVEL_GROUP: Record<number, string> = {
-  1: "group/l1",
-  2: "group/l2",
-  3: "group/l3",
-};
-const LEVEL_PANEL_VISIBLE: Record<number, string> = {
-  1: "invisible absolute left-full top-0 z-40 max-h-[70vh] w-64 overflow-y-auto rounded-2xl border border-zinc-100 bg-white p-2 opacity-0 shadow-xl transition-opacity duration-100 group-hover/l1:visible group-hover/l1:opacity-100",
-  2: "invisible absolute left-full top-0 z-40 max-h-[70vh] w-64 overflow-y-auto rounded-2xl border border-zinc-100 bg-white p-2 opacity-0 shadow-xl transition-opacity duration-100 group-hover/l2:visible group-hover/l2:opacity-100",
-  3: "invisible absolute left-full top-0 z-40 max-h-[70vh] w-64 overflow-y-auto rounded-2xl border border-zinc-100 bg-white p-2 opacity-0 shadow-xl transition-opacity duration-100 group-hover/l3:visible group-hover/l3:opacity-100",
-};
+function RightPane({ node }: { node: CatalogNavNode | undefined }) {
+  if (!node) return null;
 
-function CatalogMenuNode({ node, depth }: { node: CatalogNavNode; depth: 1 | 2 | 3 }) {
-  const hasChildren = Boolean(node.children?.length);
+  const children = node.children ?? [];
 
-  const label = node.href ? (
-    <Link
-      href={node.href}
-      className="flex flex-1 items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-foreground transition-colors hover:bg-zinc-50 hover:text-accent"
-    >
-      <span>{node.label}</span>
-      {hasChildren && <span className="text-zinc-400">›</span>}
-    </Link>
-  ) : (
-    <span className="flex flex-1 items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-foreground">
-      {node.label}
-      {hasChildren && <span className="text-zinc-400">›</span>}
-    </span>
-  );
-
-  if (!hasChildren) {
-    return <li>{label}</li>;
+  // Раздел из одного товара (например, "Дайсоны" с единственной моделью в
+  // прайсе) — children нет вообще, ведём прямо на товар.
+  if (children.length === 0) {
+    return (
+      <Link
+        href={node.href ?? "/catalog"}
+        className="inline-block rounded-xl bg-zinc-50 px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-white"
+      >
+        Смотреть {node.label.toLowerCase()} →
+      </Link>
+    );
   }
 
-  const nextDepth = depth < 3 ? ((depth + 1) as 2 | 3) : 3;
+  const isGrouped = children.some((c) => Boolean(c.children?.length));
 
-  return (
-    <li className={`relative ${LEVEL_GROUP[depth]}`}>
-      {label}
-      <ul className={LEVEL_PANEL_VISIBLE[depth]}>
-        {node.href && (
-          <li>
-            <Link
-              href={node.href}
-              className="mb-1 block rounded-lg px-3 py-2 text-xs font-medium text-accent transition-colors hover:bg-zinc-50"
-            >
-              Смотреть всё →
-            </Link>
-          </li>
-        )}
-        {node.children!.map((child) => (
-          <CatalogMenuNode key={child.label} node={child} depth={nextDepth} />
+  if (!isGrouped) {
+    // Плоский раздел (Часы, Планшеты, Ноутбуки): просто список моделей,
+    // разложенный в несколько колонок, как на STORE77 — весь раздел виден
+    // сразу, без дополнительных наведений.
+    return (
+      <div className="columns-2 gap-x-8 lg:columns-3">
+        {children.map((leaf) => (
+          <Link
+            key={leaf.label}
+            href={leaf.href ?? "/catalog"}
+            className="block break-inside-avoid rounded-lg px-2 py-1.5 text-sm text-foreground transition-colors hover:bg-zinc-50 hover:text-accent"
+          >
+            {leaf.label}
+          </Link>
         ))}
-      </ul>
-    </li>
+      </div>
+    );
+  }
+
+  // Раздел с линейками (Телефоны: Apple iPhone / Samsung Galaxy;
+  // Аксессуары: AirPods / Apple TV) — каждая линейка своим блоком, заголовок
+  // ведёт на "весь бренд", ниже — конкретные модели.
+  return (
+    <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+      {children.map((group) => (
+        <div key={group.label}>
+          {group.href ? (
+            <Link
+              href={group.href}
+              className="font-display text-sm font-semibold text-foreground transition-colors hover:text-accent"
+            >
+              {group.label}
+            </Link>
+          ) : (
+            <div className="font-display text-sm font-semibold text-foreground">{group.label}</div>
+          )}
+          {group.children && group.children.length > 0 && (
+            <div className="mt-2 columns-2 gap-x-6">
+              {group.children.map((leaf) => (
+                <Link
+                  key={leaf.label}
+                  href={leaf.href ?? "/catalog"}
+                  className="block break-inside-avoid rounded-lg px-2 py-1.5 text-sm text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-accent"
+                >
+                  {leaf.label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }
 
 export function CatalogMenuDesktop({ tree }: { tree: CatalogNavNode[] }) {
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const activeNode = tree[activeIndex] ?? tree[0];
+
   return (
-    <div className="group/l0 relative">
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
       <Link
         href="/catalog"
         className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm text-zinc-700 transition-colors hover:bg-accent hover:text-white"
@@ -100,11 +121,30 @@ export function CatalogMenuDesktop({ tree }: { tree: CatalogNavNode[] }) {
         Каталог
       </Link>
 
-      <ul className="invisible absolute left-0 top-full z-40 w-64 overflow-y-auto rounded-2xl border border-zinc-100 bg-white p-2 opacity-0 shadow-xl transition-opacity duration-100 group-hover/l0:visible group-hover/l0:opacity-100">
-        {tree.map((node) => (
-          <CatalogMenuNode key={node.label} node={node} depth={1} />
-        ))}
-      </ul>
+      {open && tree.length > 0 && (
+        <div className="absolute left-0 top-full z-50 flex w-[min(92vw,760px)] overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-xl">
+          <div className="flex w-52 shrink-0 flex-col gap-0.5 border-r border-zinc-100 bg-zinc-50/60 p-2">
+            {tree.map((node, i) => (
+              <Link
+                key={node.label}
+                href={node.href ?? "/catalog"}
+                onMouseEnter={() => setActiveIndex(i)}
+                className={`rounded-lg px-3 py-2 text-sm transition-colors ${
+                  i === activeIndex
+                    ? "bg-brand text-white"
+                    : "text-foreground hover:bg-white hover:text-accent"
+                }`}
+              >
+                {node.label}
+              </Link>
+            ))}
+          </div>
+
+          <div className="max-h-[65vh] flex-1 overflow-y-auto p-5">
+            <RightPane node={activeNode} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
