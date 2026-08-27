@@ -348,6 +348,7 @@ export async function getProductBySlug(slug: string) {
     ...toProductSummary(product),
     description: product.description,
     images: product.images,
+    colorImages: (product.colorImages as Record<string, string[]> | null) ?? null,
     // Характеристики/особенности/сравнение с предыдущим поколением —
     // пока заполнены точечно (пилот iPhone 17 Pro Max, см. prisma/seed.ts),
     // у остальных товаров эти поля пустые и блок на странице не показывается.
@@ -415,6 +416,11 @@ export async function getFavoriteVariants(variantIds: string[]) {
           productSlug: v.product.slug,
           productName: v.product.name,
           brand: v.product.brand,
+          imageUrl: pickCoverImage(
+            v.product.images,
+            (v.product.colorImages as Record<string, string[]> | null) ?? null,
+            v.color,
+          ),
         },
       ]),
   );
@@ -423,6 +429,28 @@ export async function getFavoriteVariants(variantIds: string[]) {
   return variantIds
     .map((id) => byId.get(id))
     .filter((v): v is NonNullable<typeof v> => Boolean(v));
+}
+
+// Фото "по умолчанию" для карточки без выбора конкретного цвета: фото цвета
+// приоритетного варианта (обычно самого дешёвого — с ним же связано
+// сердечко избранного на карточке), иначе первое общее фото, иначе первое
+// фото хоть какого-то цвета — лучше показать реальное фото не того цвета,
+// чем пустую заглушку.
+export function pickCoverImage(
+  images: string[],
+  colorImages: Record<string, string[]> | null,
+  preferredColor?: string | null,
+): string | null {
+  if (preferredColor && colorImages?.[preferredColor]?.length) {
+    return colorImages[preferredColor][0];
+  }
+  if (images.length > 0) return images[0];
+  if (colorImages) {
+    for (const list of Object.values(colorImages)) {
+      if (list?.length) return list[0];
+    }
+  }
+  return null;
 }
 
 function toProductSummary(
@@ -457,5 +485,10 @@ function toProductSummary(
     hasStock,
     variantCount: product.variants.length,
     defaultVariantId: cheapest?.id ?? null,
+    coverImage: pickCoverImage(
+      product.images,
+      (product.colorImages as Record<string, string[]> | null) ?? null,
+      cheapest?.color,
+    ),
   };
 }

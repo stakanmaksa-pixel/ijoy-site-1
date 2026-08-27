@@ -38,6 +38,11 @@ services:
       PORT: 3000
     ports:
       - "3000:3000"
+    volumes:
+      # Фото товаров, загруженные через админку, хранятся тут отдельно от
+      # образа приложения — иначе очередной `docker compose ... --build`
+      # (новый образ) стирал бы все загруженные фото.
+      - uploads_data:/app/public/uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -46,3 +51,4 @@ services:
 
 volumes:
   postgres_data:
+  uploads_data:

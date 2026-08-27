@@ -159,6 +159,7 @@ export default async function CatalogPage({
                     minPrice={p.minPrice}
                     hasStock={p.hasStock}
                     defaultVariantId={p.defaultVariantId}
+                    coverImage={p.coverImage}
                   />
                 ))}
               </div>

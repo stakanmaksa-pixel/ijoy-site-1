@@ -31,6 +31,11 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Папка для загруженных из админки фото товаров — в docker-compose.yml сюда
+# примонтирован именованный volume, чтобы фото переживали пересборку образа
+# (пересборка = новый образ, а volume отдельно от образа не пересоздаётся).
+RUN mkdir -p /app/public/uploads/products && chown -R nextjs:nodejs /app/public/uploads
+
 USER nextjs
 EXPOSE 3000
 

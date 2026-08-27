@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { ProductOrder } from "@/components/ProductOrder";
 
@@ -29,6 +29,8 @@ export function ProductDetail({
   highlights,
   previousGenLabel,
   previousGenHighlights,
+  images,
+  colorImages,
 }: {
   productName: string;
   brand?: string | null;
@@ -39,12 +41,32 @@ export function ProductDetail({
   highlights?: string[] | null;
   previousGenLabel?: string | null;
   previousGenHighlights?: string[] | null;
+  // Общие фото товара (без привязки к цвету) — используются, если для
+  // выбранного сейчас цвета своих фото ещё не загрузили.
+  images?: string[] | null;
+  // Фото по цветам — { "Титановый чёрный": ["/uploads/...", ...] }. Именно
+  // они и решают запрос "по фото должно быть понятно, какой цвет" — при
+  // выборе цвета ниже (в ProductOrder) галерея переключается на его фото.
+  colorImages?: Record<string, string[]> | null;
 }) {
   const initial =
     (initialVariantId && variants.find((v) => v.id === initialVariantId)) ||
     variants.find((v) => v.inStock) ||
     variants[0];
   const [selectedId, setSelectedId] = useState<string | undefined>(initial?.id);
+
+  const selectedVariant = variants.find((v) => v.id === selectedId);
+  const activeColor = selectedVariant?.color ?? null;
+  // Фото именно этого цвета — если их ещё не загрузили, откатываемся на
+  // общие фото товара, а не на фото другого цвета (иначе на карточке будет
+  // виден не тот цвет, который выбрал покупатель).
+  const galleryImages =
+    (activeColor && colorImages?.[activeColor]?.length ? colorImages[activeColor] : images) ?? [];
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [activeColor]);
+  const activeImage = galleryImages[activeImageIndex] ?? galleryImages[0];
 
   const specEntries = specs ? Object.entries(specs) : [];
   // На карточке товара (рядом с фото) показываем только самое важное —
@@ -58,10 +80,41 @@ export function ProductDetail({
   return (
     <div>
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-        <div className="relative flex aspect-square items-center justify-center rounded-3xl bg-gradient-to-br from-zinc-50 to-accent/5 text-zinc-300">
-          Фото
-          {selectedId && (
-            <FavoriteButton variantId={selectedId} className="absolute right-4 top-4" />
+        <div>
+          {/* Минималистично: одно крупное фото + ряд миниатюр под ним, без
+              лишних рамок и подписей — как просили, "чисто, но понятно". */}
+          <div className="relative flex aspect-square items-center justify-center rounded-3xl bg-gradient-to-br from-zinc-50 to-accent/5 text-zinc-300">
+            {activeImage ? (
+              <img
+                src={activeImage}
+                alt={`${productName}${activeColor ? `, ${activeColor}` : ""}`}
+                className="h-full w-full rounded-3xl object-contain"
+              />
+            ) : (
+              <span className="text-sm">Фото скоро появится</span>
+            )}
+            {selectedId && (
+              <FavoriteButton variantId={selectedId} className="absolute right-4 top-4" />
+            )}
+          </div>
+
+          {galleryImages.length > 1 && (
+            <div className="mt-3 flex gap-2 overflow-x-auto">
+              {galleryImages.map((url, i) => (
+                <button
+                  key={url}
+                  type="button"
+                  onClick={() => setActiveImageIndex(i)}
+                  className={`h-16 w-16 shrink-0 overflow-hidden rounded-xl border transition-colors ${
+                    i === activeImageIndex
+                      ? "border-accent"
+                      : "border-zinc-200 hover:border-zinc-300"
+                  }`}
+                >
+                  <img src={url} alt="" className="h-full w-full object-cover" />
+                </button>
+              ))}
+            </div>
           )}
         </div>
 

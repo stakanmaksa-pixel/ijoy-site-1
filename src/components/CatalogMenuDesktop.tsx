@@ -4,19 +4,25 @@ import Link from "next/link";
 import { useState } from "react";
 import type { CatalogNavNode } from "@/lib/catalog";
 
-// Десктопная версия меню каталога, в духе STORE77: одна большая панель на
-// наведение, а не каскад из мелких выпадашек. Слева — список всех разделов
-// (Телефоны, Часы, Планшеты...), справа — сразу ВСЁ содержимое выбранного
-// раздела (бренды/линейки и конкретные модели), без дополнительных наведений
-// и без горизontальных полосок прокрутки у каждой колонки.
+// Десктопная версия меню каталога — каскад колонок на наведение, как у
+// крупных магазинов электроники (например BigGeek): навёл на раздел —
+// справа появилась колонка его содержимого, навёл на пункт в ней — ещё
+// колонка правее, и так на любую глубину. Заложено с запасом: сейчас
+// каталог небольшой, но должен вырасти, а эта схема не привязана к
+// конкретному числу уровней (в отличие от прежней версии на CSS-хаках).
 //
-// Раньше здесь была версия с вложенными flyout-панелями (свой поповер на
-// каждый уровень вложенности) — на деле она "съезжала" за правый край экрана
-// и обрубала текст, если разделов/уровней было много. Эта версия — один
-// панель фиксированной ширины, которая гарантированно помещается на экране.
+// Раньше здесь уже была ровно такая каскадная раскладка на чистом CSS
+// (:hover), и она "съезжала" за правый край экрана — каждая колонка была
+// отдельной всплывающей панелью без общего контейнера. Тут по-другому: все
+// колонки живут ВНУТРИ одной панели ограниченной ширины (max-w-[92vw]) с
+// горизонтальной прокруткой — если колонок наберётся больше, чем влезает на
+// экран, появится полоса прокрутки внутри панели, а не обрезанный текст за
+// краем окна. Раскрытие следующей колонки — через состояние (path), а не
+// через CSS group-hover, поэтому глубина вложенности ничем не ограничена.
 //
 // На мобильных наведения нет (сенсорный экран), поэтому там остаётся
-// прежнее меню на клик — полноэкранная панель, см. CatalogMenu.tsx.
+// прежнее меню на клик — полноэкранная панель с той же логикой колонок,
+// см. CatalogMenu.tsx (эта версия писалась по его образцу).
 
 function BurgerIcon() {
   return (
@@ -26,82 +32,27 @@ function BurgerIcon() {
   );
 }
 
-function RightPane({ node }: { node: CatalogNavNode | undefined }) {
-  if (!node) return null;
-
-  const children = node.children ?? [];
-
-  // Раздел из одного товара (например, "Дайсоны" с единственной моделью в
-  // прайсе) — children нет вообще, ведём прямо на товар.
-  if (children.length === 0) {
-    return (
-      <Link
-        href={node.href ?? "/catalog"}
-        className="inline-block rounded-xl bg-zinc-50 px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-white"
-      >
-        Смотреть {node.label.toLowerCase()} →
-      </Link>
-    );
-  }
-
-  const isGrouped = children.some((c) => Boolean(c.children?.length));
-
-  if (!isGrouped) {
-    // Плоский раздел (Часы, Планшеты, Ноутбуки): просто список моделей,
-    // разложенный в несколько колонок, как на STORE77 — весь раздел виден
-    // сразу, без дополнительных наведений.
-    return (
-      <div className="columns-2 gap-x-8 lg:columns-3">
-        {children.map((leaf) => (
-          <Link
-            key={leaf.label}
-            href={leaf.href ?? "/catalog"}
-            className="block break-inside-avoid rounded-lg px-2 py-1.5 text-sm text-foreground transition-colors hover:bg-zinc-50 hover:text-accent"
-          >
-            {leaf.label}
-          </Link>
-        ))}
-      </div>
-    );
-  }
-
-  // Раздел с линейками (Телефоны: Apple iPhone / Samsung Galaxy;
-  // Аксессуары: AirPods / Apple TV) — каждая линейка своим блоком колонок.
-  // Заголовок линейки ("Apple iPhone"/"Samsung Galaxy") намеренно не
-  // показываем: и так понятно по названиям моделей ниже (везде написано
-  // "iPhone ..." / "Samsung Galaxy ..."), а лишний текст просто занимал
-  // место.
-  return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
-      {children.map((group) => (
-        <div key={group.label} className="columns-2 gap-x-6">
-          {(group.children ?? []).map((leaf) => (
-            <Link
-              key={leaf.label}
-              href={leaf.href ?? "/catalog"}
-              className="block break-inside-avoid rounded-lg px-2 py-1.5 text-sm text-foreground transition-colors hover:bg-zinc-50 hover:text-accent"
-            >
-              {leaf.label}
-            </Link>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 export function CatalogMenuDesktop({ tree }: { tree: CatalogNavNode[] }) {
   const [open, setOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [path, setPath] = useState<CatalogNavNode[]>([]);
 
-  const activeNode = tree[activeIndex] ?? tree[0];
+  function closeAll() {
+    setOpen(false);
+    setPath([]);
+  }
+
+  // Наведение на пункт с дочерними элементами раскрывает следующую колонку;
+  // если до этого была раскрыта более глубокая ветка — она обрезается
+  // (slice), как в обычном каскадном меню.
+  function handleHover(depth: number, node: CatalogNavNode) {
+    if (!node.children || node.children.length === 0) return;
+    setPath((prev) => [...prev.slice(0, depth), node]);
+  }
+
+  const columns: CatalogNavNode[][] = [tree, ...path.map((n) => n.children ?? [])];
 
   return (
-    <div
-      className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
+    <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={closeAll}>
       <Link
         href="/catalog"
         className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm text-zinc-700 transition-colors hover:bg-accent hover:text-white"
@@ -111,27 +62,68 @@ export function CatalogMenuDesktop({ tree }: { tree: CatalogNavNode[] }) {
       </Link>
 
       {open && tree.length > 0 && (
-        <div className="absolute left-0 top-full z-50 flex w-[min(92vw,760px)] overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-xl">
-          <div className="flex w-52 shrink-0 flex-col gap-0.5 border-r border-zinc-100 bg-zinc-50/60 p-2">
-            {tree.map((node, i) => (
-              <Link
-                key={node.label}
-                href={node.href ?? "/catalog"}
-                onMouseEnter={() => setActiveIndex(i)}
-                className={`rounded-lg px-3 py-2 text-sm transition-colors ${
-                  i === activeIndex
-                    ? "bg-brand text-white"
-                    : "text-foreground hover:bg-white hover:text-accent"
-                }`}
-              >
-                {node.label}
-              </Link>
-            ))}
-          </div>
+        <div className="absolute left-0 top-full z-50 flex max-w-[92vw] overflow-x-auto rounded-2xl border border-zinc-100 bg-white shadow-xl">
+          {columns.map((col, depth) => {
+            // "Смотреть всё" вверху колонки — переход туда, откуда эта
+            // колонка раскрылась (для первой колонки — весь каталог целиком).
+            const viewAllHref = depth === 0 ? "/catalog" : path[depth - 1]?.href;
 
-          <div className="max-h-[65vh] flex-1 overflow-y-auto p-5">
-            <RightPane node={activeNode} />
-          </div>
+            return (
+              <div
+                key={depth}
+                className="flex max-h-[70vh] w-56 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-zinc-100 p-2 last:border-r-0"
+              >
+                {viewAllHref && (
+                  <Link
+                    href={viewAllHref}
+                    className="mb-1 block rounded-lg px-3 py-2 text-xs font-medium text-accent transition-colors hover:bg-zinc-50"
+                  >
+                    Смотреть всё →
+                  </Link>
+                )}
+
+                {col.map((node) => {
+                  const hasChildren = Boolean(node.children?.length);
+                  const isActive = path[depth]?.label === node.label;
+                  const itemClass = `flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${
+                    isActive
+                      ? "bg-zinc-50 text-accent"
+                      : "text-foreground hover:bg-zinc-50 hover:text-accent"
+                  }`;
+                  const content = (
+                    <>
+                      <span>{node.label}</span>
+                      {hasChildren && <span className="text-zinc-400">›</span>}
+                    </>
+                  );
+
+                  // Клик по названию раздела/бренда/модели — переход на его
+                  // страницу; наведение отдельно раскрывает следующую
+                  // колонку. Пункт без своего href (например, линейка без
+                  // отдельной страницы) — просто раскрывает колонку, никуда
+                  // не ведёт.
+                  return node.href ? (
+                    <Link
+                      key={node.label}
+                      href={node.href}
+                      onMouseEnter={() => handleHover(depth, node)}
+                      className={itemClass}
+                    >
+                      {content}
+                    </Link>
+                  ) : (
+                    <span
+                      key={node.label}
+                      onMouseEnter={() => handleHover(depth, node)}
+                      className={itemClass}
+                    >
+                      {content}
+                    </span>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

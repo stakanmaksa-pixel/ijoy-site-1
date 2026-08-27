@@ -7,6 +7,8 @@ import {
   createVariant,
   updateVariant,
   deleteVariant,
+  uploadProductImage,
+  deleteProductImage,
 } from "../actions";
 import { ProductForm } from "../ProductForm";
 
@@ -30,6 +32,14 @@ export default async function EditProductPage({
   if (!product) {
     notFound();
   }
+
+  // Цвета берём из реальных модификаций товара — так список фото-групп
+  // сам следует за тем, что заведено в "Модификациях" выше, без ручной
+  // синхронизации.
+  const colors = Array.from(
+    new Set(product.variants.map((v) => v.color).filter((c): c is string => Boolean(c))),
+  );
+  const colorImages = (product.colorImages as Record<string, string[]> | null) ?? {};
 
   return (
     <div>
@@ -148,6 +158,99 @@ export default async function EditProductPage({
           </form>
         </div>
       </div>
+
+      <div className="mt-10">
+        <h2 className="text-lg font-medium text-zinc-900">Фото</h2>
+        <p className="mt-1 text-sm text-zinc-500">
+          Для каждого цвета — свои фото: на странице товара они переключаются
+          вместе с выбором цвета, чтобы сразу было видно, какой цвет
+          покупатель получит.
+        </p>
+
+        <div className="mt-4 flex flex-col gap-6">
+          {colors.map((color) => (
+            <PhotoGroup
+              key={color}
+              title={color}
+              productId={product.id}
+              slug={product.slug}
+              color={color}
+              images={colorImages[color] ?? []}
+            />
+          ))}
+
+          <PhotoGroup
+            title={colors.length > 0 ? "Общие фото (без привязки к цвету)" : "Фото"}
+            productId={product.id}
+            slug={product.slug}
+            color=""
+            images={product.images}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PhotoGroup({
+  title,
+  productId,
+  slug,
+  color,
+  images,
+}: {
+  title: string;
+  productId: string;
+  slug: string;
+  color: string;
+  images: string[];
+}) {
+  return (
+    <div className="rounded-2xl border border-zinc-200 p-4">
+      <h3 className="text-sm font-medium text-zinc-900">{title}</h3>
+
+      {images.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-3">
+          {images.map((url) => (
+            <div key={url} className="relative h-24 w-24 overflow-hidden rounded-lg border border-zinc-200">
+              {/* Обычный img — фото свои, локальные, next/image тут не даёт выгоды */}
+              <img src={url} alt="" className="h-full w-full object-cover" />
+              <form action={deleteProductImage} className="absolute right-1 top-1">
+                <input type="hidden" name="productId" value={productId} />
+                <input type="hidden" name="slug" value={slug} />
+                <input type="hidden" name="color" value={color} />
+                <input type="hidden" name="url" value={url} />
+                <button
+                  type="submit"
+                  aria-label="Удалить фото"
+                  className="flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-xs leading-none text-white hover:bg-red-600"
+                >
+                  ×
+                </button>
+              </form>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <form action={uploadProductImage} encType="multipart/form-data" className="mt-3 flex items-center gap-2">
+        <input type="hidden" name="productId" value={productId} />
+        <input type="hidden" name="slug" value={slug} />
+        <input type="hidden" name="color" value={color} />
+        <input
+          required
+          type="file"
+          name="file"
+          accept="image/jpeg,image/png,image/webp"
+          className="text-xs text-zinc-600 file:mr-3 file:rounded-full file:border-0 file:bg-zinc-100 file:px-3 file:py-1.5 file:text-xs file:font-medium hover:file:bg-zinc-200"
+        />
+        <button
+          type="submit"
+          className="shrink-0 rounded-full bg-zinc-900 px-3 py-1.5 text-xs text-white hover:bg-zinc-700"
+        >
+          Загрузить
+        </button>
+      </form>
     </div>
   );
 }

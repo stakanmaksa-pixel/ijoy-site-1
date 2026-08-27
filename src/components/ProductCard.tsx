@@ -9,6 +9,7 @@ export function ProductCard({
   minPrice,
   hasStock,
   defaultVariantId,
+  coverImage,
 }: {
   name: string;
   slug: string;
@@ -21,6 +22,7 @@ export function ProductCard({
   // значение по умолчанию; на странице товара избранное уже привязывается
   // к реально выбранной модификации.
   defaultVariantId: string | null;
+  coverImage?: string | null;
 }) {
   return (
     <Link
@@ -28,7 +30,11 @@ export function ProductCard({
       className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
       <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
-        <span className="text-sm">Фото</span>
+        {coverImage ? (
+          <img src={coverImage} alt={name} className="h-full w-full object-contain" />
+        ) : (
+          <span className="text-sm">Фото</span>
+        )}
         {defaultVariantId && (
           <FavoriteButton variantId={defaultVariantId} className="absolute right-3 top-3" />
         )}

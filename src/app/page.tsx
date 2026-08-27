@@ -188,6 +188,7 @@ export default async function HomePage() {
                   minPrice={p.minPrice}
                   hasStock={p.hasStock}
                   defaultVariantId={p.defaultVariantId}
+                  coverImage={p.coverImage}
                 />
               ))}
             </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProductBySlug } from "@/lib/catalog";
+import { getProductBySlug, pickCoverImage } from "@/lib/catalog";
 import { ProductDetail } from "@/components/ProductDetail";
 import { VariantCard } from "@/components/VariantCard";
 
@@ -91,7 +91,12 @@ export default async function ProductPage({
 
           <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {product.variants.map((v) => (
-              <VariantCard key={v.id} slug={slug} variant={v} />
+              <VariantCard
+                key={v.id}
+                slug={slug}
+                variant={v}
+                imageUrl={pickCoverImage(product.images, product.colorImages, v.color)}
+              />
             ))}
           </div>
         </>
@@ -106,6 +111,8 @@ export default async function ProductPage({
           highlights={product.highlights}
           previousGenLabel={product.previousGenLabel}
           previousGenHighlights={product.previousGenHighlights}
+          images={product.images}
+          colorImages={product.colorImages}
         />
       )}
     </div>

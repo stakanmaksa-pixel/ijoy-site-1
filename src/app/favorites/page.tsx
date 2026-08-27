@@ -17,6 +17,7 @@ type FavoriteItem = {
   productSlug: string;
   productName: string;
   brand: string | null;
+  imageUrl: string | null;
 };
 
 function variantLabel(item: FavoriteItem) {
@@ -77,7 +78,11 @@ export default function FavoritesPage() {
                 className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
               >
                 <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
-                  <span className="text-sm">Фото</span>
+                  {item.imageUrl ? (
+                    <img src={item.imageUrl} alt="" className="h-full w-full object-contain" />
+                  ) : (
+                    <span className="text-sm">Фото</span>
+                  )}
                   <FavoriteButton
                     variantId={item.variantId}
                     className="absolute right-3 top-3"

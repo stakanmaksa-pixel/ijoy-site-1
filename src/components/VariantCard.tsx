@@ -25,14 +25,28 @@ function variantLabel(v: Variant) {
 // а не к товару целиком — поэтому у разных карточек в этой сетке (один и тот
 // же телефон, но разная память/цвет) сердечки независимы и не "загораются"
 // все разом.
-export function VariantCard({ slug, variant }: { slug: string; variant: Variant }) {
+export function VariantCard({
+  slug,
+  variant,
+  imageUrl,
+}: {
+  slug: string;
+  variant: Variant;
+  // Фото именно этого цвета (или общее фото товара, если по цвету пока
+  // нет) — см. pickCoverImage в catalog.ts.
+  imageUrl?: string | null;
+}) {
   return (
     <Link
       href={`/product/${slug}?variant=${variant.id}`}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
       <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
-        <span className="text-sm">Фото</span>
+        {imageUrl ? (
+          <img src={imageUrl} alt="" className="h-full w-full object-contain" />
+        ) : (
+          <span className="text-sm">Фото</span>
+        )}
         <FavoriteButton variantId={variant.id} className="absolute right-3 top-3" />
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
