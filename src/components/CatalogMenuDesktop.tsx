@@ -66,35 +66,24 @@ function RightPane({ node }: { node: CatalogNavNode | undefined }) {
   }
 
   // Раздел с линейками (Телефоны: Apple iPhone / Samsung Galaxy;
-  // Аксессуары: AirPods / Apple TV) — каждая линейка своим блоком, заголовок
-  // ведёт на "весь бренд", ниже — конкретные модели.
+  // Аксессуары: AirPods / Apple TV) — каждая линейка своим блоком колонок.
+  // Заголовок линейки ("Apple iPhone"/"Samsung Galaxy") намеренно не
+  // показываем: и так понятно по названиям моделей ниже (везде написано
+  // "iPhone ..." / "Samsung Galaxy ..."), а лишний текст просто занимал
+  // место.
   return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
       {children.map((group) => (
-        <div key={group.label}>
-          {group.href ? (
+        <div key={group.label} className="columns-2 gap-x-6">
+          {(group.children ?? []).map((leaf) => (
             <Link
-              href={group.href}
-              className="font-display text-sm font-semibold text-foreground transition-colors hover:text-accent"
+              key={leaf.label}
+              href={leaf.href ?? "/catalog"}
+              className="block break-inside-avoid rounded-lg px-2 py-1.5 text-sm text-foreground transition-colors hover:bg-zinc-50 hover:text-accent"
             >
-              {group.label}
+              {leaf.label}
             </Link>
-          ) : (
-            <div className="font-display text-sm font-semibold text-foreground">{group.label}</div>
-          )}
-          {group.children && group.children.length > 0 && (
-            <div className="mt-2 columns-2 gap-x-6">
-              {group.children.map((leaf) => (
-                <Link
-                  key={leaf.label}
-                  href={leaf.href ?? "/catalog"}
-                  className="block break-inside-avoid rounded-lg px-2 py-1.5 text-sm text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-accent"
-                >
-                  {leaf.label}
-                </Link>
-              ))}
-            </div>
-          )}
+          ))}
         </div>
       ))}
     </div>
