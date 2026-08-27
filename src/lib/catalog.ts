@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
+import { pickCoverImage } from "@/lib/pickCoverImage";
 
 // ---------------------------------------------------------------------
 // Многоуровневое меню каталога (бургер-меню на мобильном / выпадающая
@@ -26,7 +27,7 @@ export type CatalogNavNode = {
 // соответствующие блоки в prisma/seed.ts); модели, которых сейчас нет в
 // продаже, в списках не фигурируют — они появятся сами, как только
 // появятся в прайсе, в правильном месте.
-const MODEL_DISPLAY_ORDER = {
+export const MODEL_DISPLAY_ORDER = {
   iphone: [
     "iPhone 17 Pro Max",
     "iPhone 17 Pro",
@@ -369,6 +370,54 @@ export async function getProductBySlug(slug: string) {
   };
 }
 
+export type CompareModel = {
+  slug: string;
+  name: string;
+  minPrice: number | null;
+  hasStock: boolean;
+  colors: string[];
+  images: string[];
+  colorImages: Record<string, string[]> | null;
+  specs: Record<string, string> | null;
+};
+
+// Линейка iPhone для страницы /compare — только модели, которые реально
+// сейчас есть в продаже (актуальный прайс из БД), в порядке "новые сверху"
+// (тот же MODEL_DISPLAY_ORDER.iphone, что и в каталоге/меню). Характеристики
+// (specs) берутся из того же поля Product.specs, что и на странице товара —
+// ключи в нём приведены к единому виду (см. prisma/seed.ts,
+// IPHONE_CONTENT_OVERRIDES), поэтому строки таблицы сравнения совпадают
+// между моделями там, где данные реально есть.
+export async function getIphoneCompareLineup(): Promise<CompareModel[]> {
+  const products = await prisma.product.findMany({
+    where: { status: "PUBLISHED", brand: "Apple", name: { startsWith: "iPhone" } },
+    include: { variants: true },
+  });
+
+  const sorted = [...products].sort(
+    (a, b) => rankInList(MODEL_DISPLAY_ORDER.iphone, a.name) - rankInList(MODEL_DISPLAY_ORDER.iphone, b.name),
+  );
+
+  return sorted.map((product) => {
+    const priced = product.variants.filter((v) => v.price !== null);
+    const prices = priced.map((v) => Number(v.price));
+    const minPrice = prices.length > 0 ? Math.min(...prices) : null;
+    const hasStock = product.variants.some((v) => v.inStock);
+    const colors = [...new Set(product.variants.map((v) => v.color).filter((c): c is string => Boolean(c)))];
+
+    return {
+      slug: product.slug,
+      name: product.name,
+      minPrice,
+      hasStock,
+      colors,
+      images: product.images,
+      colorImages: (product.colorImages as Record<string, string[]> | null) ?? null,
+      specs: (product.specs as Record<string, string> | null) ?? null,
+    };
+  });
+}
+
 // Товары по списку слагов — оставлено на случай, если понадобится подборка
 // товаров целиком по слагам (сейчас /favorites работает через
 // getFavoriteVariants ниже, т.к. избранное — по конкретным модификациям).
@@ -431,27 +480,10 @@ export async function getFavoriteVariants(variantIds: string[]) {
     .filter((v): v is NonNullable<typeof v> => Boolean(v));
 }
 
-// Фото "по умолчанию" для карточки без выбора конкретного цвета: фото цвета
-// приоритетного варианта (обычно самого дешёвого — с ним же связано
-// сердечко избранного на карточке), иначе первое общее фото, иначе первое
-// фото хоть какого-то цвета — лучше показать реальное фото не того цвета,
-// чем пустую заглушку.
-export function pickCoverImage(
-  images: string[],
-  colorImages: Record<string, string[]> | null,
-  preferredColor?: string | null,
-): string | null {
-  if (preferredColor && colorImages?.[preferredColor]?.length) {
-    return colorImages[preferredColor][0];
-  }
-  if (images.length > 0) return images[0];
-  if (colorImages) {
-    for (const list of Object.values(colorImages)) {
-      if (list?.length) return list[0];
-    }
-  }
-  return null;
-}
+// pickCoverImage переехала в отдельный файл без серверных зависимостей (см.
+// pickCoverImage.ts) — реэкспортируем её отсюда же, чтобы все существующие
+// импорты `from "@/lib/catalog"` продолжали работать без изменений.
+export { pickCoverImage } from "@/lib/pickCoverImage";
 
 function toProductSummary(
   product: Prisma.ProductGetPayload<{

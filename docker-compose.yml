@@ -14,7 +14,13 @@ services:
       timeout: 5s
       retries: 10
 
-  # Одноразовый сервис — применяет миграции перед запуском приложения.
+  # Одноразовый сервис — применяет миграции перед запуском приложения. Тот же
+  # сервис (через `docker compose run --rm migrate <своя команда>`) используем
+  # и для точечных серверных скриптов (см. prisma/scripts/) — например,
+  # чтобы безопасно обновить характеристики или фото без полного reseed.
+  # Смонтирован тот же volume, что и у app: чтобы такой скрипт мог положить
+  # файл фото в то же постоянное хранилище, которым пользуется сайт (а не в
+  # свою одноразовую копию, которая пропадёт вместе с контейнером).
   migrate:
     build:
       context: .
@@ -22,6 +28,8 @@ services:
     command: npx prisma migrate deploy
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-ijoy}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-ijoy}?schema=public
+    volumes:
+      - uploads_data:/app/public/uploads
     depends_on:
       postgres:
         condition: service_healthy
