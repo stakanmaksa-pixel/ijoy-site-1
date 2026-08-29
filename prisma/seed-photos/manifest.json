@@ -1,0 +1,830 @@
+{
+  "version": 1,
+  "source": "https://re-store.ru/",
+  "generatedAt": "2026-08-29",
+  "imagePolicy": {
+    "format": "webp",
+    "maxEdge": 1400,
+    "quality": 86,
+    "galleryImagesPerColor": 3
+  },
+  "jobs": [
+    {
+      "slug": "iphone-17-pro-max",
+      "colors": {
+        "Deep Blue": [
+          "iphone-17-pro-max/restore-e7e253f906-01.webp",
+          "iphone-17-pro-max/restore-e7e253f906-02.webp",
+          "iphone-17-pro-max/restore-e7e253f906-03.webp"
+        ],
+        "Cosmic Orange": [
+          "iphone-17-pro-max/restore-d825f428a9-01.webp",
+          "iphone-17-pro-max/restore-d825f428a9-02.webp",
+          "iphone-17-pro-max/restore-d825f428a9-03.webp"
+        ],
+        "Silver": [
+          "iphone-17-pro-max/restore-5c3be6b3cc-01.webp",
+          "iphone-17-pro-max/restore-5c3be6b3cc-02.webp",
+          "iphone-17-pro-max/restore-5c3be6b3cc-03.webp"
+        ]
+      },
+      "sources": {
+        "Deep Blue": "https://re-store.ru/catalog/10117MAX512BLUN/",
+        "Cosmic Orange": "https://re-store.ru/catalog/10117MAX512ORGN/",
+        "Silver": "https://re-store.ru/catalog/10117MAX256SLVN/"
+      }
+    },
+    {
+      "slug": "iphone-17-pro",
+      "colors": {
+        "Cosmic Orange": [
+          "iphone-17-pro/restore-ddefab161d-01.webp",
+          "iphone-17-pro/restore-ddefab161d-02.webp",
+          "iphone-17-pro/restore-ddefab161d-03.webp"
+        ],
+        "Silver": [
+          "iphone-17-pro/restore-612f17e1c5-01.webp",
+          "iphone-17-pro/restore-612f17e1c5-02.webp",
+          "iphone-17-pro/restore-612f17e1c5-03.webp"
+        ],
+        "Deep Blue": [
+          "iphone-17-pro/restore-c7042c4987-01.webp",
+          "iphone-17-pro/restore-c7042c4987-02.webp",
+          "iphone-17-pro/restore-c7042c4987-03.webp"
+        ]
+      },
+      "sources": {
+        "Cosmic Orange": "https://re-store.ru/catalog/10117PRO512ORGN/",
+        "Silver": "https://re-store.ru/catalog/10117PRO256SLVN/",
+        "Deep Blue": "https://re-store.ru/catalog/10117PRO256BLUN/"
+      }
+    },
+    {
+      "slug": "iphone-air",
+      "colors": {
+        "Blue": [
+          "iphone-air/restore-4e0e41e537-01.webp",
+          "iphone-air/restore-4e0e41e537-02.webp",
+          "iphone-air/restore-4e0e41e537-03.webp"
+        ],
+        "Black": [
+          "iphone-air/restore-4b017bdf45-01.webp",
+          "iphone-air/restore-4b017bdf45-02.webp",
+          "iphone-air/restore-4b017bdf45-03.webp"
+        ],
+        "Gold": [
+          "iphone-air/restore-132af5f716-01.webp",
+          "iphone-air/restore-132af5f716-02.webp",
+          "iphone-air/restore-132af5f716-03.webp"
+        ],
+        "White": [
+          "iphone-air/restore-3af5a4f693-01.webp",
+          "iphone-air/restore-3af5a4f693-02.webp",
+          "iphone-air/restore-3af5a4f693-03.webp"
+        ]
+      },
+      "sources": {
+        "Blue": "https://re-store.ru/catalog/101AIR512BLUE/",
+        "Black": "https://re-store.ru/catalog/101AIR512BLKE/",
+        "Gold": "https://re-store.ru/catalog/101AIR512GLDE/",
+        "White": "https://re-store.ru/catalog/101AIR256WHTE/"
+      }
+    },
+    {
+      "slug": "iphone-17e",
+      "colors": {
+        "Pink": [
+          "iphone-17e/restore-9550a23181-01.webp",
+          "iphone-17e/restore-9550a23181-02.webp",
+          "iphone-17e/restore-9550a23181-03.webp"
+        ],
+        "White": [
+          "iphone-17e/restore-87482fbd90-01.webp",
+          "iphone-17e/restore-87482fbd90-02.webp",
+          "iphone-17e/restore-87482fbd90-03.webp"
+        ],
+        "Black": [
+          "iphone-17e/restore-404e9f3a02-01.webp",
+          "iphone-17e/restore-404e9f3a02-02.webp",
+          "iphone-17e/restore-404e9f3a02-03.webp"
+        ]
+      },
+      "sources": {
+        "Pink": "https://re-store.ru/catalog/10117E512PNKN/",
+        "White": "https://re-store.ru/catalog/10117E512WHTN/",
+        "Black": "https://re-store.ru/catalog/10117E512BLKN/"
+      }
+    },
+    {
+      "slug": "iphone-17",
+      "colors": {
+        "Mist Blue": [
+          "iphone-17/restore-7c4d84ef57-01.webp",
+          "iphone-17/restore-7c4d84ef57-02.webp",
+          "iphone-17/restore-7c4d84ef57-03.webp"
+        ],
+        "White": [
+          "iphone-17/restore-1555ccd8ef-01.webp",
+          "iphone-17/restore-1555ccd8ef-02.webp",
+          "iphone-17/restore-1555ccd8ef-03.webp"
+        ],
+        "Black": [
+          "iphone-17/restore-0be76caa97-01.webp",
+          "iphone-17/restore-0be76caa97-02.webp",
+          "iphone-17/restore-0be76caa97-03.webp"
+        ],
+        "Sage": [
+          "iphone-17/restore-3198df6772-01.webp",
+          "iphone-17/restore-3198df6772-02.webp",
+          "iphone-17/restore-3198df6772-03.webp"
+        ],
+        "Lavender": [
+          "iphone-17/restore-7d4322a784-01.webp",
+          "iphone-17/restore-7d4322a784-02.webp",
+          "iphone-17/restore-7d4322a784-03.webp"
+        ]
+      },
+      "sources": {
+        "Mist Blue": "https://re-store.ru/catalog/10117512BLUE/",
+        "White": "https://re-store.ru/catalog/10117256WHTN/",
+        "Black": "https://re-store.ru/catalog/10117512BLKE/",
+        "Sage": "https://re-store.ru/catalog/10117256SGEE/",
+        "Lavender": "https://re-store.ru/catalog/10117256LVRE/"
+      }
+    },
+    {
+      "slug": "iphone-16-pro-max",
+      "colors": {
+        "Desert Titanium": [
+          "iphone-16-pro-max/restore-f1e9f4491d-01.webp",
+          "iphone-16-pro-max/restore-f1e9f4491d-02.webp",
+          "iphone-16-pro-max/restore-f1e9f4491d-03.webp"
+        ],
+        "Natural Titanium": [
+          "iphone-16-pro-max/restore-652acbf582-01.webp",
+          "iphone-16-pro-max/restore-652acbf582-02.webp",
+          "iphone-16-pro-max/restore-652acbf582-03.webp"
+        ],
+        "White Titanium": [
+          "iphone-16-pro-max/restore-a6ca59e6ca-01.webp",
+          "iphone-16-pro-max/restore-a6ca59e6ca-02.webp",
+          "iphone-16-pro-max/restore-a6ca59e6ca-03.webp"
+        ],
+        "Black Titanium": [
+          "iphone-16-pro-max/restore-4720c005a2-01.webp",
+          "iphone-16-pro-max/restore-4720c005a2-02.webp",
+          "iphone-16-pro-max/restore-4720c005a2-03.webp"
+        ]
+      },
+      "sources": {
+        "Desert Titanium": "https://re-store.ru/catalog/10116MAX256DSTN/",
+        "Natural Titanium": "https://re-store.ru/catalog/10116MAX512NATN/",
+        "White Titanium": "https://re-store.ru/catalog/10116MAX512WHTN/",
+        "Black Titanium": "https://re-store.ru/catalog/10116MAX512BLKD/"
+      }
+    },
+    {
+      "slug": "iphone-16-pro",
+      "colors": {
+        "White Titanium": [
+          "iphone-16-pro/restore-e5f8942331-01.webp",
+          "iphone-16-pro/restore-e5f8942331-02.webp",
+          "iphone-16-pro/restore-e5f8942331-03.webp"
+        ],
+        "Natural Titanium": [
+          "iphone-16-pro/restore-905f5cd0bc-01.webp",
+          "iphone-16-pro/restore-905f5cd0bc-02.webp",
+          "iphone-16-pro/restore-905f5cd0bc-03.webp"
+        ],
+        "Desert Titanium": [
+          "iphone-16-pro/restore-282cc34448-01.webp",
+          "iphone-16-pro/restore-282cc34448-02.webp",
+          "iphone-16-pro/restore-282cc34448-03.webp"
+        ]
+      },
+      "sources": {
+        "White Titanium": "https://re-store.ru/catalog/10116PRO128WHTN/",
+        "Natural Titanium": "https://re-store.ru/catalog/10116PRO256NATN/",
+        "Desert Titanium": "https://re-store.ru/catalog/10116PRO256DSTN/"
+      }
+    },
+    {
+      "slug": "iphone-16-plus",
+      "colors": {
+        "Ultramarine": [
+          "iphone-16-plus/restore-b341e1e147-01.webp",
+          "iphone-16-plus/restore-b341e1e147-02.webp",
+          "iphone-16-plus/restore-b341e1e147-03.webp"
+        ],
+        "Black": [
+          "iphone-16-plus/restore-984e4b9f07-01.webp",
+          "iphone-16-plus/restore-984e4b9f07-02.webp",
+          "iphone-16-plus/restore-984e4b9f07-03.webp"
+        ],
+        "White": [
+          "iphone-16-plus/restore-c21a78fbaf-01.webp",
+          "iphone-16-plus/restore-c21a78fbaf-02.webp",
+          "iphone-16-plus/restore-c21a78fbaf-03.webp"
+        ],
+        "Pink": [
+          "iphone-16-plus/restore-b58ed2b598-01.webp",
+          "iphone-16-plus/restore-b58ed2b598-02.webp",
+          "iphone-16-plus/restore-b58ed2b598-03.webp"
+        ],
+        "Teal": [
+          "iphone-16-plus/restore-7af4598c57-01.webp",
+          "iphone-16-plus/restore-7af4598c57-02.webp",
+          "iphone-16-plus/restore-7af4598c57-03.webp"
+        ]
+      },
+      "sources": {
+        "Ultramarine": "https://re-store.ru/catalog/10116PLUS128ULMN/",
+        "Black": "https://re-store.ru/catalog/10116PLUS128BLKN/",
+        "White": "https://re-store.ru/catalog/10116PLUS128WHTN/",
+        "Pink": "https://re-store.ru/catalog/10116PLUS128PNKN/",
+        "Teal": "https://re-store.ru/catalog/10116PLUS128TEALN/"
+      }
+    },
+    {
+      "slug": "iphone-16e",
+      "colors": {
+        "White": [
+          "iphone-16e/restore-1e767f579b-01.webp",
+          "iphone-16e/restore-1e767f579b-02.webp",
+          "iphone-16e/restore-1e767f579b-03.webp"
+        ],
+        "Black": [
+          "iphone-16e/official-96cd95f451-01.webp",
+          "iphone-16e/official-96cd95f451-02.webp",
+          "iphone-16e/official-96cd95f451-03.webp"
+        ]
+      },
+      "sources": {
+        "White": "https://re-store.ru/catalog/10116E128WHTN/",
+        "Black": "https://www.apple.com/shop/product/fd0d4ll/a/Refurbished-iPhone-16e-128GB-Black-Unlocked"
+      }
+    },
+    {
+      "slug": "iphone-16",
+      "colors": {
+        "Black": [
+          "iphone-16/restore-368ae3099e-01.webp",
+          "iphone-16/restore-368ae3099e-02.webp",
+          "iphone-16/restore-368ae3099e-03.webp"
+        ],
+        "Teal": [
+          "iphone-16/restore-0d03256788-01.webp",
+          "iphone-16/restore-0d03256788-02.webp",
+          "iphone-16/restore-0d03256788-03.webp"
+        ],
+        "Ultramarine": [
+          "iphone-16/restore-81a5d0493b-01.webp",
+          "iphone-16/restore-81a5d0493b-02.webp",
+          "iphone-16/restore-81a5d0493b-03.webp"
+        ],
+        "White": [
+          "iphone-16/restore-962e0969aa-01.webp",
+          "iphone-16/restore-962e0969aa-02.webp",
+          "iphone-16/restore-962e0969aa-03.webp"
+        ],
+        "Pink": [
+          "iphone-16/restore-e5f42c2437-01.webp",
+          "iphone-16/restore-e5f42c2437-02.webp",
+          "iphone-16/restore-e5f42c2437-03.webp"
+        ]
+      },
+      "sources": {
+        "Black": "https://re-store.ru/catalog/10116128BLKN/",
+        "Teal": "https://re-store.ru/catalog/10116128TEALN/",
+        "Ultramarine": "https://re-store.ru/catalog/10116128ULMN/",
+        "White": "https://re-store.ru/catalog/10116128WHTN/",
+        "Pink": "https://re-store.ru/catalog/10116128PNKN/"
+      }
+    },
+    {
+      "slug": "iphone-15-pro",
+      "colors": {
+        "Natural Titanium": [
+          "iphone-15-pro/restore-ee805f9757-01.webp",
+          "iphone-15-pro/restore-ee805f9757-02.webp",
+          "iphone-15-pro/restore-ee805f9757-03.webp"
+        ],
+        "Blue Titanium": [
+          "iphone-15-pro/legacy-ce184491d8-01.webp",
+          "iphone-15-pro/legacy-ce184491d8-02.webp",
+          "iphone-15-pro/legacy-ce184491d8-03.webp"
+        ]
+      },
+      "sources": {
+        "Natural Titanium": "https://re-store.ru/catalog/10115PRO256NATN/",
+        "Blue Titanium": "local:Products\\Смартфоны\\iPhone\\15 Pro\\Титановый синий"
+      }
+    },
+    {
+      "slug": "iphone-15-plus",
+      "colors": {
+        "Green": [
+          "iphone-15-plus/restore-55922ca115-01.webp",
+          "iphone-15-plus/restore-55922ca115-02.webp",
+          "iphone-15-plus/restore-55922ca115-03.webp"
+        ],
+        "Blue": [
+          "iphone-15-plus/restore-ab98c022c7-01.webp",
+          "iphone-15-plus/restore-ab98c022c7-02.webp",
+          "iphone-15-plus/restore-ab98c022c7-03.webp"
+        ],
+        "Pink": [
+          "iphone-15-plus/legacy-aa17460927-01.webp",
+          "iphone-15-plus/legacy-aa17460927-02.webp",
+          "iphone-15-plus/legacy-aa17460927-03.webp"
+        ]
+      },
+      "sources": {
+        "Green": "https://re-store.ru/catalog/10115PLUS512GRNN/",
+        "Blue": "https://re-store.ru/catalog/10115PLUS512BLUN/",
+        "Pink": "local:Products\\Смартфоны\\iPhone\\15 Plus\\Розовый"
+      }
+    },
+    {
+      "slug": "iphone-15",
+      "colors": {
+        "Blue": [
+          "iphone-15/restore-96d280c35d-01.webp",
+          "iphone-15/restore-96d280c35d-02.webp",
+          "iphone-15/restore-96d280c35d-03.webp"
+        ],
+        "Black": [
+          "iphone-15/restore-800caf6199-01.webp",
+          "iphone-15/restore-800caf6199-02.webp",
+          "iphone-15/restore-800caf6199-03.webp"
+        ]
+      },
+      "sources": {
+        "Blue": "https://re-store.ru/catalog/10115256BLUN/",
+        "Black": "https://re-store.ru/catalog/10115256BLKN/"
+      }
+    },
+    {
+      "slug": "iphone-14",
+      "colors": {
+        "Midnight": [
+          "iphone-14/restore-7ea9531cc6-01.webp",
+          "iphone-14/restore-7ea9531cc6-02.webp",
+          "iphone-14/restore-7ea9531cc6-03.webp"
+        ],
+        "Red": [
+          "iphone-14/restore-3703c7a5f0-01.webp",
+          "iphone-14/restore-3703c7a5f0-02.webp",
+          "iphone-14/restore-3703c7a5f0-03.webp"
+        ],
+        "Starlight": [
+          "iphone-14/restore-b32d2802b5-01.webp",
+          "iphone-14/restore-b32d2802b5-02.webp",
+          "iphone-14/restore-b32d2802b5-03.webp"
+        ],
+        "Purple": [
+          "iphone-14/restore-17aedabcda-01.webp",
+          "iphone-14/restore-17aedabcda-02.webp",
+          "iphone-14/restore-17aedabcda-03.webp"
+        ],
+        "Blue": [
+          "iphone-14/restore-b55847ebc2-01.webp",
+          "iphone-14/restore-b55847ebc2-02.webp",
+          "iphone-14/restore-b55847ebc2-03.webp"
+        ],
+        "Yellow": [
+          "iphone-14/legacy-bd5938a3d3-01.webp",
+          "iphone-14/legacy-bd5938a3d3-02.webp",
+          "iphone-14/legacy-bd5938a3d3-03.webp"
+        ]
+      },
+      "sources": {
+        "Midnight": "https://re-store.ru/catalog/10114512MDNN/",
+        "Red": "https://re-store.ru/catalog/10114512REDN/",
+        "Starlight": "https://re-store.ru/catalog/10114128STRD/",
+        "Purple": "https://re-store.ru/catalog/10114512PPLN/",
+        "Blue": "https://re-store.ru/catalog/10114512BLUN/",
+        "Yellow": "local:Products\\Смартфоны\\iPhone\\14\\Apple iPhone 14, желтый"
+      }
+    },
+    {
+      "slug": "iphone-13",
+      "colors": {
+        "Midnight": [
+          "iphone-13/restore-0aeada9cb7-01.webp",
+          "iphone-13/restore-0aeada9cb7-02.webp",
+          "iphone-13/restore-0aeada9cb7-03.webp"
+        ]
+      },
+      "sources": {
+        "Midnight": "https://re-store.ru/catalog/10113128MDN/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-s26-ultra",
+      "colors": {
+        "Cobalt Violet": [
+          "samsung-galaxy-s26-ultra/restore-9ca30cb069-01.webp",
+          "samsung-galaxy-s26-ultra/restore-9ca30cb069-02.webp",
+          "samsung-galaxy-s26-ultra/restore-9ca30cb069-03.webp"
+        ],
+        "Black": [
+          "samsung-galaxy-s26-ultra/restore-b8899dd1cd-01.webp",
+          "samsung-galaxy-s26-ultra/restore-b8899dd1cd-02.webp",
+          "samsung-galaxy-s26-ultra/restore-b8899dd1cd-03.webp"
+        ],
+        "Light Blue": [
+          "samsung-galaxy-s26-ultra/restore-7a4e386348-01.webp",
+          "samsung-galaxy-s26-ultra/restore-7a4e386348-02.webp",
+          "samsung-galaxy-s26-ultra/restore-7a4e386348-03.webp"
+        ],
+        "Violet": [
+          "samsung-galaxy-s26-ultra/restore-9ca30cb069-01.webp",
+          "samsung-galaxy-s26-ultra/restore-9ca30cb069-02.webp",
+          "samsung-galaxy-s26-ultra/restore-9ca30cb069-03.webp"
+        ],
+        "White": [
+          "samsung-galaxy-s26-ultra/restore-52d2288c0f-01.webp",
+          "samsung-galaxy-s26-ultra/restore-52d2288c0f-02.webp",
+          "samsung-galaxy-s26-ultra/restore-52d2288c0f-03.webp"
+        ]
+      },
+      "sources": {
+        "Cobalt Violet": "https://re-store.ru/catalog/SM-S948B12512VLT2E1S/",
+        "Black": "https://re-store.ru/catalog/SM-S948B16001BLK2E1S/",
+        "Light Blue": "https://re-store.ru/catalog/SM-S948B16001BLU2E1S/",
+        "Violet": "https://re-store.ru/catalog/SM-S948B12512VLT2E1S/",
+        "White": "https://re-store.ru/catalog/SM-S948B16001WHT2E1S/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-s26-plus",
+      "colors": {
+        "Blue": [
+          "samsung-galaxy-s26-plus/restore-32cad831e1-01.webp",
+          "samsung-galaxy-s26-plus/restore-32cad831e1-02.webp",
+          "samsung-galaxy-s26-plus/restore-32cad831e1-03.webp"
+        ],
+        "White": [
+          "samsung-galaxy-s26-plus/restore-9fef43c1e7-01.webp",
+          "samsung-galaxy-s26-plus/restore-9fef43c1e7-02.webp",
+          "samsung-galaxy-s26-plus/restore-9fef43c1e7-03.webp"
+        ],
+        "Sky Blue": [
+          "samsung-galaxy-s26-plus/restore-32cad831e1-01.webp",
+          "samsung-galaxy-s26-plus/restore-32cad831e1-02.webp",
+          "samsung-galaxy-s26-plus/restore-32cad831e1-03.webp"
+        ]
+      },
+      "sources": {
+        "Blue": "https://re-store.ru/catalog/SM-S947B12512BLU2E1S/",
+        "White": "https://re-store.ru/catalog/SM-S947B12512WHT2E1S/",
+        "Sky Blue": "https://re-store.ru/catalog/SM-S947B12512BLU2E1S/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-s26",
+      "colors": {
+        "Sky Blue": [
+          "samsung-galaxy-s26/restore-4db66a145b-01.webp",
+          "samsung-galaxy-s26/restore-4db66a145b-02.webp",
+          "samsung-galaxy-s26/restore-4db66a145b-03.webp"
+        ],
+        "Cobalt Violet": [
+          "samsung-galaxy-s26/restore-d8202898b6-01.webp",
+          "samsung-galaxy-s26/restore-d8202898b6-02.webp",
+          "samsung-galaxy-s26/restore-d8202898b6-03.webp"
+        ],
+        "Black": [
+          "samsung-galaxy-s26/restore-25abd5a68c-01.webp",
+          "samsung-galaxy-s26/restore-25abd5a68c-02.webp",
+          "samsung-galaxy-s26/restore-25abd5a68c-03.webp"
+        ],
+        "White": [
+          "samsung-galaxy-s26/restore-482b371829-01.webp",
+          "samsung-galaxy-s26/restore-482b371829-02.webp",
+          "samsung-galaxy-s26/restore-482b371829-03.webp"
+        ],
+        "Silver Shadow": [
+          "samsung-galaxy-s26/official-5e27d5c840-01.webp"
+        ]
+      },
+      "sources": {
+        "Sky Blue": "https://re-store.ru/catalog/SM-S942B12512BLU2E1S/",
+        "Cobalt Violet": "https://re-store.ru/catalog/SM-S942B12256VLT2E1S/",
+        "Black": "https://re-store.ru/catalog/SM-S942B12512BLK2E1S/",
+        "White": "https://re-store.ru/catalog/SM-S942B12512WHT2E1S/",
+        "Silver Shadow": "https://www.samsung.com/us/smartphones/galaxy-s26/buy/galaxy-s26-256gb-unlocked-sku-sm-s942uzsexaa/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-s25-ultra",
+      "colors": {
+        "Titanium Whitesilver": [
+          "samsung-galaxy-s25-ultra/restore-0b817d15e4-01.webp",
+          "samsung-galaxy-s25-ultra/restore-0b817d15e4-02.webp",
+          "samsung-galaxy-s25-ultra/restore-0b817d15e4-03.webp"
+        ],
+        "Titanium Black": [
+          "samsung-galaxy-s25-ultra/restore-c6f78c97a8-01.webp",
+          "samsung-galaxy-s25-ultra/restore-c6f78c97a8-02.webp",
+          "samsung-galaxy-s25-ultra/restore-c6f78c97a8-03.webp"
+        ],
+        "Titanium Silverblue": [
+          "samsung-galaxy-s25-ultra/restore-6089fa3e76-01.webp",
+          "samsung-galaxy-s25-ultra/restore-6089fa3e76-02.webp",
+          "samsung-galaxy-s25-ultra/restore-6089fa3e76-03.webp"
+        ],
+        "Titanium Gray": [
+          "samsung-galaxy-s25-ultra/restore-d36b517e4a-01.webp",
+          "samsung-galaxy-s25-ultra/restore-d36b517e4a-02.webp",
+          "samsung-galaxy-s25-ultra/restore-d36b517e4a-03.webp"
+        ]
+      },
+      "sources": {
+        "Titanium Whitesilver": "https://re-store.ru/catalog/SM-S938B12512SLV2E1S/",
+        "Titanium Black": "https://re-store.ru/catalog/SM-S938B12512BLK2E1S/",
+        "Titanium Silverblue": "https://re-store.ru/catalog/SM-S938B12512BLU2E1S/",
+        "Titanium Gray": "https://re-store.ru/catalog/SM-S938B12512GRY2E1S/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-s25-fe-5g",
+      "colors": {
+        "White": [
+          "samsung-galaxy-s25-fe-5g/restore-abb04252b3-01.webp",
+          "samsung-galaxy-s25-fe-5g/restore-abb04252b3-02.webp",
+          "samsung-galaxy-s25-fe-5g/restore-abb04252b3-03.webp"
+        ],
+        "JetBlack": [
+          "samsung-galaxy-s25-fe-5g/restore-98982cf571-01.webp",
+          "samsung-galaxy-s25-fe-5g/restore-98982cf571-02.webp",
+          "samsung-galaxy-s25-fe-5g/restore-98982cf571-03.webp"
+        ],
+        "Navy": [
+          "samsung-galaxy-s25-fe-5g/restore-b7d465bd33-01.webp",
+          "samsung-galaxy-s25-fe-5g/restore-b7d465bd33-02.webp",
+          "samsung-galaxy-s25-fe-5g/restore-b7d465bd33-03.webp"
+        ]
+      },
+      "sources": {
+        "White": "https://re-store.ru/catalog/SM-S731B08256WHT2E1S/",
+        "JetBlack": "https://re-store.ru/catalog/SM-S731B08256BLK2E1S/",
+        "Navy": "https://re-store.ru/catalog/SM-S731B08256DBL2E1S/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-s25",
+      "colors": {
+        "Icy Blue": [
+          "samsung-galaxy-s25/restore-9e94b530dd-01.webp",
+          "samsung-galaxy-s25/restore-9e94b530dd-02.webp",
+          "samsung-galaxy-s25/restore-9e94b530dd-03.webp"
+        ],
+        "Navy": [
+          "samsung-galaxy-s25/restore-333c5b8078-01.webp",
+          "samsung-galaxy-s25/restore-333c5b8078-02.webp",
+          "samsung-galaxy-s25/restore-333c5b8078-03.webp"
+        ],
+        "Mint": [
+          "samsung-galaxy-s25/restore-9732adf246-01.webp",
+          "samsung-galaxy-s25/restore-9732adf246-02.webp",
+          "samsung-galaxy-s25/restore-9732adf246-03.webp"
+        ],
+        "Silver Shadow": [
+          "samsung-galaxy-s25/restore-30a73bfa02-01.webp",
+          "samsung-galaxy-s25/restore-30a73bfa02-02.webp",
+          "samsung-galaxy-s25/restore-30a73bfa02-03.webp"
+        ]
+      },
+      "sources": {
+        "Icy Blue": "https://re-store.ru/catalog/SM-S931B12256LBL2E1S/",
+        "Navy": "https://re-store.ru/catalog/SM-S931B12256BLU2E1S/",
+        "Mint": "https://re-store.ru/catalog/SM-S931B12512MNT2E1S/",
+        "Silver Shadow": "https://re-store.ru/catalog/SM-S931B12256GRY2E1S/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-a57-5g",
+      "colors": {
+        "Navy": [
+          "samsung-galaxy-a57-5g/restore-d7ed26c8a2-01.webp",
+          "samsung-galaxy-a57-5g/restore-d7ed26c8a2-02.webp",
+          "samsung-galaxy-a57-5g/restore-d7ed26c8a2-03.webp"
+        ],
+        "Awesome Lilac": [
+          "samsung-galaxy-a57-5g/restore-a8f270aca6-01.webp",
+          "samsung-galaxy-a57-5g/restore-a8f270aca6-02.webp",
+          "samsung-galaxy-a57-5g/restore-a8f270aca6-03.webp"
+        ],
+        "Awesome Gray": [
+          "samsung-galaxy-a57-5g/restore-3815208803-01.webp",
+          "samsung-galaxy-a57-5g/restore-3815208803-02.webp",
+          "samsung-galaxy-a57-5g/restore-3815208803-03.webp"
+        ],
+        "Awesome Icyblue": [
+          "samsung-galaxy-a57-5g/restore-bd4db29216-01.webp",
+          "samsung-galaxy-a57-5g/restore-bd4db29216-02.webp",
+          "samsung-galaxy-a57-5g/restore-bd4db29216-03.webp"
+        ],
+        "Awesome Navy": [
+          "samsung-galaxy-a57-5g/restore-d7ed26c8a2-01.webp",
+          "samsung-galaxy-a57-5g/restore-d7ed26c8a2-02.webp",
+          "samsung-galaxy-a57-5g/restore-d7ed26c8a2-03.webp"
+        ]
+      },
+      "sources": {
+        "Navy": "https://re-store.ru/catalog/SM-A576B08128NAV2E1S/",
+        "Awesome Lilac": "https://re-store.ru/catalog/SM-A576B08128LIL2E1S/",
+        "Awesome Gray": "https://re-store.ru/catalog/SM-A576B08128GRY2E1S/",
+        "Awesome Icyblue": "https://re-store.ru/catalog/SM-A576B08128BLU2E1S/",
+        "Awesome Navy": "https://re-store.ru/catalog/SM-A576B08128NAV2E1S/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-a56-5g",
+      "colors": {
+        "Awesome Lightgray": [
+          "samsung-galaxy-a56-5g/restore-44f9041855-01.webp",
+          "samsung-galaxy-a56-5g/restore-44f9041855-02.webp",
+          "samsung-galaxy-a56-5g/restore-44f9041855-03.webp"
+        ]
+      },
+      "sources": {
+        "Awesome Lightgray": "https://re-store.ru/catalog/SM-A566E08256GRY2E1S/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-a37-5g",
+      "colors": {
+        "Green": [
+          "samsung-galaxy-a37-5g/restore-f32f1b8172-01.webp",
+          "samsung-galaxy-a37-5g/restore-f32f1b8172-02.webp",
+          "samsung-galaxy-a37-5g/restore-f32f1b8172-03.webp"
+        ],
+        "White": [
+          "samsung-galaxy-a37-5g/restore-d1c10938b6-01.webp",
+          "samsung-galaxy-a37-5g/restore-d1c10938b6-02.webp",
+          "samsung-galaxy-a37-5g/restore-d1c10938b6-03.webp"
+        ],
+        "Awesome Greygreen": [
+          "samsung-galaxy-a37-5g/restore-f32f1b8172-01.webp",
+          "samsung-galaxy-a37-5g/restore-f32f1b8172-02.webp",
+          "samsung-galaxy-a37-5g/restore-f32f1b8172-03.webp"
+        ],
+        "Awesome White": [
+          "samsung-galaxy-a37-5g/restore-d1c10938b6-01.webp",
+          "samsung-galaxy-a37-5g/restore-d1c10938b6-02.webp",
+          "samsung-galaxy-a37-5g/restore-d1c10938b6-03.webp"
+        ],
+        "Black": [
+          "samsung-galaxy-a37-5g/restore-aac0c46a99-01.webp",
+          "samsung-galaxy-a37-5g/restore-aac0c46a99-02.webp",
+          "samsung-galaxy-a37-5g/restore-aac0c46a99-03.webp"
+        ],
+        "Lavender": [
+          "samsung-galaxy-a37-5g/official-bcf8c00c7d-01.webp",
+          "samsung-galaxy-a37-5g/official-bcf8c00c7d-02.webp",
+          "samsung-galaxy-a37-5g/official-bcf8c00c7d-03.webp"
+        ]
+      },
+      "sources": {
+        "Green": "https://re-store.ru/catalog/SM-A376E08256GRN21S/",
+        "White": "https://re-store.ru/catalog/SM-A376E08256WHT21S/",
+        "Awesome Greygreen": "https://re-store.ru/catalog/SM-A376E08256GRN21S/",
+        "Awesome White": "https://re-store.ru/catalog/SM-A376E08256WHT21S/",
+        "Black": "https://re-store.ru/catalog/SM-A376E08256BLK21S/",
+        "Lavender": "https://www.samsung.com/latin/smartphones/galaxy-a/galaxy-a37-5g-awesome-lavender-128gb-sm-a376blvjgto/buy/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-a27-5g",
+      "colors": {
+        "Black": [
+          "samsung-galaxy-a27-5g/restore-accc853f7c-01.webp",
+          "samsung-galaxy-a27-5g/restore-accc853f7c-02.webp",
+          "samsung-galaxy-a27-5g/restore-accc853f7c-03.webp"
+        ],
+        "Blue": [
+          "samsung-galaxy-a27-5g/restore-4a866aa268-01.webp",
+          "samsung-galaxy-a27-5g/restore-4a866aa268-02.webp",
+          "samsung-galaxy-a27-5g/restore-4a866aa268-03.webp"
+        ],
+        "Light Pink": [
+          "samsung-galaxy-a27-5g/restore-20fb004ba2-01.webp",
+          "samsung-galaxy-a27-5g/restore-20fb004ba2-02.webp",
+          "samsung-galaxy-a27-5g/restore-20fb004ba2-03.webp"
+        ]
+      },
+      "sources": {
+        "Black": "https://re-store.ru/catalog/SM-A276B08256BLK21S/",
+        "Blue": "https://re-store.ru/catalog/SM-A276B08256BLU21S/",
+        "Light Pink": "https://re-store.ru/catalog/SM-A276B08256PNK21S/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-a17-4g",
+      "colors": {
+        "Black": [
+          "samsung-galaxy-a17-4g/restore-92a1c76585-01.webp",
+          "samsung-galaxy-a17-4g/restore-92a1c76585-02.webp",
+          "samsung-galaxy-a17-4g/restore-92a1c76585-03.webp"
+        ],
+        "Blue": [
+          "samsung-galaxy-a17-4g/restore-fe5d70c69c-01.webp",
+          "samsung-galaxy-a17-4g/restore-fe5d70c69c-02.webp",
+          "samsung-galaxy-a17-4g/restore-fe5d70c69c-03.webp"
+        ],
+        "Gray": [
+          "samsung-galaxy-a17-4g/official-2160bc08c8-01.webp",
+          "samsung-galaxy-a17-4g/official-2160bc08c8-02.webp",
+          "samsung-galaxy-a17-4g/official-2160bc08c8-03.webp"
+        ],
+        "Light Blue": [
+          "samsung-galaxy-a17-4g/official-579068ece8-01.webp",
+          "samsung-galaxy-a17-4g/official-579068ece8-02.webp",
+          "samsung-galaxy-a17-4g/official-579068ece8-03.webp"
+        ]
+      },
+      "sources": {
+        "Black": "https://re-store.ru/catalog/SM-A175F04128BLK2S/",
+        "Blue": "https://re-store.ru/catalog/SM-A175F04128LBL2S/",
+        "Gray": "https://www.samsung.com/ie/business/smartphones/galaxy-a/galaxy-a17-grey-128gb-sm-a175fzabeub/",
+        "Light Blue": "https://www.samsung.com/ie/business/smartphones/galaxy-a/galaxy-a17-light-blue-128gb-sm-a175flbbeub/"
+      }
+    },
+    {
+      "slug": "iphone-15-pro-max",
+      "colors": {
+        "White": [
+          "iphone-15-pro-max/legacy-d70d331285-01.webp",
+          "iphone-15-pro-max/legacy-d70d331285-02.webp",
+          "iphone-15-pro-max/legacy-d70d331285-03.webp"
+        ]
+      },
+      "sources": {
+        "White": "local:Products\\Смартфоны\\iPhone\\15 Pro Max\\Титановый белый"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-s23-plus",
+      "colors": {
+        "Black": [
+          "samsung-galaxy-s23-plus/official-9be38506b3-01.webp",
+          "samsung-galaxy-s23-plus/official-9be38506b3-02.webp",
+          "samsung-galaxy-s23-plus/official-9be38506b3-03.webp"
+        ],
+        "Green": [
+          "samsung-galaxy-s23-plus/official-0ef2d26260-01.webp",
+          "samsung-galaxy-s23-plus/official-0ef2d26260-02.webp",
+          "samsung-galaxy-s23-plus/official-0ef2d26260-03.webp"
+        ]
+      },
+      "sources": {
+        "Black": "https://www.samsung.com/es/business/smartphones/galaxy-s/galaxy-s23-plus-sm-s916bzkgeub/buy/",
+        "Green": "https://www.samsung.com/es/business/smartphones/galaxy-s/galaxy-s23-plus-sm-s916bzggeub/buy/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-a16",
+      "colors": {
+        "Black": [
+          "samsung-galaxy-a16/official-0f4d6a9d7f-01.webp",
+          "samsung-galaxy-a16/official-0f4d6a9d7f-02.webp",
+          "samsung-galaxy-a16/official-0f4d6a9d7f-03.webp"
+        ]
+      },
+      "sources": {
+        "Black": "https://www.samsung.com/uk/smartphones/galaxy-a/galaxy-a16-black-128gb-sm-a165fzkbeub/buy/"
+      }
+    },
+    {
+      "slug": "samsung-galaxy-m56-5g",
+      "colors": {
+        "Black": [
+          "samsung-galaxy-m56-5g/official-6de7b2789e-01.webp",
+          "samsung-galaxy-m56-5g/official-6de7b2789e-02.webp",
+          "samsung-galaxy-m56-5g/official-6de7b2789e-03.webp"
+        ],
+        "LightGreen": [
+          "samsung-galaxy-m56-5g/official-4d261a2b2e-01.webp",
+          "samsung-galaxy-m56-5g/official-4d261a2b2e-02.webp",
+          "samsung-galaxy-m56-5g/official-4d261a2b2e-03.webp"
+        ]
+      },
+      "sources": {
+        "Black": "https://www.samsung.com/in/smartphones/galaxy-m/galaxy-m-black-256gb-sm-m566bzkbins/buy/",
+        "LightGreen": "https://www.samsung.com/in/smartphones/galaxy-m/galaxy-m-light-green-256gb-sm-m566blgbins/buy/"
+      }
+    }
+  ],
+  "unresolved": [],
+  "errors": {
+    "gallery": {},
+    "download": {}
+  },
+  "supplements": {
+    "officialManufacturerPages": 10,
+    "existingIJoyArchiveColors": 4
+  }
+}
