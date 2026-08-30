@@ -6,6 +6,7 @@ import { PageHero } from "@/components/PageHero";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { formatPrice } from "@/lib/format";
 import { useFavoriteVariantIds } from "@/lib/favorites";
+import { MAX_COMPARISON_ITEMS } from "@/lib/comparison";
 
 type FavoriteItem = {
   variantId: string;
@@ -33,6 +34,7 @@ function variantLabel(item: FavoriteItem) {
 export default function FavoritesPage() {
   const ids = useFavoriteVariantIds();
   const [items, setItems] = useState<FavoriteItem[]>([]);
+  const [selectedVariantIds, setSelectedVariantIds] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const idsKey = ids.join(",");
 
@@ -58,6 +60,23 @@ export default function FavoritesPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idsKey]);
 
+  const selectedSlugs = [...new Set(
+    selectedVariantIds
+      .map((id) => items.find((item) => item.variantId === id)?.productSlug)
+      .filter((slug): slug is string => Boolean(slug)),
+  )];
+
+  function toggleForComparison(item: FavoriteItem) {
+    setSelectedVariantIds((current) => {
+      if (current.includes(item.variantId)) return current.filter((id) => id !== item.variantId);
+      const currentSlugs = new Set(
+        current.map((id) => items.find((entry) => entry.variantId === id)?.productSlug).filter(Boolean),
+      );
+      if (!currentSlugs.has(item.productSlug) && currentSlugs.size >= MAX_COMPARISON_ITEMS) return current;
+      return [...current, item.variantId];
+    });
+  }
+
   return (
     <div>
       <PageHero title="Избранное iJoy Gadget Store" highlight="Избранное" />
@@ -70,7 +89,24 @@ export default function FavoritesPage() {
             Пока пусто — добавляйте товары в избранное сердечком на карточке.
           </p>
         ) : (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+          <>
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-zinc-50 px-4 py-3">
+              <div>
+                <div className="font-medium text-foreground">Сравнить выбранные</div>
+                <div className="text-sm text-zinc-500">Отметьте от 2 до 3 разных моделей.</div>
+              </div>
+              {selectedSlugs.length >= 2 ? (
+                <Link
+                  href={`/compare?models=${encodeURIComponent(selectedSlugs.join(","))}`}
+                  className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+                >
+                  Сравнить ({selectedSlugs.length})
+                </Link>
+              ) : (
+                <span className="rounded-full bg-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-500">Выберите 2 модели</span>
+              )}
+            </div>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
             {items.map((item) => (
               <Link
                 key={item.variantId}
@@ -87,6 +123,23 @@ export default function FavoritesPage() {
                     variantId={item.variantId}
                     className="absolute right-3 top-3"
                   />
+                  <label
+                    className="absolute left-3 top-3 flex cursor-pointer items-center gap-1.5 rounded-full bg-white/95 px-3 py-2 text-xs font-semibold text-zinc-700 shadow-sm ring-1 ring-black/5"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      toggleForComparison(item);
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedVariantIds.includes(item.variantId)}
+                      onChange={() => toggleForComparison(item)}
+                      onClick={(event) => event.stopPropagation()}
+                      className="accent-accent"
+                    />
+                    Сравнить
+                  </label>
                 </div>
                 <div className="flex flex-1 flex-col gap-1 p-4">
                   {item.brand ? (
@@ -107,7 +160,8 @@ export default function FavoritesPage() {
                 </div>
               </Link>
             ))}
-          </div>
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -103,6 +103,7 @@ export default async function ProductPage({
       ) : (
         <ProductDetail
           productName={product.name}
+          productSlug={product.slug}
           brand={product.brand}
           description={product.description}
           variants={product.variants}

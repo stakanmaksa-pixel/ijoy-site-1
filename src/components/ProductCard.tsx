@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { CompareButton } from "@/components/CompareButton";
 
 export function ProductCard({
   name,
@@ -35,9 +36,10 @@ export function ProductCard({
         ) : (
           <span className="text-sm">Фото</span>
         )}
-        {defaultVariantId && (
-          <FavoriteButton variantId={defaultVariantId} className="absolute right-3 top-3" />
-        )}
+        <div className="absolute right-3 top-3 flex gap-2">
+          <CompareButton slug={slug} />
+          {defaultVariantId && <FavoriteButton variantId={defaultVariantId} />}
+        </div>
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
         {brand ? (

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SiteFeedback } from "@/components/SiteFeedback";
+import { CompareTray } from "@/components/CompareTray";
 
 // Те же шрифты, что и на прежнем сайте на Тильде: Unbounded — для
 // заголовков и кнопок, Montserrat — для основного текста.
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1">{children}</main>
         <SiteFeedback />
         <Footer />
+        <CompareTray />
       </body>
     </html>
   );

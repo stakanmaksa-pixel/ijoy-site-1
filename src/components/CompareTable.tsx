@@ -22,7 +22,7 @@ const PRIMARY_SPEC_ROWS = [
   "Корпус",
 ];
 
-const MAX_COLUMNS = 4;
+const MAX_COLUMNS = 3;
 
 function screenSize(specs: Record<string, string> | null): string | null {
   const value = specs?.["Дисплей"];
@@ -32,8 +32,16 @@ function screenSize(specs: Record<string, string> | null): string | null {
   return `${match[1].replace(",", ".")}″`;
 }
 
-export function CompareTable({ models }: { models: CompareModel[] }) {
-  const [selected, setSelected] = useState<string[]>(() => models.slice(0, MAX_COLUMNS).map((m) => m.slug));
+export function CompareTable({
+  models,
+  initialSlugs = [],
+}: {
+  models: CompareModel[];
+  initialSlugs?: string[];
+}) {
+  const [selected, setSelected] = useState<string[]>(() =>
+    initialSlugs.length > 0 ? initialSlugs : models.slice(0, MAX_COLUMNS).map((m) => m.slug),
+  );
   const [activeColors, setActiveColors] = useState<Record<string, string>>({});
 
   function toggle(slug: string) {
@@ -71,7 +79,10 @@ export function CompareTable({ models }: { models: CompareModel[] }) {
     <div className="flex flex-col gap-8">
       {/* Выбор моделей — до 4 одновременно; выбор новой сверх лимита сдвигает
           самую "старую" из уже выбранных, а не блокируется молча. */}
-      <div className="flex flex-wrap gap-2">
+      <div>
+        <h2 className="font-display text-2xl font-semibold text-foreground">Выберите модели</h2>
+        <p className="mt-2 text-sm text-zinc-500">До трёх моделей одновременно.</p>
+        <div className="mt-4 flex flex-wrap gap-2">
         {models.map((m) => {
           const isActive = selected.includes(m.slug);
           return (
@@ -89,6 +100,7 @@ export function CompareTable({ models }: { models: CompareModel[] }) {
             </button>
           );
         })}
+        </div>
       </div>
 
       {/* Колонки моделей */}

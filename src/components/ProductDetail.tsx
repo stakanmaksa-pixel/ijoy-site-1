@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { CompareButton } from "@/components/CompareButton";
 import { ProductOrder } from "@/components/ProductOrder";
 
 type Variant = {
@@ -21,6 +22,7 @@ type Variant = {
 // onSelectedVariantChange, а он идёт в FavoriteButton.
 export function ProductDetail({
   productName,
+  productSlug,
   brand,
   description,
   variants,
@@ -33,6 +35,7 @@ export function ProductDetail({
   colorImages,
 }: {
   productName: string;
+  productSlug: string;
   brand?: string | null;
   description?: string | null;
   variants: Variant[];
@@ -93,9 +96,10 @@ export function ProductDetail({
             ) : (
               <span className="text-sm">Фото скоро появится</span>
             )}
-            {selectedId && (
-              <FavoriteButton variantId={selectedId} className="absolute right-4 top-4" />
-            )}
+            <div className="absolute right-4 top-4 flex gap-2">
+              <CompareButton slug={productSlug} />
+              {selectedId && <FavoriteButton variantId={selectedId} />}
+            </div>
           </div>
 
           {galleryImages.length > 1 && (
