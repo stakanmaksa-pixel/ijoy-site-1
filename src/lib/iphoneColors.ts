@@ -20,6 +20,8 @@ export const IPHONE_COLOR_SWATCHES: Record<string, string> = {
   Sage: "#a6ae9d",
   Silver: "#e5e5e6",
   "Soft Pink": "#f2d1d6",
+  "Cosmic Orange": "#e8742d",
+  "Deep Blue": "#283d68",
   "Space Gray": "#54524f",
   Starlight: "#eee5d3",
   Teal: "#4f6a6a",
@@ -28,6 +30,25 @@ export const IPHONE_COLOR_SWATCHES: Record<string, string> = {
   Yellow: "#e8d16a",
 };
 
+const IPHONE_COLOR_LABELS: Record<string, string> = {
+  "Cosmic Orange": "Космический оранжевый",
+  "Deep Blue": "Глубокий синий",
+  Silver: "Серебристый",
+  Black: "Чёрный",
+  White: "Белый",
+  Blue: "Синий",
+  Orange: "Оранжевый",
+  Gray: "Серый",
+  Gold: "Золотой",
+  Green: "Зелёный",
+  Pink: "Розовый",
+  Purple: "Фиолетовый",
+};
+
 export function iphoneColorSwatch(color: string): string {
   return IPHONE_COLOR_SWATCHES[color] ?? "#d4d4d8";
+}
+
+export function iphoneColorLabel(color: string): string {
+  return IPHONE_COLOR_LABELS[color] ?? color;
 }

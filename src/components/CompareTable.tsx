@@ -5,7 +5,7 @@ import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { pickCoverImage } from "@/lib/pickCoverImage";
 import type { CompareModel } from "@/lib/catalog";
-import { iphoneColorSwatch } from "@/lib/iphoneColors";
+import { iphoneColorLabel, iphoneColorSwatch } from "@/lib/iphoneColors";
 
 // Порядок строк характеристик — как на apple.com/iphone/compare/: сначала
 // самое важное (экран, процессор, камеры, автономность), потом память и
@@ -131,20 +131,25 @@ export function CompareTable({
               </div>
 
               {m.colors.length > 0 && (
-                <div className="mt-3 flex flex-wrap justify-center gap-1.5">
-                  {m.colors.map((color) => (
-                    <button
-                      key={color}
-                      type="button"
-                      title={color}
-                      aria-label={color}
-                      onClick={() => setActiveColors((prev) => ({ ...prev, [m.slug]: color }))}
-                      className={`h-5 w-5 rounded-full border transition-transform ${
-                        activeColor === color ? "scale-110 border-accent" : "border-zinc-200"
-                      }`}
-                      style={{ backgroundColor: iphoneColorSwatch(color) }}
-                    />
-                  ))}
+                <div className="mt-3 flex flex-col items-center">
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {m.colors.map((color) => (
+                      <button
+                        key={color}
+                        type="button"
+                        title={iphoneColorLabel(color)}
+                        aria-label={iphoneColorLabel(color)}
+                        onClick={() => setActiveColors((prev) => ({ ...prev, [m.slug]: color }))}
+                        className={`h-7 w-7 rounded-full border transition-transform ${
+                          activeColor === color
+                            ? "scale-110 border-white ring-2 ring-accent"
+                            : "border-zinc-300 hover:scale-105"
+                        }`}
+                        style={{ backgroundColor: iphoneColorSwatch(color) }}
+                      />
+                    ))}
+                  </div>
+                  {activeColor && <div className="mt-2 text-xs font-medium text-zinc-600">{iphoneColorLabel(activeColor)}</div>}
                 </div>
               )}
             </div>
