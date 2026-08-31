@@ -301,14 +301,14 @@ export function ProductOrder({
           type="button"
           onClick={() => setFormOpen(true)}
           disabled={!selected?.inStock}
-          className="w-fit rounded-full bg-brand px-6 py-3 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40"
+          className="w-full rounded-full bg-brand px-6 py-3 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40 sm:w-fit"
         >
           {selected?.price != null ? "Оформить заказ" : "Уточнить цену"}
         </button>
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="flex max-w-sm flex-col gap-3 rounded-2xl border border-zinc-200 p-4"
+          className="flex w-full max-w-sm flex-col gap-3 rounded-2xl border border-zinc-200 p-4"
         >
           <label className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
             Сайт
@@ -343,7 +343,7 @@ export function ProductOrder({
           <button
             type="submit"
             disabled={status === "sending"}
-            className="rounded-full bg-brand px-6 py-3 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark disabled:opacity-60"
+            className="w-full rounded-full bg-brand px-6 py-3 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark disabled:opacity-60 sm:w-fit"
           >
             {status === "sending" ? "Отправляем…" : "Отправить заявку"}
           </button>

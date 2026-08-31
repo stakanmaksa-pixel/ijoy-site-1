@@ -82,21 +82,21 @@ export function ProductDetail({
 
   return (
     <div>
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 md:gap-10 md:grid-cols-2">
         <div>
           {/* Минималистично: одно крупное фото + ряд миниатюр под ним, без
               лишних рамок и подписей — как просили, "чисто, но понятно". */}
-          <div className="relative flex aspect-square items-center justify-center rounded-3xl bg-white text-zinc-300">
+          <div className="relative flex aspect-square items-center justify-center rounded-2xl bg-white text-zinc-300 sm:rounded-3xl">
             {activeImage ? (
               <img
                 src={activeImage}
                 alt={`${productName}${activeColor ? `, ${activeColor}` : ""}`}
-                className="h-full w-full rounded-3xl object-contain"
+                className="h-full w-full rounded-2xl object-contain sm:rounded-3xl"
               />
             ) : (
               <span className="text-sm">Фото скоро появится</span>
             )}
-            <div className="absolute right-4 top-4 flex gap-2">
+            <div className="absolute right-3 top-3 flex gap-2 sm:right-4 sm:top-4">
               <CompareButton slug={productSlug} />
               {selectedId && <FavoriteButton variantId={selectedId} />}
             </div>
@@ -109,7 +109,7 @@ export function ProductDetail({
                   key={url}
                   type="button"
                   onClick={() => setSelectedImage(url)}
-                  className={`h-16 w-16 shrink-0 overflow-hidden rounded-xl border transition-colors ${
+                  className={`h-14 w-14 shrink-0 overflow-hidden rounded-xl border transition-colors sm:h-16 sm:w-16 ${
                     url === activeImage
                       ? "border-accent"
                       : "border-zinc-200 hover:border-zinc-300"
@@ -128,7 +128,7 @@ export function ProductDetail({
               {brand}
             </div>
           )}
-          <h1 className="mt-1 font-display text-3xl font-semibold leading-tight text-foreground">
+          <h1 className="mt-1 font-display text-2xl font-semibold leading-tight text-foreground sm:text-3xl">
             {productName}
           </h1>
 
