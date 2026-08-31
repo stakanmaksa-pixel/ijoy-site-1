@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PhoneField, phoneWithCountryCode } from "@/components/PhoneField";
 
 // Форма "Оставьте заявку — перезвоним через 15 минут" — тот же блок
 // (T1015 на Тильде: градиент accent → brand, белые поля, обводная кнопка),
@@ -20,6 +21,7 @@ export function CallbackForm({
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+7");
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
     "idle",
@@ -34,7 +36,7 @@ export function CallbackForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           customerName: name,
-          customerPhone: phone,
+          customerPhone: phoneWithCountryCode(countryCode, phone),
           comment: `Заявка «${source}»: перезвонить`,
           website,
           items: [],
@@ -80,13 +82,12 @@ export function CallbackForm({
             onChange={(e) => setName(e.target.value)}
             className="w-full rounded-full border-0 px-5 py-3 text-sm text-foreground placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-white sm:w-56"
           />
-          <input
-            required
-            type="tel"
-            placeholder="+7 (___) ___-__-__"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full rounded-full border-0 px-5 py-3 text-sm text-foreground placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-white sm:w-56"
+          <PhoneField
+            countryCode={countryCode}
+            onCountryCodeChange={setCountryCode}
+            phone={phone}
+            onPhoneChange={setPhone}
+            className="w-full text-foreground sm:w-[360px]"
           />
           <button
             type="submit"

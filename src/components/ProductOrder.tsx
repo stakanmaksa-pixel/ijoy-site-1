@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { formatPrice } from "@/lib/format";
 import { colorToHex } from "@/lib/colorSwatch";
+import { PhoneField, phoneWithCountryCode } from "@/components/PhoneField";
 
 type Variant = {
   id: string;
@@ -120,6 +121,7 @@ export function ProductOrder({
   const [formOpen, setFormOpen] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+7");
   const [comment, setComment] = useState("");
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
@@ -163,7 +165,7 @@ export function ProductOrder({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           customerName: name,
-          customerPhone: phone,
+          customerPhone: phoneWithCountryCode(countryCode, phone),
           website,
           comment: priceOnRequest
             ? [`Уточнить цену: «${productName}» (${variantLabel(selected)})`, comment]
@@ -324,13 +326,12 @@ export function ProductOrder({
             onChange={(e) => setName(e.target.value)}
             className="rounded-lg border border-zinc-300 px-3 py-2 text-sm"
           />
-          <input
-            required
-            type="tel"
-            placeholder="Телефон"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="rounded-lg border border-zinc-300 px-3 py-2 text-sm"
+          <PhoneField
+            countryCode={countryCode}
+            onCountryCodeChange={setCountryCode}
+            phone={phone}
+            onPhoneChange={setPhone}
+            className="text-foreground"
           />
           <textarea
             placeholder="Комментарий (необязательно)"
