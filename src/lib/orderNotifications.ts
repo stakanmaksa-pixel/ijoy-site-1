@@ -38,7 +38,7 @@ function messageText(order: OrderNotification) {
   }
   if (order.deliveryMethod === "DELIVERY") {
     lines.push("🚚 Получение: доставка");
-    lines.push(`📍 Адрес: ${order.deliveryAddress}`);
+    lines.push(`📍 Адрес: ${order.deliveryAddress || "уточнит менеджер"}`);
   }
   if (!isCallback) {
     lines.push("", "Товары:");

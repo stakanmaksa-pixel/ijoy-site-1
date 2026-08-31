@@ -28,14 +28,6 @@ const orderSchema = z.object({
       }),
     )
     .default([]),
-}).superRefine((data, context) => {
-  if (data.deliveryMethod === "DELIVERY" && !data.deliveryAddress) {
-    context.addIssue({
-      code: z.ZodIssueCode.custom,
-      path: ["deliveryAddress"],
-      message: "Укажите адрес доставки",
-    });
-  }
 });
 
 function clientIp(request: Request) {

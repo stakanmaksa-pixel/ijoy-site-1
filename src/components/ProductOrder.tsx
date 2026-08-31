@@ -122,7 +122,7 @@ export function ProductOrder({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+7");
-  const [deliveryMethod, setDeliveryMethod] = useState<"PICKUP" | "DELIVERY">("PICKUP");
+  const [deliveryMethod, setDeliveryMethod] = useState<"UNSPECIFIED" | "PICKUP" | "DELIVERY">("UNSPECIFIED");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [comment, setComment] = useState("");
   const [website, setWebsite] = useState("");
@@ -341,7 +341,25 @@ export function ProductOrder({
             <legend className="mb-2 text-sm font-medium text-foreground">
               Как получить заказ?
             </legend>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid gap-2">
+              <label
+                className={`cursor-pointer rounded-xl border px-3 py-2 text-sm transition-colors ${
+                  deliveryMethod === "UNSPECIFIED"
+                    ? "border-brand bg-brand/5 text-brand"
+                    : "border-zinc-300 text-zinc-700"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="deliveryMethod"
+                  value="UNSPECIFIED"
+                  checked={deliveryMethod === "UNSPECIFIED"}
+                  onChange={() => setDeliveryMethod("UNSPECIFIED")}
+                  className="sr-only"
+                />
+                Обсужу с менеджером
+              </label>
+              <div className="grid grid-cols-2 gap-2">
               <label
                 className={`cursor-pointer rounded-xl border px-3 py-2 text-sm transition-colors ${
                   deliveryMethod === "PICKUP"
@@ -376,17 +394,18 @@ export function ProductOrder({
                 />
                 Доставка
               </label>
+              </div>
             </div>
-            {deliveryMethod === "PICKUP" ? (
+            {deliveryMethod === "PICKUP" && (
               <p className="mt-2 text-xs leading-5 text-zinc-500">
                 Менеджер согласует с вами магазин, дату и время получения.
               </p>
-            ) : (
+            )}
+            {deliveryMethod === "DELIVERY" && (
               <textarea
-                required
                 value={deliveryAddress}
                 onChange={(e) => setDeliveryAddress(e.target.value)}
-                placeholder="Город, улица, дом, квартира"
+                placeholder="Адрес доставки (необязательно)"
                 className="mt-2 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm"
                 rows={2}
               />
