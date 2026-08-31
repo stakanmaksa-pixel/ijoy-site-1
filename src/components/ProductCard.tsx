@@ -34,7 +34,17 @@ export function ProductCard({
         {coverImage ? (
           <img src={coverImage} alt={name} className="h-full w-full object-contain" />
         ) : (
-          <span className="text-sm">Фото</span>
+          <div className="px-5 text-center">
+            {brand && (
+              <div className="text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
+                {brand}
+              </div>
+            )}
+            <div className="mt-2 font-display text-lg font-medium leading-tight text-zinc-400">
+              {name}
+            </div>
+            <div className="mt-3 text-xs text-zinc-300">Фото добавляется</div>
+          </div>
         )}
         <div className="absolute right-3 top-3 flex gap-2">
           <CompareButton slug={slug} />
