@@ -22,16 +22,23 @@ function itemLabel(item: NotificationItem) {
 }
 
 function messageText(order: OrderNotification) {
-  const lines = ["Новая заявка с сайта iJoy", `№ ${order.id}`, "", `Имя: ${order.customerName}`, `Телефон: ${order.customerPhone}`];
+  const isCallback = order.items.length === 0;
+  const lines = [
+    isCallback ? "📞 Новая заявка на звонок — iJoy" : "🛍 Новая заявка на товар — iJoy",
+    `№ ${order.id}`,
+    "",
+    `👤 Имя: ${order.customerName}`,
+    `📱 Телефон: ${order.customerPhone}`,
+  ];
   if (order.customerEmail) lines.push(`Email: ${order.customerEmail}`);
-  if (order.items.length > 0) {
+  if (!isCallback) {
     lines.push("", "Товары:");
     for (const item of order.items) {
       const price = item.price != null ? ` — ${item.price.toLocaleString("ru-RU")} ₽` : " — цену уточнить";
       lines.push(`• ${itemLabel(item)} × ${item.quantity}${price}`);
     }
   } else {
-    lines.push("", "Тип: заявка / уточнение цены");
+    lines.push("", "Тип: перезвонить / уточнить цену");
   }
   if (order.comment) lines.push("", `Комментарий: ${order.comment}`);
   return lines.join("\n");

@@ -3,11 +3,18 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { notifyAboutOrder } from "@/lib/orderNotifications";
 
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 6;
+const requestTimesByIp = new Map<string, number[]>();
+
 const orderSchema = z.object({
   customerName: z.string().trim().min(1).max(200),
   customerPhone: z.string().trim().min(5).max(40),
   customerEmail: z.string().trim().email().optional().or(z.literal("")),
   comment: z.string().trim().max(2000).optional().or(z.literal("")),
+  // Скрытое поле-ловушка. Человек его не видит, а простые боты часто
+  // заполняют все поля формы подряд.
+  website: z.string().trim().max(200).optional().default(""),
   // items может быть пустым — так оформляются заявки "перезвоните мне"
   // (форма на главной, Trade-In, Гарантия, Доставка), не привязанные к
   // конкретному товару. Такая заявка попадает в тот же /admin/orders.
@@ -21,6 +28,25 @@ const orderSchema = z.object({
     .default([]),
 });
 
+function clientIp(request: Request) {
+  const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  return forwarded || request.headers.get("x-real-ip");
+}
+
+function isRateLimited(ip: string | null) {
+  // Если сервер не передал IP клиента, не ограничиваем всех посетителей
+  // одной общей квотой.
+  if (!ip) return false;
+
+  const now = Date.now();
+  const recent = (requestTimesByIp.get(ip) ?? []).filter(
+    (time) => now - time < RATE_LIMIT_WINDOW_MS,
+  );
+  recent.push(now);
+  requestTimesByIp.set(ip, recent);
+  return recent.length > RATE_LIMIT_MAX_REQUESTS;
+}
+
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = orderSchema.safeParse(body);
@@ -32,8 +58,16 @@ export async function POST(request: Request) {
     );
   }
 
-  const { customerName, customerPhone, customerEmail, comment, items } =
+  const { customerName, customerPhone, customerEmail, comment, website, items } =
     parsed.data;
+
+  // Отвечаем так же, как на обычную заявку: спамер не получает подсказку,
+  // что его распознали, а в базе и Telegram ничего не создаётся.
+  if (website) return NextResponse.json({ id: "" }, { status: 201 });
+
+  if (isRateLimited(clientIp(request))) {
+    return NextResponse.json({ error: "too_many_requests" }, { status: 429 });
+  }
 
   const variantIds = items.map((i) => i.variantId);
   const variants = await prisma.productVariant.findMany({

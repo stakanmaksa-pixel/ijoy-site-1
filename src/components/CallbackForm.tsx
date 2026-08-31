@@ -20,6 +20,7 @@ export function CallbackForm({
 }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
     "idle",
   );
@@ -35,6 +36,7 @@ export function CallbackForm({
           customerName: name,
           customerPhone: phone,
           comment: `Заявка «${source}»: перезвонить`,
+          website,
           items: [],
         }),
       });
@@ -62,6 +64,15 @@ export function CallbackForm({
           onSubmit={handleSubmit}
           className="mx-auto mt-8 flex max-w-2xl flex-col items-center gap-3 sm:flex-row sm:justify-center"
         >
+          <label className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+            Сайт
+            <input
+              tabIndex={-1}
+              autoComplete="off"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+            />
+          </label>
           <input
             required
             placeholder="Ваше имя*"

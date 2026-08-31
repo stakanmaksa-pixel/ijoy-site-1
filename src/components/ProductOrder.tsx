@@ -121,6 +121,7 @@ export function ProductOrder({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [comment, setComment] = useState("");
+  const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
     "idle",
   );
@@ -163,6 +164,7 @@ export function ProductOrder({
         body: JSON.stringify({
           customerName: name,
           customerPhone: phone,
+          website,
           comment: priceOnRequest
             ? [`Уточнить цену: «${productName}» (${variantLabel(selected)})`, comment]
                 .filter(Boolean)
@@ -306,6 +308,15 @@ export function ProductOrder({
           onSubmit={handleSubmit}
           className="flex max-w-sm flex-col gap-3 rounded-2xl border border-zinc-200 p-4"
         >
+          <label className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+            Сайт
+            <input
+              tabIndex={-1}
+              autoComplete="off"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+            />
+          </label>
           <input
             required
             placeholder="Ваше имя"
