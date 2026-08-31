@@ -43,6 +43,11 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:-ijoy}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-ijoy}?schema=public
       BOT_API_TOKEN: ${BOT_API_TOKEN:?укажите токен в .env}
       ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:?укажите секрет в .env}
+      TELEGRAM_NOTIFICATIONS_BOT_TOKEN: ${TELEGRAM_NOTIFICATIONS_BOT_TOKEN:-}
+      TELEGRAM_OWNER_CHAT_ID: ${TELEGRAM_OWNER_CHAT_ID:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      ORDER_EMAIL_FROM: ${ORDER_EMAIL_FROM:-}
+      ORDER_EMAIL_TO: ${ORDER_EMAIL_TO:-}
       PORT: 3000
     ports:
       - "3000:3000"

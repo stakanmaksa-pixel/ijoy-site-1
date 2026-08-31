@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { notifyAboutOrder } from "@/lib/orderNotifications";
 
 const orderSchema = z.object({
   customerName: z.string().trim().min(1).max(200),
@@ -76,11 +77,24 @@ export async function POST(request: Request) {
         }),
       },
     },
-    include: { items: true },
+    include: { items: { include: { variant: { include: { product: true } } } } },
   });
 
-  // TODO(этап 1→2): уведомления в Telegram и на email при создании заказа —
-  // см. раздел 7 tz-plan.md ("Онлайн-оплата (закладка на будущее)").
+  await notifyAboutOrder({
+    id: order.id,
+    customerName: order.customerName,
+    customerPhone: order.customerPhone,
+    customerEmail: order.customerEmail,
+    comment: order.comment,
+    items: order.items.map((item) => ({
+      productName: item.variant.product.name,
+      memory: item.variant.memory,
+      color: item.variant.color,
+      region: item.variant.region,
+      quantity: item.quantity,
+      price: Number(item.priceAtOrder),
+    })),
+  });
 
   return NextResponse.json({ id: order.id }, { status: 201 });
 }
