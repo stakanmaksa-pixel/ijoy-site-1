@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { CallbackForm } from "@/components/CallbackForm";
 import {
   getCategoriesWithCounts,
+  getCatalogFilterOptions,
   getDistinctBrands,
   getPublishedProducts,
 } from "@/lib/catalog";
@@ -24,19 +25,36 @@ export default async function CatalogPage({
   const params = await searchParams;
   const categorySlug = toSingle(params.category);
   const brand = toSingle(params.brand);
+  const productSlug = toSingle(params.product);
+  const memory = toSingle(params.memory);
+  const color = toSingle(params.color);
+  const onlyInStock = toSingle(params.inStock) === "1";
   const minPrice = toSingle(params.minPrice);
   const maxPrice = toSingle(params.maxPrice);
   const search = toSingle(params.q);
 
-  const [categories, brands, products] = await Promise.all([
+  const [categories, brands, products, modelOptions, attributeOptions] = await Promise.all([
     getCategoriesWithCounts(),
     getDistinctBrands(),
     getPublishedProducts({
       categorySlug: categorySlug || undefined,
       brand: brand || undefined,
+      productSlug: productSlug || undefined,
+      memory: memory || undefined,
+      color: color || undefined,
+      onlyInStock,
       minPrice: minPrice ? Number(minPrice) : undefined,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
       search: search || undefined,
+    }),
+    getCatalogFilterOptions({
+      categorySlug: categorySlug || undefined,
+      brand: brand || undefined,
+    }),
+    getCatalogFilterOptions({
+      categorySlug: categorySlug || undefined,
+      brand: brand || undefined,
+      productSlug: productSlug || undefined,
     }),
   ]);
 
@@ -57,7 +75,7 @@ export default async function CatalogPage({
 
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[240px_1fr]">
           <aside>
-            <form method="get" className="flex flex-col gap-7">
+            <form method="get" className="flex flex-col gap-6">
               {search && <input type="hidden" name="q" value={search} />}
               <div>
                 <div className="mb-3 text-sm font-medium text-foreground">
@@ -112,6 +130,50 @@ export default async function CatalogPage({
                 </div>
               )}
 
+              {modelOptions.products.length > 1 && (
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-foreground">Модель</label>
+                  <select
+                    name="product"
+                    defaultValue={productSlug || ""}
+                    className="w-full rounded-full border border-zinc-300 px-4 py-2.5 text-sm text-zinc-700 focus:border-accent focus:outline-none"
+                  >
+                    <option value="">Все модели</option>
+                    {modelOptions.products.map((product) => (
+                      <option key={product.slug} value={product.slug}>{product.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {attributeOptions.memory.length > 0 && (
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-foreground">Память</label>
+                  <select
+                    name="memory"
+                    defaultValue={memory || ""}
+                    className="w-full rounded-full border border-zinc-300 px-4 py-2.5 text-sm text-zinc-700 focus:border-accent focus:outline-none"
+                  >
+                    <option value="">Любая</option>
+                    {attributeOptions.memory.map((value) => <option key={value} value={value}>{value}</option>)}
+                  </select>
+                </div>
+              )}
+
+              {attributeOptions.colors.length > 0 && (
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-foreground">Цвет</label>
+                  <select
+                    name="color"
+                    defaultValue={color || ""}
+                    className="w-full rounded-full border border-zinc-300 px-4 py-2.5 text-sm text-zinc-700 focus:border-accent focus:outline-none"
+                  >
+                    <option value="">Любой</option>
+                    {attributeOptions.colors.map((value) => <option key={value} value={value}>{value}</option>)}
+                  </select>
+                </div>
+              )}
+
               <div>
                 <div className="mb-3 text-sm font-medium text-foreground">
                   Цена, ₽
@@ -134,12 +196,18 @@ export default async function CatalogPage({
                 </div>
               </div>
 
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700">
+                <input type="checkbox" name="inStock" value="1" defaultChecked={onlyInStock} className="h-4 w-4 accent-accent" />
+                Только в наличии
+              </label>
+
               <button
                 type="submit"
                 className="rounded-full bg-brand px-4 py-2.5 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark"
               >
                 Применить
               </button>
+              <a href="/catalog" className="text-center text-sm text-zinc-500 hover:text-accent">Сбросить фильтры</a>
             </form>
           </aside>
 

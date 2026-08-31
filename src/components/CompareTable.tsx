@@ -103,9 +103,18 @@ export function CompareTable({
         </div>
       </div>
 
-      {/* Колонки моделей */}
-      <div className="grid gap-6" style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}>
-        {columns.map((m) => {
+      {/* На мобильном колонки не ужимаются до нечитаемого размера: их можно
+          плавно пролистать по горизонтали, а на широком экране всё остаётся
+          в одном ряду. */}
+      <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
+        <div
+          className="grid gap-6"
+          style={{
+            gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))`,
+            minWidth: `${Math.max(columns.length * 230, 460)}px`,
+          }}
+        >
+          {columns.map((m) => {
           const activeColor = activeColors[m.slug] ?? m.colors[0];
           const cover = pickCoverImage(m.images, m.colorImages, activeColor);
           const size = screenSize(m.specs);
@@ -152,22 +161,41 @@ export function CompareTable({
                   {activeColor && <div className="mt-2 text-xs font-medium text-zinc-600">{iphoneColorLabel(activeColor)}</div>}
                 </div>
               )}
+
+              <div className="mt-5 flex w-full max-w-[220px] flex-col gap-2">
+                <Link
+                  href={`/product/${m.slug}`}
+                  className="rounded-full bg-accent px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark"
+                >
+                  Купить
+                </Link>
+                <Link
+                  href={`/product/${m.slug}`}
+                  className="rounded-full border border-zinc-200 px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-accent hover:text-accent"
+                >
+                  Подробнее
+                </Link>
+              </div>
             </div>
           );
-        })}
+          })}
+        </div>
       </div>
 
       {/* Таблица характеристик */}
-      <div className="overflow-x-auto rounded-2xl border border-zinc-100">
-        <table className="w-full border-collapse text-sm">
+      <div>
+        <h2 className="font-display text-2xl font-semibold text-foreground">Характеристики</h2>
+        <p className="mt-2 text-sm text-zinc-500">Сравните главное и выберите подходящую модель.</p>
+        <div className="mt-5 overflow-x-auto rounded-2xl border border-zinc-100">
+        <table className="w-full min-w-[620px] border-collapse text-sm">
           <tbody>
             {rowsWithData.map((row, idx) => (
               <tr key={row} className={idx % 2 === 0 ? "bg-white" : "bg-zinc-50/60"}>
-                <td className="w-40 shrink-0 border-r border-zinc-100 px-4 py-3 align-top font-medium text-zinc-500">
+                <td className="w-44 shrink-0 border-r border-zinc-100 px-4 py-4 align-top font-semibold text-zinc-600">
                   {row}
                 </td>
                 {columns.map((m) => (
-                  <td key={m.slug} className="px-4 py-3 align-top text-foreground">
+                  <td key={m.slug} className="px-4 py-4 align-top leading-6 text-foreground">
                     {m.specs?.[row] ?? <span className="text-zinc-300">–</span>}
                   </td>
                 ))}
@@ -175,6 +203,7 @@ export function CompareTable({
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

@@ -50,7 +50,7 @@ export function ProductCard({
         <div className="font-medium text-foreground">{name}</div>
         <div className="mt-auto pt-2 flex items-center justify-between">
           <span className="text-base font-semibold text-foreground">
-            {minPrice != null ? `от ${formatPrice(minPrice)}` : "Цена по запросу"}
+            {minPrice != null ? `от ${formatPrice(minPrice)}` : "Уточняйте цену"}
           </span>
           {!hasStock && (
             <span className="text-xs text-zinc-400">Под заказ</span>

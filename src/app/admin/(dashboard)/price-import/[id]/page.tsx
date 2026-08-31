@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
-import { acceptLine, acceptAllMatched, createVariantFromLine, rejectLine } from "../actions";
+import { acceptLine, acceptAllMatched, applyAsFullPriceList, createVariantFromLine, rejectLine } from "../actions";
 
 export const dynamic = "force-dynamic";
 
@@ -73,18 +73,30 @@ export default async function PriceImportBatchPage({
           <p className="mt-1 text-sm text-zinc-500">{batch.lines.length} позиций в прайсе</p>
         </div>
 
-        {matchedCount > 0 && (
-          <form action={acceptAllMatched}>
+        <div className="flex flex-wrap gap-2">
+          {matchedCount > 0 && (
+            <form action={acceptAllMatched}>
+              <input type="hidden" name="batchId" value={batch.id} />
+              <button type="submit" className="rounded-full bg-zinc-900 px-4 py-2 text-sm text-white hover:bg-zinc-700">
+                Принять все совпавшие ({matchedCount})
+              </button>
+            </form>
+          )}
+          <form action={applyAsFullPriceList}>
             <input type="hidden" name="batchId" value={batch.id} />
             <button
               type="submit"
-              className="rounded-full bg-zinc-900 px-4 py-2 text-sm text-white hover:bg-zinc-700"
+              className="rounded-full border border-accent px-4 py-2 text-sm font-medium text-accent hover:bg-accent hover:text-white"
+              title="Используйте только для полного прайса поставщика"
             >
-              Принять все совпавшие ({matchedCount})
+              Применить как полный прайс
             </button>
           </form>
-        )}
+        </div>
       </div>
+      <p className="mt-3 max-w-2xl text-xs leading-5 text-zinc-500">
+        При полном прайсе модели, которых нет в файле, сохраняются на сайте, но их цена заменяется на «Уточняйте у менеджера».
+      </p>
 
       <div className="mt-6 flex flex-col gap-3">
         {batch.lines.map((line) => {

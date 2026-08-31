@@ -258,6 +258,10 @@ export async function getCategoriesWithCounts() {
 export type CatalogFilters = {
   categorySlug?: string;
   brand?: string;
+  productSlug?: string;
+  memory?: string;
+  color?: string;
+  onlyInStock?: boolean;
   minPrice?: number;
   maxPrice?: number;
   // Поиск по названию/бренду товара (шапка сайта, форма без JS на /catalog).
@@ -284,15 +288,20 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
     where.brand = filters.brand;
   }
 
+  if (filters.productSlug) {
+    where.slug = filters.productSlug;
+  }
+
+  const variantWhere: Prisma.ProductVariantWhereInput = {};
   if (filters.minPrice != null || filters.maxPrice != null) {
-    where.variants = {
-      some: {
-        price: {
-          gte: filters.minPrice,
-          lte: filters.maxPrice,
-        },
-      },
-    };
+    variantWhere.price = { gte: filters.minPrice, lte: filters.maxPrice };
+  }
+  if (filters.memory) variantWhere.memory = filters.memory;
+  if (filters.color) variantWhere.color = filters.color;
+  if (filters.onlyInStock) variantWhere.inStock = true;
+
+  if (Object.keys(variantWhere).length > 0) {
+    where.variants = { some: variantWhere };
   }
 
   const products = await prisma.product.findMany({
@@ -317,7 +326,52 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
     return rankA - rankB;
   });
 
-  return sorted.map(toProductSummary);
+  return sorted.map((product) => {
+    const visibleVariants = Object.keys(variantWhere).length > 0
+      ? product.variants.filter((variant) => {
+          if (filters.minPrice != null && (variant.price === null || Number(variant.price) < filters.minPrice)) return false;
+          if (filters.maxPrice != null && (variant.price === null || Number(variant.price) > filters.maxPrice)) return false;
+          if (filters.memory && variant.memory !== filters.memory) return false;
+          if (filters.color && variant.color !== filters.color) return false;
+          if (filters.onlyInStock && !variant.inStock) return false;
+          return true;
+        })
+      : product.variants;
+    return toProductSummary(product, visibleVariants);
+  });
+}
+
+export async function getCatalogFilterOptions(filters: Pick<CatalogFilters, "categorySlug" | "brand" | "productSlug"> = {}) {
+  const where: Prisma.ProductWhereInput = { status: "PUBLISHED" };
+  if (filters.categorySlug) where.category = { slug: filters.categorySlug };
+  if (filters.brand) where.brand = filters.brand;
+  if (filters.productSlug) where.slug = filters.productSlug;
+
+  const products = await prisma.product.findMany({
+    where,
+    select: {
+      name: true,
+      slug: true,
+      variants: { select: { memory: true, color: true } },
+    },
+    orderBy: { name: "asc" },
+  });
+
+  const unique = (values: (string | null)[]) => [...new Set(values.filter((value): value is string => Boolean(value)))];
+  const memory = unique(products.flatMap((product) => product.variants.map((variant) => variant.memory))).sort((a, b) => {
+    const number = (value: string) => {
+      const match = value.match(/^(\d+(?:\.\d+)?)\s*(GB|TB)?/i);
+      if (!match) return Number.MAX_SAFE_INTEGER;
+      return Number(match[1]) * (match[2]?.toUpperCase() === "TB" ? 1000 : 1);
+    };
+    return number(a) - number(b);
+  });
+
+  return {
+    products,
+    memory,
+    colors: unique(products.flatMap((product) => product.variants.map((variant) => variant.color))).sort(),
+  };
 }
 
 export async function getDistinctBrands() {
@@ -489,13 +543,14 @@ function toProductSummary(
   product: Prisma.ProductGetPayload<{
     include: { category: true; variants: true };
   }>,
+  variants = product.variants,
 ) {
   // Модификации с ценой "уточняйте у менеджера" (price: null) не участвуют
   // в подсчёте минимальной цены на карточке товара.
-  const priced = product.variants.filter((v) => v.price !== null);
+  const priced = variants.filter((v) => v.price !== null);
   const prices = priced.map((v) => Number(v.price));
   const minPrice = prices.length > 0 ? Math.min(...prices) : null;
-  const hasStock = product.variants.some((v) => v.inStock);
+  const hasStock = variants.some((v) => v.inStock);
 
   // "Представительская" модификация карточки товара (сетка каталога/Новинки)
   // — самая дешёвая (та же, что определяет minPrice выше), либо просто
@@ -504,7 +559,7 @@ function toProductSummary(
   const cheapest =
     priced.length > 0
       ? priced.reduce((min, v) => (Number(v.price) < Number(min.price) ? v : min))
-      : product.variants[0];
+      : variants[0];
 
   return {
     id: product.id,
@@ -515,7 +570,7 @@ function toProductSummary(
     categorySlug: product.category.slug,
     minPrice,
     hasStock,
-    variantCount: product.variants.length,
+    variantCount: variants.length,
     defaultVariantId: cheapest?.id ?? null,
     coverImage: pickCoverImage(
       product.images,

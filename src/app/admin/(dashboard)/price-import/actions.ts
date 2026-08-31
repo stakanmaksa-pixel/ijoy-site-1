@@ -106,6 +106,58 @@ export async function acceptAllMatched(formData: FormData) {
 }
 
 /**
+ * Применить файл как полный актуальный прайс. Модели и варианты, которых в
+ * новом файле нет, мы не прячем из каталога и не удаляем: обнуляем только
+ * цену. Покупатель всё равно видит новинку, а вместо устаревшей цены —
+ * "Уточняйте у менеджера". Действие намеренно отдельное: его нельзя
+ * применять к короткому или тестовому фрагменту прайса.
+ */
+export async function applyAsFullPriceList(formData: FormData) {
+  const admin = await requireAdmin();
+  const batchId = String(formData.get("batchId") ?? "");
+  if (!batchId) return;
+
+  const lines = await prisma.priceImportLine.findMany({ where: { batchId } });
+  const acceptedIds = lines
+    .filter((line) => line.status === "ACCEPTED" && line.matchedVariantId)
+    .map((line) => line.matchedVariantId!);
+  const matched = lines.filter(
+    (line) => line.status === "MATCHED" && line.matchedVariantId && line.parsedPrice !== null,
+  );
+
+  for (const line of matched) {
+    await prisma.productVariant.update({
+      where: { id: line.matchedVariantId! },
+      data: { price: line.parsedPrice!, rawLabel: line.parsedModel ?? line.rawLine },
+    });
+    await prisma.priceImportLine.update({
+      where: { id: line.id },
+      data: { status: "ACCEPTED" },
+    });
+    acceptedIds.push(line.matchedVariantId!);
+  }
+
+  // Важно: не меняем Product.status и не удаляем варианты. Новые модели
+  // остаются видимыми, даже если их временно нет у поставщика.
+  await prisma.productVariant.updateMany({
+    where: {
+      product: { status: "PUBLISHED" },
+      ...(acceptedIds.length > 0 ? { id: { notIn: acceptedIds } } : {}),
+    },
+    data: { price: null },
+  });
+
+  await prisma.priceImportBatch.update({
+    where: { id: batchId },
+    data: { reviewedAt: new Date(), reviewedById: admin.id },
+  });
+  await recomputeBatchStatus(batchId);
+  revalidatePath(`/admin/price-import/${batchId}`);
+  revalidatePath("/admin/price-import");
+  revalidateStorefront();
+}
+
+/**
  * Строка не совпала ни с одной существующей модификацией (например — совсем
  * новая модель телефона). Вместо того чтобы уходить на отдельную страницу
  * товара и вбивать память/цену вручную ещё раз, создаём модификацию сразу

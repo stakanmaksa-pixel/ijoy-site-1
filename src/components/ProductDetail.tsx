@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CompareButton } from "@/components/CompareButton";
 import { ProductOrder } from "@/components/ProductOrder";
@@ -65,11 +65,11 @@ export function ProductDetail({
   // виден не тот цвет, который выбрал покупатель).
   const galleryImages =
     (activeColor && colorImages?.[activeColor]?.length ? colorImages[activeColor] : images) ?? [];
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  useEffect(() => {
-    setActiveImageIndex(0);
-  }, [activeColor]);
-  const activeImage = galleryImages[activeImageIndex] ?? galleryImages[0];
+  // Храним URL, а не индекс: при переключении цвета старый URL отсутствует
+  // в новом наборе, поэтому автоматически берётся первое фото нового цвета
+  // без дополнительного setState внутри effect.
+  const [selectedImage, setSelectedImage] = useState<string | undefined>();
+  const activeImage = galleryImages.includes(selectedImage ?? "") ? selectedImage : galleryImages[0];
 
   const specEntries = specs ? Object.entries(specs) : [];
   // На карточке товара (рядом с фото) показываем только самое важное —
@@ -104,13 +104,13 @@ export function ProductDetail({
 
           {galleryImages.length > 1 && (
             <div className="mt-3 flex gap-2 overflow-x-auto">
-              {galleryImages.map((url, i) => (
+              {galleryImages.map((url) => (
                 <button
                   key={url}
                   type="button"
-                  onClick={() => setActiveImageIndex(i)}
+                  onClick={() => setSelectedImage(url)}
                   className={`h-16 w-16 shrink-0 overflow-hidden rounded-xl border transition-colors ${
-                    i === activeImageIndex
+                    url === activeImage
                       ? "border-accent"
                       : "border-zinc-200 hover:border-zinc-300"
                   }`}
@@ -169,15 +169,15 @@ export function ProductDetail({
         // Специально в одну колонку (не side-by-side), чтобы характеристики
         // гарантированно шли НИЖЕ сравнения на любом экране, а не просто
         // слева/справа на десктопе.
-        <div className="mt-16 flex flex-col gap-10 md:max-w-2xl">
+        <div className="mt-16 flex w-full flex-col gap-10">
           {hasComparison && (
-            <div>
+            <div className="rounded-3xl bg-zinc-50 p-6 sm:p-8">
               <h2 className="font-display text-xl font-semibold text-foreground">
                 Чем лучше {previousGenLabel}
               </h2>
-              <ul className="mt-4 space-y-3 rounded-2xl border border-zinc-100 p-4">
+              <ul className="mt-5 grid gap-3 md:grid-cols-2">
                 {previousGenHighlights!.map((item) => (
-                  <li key={item} className="flex gap-2 text-sm leading-6 text-zinc-700">
+                  <li key={item} className="flex gap-2 rounded-2xl bg-white p-4 text-sm leading-6 text-zinc-700 shadow-sm">
                     <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                     {item}
                   </li>
@@ -191,7 +191,7 @@ export function ProductDetail({
               <h2 className="font-display text-xl font-semibold text-foreground">
                 Характеристики
               </h2>
-              <dl className="mt-4 divide-y divide-zinc-100 rounded-2xl border border-zinc-100">
+              <dl className="mt-4 grid gap-3 md:grid-cols-2">
                 {specEntries.map(([label, value]) => (
                   // Раньше значение было прижато к правому краю и при переносе
                   // на две строки текст "лесенкой" съезжал влево — из-за этого
@@ -199,8 +199,8 @@ export function ProductDetail({
                   // отдельных ряда: подпись сверху мелким серым, значение
                   // снизу обычным текстом с выравниванием по левому краю, так
                   // длинные значения переносятся ровно, без лесенки.
-                  <div key={label} className="flex flex-col gap-1 px-4 py-3 text-sm sm:flex-row sm:items-baseline sm:gap-4">
-                    <dt className="shrink-0 text-xs uppercase tracking-wide text-zinc-400 sm:w-40 sm:text-sm sm:normal-case sm:tracking-normal sm:text-zinc-500">
+                  <div key={label} className="flex flex-col gap-1 rounded-2xl border border-zinc-100 px-4 py-4 text-sm">
+                    <dt className="shrink-0 text-xs uppercase tracking-wide text-zinc-400">
                       {label}
                     </dt>
                     <dd className="text-left font-medium leading-6 text-foreground">{value}</dd>
