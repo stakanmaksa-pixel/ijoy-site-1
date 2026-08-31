@@ -86,7 +86,7 @@ export function ProductDetail({
         <div>
           {/* Минималистично: одно крупное фото + ряд миниатюр под ним, без
               лишних рамок и подписей — как просили, "чисто, но понятно". */}
-          <div className="relative flex aspect-square items-center justify-center rounded-3xl bg-gradient-to-br from-zinc-50 to-accent/5 text-zinc-300">
+          <div className="relative flex aspect-square items-center justify-center rounded-3xl bg-white text-zinc-300">
             {activeImage ? (
               <img
                 src={activeImage}
