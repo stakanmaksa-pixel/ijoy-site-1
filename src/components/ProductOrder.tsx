@@ -122,6 +122,8 @@ export function ProductOrder({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+7");
+  const [deliveryMethod, setDeliveryMethod] = useState<"PICKUP" | "DELIVERY">("PICKUP");
+  const [deliveryAddress, setDeliveryAddress] = useState("");
   const [comment, setComment] = useState("");
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
@@ -167,6 +169,8 @@ export function ProductOrder({
           customerName: name,
           customerPhone: phoneWithCountryCode(countryCode, phone),
           website,
+          deliveryMethod,
+          deliveryAddress,
           comment: priceOnRequest
             ? [`Уточнить цену: «${productName}» (${variantLabel(selected)})`, comment]
                 .filter(Boolean)
@@ -333,6 +337,61 @@ export function ProductOrder({
             onPhoneChange={setPhone}
             className="text-foreground"
           />
+          <fieldset>
+            <legend className="mb-2 text-sm font-medium text-foreground">
+              Как получить заказ?
+            </legend>
+            <div className="grid grid-cols-2 gap-2">
+              <label
+                className={`cursor-pointer rounded-xl border px-3 py-2 text-sm transition-colors ${
+                  deliveryMethod === "PICKUP"
+                    ? "border-brand bg-brand/5 text-brand"
+                    : "border-zinc-300 text-zinc-700"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="deliveryMethod"
+                  value="PICKUP"
+                  checked={deliveryMethod === "PICKUP"}
+                  onChange={() => setDeliveryMethod("PICKUP")}
+                  className="sr-only"
+                />
+                Самовывоз
+              </label>
+              <label
+                className={`cursor-pointer rounded-xl border px-3 py-2 text-sm transition-colors ${
+                  deliveryMethod === "DELIVERY"
+                    ? "border-brand bg-brand/5 text-brand"
+                    : "border-zinc-300 text-zinc-700"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="deliveryMethod"
+                  value="DELIVERY"
+                  checked={deliveryMethod === "DELIVERY"}
+                  onChange={() => setDeliveryMethod("DELIVERY")}
+                  className="sr-only"
+                />
+                Доставка
+              </label>
+            </div>
+            {deliveryMethod === "PICKUP" ? (
+              <p className="mt-2 text-xs leading-5 text-zinc-500">
+                Менеджер согласует с вами магазин, дату и время получения.
+              </p>
+            ) : (
+              <textarea
+                required
+                value={deliveryAddress}
+                onChange={(e) => setDeliveryAddress(e.target.value)}
+                placeholder="Город, улица, дом, квартира"
+                className="mt-2 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm"
+                rows={2}
+              />
+            )}
+          </fieldset>
           <textarea
             placeholder="Комментарий (необязательно)"
             value={comment}

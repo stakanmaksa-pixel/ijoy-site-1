@@ -12,6 +12,8 @@ const orderSchema = z.object({
   customerPhone: z.string().trim().min(5).max(40),
   customerEmail: z.string().trim().email().optional().or(z.literal("")),
   comment: z.string().trim().max(2000).optional().or(z.literal("")),
+  deliveryMethod: z.enum(["UNSPECIFIED", "PICKUP", "DELIVERY"]).optional().default("UNSPECIFIED"),
+  deliveryAddress: z.string().trim().max(500).optional().or(z.literal("")),
   // Скрытое поле-ловушка. Человек его не видит, а простые боты часто
   // заполняют все поля формы подряд.
   website: z.string().trim().max(200).optional().default(""),
@@ -26,6 +28,14 @@ const orderSchema = z.object({
       }),
     )
     .default([]),
+}).superRefine((data, context) => {
+  if (data.deliveryMethod === "DELIVERY" && !data.deliveryAddress) {
+    context.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["deliveryAddress"],
+      message: "Укажите адрес доставки",
+    });
+  }
 });
 
 function clientIp(request: Request) {
@@ -58,7 +68,16 @@ export async function POST(request: Request) {
     );
   }
 
-  const { customerName, customerPhone, customerEmail, comment, website, items } =
+  const {
+    customerName,
+    customerPhone,
+    customerEmail,
+    comment,
+    deliveryMethod,
+    deliveryAddress,
+    website,
+    items,
+  } =
     parsed.data;
 
   // Отвечаем так же, как на обычную заявку: спамер не получает подсказку,
@@ -99,6 +118,8 @@ export async function POST(request: Request) {
       customerPhone,
       customerEmail: customerEmail || null,
       comment: comment || null,
+      deliveryMethod,
+      deliveryAddress: deliveryAddress || null,
       items: {
         create: items.map((item) => {
           const variant = variants.find((v) => v.id === item.variantId)!;
@@ -120,6 +141,8 @@ export async function POST(request: Request) {
     customerPhone: order.customerPhone,
     customerEmail: order.customerEmail,
     comment: order.comment,
+    deliveryMethod: order.deliveryMethod,
+    deliveryAddress: order.deliveryAddress,
     items: order.items.map((item) => ({
       productName: item.variant.product.name,
       memory: item.variant.memory,

@@ -120,6 +120,14 @@ enum PaymentStatus {
   REFUNDED
 }
 
+// Способ получения нужен отдельно от комментария: его видно менеджеру в
+// заявке и позднее по нему можно будет фильтровать заказы.
+enum DeliveryMethod {
+  UNSPECIFIED
+  PICKUP
+  DELIVERY
+}
+
 model Order {
   id            String        @id @default(cuid())
   customerName  String
@@ -129,6 +137,8 @@ model Order {
   status        OrderStatus   @default(NEW)
   paymentMethod PaymentMethod @default(NONE)
   paymentStatus PaymentStatus @default(NOT_REQUIRED)
+  deliveryMethod DeliveryMethod @default(UNSPECIFIED)
+  deliveryAddress String?
   items         OrderItem[]
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt

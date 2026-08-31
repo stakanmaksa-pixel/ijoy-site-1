@@ -30,6 +30,11 @@ const STATUS_STYLE: Record<OrderStatus, string> = {
   CANCELLED: "bg-zinc-100 text-zinc-500 ring-zinc-200",
 };
 
+const DELIVERY_LABEL = {
+  PICKUP: "Самовывоз",
+  DELIVERY: "Доставка",
+} as const;
+
 export default async function AdminOrdersPage({
   searchParams,
 }: {
@@ -126,6 +131,15 @@ export default async function AdminOrdersPage({
                       timeStyle: "short",
                     }).format(order.createdAt)}
                   </div>
+                  {order.deliveryMethod !== "UNSPECIFIED" && (
+                    <div className="mt-2 text-sm text-zinc-700">
+                      <span className="font-medium">Получение: </span>
+                      {DELIVERY_LABEL[order.deliveryMethod]}
+                      {order.deliveryMethod === "DELIVERY" && order.deliveryAddress && (
+                        <span> · {order.deliveryAddress}</span>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <form action={updateOrderStatus} className="flex items-center gap-2">

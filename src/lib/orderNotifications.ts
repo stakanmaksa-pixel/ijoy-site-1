@@ -13,6 +13,8 @@ type OrderNotification = {
   customerPhone: string;
   customerEmail: string | null;
   comment: string | null;
+  deliveryMethod: "UNSPECIFIED" | "PICKUP" | "DELIVERY";
+  deliveryAddress: string | null;
   items: NotificationItem[];
 };
 
@@ -31,6 +33,13 @@ function messageText(order: OrderNotification) {
     `📱 Телефон: ${order.customerPhone}`,
   ];
   if (order.customerEmail) lines.push(`Email: ${order.customerEmail}`);
+  if (order.deliveryMethod === "PICKUP") {
+    lines.push("🚶 Получение: самовывоз");
+  }
+  if (order.deliveryMethod === "DELIVERY") {
+    lines.push("🚚 Получение: доставка");
+    lines.push(`📍 Адрес: ${order.deliveryAddress}`);
+  }
   if (!isCallback) {
     lines.push("", "Товары:");
     for (const item of order.items) {
