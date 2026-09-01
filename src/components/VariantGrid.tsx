@@ -32,6 +32,7 @@ export function VariantGrid({
   const [color, setColor] = useState("");
   const [region, setRegion] = useState("");
   const [onlyInStock, setOnlyInStock] = useState(false);
+  const [compareIds, setCompareIds] = useState<string[]>([]);
 
   const filtered = variants.filter(
     (variant) =>
@@ -48,6 +49,14 @@ export function VariantGrid({
     setRegion("");
     setOnlyInStock(false);
   }
+
+  function toggleCompare(id: string) {
+    setCompareIds((current) =>
+      current.includes(id) ? current.filter((item) => item !== id) : current.length < 3 ? [...current, id] : current,
+    );
+  }
+
+  const compared = variants.filter((variant) => compareIds.includes(variant.id));
 
   return (
     <>
@@ -95,10 +104,56 @@ export function VariantGrid({
 
       {filtered.length > 0 ? (
         <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {filtered.map((variant) => <VariantCard key={variant.id} slug={slug} variant={variant} imageUrl={imageByColor[variant.color ?? ""] ?? null} />)}
+          {filtered.map((variant) => {
+            const selected = compareIds.includes(variant.id);
+            const limitReached = !selected && compareIds.length >= 3;
+            return (
+              <div key={variant.id} className="relative">
+                <VariantCard slug={slug} variant={variant} imageUrl={imageByColor[variant.color ?? ""] ?? null} />
+                <button
+                  type="button"
+                  onClick={() => toggleCompare(variant.id)}
+                  disabled={limitReached}
+                  className={`absolute left-3 top-3 rounded-full px-3 py-1.5 text-xs font-medium shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${selected ? "bg-accent text-white" : "bg-white text-zinc-700 hover:text-accent"}`}
+                >
+                  {selected ? "Выбрано" : "Сравнить"}
+                </button>
+              </div>
+            );
+          })}
         </div>
       ) : (
         <p className="mt-5 text-sm text-zinc-500">Нет вариантов с такими параметрами.</p>
+      )}
+
+      {compared.length > 0 && (
+        <section className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+          <div className="flex items-center justify-between gap-3 border-b border-zinc-100 px-4 py-4 sm:px-5">
+            <div>
+              <h2 className="font-display text-lg font-semibold text-foreground">Сравнение вариантов</h2>
+              <p className="mt-0.5 text-sm text-zinc-500">Выбрано: {compared.length} из 3</p>
+            </div>
+            <button type="button" onClick={() => setCompareIds([])} className="text-sm text-zinc-500 hover:text-accent">Очистить</button>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[520px] text-left text-sm">
+              <tbody>
+                {[
+                  ["Память", (variant: ProductVariantForGrid) => variant.memory || "—"],
+                  ["Цвет", (variant: ProductVariantForGrid) => variant.color || "—"],
+                  ["Регион / SIM", (variant: ProductVariantForGrid) => variant.region || "—"],
+                  ["Наличие", (variant: ProductVariantForGrid) => (variant.inStock ? "В наличии" : "Под заказ")],
+                  ["Цена", (variant: ProductVariantForGrid) => (variant.price != null ? `${variant.price.toLocaleString("ru-RU")} ₽` : "Уточняйте у менеджера")],
+                ].map(([label, value]) => (
+                  <tr key={label as string} className="border-b border-zinc-100 last:border-0">
+                    <th className="w-40 bg-zinc-50 px-4 py-3 font-medium text-zinc-600 sm:px-5">{label as string}</th>
+                    {compared.map((variant) => <td key={variant.id} className="px-4 py-3 text-foreground sm:px-5">{(value as (item: ProductVariantForGrid) => string)(variant)}</td>)}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       )}
     </>
   );
