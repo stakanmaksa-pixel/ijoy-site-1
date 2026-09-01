@@ -47,38 +47,6 @@ export function officialVariants(entry: OfficialCatalogEntry): OfficialVariant[]
 // Первая выверенная партия. Модели, которые уже есть в прайсе, намеренно
 // не перечислены: скрипт никогда не меняет существующий товар.
 export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
-  // Apple iPhone 13–14: недостающие Pro/mini версии.
-  {
-    category: "telefony", name: "iPhone 13 mini", slug: "iphone-13-mini", brand: "Apple",
-    description: "Компактный iPhone 13 mini. Цену и доступность подтвердит менеджер.",
-    memories: ["128GB", "256GB", "512GB"],
-    colors: ["Green", "Pink", "Blue", "Midnight", "Starlight", "(PRODUCT)RED"],
-  },
-  {
-    category: "telefony", name: "iPhone 13 Pro", slug: "iphone-13-pro", brand: "Apple",
-    description: "iPhone 13 Pro. Цену и доступность подтвердит менеджер.",
-    memories: ["128GB", "256GB", "512GB", "1TB"],
-    colors: ["Alpine Green", "Sierra Blue", "Silver", "Gold", "Graphite"],
-  },
-  {
-    category: "telefony", name: "iPhone 13 Pro Max", slug: "iphone-13-pro-max", brand: "Apple",
-    description: "iPhone 13 Pro Max. Цену и доступность подтвердит менеджер.",
-    memories: ["128GB", "256GB", "512GB", "1TB"],
-    colors: ["Alpine Green", "Sierra Blue", "Silver", "Gold", "Graphite"],
-  },
-  {
-    category: "telefony", name: "iPhone 14 Pro", slug: "iphone-14-pro", brand: "Apple",
-    description: "iPhone 14 Pro. Цену и доступность подтвердит менеджер.",
-    memories: ["128GB", "256GB", "512GB", "1TB"],
-    colors: ["Space Black", "Silver", "Gold", "Deep Purple"],
-  },
-  {
-    category: "telefony", name: "iPhone 14 Pro Max", slug: "iphone-14-pro-max", brand: "Apple",
-    description: "iPhone 14 Pro Max. Цену и доступность подтвердит менеджер.",
-    memories: ["128GB", "256GB", "512GB", "1TB"],
-    colors: ["Space Black", "Silver", "Gold", "Deep Purple"],
-  },
-
   // Samsung Galaxy S23–S25, отсутствующие в текущем прайсовом каталоге.
   {
     category: "telefony", name: "Samsung Galaxy S23", slug: "samsung-galaxy-s23", brand: "Samsung",
