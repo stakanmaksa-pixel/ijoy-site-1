@@ -84,6 +84,17 @@ export const MODEL_DISPLAY_ORDER = {
     "AirPods Max 2",
     "AirPods Max",
   ],
+  gopro: [
+    "GoPro MISSION 1 PRO ILS",
+    "GoPro MISSION 1 PRO",
+    "GoPro MISSION 1",
+    "GoPro MAX2",
+    "GoPro HERO13 Black",
+    "GoPro HERO12 Black",
+    "GoPro MAX",
+    "GoPro LIT HERO",
+    "GoPro HERO",
+  ],
 } as const satisfies Record<string, readonly string[]>;
 
 // Место товара в его списке "новые сверху"; товары без списка (или не
@@ -112,6 +123,7 @@ function resolveOrderList(
   if (categorySlug === "planshety") return MODEL_DISPLAY_ORDER.ipad;
   if (categorySlug === "noutbuki") return MODEL_DISPLAY_ORDER.macbook;
   if (categorySlug === "chasy") return MODEL_DISPLAY_ORDER.watch;
+  if (categorySlug === "ekshn-kamery") return MODEL_DISPLAY_ORDER.gopro;
   if (categorySlug === "aksessuary" && /^AirPods/.test(name)) return MODEL_DISPLAY_ORDER.airpods;
   return undefined;
 }
@@ -150,6 +162,7 @@ const CATEGORY_ORDER: Record<string, readonly string[]> = {
   chasy: MODEL_DISPLAY_ORDER.watch,
   planshety: MODEL_DISPLAY_ORDER.ipad,
   noutbuki: MODEL_DISPLAY_ORDER.macbook,
+  "ekshn-kamery": MODEL_DISPLAY_ORDER.gopro,
 };
 
 export async function getCatalogNavTree(): Promise<CatalogNavNode[]> {

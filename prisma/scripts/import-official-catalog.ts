@@ -1,7 +1,11 @@
 import "dotenv/config";
 import { PrismaClient } from "../../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { OFFICIAL_CATALOG_ENTRIES, officialVariants } from "../official-catalog";
+import {
+  OFFICIAL_CATALOG_CATEGORIES,
+  OFFICIAL_CATALOG_ENTRIES,
+  officialVariants,
+} from "../official-catalog";
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
@@ -10,6 +14,16 @@ const prisma = new PrismaClient({
 async function main() {
   let created = 0;
   let skipped = 0;
+
+  // Новые разделы витрины создаются вместе с каталогом. update: {} важен:
+  // последующие импорты не перетирают правки названий и порядка из админки.
+  for (const category of OFFICIAL_CATALOG_CATEGORIES) {
+    await prisma.category.upsert({
+      where: { slug: category.slug },
+      update: {},
+      create: category,
+    });
+  }
 
   for (const entry of OFFICIAL_CATALOG_ENTRIES) {
     // Не обновляем существующие товары: в них могут быть реальные цены,

@@ -28,6 +28,7 @@ const CATEGORY_TILE_GRADIENTS: Record<string, string> = {
   planshety: "from-brand-dark via-brand to-accent",
   aksessuary: "from-coral to-brand",
   daisony: "from-brand-dark to-brand",
+  "ekshn-kamery": "from-zinc-800 to-brand-dark",
 };
 
 const FAQ_ITEMS: FaqItem[] = [

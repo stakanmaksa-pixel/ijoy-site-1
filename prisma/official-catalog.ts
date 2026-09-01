@@ -3,7 +3,7 @@
 // модификации price: null, поэтому на витрине выводится «Уточняйте цену».
 
 export type OfficialCatalogEntry = {
-  category: "telefony" | "chasy" | "planshety" | "noutbuki";
+  category: "telefony" | "chasy" | "planshety" | "noutbuki" | "ekshn-kamery";
   name: string;
   slug: string;
   brand: string;
@@ -11,6 +11,12 @@ export type OfficialCatalogEntry = {
   memories?: string[];
   colors: string[];
 };
+
+// Категории, которых могло не быть в первоначальной базе. Импортёр создаёт
+// только отсутствующие: название и порядок существующих категорий он не меняет.
+export const OFFICIAL_CATALOG_CATEGORIES = [
+  { slug: "ekshn-kamery", name: "Экшн-камеры", sortOrder: 50 },
+] as const;
 
 export type OfficialVariant = {
   memory: string | null;
@@ -229,4 +235,17 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "planshety", name: "Xiaomi Pad 7", slug: "xiaomi-pad-7", brand: "Xiaomi", description: "Xiaomi Pad 7. Цену и доступность подтвердит менеджер.", memories: ["8/128GB", "8/256GB", "12/256GB"], colors: ["Gray", "Blue", "Green"] },
   { category: "planshety", name: "Xiaomi Pad 7 Pro", slug: "xiaomi-pad-7-pro", brand: "Xiaomi", description: "Xiaomi Pad 7 Pro. Цену и доступность подтвердит менеджер.", memories: ["8/128GB", "8/256GB", "12/512GB"], colors: ["Gray", "Blue", "Green"] },
   { category: "planshety", name: "HONOR Pad V9", slug: "honor-pad-v9", brand: "HONOR", description: "HONOR Pad V9. Цену и доступность подтвердит менеджер.", memories: ["24GB / 256GB"], colors: ["White", "Gray"] },
+
+  // Актуальная линейка с официальной витрины GoPro. Комплекты Creator
+  // Edition и Ultra Wide Edition не добавляем как отдельные модели: это
+  // наборы на базе HERO13 Black, а не самостоятельные камеры.
+  { category: "ekshn-kamery", name: "GoPro MISSION 1", slug: "gopro-mission-1", brand: "GoPro", description: "GoPro MISSION 1 — компактная кинематографическая камера с фиксированным объективом. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
+  { category: "ekshn-kamery", name: "GoPro MISSION 1 PRO", slug: "gopro-mission-1-pro", brand: "GoPro", description: "GoPro MISSION 1 PRO — профессиональная кинематографическая камера с фиксированным объективом. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
+  { category: "ekshn-kamery", name: "GoPro MISSION 1 PRO ILS", slug: "gopro-mission-1-pro-ils", brand: "GoPro", description: "GoPro MISSION 1 PRO ILS с поддержкой сменных объективов Micro Four Thirds. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
+  { category: "ekshn-kamery", name: "GoPro HERO13 Black", slug: "gopro-hero13-black", brand: "GoPro", description: "GoPro HERO13 Black. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
+  { category: "ekshn-kamery", name: "GoPro HERO12 Black", slug: "gopro-hero12-black", brand: "GoPro", description: "GoPro HERO12 Black. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
+  { category: "ekshn-kamery", name: "GoPro MAX2", slug: "gopro-max2", brand: "GoPro", description: "GoPro MAX2 — 360°-камера с записью True 8K. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
+  { category: "ekshn-kamery", name: "GoPro MAX", slug: "gopro-max", brand: "GoPro", description: "GoPro MAX — 360°-камера. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
+  { category: "ekshn-kamery", name: "GoPro LIT HERO", slug: "gopro-lit-hero", brand: "GoPro", description: "GoPro LIT HERO — компактная 4K-камера со встроенной подсветкой. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
+  { category: "ekshn-kamery", name: "GoPro HERO", slug: "gopro-hero", brand: "GoPro", description: "GoPro HERO — компактная 4K-камера. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
 ];
