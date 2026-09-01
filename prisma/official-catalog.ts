@@ -291,4 +291,3 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "telefony", name: "HUAWEI nova 15 Pro", slug: "huawei-nova-15-pro", brand: "HUAWEI", description: "HUAWEI nova 15 Pro. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
   { category: "telefony", name: "HUAWEI nova 15", slug: "huawei-nova-15", brand: "HUAWEI", description: "HUAWEI nova 15. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
 ];
-];
