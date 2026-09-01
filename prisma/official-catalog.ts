@@ -140,4 +140,19 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "planshety", name: "Samsung Galaxy Tab S10 Ultra", slug: "samsung-galaxy-tab-s10-ultra", brand: "Samsung", description: "Samsung Galaxy Tab S10 Ultra. Цену и доступность подтвердит менеджер.", memories: ["12/256GB", "12/512GB", "16/1TB"], colors: ["Moonstone Gray", "Platinum Silver"] },
   { category: "planshety", name: "Samsung Galaxy Tab S11", slug: "samsung-galaxy-tab-s11", brand: "Samsung", description: "Samsung Galaxy Tab S11. Цену и доступность подтвердит менеджер.", memories: ["12/256GB", "12/512GB"], colors: ["Gray", "Silver"] },
   { category: "planshety", name: "Samsung Galaxy Tab S11 Ultra", slug: "samsung-galaxy-tab-s11-ultra", brand: "Samsung", description: "Samsung Galaxy Tab S11 Ultra. Цену и доступность подтвердит менеджер.", memories: ["12/256GB", "12/512GB", "16/1TB"], colors: ["Gray", "Silver"] },
+
+  // Xiaomi 15T — актуальная T-серия. Варианты подтверждены на официальных
+  // страницах Xiaomi; наличие в России в любом случае уточняет менеджер.
+  {
+    category: "telefony", name: "Xiaomi 15T", slug: "xiaomi-15t", brand: "Xiaomi",
+    description: "Xiaomi 15T с камерой Leica. Цену и доступность подтвердит менеджер.",
+    memories: ["12/256GB", "12/512GB"],
+    colors: ["Black", "Gray", "Rose Gold"],
+  },
+  {
+    category: "telefony", name: "Xiaomi 15T Pro", slug: "xiaomi-15t-pro", brand: "Xiaomi",
+    description: "Xiaomi 15T Pro с камерой Leica и 5× телеобъективом. Цену и доступность подтвердит менеджер.",
+    memories: ["12/256GB", "12/512GB", "12/1TB"],
+    colors: ["Black", "Gray", "Mocha Gold"],
+  },
 ];
