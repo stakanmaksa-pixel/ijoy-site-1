@@ -62,6 +62,12 @@ export const MODEL_DISPLAY_ORDER = {
   sony: ["Sony Xperia 1 VIII", "Sony Xperia 10 VII"],
   ipad: [
     "iPad Pro 11 (2025, M5)",
+    "iPad Pro 11-inch (M5)",
+    "iPad Pro 13-inch (M5)",
+    "iPad Air 13-inch (M4)",
+    "iPad Air 11-inch (M4)",
+    "iPad (A16)",
+    "iPad mini (A17 Pro)",
     "iPad Air 13 (2025, M3)",
     "iPad Air 11 (2025, M3)",
     "iPad 11 (2025)",
@@ -70,6 +76,9 @@ export const MODEL_DISPLAY_ORDER = {
   ],
   macbook: [
     "MacBook Neo",
+    "MacBook Neo 13-inch",
+    "MacBook Air 15-inch (M5)",
+    "MacBook Air 13-inch (M5)",
     "MacBook Air 15",
     "MacBook Air 15 (2025, M4)",
     "MacBook Air 13",
