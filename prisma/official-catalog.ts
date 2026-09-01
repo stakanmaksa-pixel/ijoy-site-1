@@ -192,4 +192,11 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
     memories: ["6/128GB", "6/256GB", "8/128GB", "8/256GB", "8/512GB"],
     colors: ["Purple", "Green", "Black", "Blue"],
   },
+
+  {
+    category: "telefony", name: "HUAWEI Pura 80", slug: "huawei-pura-80", brand: "HUAWEI",
+    description: "HUAWEI Pura 80. Цену, регион поставки и доступность подтвердит менеджер.",
+    memories: ["12/256GB", "12/512GB", "12/1TB"],
+    colors: ["Velvet Gold", "Velvet Green", "Velvet White", "Velvet Black"],
+  },
 ];
