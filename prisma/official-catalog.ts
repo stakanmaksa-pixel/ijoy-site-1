@@ -199,4 +199,11 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
     memories: ["12/256GB", "12/512GB", "12/1TB"],
     colors: ["Velvet Gold", "Velvet Green", "Velvet White", "Velvet Black"],
   },
+
+  // Актуальные iPad и Apple Watch. Конфигурации взяты из Apple Compare.
+  { category: "planshety", name: "iPad Pro 11-inch (M5)", slug: "ipad-pro-11-m5", brand: "Apple", description: "iPad Pro 11-inch с чипом M5. Цену и доступность подтвердит менеджер.", memories: ["256GB", "512GB", "1TB", "2TB"], colors: ["Space Black", "Silver"] },
+  { category: "planshety", name: "iPad Pro 13-inch (M5)", slug: "ipad-pro-13-m5", brand: "Apple", description: "iPad Pro 13-inch с чипом M5. Цену и доступность подтвердит менеджер.", memories: ["256GB", "512GB", "1TB", "2TB"], colors: ["Space Black", "Silver"] },
+  { category: "planshety", name: "iPad Air 11-inch (M3)", slug: "ipad-air-11-m3", brand: "Apple", description: "iPad Air 11-inch с чипом M3. Цену и доступность подтвердит менеджер.", memories: ["128GB", "256GB", "512GB", "1TB"], colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
+  { category: "planshety", name: "iPad Air 13-inch (M3)", slug: "ipad-air-13-m3", brand: "Apple", description: "iPad Air 13-inch с чипом M3. Цену и доступность подтвердит менеджер.", memories: ["128GB", "256GB", "512GB", "1TB"], colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
+  { category: "chasy", name: "Apple Watch Ultra 3", slug: "apple-watch-ultra-3", brand: "Apple", description: "Apple Watch Ultra 3, корпус 49 мм. Цену и доступность подтвердит менеджер.", memories: ["64GB"], colors: ["Natural Titanium", "Black Titanium"] },
 ];
