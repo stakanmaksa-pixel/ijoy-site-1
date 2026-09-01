@@ -319,4 +319,12 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "planshety", name: "OnePlus Pad Lite", slug: "oneplus-pad-lite", brand: "OnePlus", description: "OnePlus Pad Lite. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
   { category: "chasy", name: "OnePlus Watch 3", slug: "oneplus-watch-3", brand: "OnePlus", description: "OnePlus Watch 3. Цену, варианты и доступность подтвердит менеджер.", colors: [] },
   { category: "chasy", name: "OnePlus Watch 3 43mm", slug: "oneplus-watch-3-43mm", brand: "OnePlus", description: "OnePlus Watch 3 43mm. Цену, варианты и доступность подтвердит менеджер.", colors: [] },
+  // Актуальные планшеты и носимые устройства HUAWEI из глобальных анонсов.
+  { category: "planshety", name: "HUAWEI MatePad Pro Max", slug: "huawei-matepad-pro-max", brand: "HUAWEI", description: "HUAWEI MatePad Pro Max. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "planshety", name: "HUAWEI MatePad Air", slug: "huawei-matepad-air", brand: "HUAWEI", description: "HUAWEI MatePad Air. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "planshety", name: "HUAWEI MatePad Mini", slug: "huawei-matepad-mini", brand: "HUAWEI", description: "HUAWEI MatePad Mini. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "chasy", name: "HUAWEI WATCH FIT 5", slug: "huawei-watch-fit-5", brand: "HUAWEI", description: "HUAWEI WATCH FIT 5. Цену, варианты и доступность подтвердит менеджер.", colors: [] },
+  { category: "chasy", name: "HUAWEI WATCH FIT 5 Pro", slug: "huawei-watch-fit-5-pro", brand: "HUAWEI", description: "HUAWEI WATCH FIT 5 Pro. Цену, варианты и доступность подтвердит менеджер.", colors: [] },
+  { category: "chasy", name: "HUAWEI WATCH Ultimate 2", slug: "huawei-watch-ultimate-2", brand: "HUAWEI", description: "HUAWEI WATCH Ultimate 2. Цену, варианты и доступность подтвердит менеджер.", colors: [] },
+  { category: "chasy", name: "HUAWEI WATCH GT Runner 2", slug: "huawei-watch-gt-runner-2", brand: "HUAWEI", description: "HUAWEI WATCH GT Runner 2. Цену, варианты и доступность подтвердит менеджер.", colors: [] },
 ];
