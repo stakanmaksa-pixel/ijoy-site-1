@@ -166,6 +166,31 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
       groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("Sony")}`,
       order: MODEL_DISPLAY_ORDER.sony,
     },
+    {
+      label: "Xiaomi и REDMI",
+      test: (_n, brand) => brand === "Xiaomi",
+      groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("Xiaomi")}`,
+    },
+    {
+      label: "POCO",
+      test: (_n, brand) => brand === "POCO",
+      groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("POCO")}`,
+    },
+    {
+      label: "HUAWEI",
+      test: (_n, brand) => brand === "HUAWEI",
+      groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("HUAWEI")}`,
+    },
+    {
+      label: "HONOR",
+      test: (_n, brand) => brand === "HONOR",
+      groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("HONOR")}`,
+    },
+    {
+      label: "OnePlus",
+      test: (_n, brand) => brand === "OnePlus",
+      groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("OnePlus")}`,
+    },
   ],
   aksessuary: [
     { label: "Наушники AirPods", test: (name) => /airpods/i.test(name), order: MODEL_DISPLAY_ORDER.airpods },
