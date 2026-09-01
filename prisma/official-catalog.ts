@@ -155,4 +155,18 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
     memories: ["12/256GB", "12/512GB", "12/1TB"],
     colors: ["Black", "Gray", "Mocha Gold"],
   },
+
+  // OnePlus — актуальные флагманы. Конфигурации и цвета сверены с OnePlus.
+  {
+    category: "telefony", name: "OnePlus 13", slug: "oneplus-13", brand: "OnePlus",
+    description: "OnePlus 13. Цену и доступность подтвердит менеджер.",
+    memories: ["12/256GB", "16/512GB"],
+    colors: ["Midnight Ocean", "Arctic Dawn", "Black Eclipse"],
+  },
+  {
+    category: "telefony", name: "OnePlus 15", slug: "oneplus-15", brand: "OnePlus",
+    description: "OnePlus 15. Цену и доступность подтвердит менеджер.",
+    memories: ["12/256GB", "16/512GB"],
+    colors: ["Sand Storm", "Infinite Black", "Ultra Violet"],
+  },
 ];
