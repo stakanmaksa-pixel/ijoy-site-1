@@ -248,4 +248,10 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "ekshn-kamery", name: "GoPro MAX", slug: "gopro-max", brand: "GoPro", description: "GoPro MAX — 360°-камера. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
   { category: "ekshn-kamery", name: "GoPro LIT HERO", slug: "gopro-lit-hero", brand: "GoPro", description: "GoPro LIT HERO — компактная 4K-камера со встроенной подсветкой. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
   { category: "ekshn-kamery", name: "GoPro HERO", slug: "gopro-hero", brand: "GoPro", description: "GoPro HERO — компактная 4K-камера. Цену и доступность подтвердит менеджер.", colors: ["Black"] },
+
+  // Sony Xperia: только наиболее свежие официальные поколения. Для Xperia
+  // 1 VIII добавлена подтверждённая топовая SIM-free конфигурация; остальные
+  // региональные варианты менеджер добавит при появлении в прайсе.
+  { category: "telefony", name: "Sony Xperia 1 VIII", slug: "sony-xperia-1-viii", brand: "Sony", description: "Sony Xperia 1 VIII — флагман Xperia с тройной камерой и AI Camera Assistant. Цену, регион и доступность подтвердит менеджер.", memories: ["16GB / 1TB"], colors: ["Graphite Black", "Iolite Silver", "Garnet Red", "Native Gold"] },
+  { category: "telefony", name: "Sony Xperia 10 VII", slug: "sony-xperia-10-vii", brand: "Sony", description: "Sony Xperia 10 VII — актуальная модель Xperia 10 с отдельной кнопкой камеры. Цену, регион и доступность подтвердит менеджер.", memories: ["8GB / 128GB"], colors: ["Charcoal Black", "White", "Turquoise"] },
 ];

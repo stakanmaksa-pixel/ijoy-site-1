@@ -59,6 +59,7 @@ export const MODEL_DISPLAY_ORDER = {
     "Samsung Galaxy A16",
     "Samsung Galaxy M56 5G",
   ],
+  sony: ["Sony Xperia 1 VIII", "Sony Xperia 10 VII"],
   ipad: [
     "iPad Pro 11 (2025, M5)",
     "iPad Air 13 (2025, M3)",
@@ -118,6 +119,7 @@ function resolveOrderList(
   if (categorySlug === "telefony") {
     if (brand === "Apple") return MODEL_DISPLAY_ORDER.iphone;
     if (brand === "Samsung") return MODEL_DISPLAY_ORDER.samsung;
+    if (brand === "Sony") return MODEL_DISPLAY_ORDER.sony;
     return undefined;
   }
   if (categorySlug === "planshety") return MODEL_DISPLAY_ORDER.ipad;
@@ -148,6 +150,12 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
       test: (_n, brand) => brand === "Samsung",
       groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("Samsung")}`,
       order: MODEL_DISPLAY_ORDER.samsung,
+    },
+    {
+      label: "Sony Xperia",
+      test: (_n, brand) => brand === "Sony",
+      groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("Sony")}`,
+      order: MODEL_DISPLAY_ORDER.sony,
     },
   ],
   aksessuary: [
