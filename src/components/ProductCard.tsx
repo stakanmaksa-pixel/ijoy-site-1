@@ -3,6 +3,18 @@ import { formatPrice } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CompareButton } from "@/components/CompareButton";
 
+const BRAND_CARD_THEMES: Record<string, string> = {
+  Apple: "from-zinc-950 via-zinc-800 to-zinc-600",
+  Samsung: "from-blue-950 via-blue-700 to-cyan-500",
+  Xiaomi: "from-orange-700 via-orange-500 to-amber-300",
+  POCO: "from-yellow-400 via-yellow-300 to-amber-100",
+  HUAWEI: "from-red-950 via-red-700 to-red-400",
+  HONOR: "from-sky-950 via-sky-700 to-cyan-400",
+  OnePlus: "from-red-950 via-red-700 to-rose-400",
+  Sony: "from-slate-950 via-slate-700 to-slate-400",
+  GoPro: "from-slate-950 via-slate-700 to-cyan-500",
+};
+
 export function ProductCard({
   name,
   slug,
@@ -25,6 +37,8 @@ export function ProductCard({
   defaultVariantId: string | null;
   coverImage?: string | null;
 }) {
+  const fallbackTheme = BRAND_CARD_THEMES[brand ?? ""] ?? "from-brand-dark via-brand to-accent";
+
   return (
     <Link
       href={`/product/${slug}`}
@@ -34,16 +48,21 @@ export function ProductCard({
         {coverImage ? (
           <img src={coverImage} alt={name} className="h-full w-full object-contain" />
         ) : (
-          <div className="px-5 text-center">
-            {brand && (
-              <div className="text-xs font-medium uppercase tracking-[0.18em] text-zinc-400">
-                {brand}
-              </div>
-            )}
-            <div className="mt-2 font-display text-lg font-medium leading-tight text-zinc-400">
-              {name}
+          <div className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-br p-5 text-white ${fallbackTheme}`}>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/30 bg-white/15 font-display text-xl font-semibold shadow-lg backdrop-blur-sm">
+              {(brand ?? name).slice(0, 1)}
             </div>
-            <div className="mt-3 text-xs text-zinc-300">Фото добавляется</div>
+            <div>
+              {brand && (
+                <div className="text-xs font-medium uppercase tracking-[0.18em] text-white/70">
+                  {brand}
+                </div>
+              )}
+              <div className="mt-2 font-display text-lg font-medium leading-tight text-white">
+                {name}
+              </div>
+              <div className="mt-3 text-xs text-white/70">Новая модель</div>
+            </div>
           </div>
         )}
         <div className="absolute right-3 top-3 flex gap-2">
