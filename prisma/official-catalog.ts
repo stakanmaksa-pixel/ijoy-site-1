@@ -309,4 +309,14 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "telefony", name: "POCO F8 Ultra", slug: "poco-f8-ultra", brand: "POCO", description: "POCO F8 Ultra. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
   { category: "telefony", name: "POCO M8 Pro 5G", slug: "poco-m8-pro-5g", brand: "POCO", description: "POCO M8 Pro 5G. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
   { category: "telefony", name: "POCO M8 5G", slug: "poco-m8-5g", brand: "POCO", description: "POCO M8 5G. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+
+  // Подтверждённые актуальные модели OnePlus.
+  { category: "telefony", name: "OnePlus 15R", slug: "oneplus-15r", brand: "OnePlus", description: "OnePlus 15R. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "OnePlus 13s", slug: "oneplus-13s", brand: "OnePlus", description: "OnePlus 13s. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "OnePlus Nord 5", slug: "oneplus-nord-5", brand: "OnePlus", description: "OnePlus Nord 5. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "OnePlus Nord CE5", slug: "oneplus-nord-ce5", brand: "OnePlus", description: "OnePlus Nord CE5. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "planshety", name: "OnePlus Pad 3", slug: "oneplus-pad-3", brand: "OnePlus", description: "OnePlus Pad 3. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "planshety", name: "OnePlus Pad Lite", slug: "oneplus-pad-lite", brand: "OnePlus", description: "OnePlus Pad Lite. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "chasy", name: "OnePlus Watch 3", slug: "oneplus-watch-3", brand: "OnePlus", description: "OnePlus Watch 3. Цену, варианты и доступность подтвердит менеджер.", colors: [] },
+  { category: "chasy", name: "OnePlus Watch 3 43mm", slug: "oneplus-watch-3-43mm", brand: "OnePlus", description: "OnePlus Watch 3 43mm. Цену, варианты и доступность подтвердит менеджер.", colors: [] },
 ];
