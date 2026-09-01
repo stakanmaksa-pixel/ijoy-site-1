@@ -278,4 +278,17 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "telefony", name: "HONOR 600", slug: "honor-600", brand: "HONOR", description: "HONOR 600. Цену, память, регион и доступность подтвердит менеджер.", colors: ["Sprout Green", "Desert Gold", "Velvet Grey", "Velvet Black"] },
   { category: "telefony", name: "HONOR 600 Lite", slug: "honor-600-lite", brand: "HONOR", description: "HONOR 600 Lite. Цену, память, регион и доступность подтвердит менеджер.", colors: ["Meteor Silver", "Velvet Black"] },
   { category: "telefony", name: "HONOR X9d", slug: "honor-x9d", brand: "HONOR", description: "HONOR X9d с усиленной защитой корпуса. Цену, память, регион и доступность подтвердит менеджер.", colors: ["Sunrise Orange", "Desert Gold", "Velvet Black"] },
+
+  // Новая глобальная линейка HUAWEI. Варианты памяти и цвета на глобальной
+  // витрине зависят от страны, поэтому оставляем их прайсу поставщика.
+  { category: "telefony", name: "HUAWEI Pura 90s Pro Max", slug: "huawei-pura-90s-pro-max", brand: "HUAWEI", description: "HUAWEI Pura 90s Pro Max. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "HUAWEI Pura 90s Pro", slug: "huawei-pura-90s-pro", brand: "HUAWEI", description: "HUAWEI Pura 90s Pro. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "HUAWEI Pura 80 Pro", slug: "huawei-pura-80-pro", brand: "HUAWEI", description: "HUAWEI Pura 80 Pro. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "HUAWEI Pura 80 Ultra", slug: "huawei-pura-80-ultra", brand: "HUAWEI", description: "HUAWEI Pura 80 Ultra. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "HUAWEI Mate 80 Pro", slug: "huawei-mate-80-pro", brand: "HUAWEI", description: "HUAWEI Mate 80 Pro. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "HUAWEI Mate XT ULTIMATE DESIGN", slug: "huawei-mate-xt-ultimate-design", brand: "HUAWEI", description: "HUAWEI Mate XT ULTIMATE DESIGN. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "HUAWEI nova 15 Max", slug: "huawei-nova-15-max", brand: "HUAWEI", description: "HUAWEI nova 15 Max. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "HUAWEI nova 15 Pro", slug: "huawei-nova-15-pro", brand: "HUAWEI", description: "HUAWEI nova 15 Pro. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "HUAWEI nova 15", slug: "huawei-nova-15", brand: "HUAWEI", description: "HUAWEI nova 15. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+];
 ];
