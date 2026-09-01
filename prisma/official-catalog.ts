@@ -185,4 +185,11 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
     memories: ["12/256GB", "12/512GB"],
     colors: ["Black", "Blue", "Titanium Silver"],
   },
+
+  {
+    category: "telefony", name: "Redmi Note 14", slug: "redmi-note-14", brand: "Xiaomi",
+    description: "Redmi Note 14. Цену и доступность подтвердит менеджер.",
+    memories: ["6/128GB", "6/256GB", "8/128GB", "8/256GB", "8/512GB"],
+    colors: ["Purple", "Green", "Black", "Blue"],
+  },
 ];
