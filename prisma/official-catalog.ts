@@ -3,7 +3,7 @@
 // модификации price: null, поэтому на витрине выводится «Уточняйте цену».
 
 export type OfficialCatalogEntry = {
-  category: "telefony" | "chasy" | "planshety";
+  category: "telefony" | "chasy" | "planshety" | "noutbuki";
   name: string;
   slug: string;
   brand: string;
@@ -206,4 +206,11 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "planshety", name: "iPad Air 11-inch (M3)", slug: "ipad-air-11-m3", brand: "Apple", description: "iPad Air 11-inch с чипом M3. Цену и доступность подтвердит менеджер.", memories: ["128GB", "256GB", "512GB", "1TB"], colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
   { category: "planshety", name: "iPad Air 13-inch (M3)", slug: "ipad-air-13-m3", brand: "Apple", description: "iPad Air 13-inch с чипом M3. Цену и доступность подтвердит менеджер.", memories: ["128GB", "256GB", "512GB", "1TB"], colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
   { category: "chasy", name: "Apple Watch Ultra 3", slug: "apple-watch-ultra-3", brand: "Apple", description: "Apple Watch Ultra 3, корпус 49 мм. Цену и доступность подтвердит менеджер.", memories: ["64GB"], colors: ["Natural Titanium", "Black Titanium"] },
+
+  // Ноутбуки Apple добавляются в уже существующую категорию «Ноутбуки».
+  { category: "noutbuki", name: "MacBook Neo 13-inch", slug: "macbook-neo-13", brand: "Apple", description: "MacBook Neo 13-inch с чипом A18 Pro. Цену и доступность подтвердит менеджер.", memories: ["8GB / 256GB SSD", "8GB / 512GB SSD"], colors: ["Silver", "Blush", "Citrus", "Indigo"] },
+  { category: "noutbuki", name: "MacBook Air 13-inch (M4)", slug: "macbook-air-13-m4", brand: "Apple", description: "MacBook Air 13-inch с чипом M4. Цену и доступность подтвердит менеджер.", memories: ["16GB / 256GB SSD", "16GB / 512GB SSD", "16GB / 1TB SSD", "16GB / 2TB SSD", "24GB / 512GB SSD", "32GB / 2TB SSD"], colors: ["Sky Blue", "Silver", "Starlight", "Midnight"] },
+  { category: "noutbuki", name: "MacBook Air 15-inch (M4)", slug: "macbook-air-15-m4", brand: "Apple", description: "MacBook Air 15-inch с чипом M4. Цену и доступность подтвердит менеджер.", memories: ["16GB / 256GB SSD", "16GB / 512GB SSD", "16GB / 1TB SSD", "16GB / 2TB SSD", "24GB / 512GB SSD", "32GB / 2TB SSD"], colors: ["Sky Blue", "Silver", "Starlight", "Midnight"] },
+  { category: "noutbuki", name: "MacBook Pro 14-inch (M5)", slug: "macbook-pro-14-m5", brand: "Apple", description: "MacBook Pro 14-inch с чипами M5, M5 Pro или M5 Max. Цену и доступность подтвердит менеджер.", memories: ["16GB / 1TB SSD", "24GB / 1TB SSD", "32GB / 1TB SSD", "48GB / 2TB SSD", "64GB / 4TB SSD", "128GB / 8TB SSD"], colors: ["Space Black", "Silver"] },
+  { category: "noutbuki", name: "MacBook Pro 16-inch (M5)", slug: "macbook-pro-16-m5", brand: "Apple", description: "MacBook Pro 16-inch с чипами M5 Pro или M5 Max. Цену и доступность подтвердит менеджер.", memories: ["24GB / 1TB SSD", "36GB / 1TB SSD", "48GB / 2TB SSD", "64GB / 4TB SSD", "128GB / 8TB SSD"], colors: ["Space Black", "Silver"] },
 ];
