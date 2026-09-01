@@ -290,4 +290,23 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "telefony", name: "HUAWEI nova 15 Max", slug: "huawei-nova-15-max", brand: "HUAWEI", description: "HUAWEI nova 15 Max. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
   { category: "telefony", name: "HUAWEI nova 15 Pro", slug: "huawei-nova-15-pro", brand: "HUAWEI", description: "HUAWEI nova 15 Pro. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
   { category: "telefony", name: "HUAWEI nova 15", slug: "huawei-nova-15", brand: "HUAWEI", description: "HUAWEI nova 15. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+
+  // Актуальные глобальные Xiaomi, REDMI и POCO. Региональные варианты
+  // памяти и цветов оставляем прайсу поставщика, чтобы не создавать ложных SKU.
+  { category: "telefony", name: "Xiaomi 17", slug: "xiaomi-17", brand: "Xiaomi", description: "Xiaomi 17. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "Xiaomi 17 Ultra", slug: "xiaomi-17-ultra", brand: "Xiaomi", description: "Xiaomi 17 Ultra. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "Xiaomi 17T", slug: "xiaomi-17t", brand: "Xiaomi", description: "Xiaomi 17T. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "Xiaomi 17T Pro", slug: "xiaomi-17t-pro", brand: "Xiaomi", description: "Xiaomi 17T Pro. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "REDMI Note 15", slug: "redmi-note-15", brand: "Xiaomi", description: "REDMI Note 15. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "REDMI Note 15 5G", slug: "redmi-note-15-5g", brand: "Xiaomi", description: "REDMI Note 15 5G. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "REDMI Note 15 Pro", slug: "redmi-note-15-pro", brand: "Xiaomi", description: "REDMI Note 15 Pro. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "REDMI Note 15 Pro 5G", slug: "redmi-note-15-pro-5g", brand: "Xiaomi", description: "REDMI Note 15 Pro 5G. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "REDMI Note 15 Pro+ 5G", slug: "redmi-note-15-pro-plus-5g", brand: "Xiaomi", description: "REDMI Note 15 Pro+ 5G. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "REDMI 15", slug: "redmi-15", brand: "Xiaomi", description: "REDMI 15. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "REDMI 15 5G", slug: "redmi-15-5g", brand: "Xiaomi", description: "REDMI 15 5G. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "POCO X8 Pro", slug: "poco-x8-pro", brand: "POCO", description: "POCO X8 Pro. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "POCO X8 Pro Max", slug: "poco-x8-pro-max", brand: "POCO", description: "POCO X8 Pro Max. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "POCO F8 Ultra", slug: "poco-f8-ultra", brand: "POCO", description: "POCO F8 Ultra. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "POCO M8 Pro 5G", slug: "poco-m8-pro-5g", brand: "POCO", description: "POCO M8 Pro 5G. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
+  { category: "telefony", name: "POCO M8 5G", slug: "poco-m8-5g", brand: "POCO", description: "POCO M8 5G. Цену, варианты памяти, регион и доступность подтвердит менеджер.", colors: [] },
 ];
