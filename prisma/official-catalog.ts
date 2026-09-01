@@ -270,4 +270,12 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
   { category: "planshety", name: "Samsung Galaxy Tab S10 Lite", slug: "samsung-galaxy-tab-s10-lite", brand: "Samsung", description: "Samsung Galaxy Tab S10 Lite. Цену и доступность подтвердит менеджер.", memories: ["6/128GB", "8/256GB"], colors: ["Gray", "Silver", "Coral Red"] },
   { category: "planshety", name: "Samsung Galaxy Tab A11+", slug: "samsung-galaxy-tab-a11-plus", brand: "Samsung", description: "Samsung Galaxy Tab A11+. Цену и доступность подтвердит менеджер.", memories: ["6/128GB", "8/256GB"], colors: ["Gray", "Silver"] },
   { category: "chasy", name: "Samsung Galaxy Watch8 Classic", slug: "samsung-galaxy-watch8-classic", brand: "Samsung", description: "Samsung Galaxy Watch8 Classic. Цену и доступность подтвердит менеджер.", colors: ["Black", "White"] },
+
+  // Текущие новинки HONOR с глобальной витрины. Память не фиксируем: состав
+  // конфигураций меняется по рынкам, а прайс поставщика дополняет её точно.
+  { category: "telefony", name: "HONOR Magic V6", slug: "honor-magic-v6", brand: "HONOR", description: "HONOR Magic V6 — складной флагман HONOR. Цену, память, регион и доступность подтвердит менеджер.", colors: ["Red", "Gold", "White", "Black"] },
+  { category: "telefony", name: "HONOR 600 Pro", slug: "honor-600-pro", brand: "HONOR", description: "HONOR 600 Pro. Цену, память, регион и доступность подтвердит менеджер.", colors: ["Golden White", "Orange", "Black"] },
+  { category: "telefony", name: "HONOR 600", slug: "honor-600", brand: "HONOR", description: "HONOR 600. Цену, память, регион и доступность подтвердит менеджер.", colors: ["Sprout Green", "Desert Gold", "Velvet Grey", "Velvet Black"] },
+  { category: "telefony", name: "HONOR 600 Lite", slug: "honor-600-lite", brand: "HONOR", description: "HONOR 600 Lite. Цену, память, регион и доступность подтвердит менеджер.", colors: ["Meteor Silver", "Velvet Black"] },
+  { category: "telefony", name: "HONOR X9d", slug: "honor-x9d", brand: "HONOR", description: "HONOR X9d с усиленной защитой корпуса. Цену, память, регион и доступность подтвердит менеджер.", colors: ["Sunrise Orange", "Desert Gold", "Velvet Black"] },
 ];
