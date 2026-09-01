@@ -178,4 +178,11 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
     memories: ["12/512GB", "16/1TB"],
     colors: ["Sunrise Gold", "Sky Cyan", "Black", "Dawn Gold", "Reddish Brown", "Ivory White"],
   },
+
+  {
+    category: "telefony", name: "POCO F8 Pro", slug: "poco-f8-pro", brand: "POCO",
+    description: "POCO F8 Pro. Цену и доступность подтвердит менеджер.",
+    memories: ["12/256GB", "12/512GB"],
+    colors: ["Black", "Blue", "Titanium Silver"],
+  },
 ];
