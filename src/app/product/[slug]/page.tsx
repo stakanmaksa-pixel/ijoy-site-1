@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductBySlug, pickCoverImage } from "@/lib/catalog";
 import { ProductDetail } from "@/components/ProductDetail";
-import { VariantCard } from "@/components/VariantCard";
+import { VariantGrid } from "@/components/VariantGrid";
 
 export async function generateMetadata({
   params,
@@ -89,16 +89,16 @@ export default async function ProductPage({
             </p>
           )}
 
-          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {product.variants.map((v) => (
-              <VariantCard
-                key={v.id}
-                slug={slug}
-                variant={v}
-                imageUrl={pickCoverImage(product.images, product.colorImages, v.color)}
-              />
-            ))}
-          </div>
+          <VariantGrid
+            slug={slug}
+            variants={product.variants}
+            imageByColor={Object.fromEntries(
+              product.variants.map((variant) => [
+                variant.color ?? "",
+                pickCoverImage(product.images, product.colorImages, variant.color),
+              ]),
+            )}
+          />
         </>
       ) : (
         <ProductDetail
