@@ -169,4 +169,13 @@ export const OFFICIAL_CATALOG_ENTRIES: OfficialCatalogEntry[] = [
     memories: ["12/256GB", "16/512GB"],
     colors: ["Sand Storm", "Infinite Black", "Ultra Violet"],
   },
+
+  // В разных странах HONOR поставляет не все цвета, поэтому перечислены
+  // официально заявленные глобальные варианты. Конкретный регион уточняет менеджер.
+  {
+    category: "telefony", name: "HONOR Magic8 Pro", slug: "honor-magic8-pro", brand: "HONOR",
+    description: "HONOR Magic8 Pro. Цену, регион поставки и доступность подтвердит менеджер.",
+    memories: ["12/512GB", "16/1TB"],
+    colors: ["Sunrise Gold", "Sky Cyan", "Black", "Dawn Gold", "Reddish Brown", "Ivory White"],
+  },
 ];
