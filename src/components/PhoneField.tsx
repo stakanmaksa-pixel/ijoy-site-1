@@ -1,9 +1,9 @@
 "use client";
 
 const COUNTRY_CODES = [
-  { code: "+7", label: "Россия / Казахстан (+7)" },
-  { code: "+375", label: "Беларусь (+375)" },
-  { code: "+998", label: "Узбекистан (+998)" },
+  { code: "+7", label: "Россия +7" },
+  { code: "+375", label: "Беларусь +375" },
+  { code: "+998", label: "Узбекистан +998" },
   { code: "", label: "Другая страна" },
 ] as const;
 
@@ -26,35 +26,17 @@ export function PhoneField({
 }) {
   const isOtherCountry = countryCode === "";
 
-  return (
-    <div className={className}>
-      <div className="flex overflow-hidden rounded-full bg-white text-foreground">
-        <select
-          aria-label="Код страны"
-          value={countryCode}
-          onChange={(event) => onCountryCodeChange(event.target.value)}
-          className="min-w-0 border-0 border-r border-zinc-200 bg-zinc-50 px-3 py-3 text-sm outline-none"
-        >
-          {COUNTRY_CODES.map((option) => (
-            <option key={option.code || "other"} value={option.code}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <input
-          required
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel-national"
-          placeholder={isOtherCountry ? "+код страны и номер" : "Номер без кода страны"}
-          value={phone}
-          onChange={(event) => onPhoneChange(event.target.value)}
-          className="min-w-0 flex-1 border-0 bg-white px-4 py-3 text-sm outline-none placeholder:text-zinc-400"
-        />
-      </div>
-      <p className="mt-1 text-xs text-current/65">
-        {isOtherCountry ? "Введите номер полностью, начиная с +." : "Код страны уже выбран — вводите номер без +7."}
-      </p>
+  return <div className={className}>
+    <div className="text-sm font-medium text-foreground">Номер телефона</div>
+    <div className="mt-2 flex flex-wrap gap-2">
+      {COUNTRY_CODES.map((option) => {
+        const active = countryCode === option.code;
+        return <button key={option.code || "other"} type="button" onClick={() => onCountryCodeChange(option.code)} className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors sm:text-sm ${active ? "border-brand bg-brand text-white" : "border-zinc-200 bg-white text-zinc-600 hover:border-accent hover:text-accent"}`}>
+          {option.label}
+        </button>;
+      })}
     </div>
-  );
+    <input required type="tel" inputMode="tel" autoComplete="tel-national" placeholder={isOtherCountry ? "Введите номер полностью, начиная с +" : `Номер без кода ${countryCode}`} value={phone} onChange={(event) => onPhoneChange(event.target.value)} className="mt-3 w-full rounded-xl border border-zinc-300 bg-white px-4 py-3 text-base outline-none transition-colors placeholder:text-zinc-400 focus:border-accent" />
+    <p className="mt-2 text-xs leading-5 text-current/65">{isOtherCountry ? "Введите номер полностью, начиная с +." : `Код ${countryCode} уже выбран — вводите номер без него.`}</p>
+  </div>;
 }
