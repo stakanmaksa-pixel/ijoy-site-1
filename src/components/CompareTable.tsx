@@ -123,7 +123,7 @@ export function CompareTable({
             <div key={m.slug} className="flex flex-col items-center text-center">
               <Link href={`/product/${m.slug}`} className="mb-3 flex aspect-square w-full max-w-[220px] items-center justify-center rounded-2xl bg-zinc-50 text-zinc-300">
                 {cover ? (
-                  <img src={cover} alt={m.name} className="h-full w-full object-contain" />
+                  <img src={cover} alt={m.name} loading="lazy" decoding="async" className="h-full w-full object-contain" />
                 ) : (
                   <span className="text-sm">Фото</span>
                 )}

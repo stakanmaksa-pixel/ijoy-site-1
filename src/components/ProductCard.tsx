@@ -47,7 +47,7 @@ export function ProductCard({
     >
       <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
         {coverImage ? (
-          <img src={coverImage} alt={name} className="h-full w-full object-contain" />
+          <img src={coverImage} alt={name} loading="lazy" decoding="async" className="h-full w-full object-contain" />
         ) : (
           <div className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-br p-5 text-white ${fallbackTheme}`}>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/30 bg-white/15 font-display text-xl font-semibold shadow-lg backdrop-blur-sm">

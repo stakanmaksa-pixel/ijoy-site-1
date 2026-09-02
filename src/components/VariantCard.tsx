@@ -44,7 +44,7 @@ export function VariantCard({
     >
       <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
         {imageUrl ? (
-          <img src={imageUrl} alt="" className="h-full w-full object-contain" />
+          <img src={imageUrl} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" />
         ) : (
           <span className="text-sm">Фото</span>
         )}

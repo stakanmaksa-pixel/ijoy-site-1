@@ -115,7 +115,7 @@ export default function FavoritesPage() {
               >
                 <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
                   {item.imageUrl ? (
-                    <img src={item.imageUrl} alt="" className="h-full w-full object-contain" />
+                    <img src={item.imageUrl} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" />
                   ) : (
                     <span className="text-sm">Фото</span>
                   )}
