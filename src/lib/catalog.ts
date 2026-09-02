@@ -77,7 +77,6 @@ export const MODEL_DISPLAY_ORDER = {
   ],
   macbook: [
     "MacBook Neo",
-    "MacBook Neo 13-inch",
     "MacBook Air 15-inch (M5)",
     "MacBook Air 13-inch (M5)",
     "MacBook Air 15",
@@ -286,7 +285,9 @@ export const getCatalogNavTree = unstable_cache(async (): Promise<CatalogNavNode
             return { label: p.name, href: `/product/${p.slug}` };
           });
         if (items.length > 0) {
-          groups.push({ label: matcher.label, href: matcher.groupHref, children: items });
+          // Одна модель в серии не нуждается в лишней подкатегории:
+          // MacBook Air M5 13" сразу открывает товар, как iPhone 17 Pro Max.
+          groups.push(items.length === 1 ? { ...items[0], label: matcher.label } : { label: matcher.label, href: matcher.groupHref, children: items });
         }
       }
 
