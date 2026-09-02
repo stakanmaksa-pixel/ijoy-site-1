@@ -212,6 +212,20 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
     { label: "Apple MacBook Air — другие", test: (name) => /macbook\s+air/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air" },
     { label: "Apple MacBook Pro — другие", test: (name) => /macbook\s+pro/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Pro" },
   ],
+  planshety: [
+    { label: "Apple iPad", test: (_name, brand) => brand === "Apple", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Apple")}`, order: MODEL_DISPLAY_ORDER.ipad },
+    { label: "Samsung Galaxy Tab", test: (_name, brand) => brand === "Samsung", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Samsung")}` },
+    { label: "Xiaomi Pad", test: (_name, brand) => brand === "Xiaomi", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Xiaomi")}` },
+    { label: "HUAWEI MatePad", test: (_name, brand) => brand === "HUAWEI", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("HUAWEI")}` },
+    { label: "HONOR Pad", test: (_name, brand) => brand === "HONOR", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("HONOR")}` },
+    { label: "OnePlus Pad", test: (_name, brand) => brand === "OnePlus", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("OnePlus")}` },
+  ],
+  chasy: [
+    { label: "Apple Watch", test: (_name, brand) => brand === "Apple", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("Apple")}`, order: MODEL_DISPLAY_ORDER.watch },
+    { label: "Samsung Galaxy Watch", test: (_name, brand) => brand === "Samsung", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("Samsung")}` },
+    { label: "HUAWEI Watch", test: (_name, brand) => brand === "HUAWEI", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("HUAWEI")}` },
+    { label: "OnePlus Watch", test: (_name, brand) => brand === "OnePlus", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("OnePlus")}` },
+  ],
 };
 
 // Категории без деления на линейки (один бренд на категорию) — тут просто
