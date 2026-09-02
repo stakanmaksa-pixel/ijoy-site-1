@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
 import { pickCoverImage } from "@/lib/pickCoverImage";
+import { unstable_cache } from "next/cache";
 
 // ---------------------------------------------------------------------
 // Многоуровневое меню каталога (бургер-меню на мобильном / выпадающая
@@ -237,7 +238,11 @@ const CATEGORY_ORDER: Record<string, readonly string[]> = {
   "ekshn-kamery": MODEL_DISPLAY_ORDER.gopro,
 };
 
-export async function getCatalogNavTree(): Promise<CatalogNavNode[]> {
+// Шапка отображается на каждой странице. Без кэша её запрос к БД выполнялся
+// при каждом открытии, хотя структура категорий меняется редко. Храним
+// дерево одну минуту: меню открывается быстрее, а после обновления прайса
+// посетитель увидит актуальную структуру максимум через минуту.
+export const getCatalogNavTree = unstable_cache(async (): Promise<CatalogNavNode[]> => {
   const categories = await prisma.category.findMany({
     orderBy: { sortOrder: "asc" },
     include: {
@@ -316,7 +321,7 @@ export async function getCatalogNavTree(): Promise<CatalogNavNode[]> {
   }
 
   return tree;
-}
+}, ["ijoy-catalog-nav-tree"], { revalidate: 60, tags: ["catalog-nav"] });
 
 export async function getCategoriesWithCounts() {
   const categories = await prisma.category.findMany({
