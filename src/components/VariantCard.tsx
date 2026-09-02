@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { CartButton } from "@/components/CartButton";
 
 type Variant = {
   id: string;
@@ -48,6 +49,7 @@ export function VariantCard({
           <span className="text-sm">Фото</span>
         )}
         <FavoriteButton variantId={variant.id} className="absolute right-3 top-3" />
+        {variant.price != null && variant.inStock && <CartButton variantId={variant.id} compact className="absolute left-3 top-3" />}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
         <div className="text-sm text-zinc-500">{variantLabel(variant)}</div>

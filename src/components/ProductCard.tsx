@@ -2,6 +2,7 @@ import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CompareButton } from "@/components/CompareButton";
+import { CartButton } from "@/components/CartButton";
 
 const BRAND_CARD_THEMES: Record<string, string> = {
   Apple: "from-zinc-950 via-zinc-800 to-zinc-600",
@@ -69,6 +70,7 @@ export function ProductCard({
           <CompareButton slug={slug} />
           {defaultVariantId && <FavoriteButton variantId={defaultVariantId} />}
         </div>
+        {defaultVariantId && minPrice != null && hasStock && <CartButton variantId={defaultVariantId} compact className="absolute left-3 top-3" />}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
         {brand ? (

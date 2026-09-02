@@ -5,6 +5,7 @@ import { getCatalogNavTree } from "@/lib/catalog";
 import { CatalogMenu } from "@/components/CatalogMenu";
 import { CatalogMenuDesktop } from "@/components/CatalogMenuDesktop";
 import { Logo } from "@/components/Logo";
+import { CartLink } from "@/components/CartLink";
 
 // Заливка фона на ховере вместо простой смены цвета текста — так проще
 // заметить, какой пункт меню сейчас под курсором (раньше было заметно
@@ -39,12 +40,10 @@ export async function Header() {
           ))}
         </nav>
 
-        <a
-          href={CONTACTS.phoneHref}
-          className="whitespace-nowrap rounded-full bg-brand px-4 py-2 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark"
-        >
-          Позвонить
-        </a>
+        <div className="flex items-center gap-2">
+          <div className="hidden sm:block"><CartLink /></div>
+          <a href={CONTACTS.phoneHref} className="whitespace-nowrap rounded-full bg-brand px-4 py-2 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark">Позвонить</a>
+        </div>
       </div>
 
       {/* Поиск по каталогу — обычная GET-форма без JS, ведёт на /catalog?q=...
@@ -85,6 +84,7 @@ export async function Header() {
       {/* Мобильная навигация */}
       <nav className="flex flex-wrap items-center gap-1 border-t border-zinc-100 px-4 py-3 text-sm text-zinc-700 md:hidden">
         <CatalogMenu tree={catalogTree} />
+        <CartLink />
         {NAV_LINKS.map((link) => (
           <Link key={link.href} href={link.href} className={NAV_LINK_CLASS}>
             {link.label}

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { formatPrice } from "@/lib/format";
 import { colorToHex } from "@/lib/colorSwatch";
 import { PhoneField, phoneWithCountryCode } from "@/components/PhoneField";
+import { CartButton } from "@/components/CartButton";
 
 type Variant = {
   id: string;
@@ -301,14 +302,17 @@ export function ProductOrder({
       )}
 
       {!formOpen ? (
-        <button
-          type="button"
-          onClick={() => setFormOpen(true)}
-          disabled={!selected?.inStock}
-          className="w-full rounded-full bg-brand px-6 py-3 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40 sm:w-fit"
-        >
-          {selected?.price != null ? "Оформить заказ" : "Уточнить цену"}
-        </button>
+        <div className="flex flex-wrap gap-3">
+          {selected?.price != null && selected.inStock && <CartButton variantId={selected.id} />}
+          <button
+            type="button"
+            onClick={() => setFormOpen(true)}
+            disabled={!selected?.inStock}
+            className="w-full rounded-full bg-brand px-6 py-3 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40 sm:w-fit"
+          >
+            {selected?.price != null ? "Оформить сейчас" : "Уточнить цену"}
+          </button>
+        </div>
       ) : (
         <form
           onSubmit={handleSubmit}
