@@ -1,3 +1,6 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { CallbackForm } from "@/components/CallbackForm";
 
 // На каждой внутренней странице Тильды прямо перед подвалом стоит один и
@@ -6,6 +9,8 @@ import { CallbackForm } from "@/components/CallbackForm";
 // форма связи с магазином. Выносим его на уровень layout, чтобы не
 // дублировать на каждой странице.
 export function SiteFeedback() {
+  const pathname = usePathname();
+  if (pathname === "/warranty") return null;
   return (
     <div className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
       <CallbackForm

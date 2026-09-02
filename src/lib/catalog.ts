@@ -344,10 +344,10 @@ export async function getCategoriesWithCounts() {
 
 export type CatalogFilters = {
   categorySlug?: string;
-  brand?: string;
-  productSlug?: string;
-  memory?: string;
-  color?: string;
+  brand?: string[];
+  productSlug?: string[];
+  memory?: string[];
+  color?: string[];
   onlyInStock?: boolean;
   minPrice?: number;
   maxPrice?: number;
@@ -371,20 +371,20 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
     ];
   }
 
-  if (filters.brand) {
-    where.brand = filters.brand;
+  if (filters.brand?.length) {
+    where.brand = { in: filters.brand };
   }
 
-  if (filters.productSlug) {
-    where.slug = filters.productSlug;
+  if (filters.productSlug?.length) {
+    where.slug = { in: filters.productSlug };
   }
 
   const variantWhere: Prisma.ProductVariantWhereInput = {};
   if (filters.minPrice != null || filters.maxPrice != null) {
     variantWhere.price = { gte: filters.minPrice, lte: filters.maxPrice };
   }
-  if (filters.memory) variantWhere.memory = filters.memory;
-  if (filters.color) variantWhere.color = filters.color;
+  if (filters.memory?.length) variantWhere.memory = { in: filters.memory };
+  if (filters.color?.length) variantWhere.color = { in: filters.color };
   if (filters.onlyInStock) variantWhere.inStock = true;
 
   if (Object.keys(variantWhere).length > 0) {
@@ -418,8 +418,8 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
       ? product.variants.filter((variant) => {
           if (filters.minPrice != null && (variant.price === null || Number(variant.price) < filters.minPrice)) return false;
           if (filters.maxPrice != null && (variant.price === null || Number(variant.price) > filters.maxPrice)) return false;
-          if (filters.memory && variant.memory !== filters.memory) return false;
-          if (filters.color && variant.color !== filters.color) return false;
+          if (filters.memory?.length && (!variant.memory || !filters.memory.includes(variant.memory))) return false;
+          if (filters.color?.length && (!variant.color || !filters.color.includes(variant.color))) return false;
           if (filters.onlyInStock && !variant.inStock) return false;
           return true;
         })
@@ -431,8 +431,8 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
 export async function getCatalogFilterOptions(filters: Pick<CatalogFilters, "categorySlug" | "brand" | "productSlug"> = {}) {
   const where: Prisma.ProductWhereInput = { status: "PUBLISHED" };
   if (filters.categorySlug) where.category = { slug: filters.categorySlug };
-  if (filters.brand) where.brand = filters.brand;
-  if (filters.productSlug) where.slug = filters.productSlug;
+  if (filters.brand?.length) where.brand = { in: filters.brand };
+  if (filters.productSlug?.length) where.slug = { in: filters.productSlug };
 
   const products = await prisma.product.findMany({
     where,

@@ -88,6 +88,7 @@ export function CallbackForm({
             phone={phone}
             onPhoneChange={setPhone}
             className="w-full text-foreground sm:w-[360px]"
+            allowCountrySelect={false}
           />
           <button
             type="submit"

@@ -71,6 +71,36 @@ const KEYWORDS: [RegExp, string][] = [
   [/beige|беж/i, "#dccbb0"],
 ];
 
+// В прайсах производителей названия часто приходят по-английски. В базе
+// сохраняем оригинал (он нужен менеджеру и для точной модификации), а
+// покупателю показываем понятный русский вариант с оригиналом в скобках.
+const RUSSIAN_NAMES: Record<string, string> = {
+  black: "Чёрный", white: "Белый", silver: "Серебристый", gold: "Золотой",
+  graphite: "Графитовый", midnight: "Тёмная ночь", starlight: "Сияющая звезда",
+  "space gray": "Серый космос", "space grey": "Серый космос", titanium: "Титан",
+  "natural titanium": "Натуральный титан", "blue titanium": "Синий титан",
+  "white titanium": "Белый титан", "black titanium": "Чёрный титан",
+  "desert titanium": "Пустынный титан", blue: "Синий", navy: "Тёмно-синий",
+  "light blue": "Голубой", "icy blue": "Ледяной голубой", red: "Красный",
+  "product red": "Красный (PRODUCT)RED", pink: "Розовый", purple: "Фиолетовый",
+  lavender: "Лавандовый", violet: "Фиолетовый", "deep purple": "Тёмно-фиолетовый",
+  green: "Зелёный", "alpine green": "Альпийский зелёный", mint: "Мятный",
+  yellow: "Жёлтый", orange: "Оранжевый", coral: "Коралловый", cream: "Кремовый",
+  beige: "Бежевый", "rose gold": "Розовое золото", "sierra blue": "Сьерра-синий",
+  "phantom black": "Фантомный чёрный", "phantom silver": "Фантомный серебристый",
+  "phantom violet": "Фантомный фиолетовый", "awesome black": "Классный чёрный",
+  "awesome white": "Классный белый", "awesome navy": "Классный тёмно-синий",
+  "awesome lavender": "Классный лавандовый", "awesome lime": "Классный лаймовый",
+  "awesome graphite": "Классный графитовый", "awesome iceblue": "Классный ледяной голубой",
+  "awesome mint": "Классный мятный", teal: "Бирюзовый", desert: "Пустынный",
+};
+
+export function colorLabel(name: string | null | undefined): string {
+  if (!name) return "";
+  const russian = RUSSIAN_NAMES[name.trim().toLowerCase()];
+  return russian ? `${russian} (${name})` : name;
+}
+
 export function colorToHex(name: string | null | undefined): string {
   if (!name) return "#c7c7cc";
   const key = name.trim().toLowerCase();

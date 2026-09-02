@@ -2,6 +2,7 @@ import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CartButton } from "@/components/CartButton";
+import { colorLabel } from "@/lib/colorSwatch";
 
 type Variant = {
   id: string;
@@ -14,7 +15,7 @@ type Variant = {
 };
 
 function variantLabel(v: Variant) {
-  return [v.memory, v.color, v.region].filter(Boolean).join(" · ") || "Стандарт";
+  return [v.memory, colorLabel(v.color), v.region].filter(Boolean).join(" · ") || "Стандарт";
 }
 
 // Карточка одной конкретной модификации товара (память + цвет + регион) —

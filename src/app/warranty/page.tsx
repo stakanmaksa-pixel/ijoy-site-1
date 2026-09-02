@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero, SectionKicker } from "@/components/PageHero";
 import { InfoCards } from "@/components/InfoCards";
-import { CallbackForm } from "@/components/CallbackForm";
+import { WarrantyClaimForm } from "@/components/WarrantyClaimForm";
 import { FaqAccordion, type FaqItem } from "@/components/FaqAccordion";
 
 export const metadata: Metadata = { title: "Гарантия" };
@@ -59,7 +59,7 @@ export default function WarrantyPage() {
         />
 
         <div className="mt-16">
-          <CallbackForm id="warranty-form" title="Гарантийный случай" source="Гарантийный случай" />
+          <WarrantyClaimForm />
         </div>
 
         <div className="mt-20 max-w-3xl">

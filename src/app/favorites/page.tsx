@@ -7,6 +7,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import { formatPrice } from "@/lib/format";
 import { useFavoriteVariantIds } from "@/lib/favorites";
 import { MAX_COMPARISON_ITEMS } from "@/lib/comparison";
+import { colorLabel } from "@/lib/colorSwatch";
 
 type FavoriteItem = {
   variantId: string;
@@ -23,7 +24,7 @@ type FavoriteItem = {
 
 function variantLabel(item: FavoriteItem) {
   return (
-    [item.memory, item.color, item.region].filter(Boolean).join(" · ") || "Стандарт"
+    [item.memory, colorLabel(item.color), item.region].filter(Boolean).join(" · ") || "Стандарт"
   );
 }
 

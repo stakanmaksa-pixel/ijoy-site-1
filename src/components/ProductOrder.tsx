@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { formatPrice } from "@/lib/format";
-import { colorToHex } from "@/lib/colorSwatch";
+import { colorLabel, colorToHex } from "@/lib/colorSwatch";
 import { PhoneField, phoneWithCountryCode } from "@/components/PhoneField";
 import { CartButton } from "@/components/CartButton";
 
@@ -22,7 +22,7 @@ type Axis = "memory" | "color" | "region";
 const PRICE_ON_REQUEST = "Уточняйте у менеджера";
 
 function variantLabel(v: Variant) {
-  return [v.memory, v.color, v.region].filter(Boolean).join(" · ") || "Стандарт";
+  return [v.memory, colorLabel(v.color), v.region].filter(Boolean).join(" · ") || "Стандарт";
 }
 
 function priceLabel(v: Variant | undefined): string {
@@ -215,7 +215,7 @@ export function ProductOrder({
         <div>
           <div className="mb-2 text-sm font-medium text-foreground">
             {axisLabel(axis, options)}
-            {value && <span className="font-normal text-zinc-500"> · {value}</span>}
+            {value && <span className="font-normal text-zinc-500"> · {colorLabel(value)}</span>}
           </div>
           <div className="flex flex-wrap gap-3">
             {options.map((opt) => {
@@ -228,8 +228,8 @@ export function ProductOrder({
                   type="button"
                   onClick={() => pick("color", opt)}
                   disabled={!available}
-                  title={`${opt}${previewVariant ? ` · ${priceLabel(previewVariant)}` : ""}`}
-                  aria-label={opt}
+                  title={`${colorLabel(opt)}${previewVariant ? ` · ${priceLabel(previewVariant)}` : ""}`}
+                  aria-label={colorLabel(opt)}
                   className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-colors ${
                     isSelected ? "border-brand" : "border-transparent hover:border-zinc-300"
                   } ${!available ? "cursor-not-allowed opacity-40" : ""}`}

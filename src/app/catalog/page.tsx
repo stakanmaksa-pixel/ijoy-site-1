@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { ProductCard } from "@/components/ProductCard";
 import { PageHero } from "@/components/PageHero";
 import { CallbackForm } from "@/components/CallbackForm";
+import { CatalogAutoForm } from "@/components/CatalogAutoForm";
+import { colorLabel } from "@/lib/colorSwatch";
 import {
   getCategoriesWithCounts,
   getCatalogFilterOptions,
@@ -16,6 +18,7 @@ export const metadata: Metadata = {
 function toSingle(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
 }
+function toList(value: string | string[] | undefined) { return (Array.isArray(value) ? value : value ? [value] : []).filter(Boolean); }
 
 export default async function CatalogPage({
   searchParams,
@@ -24,10 +27,10 @@ export default async function CatalogPage({
 }) {
   const params = await searchParams;
   const categorySlug = toSingle(params.category);
-  const brand = toSingle(params.brand);
-  const productSlug = toSingle(params.product);
-  const memory = toSingle(params.memory);
-  const color = toSingle(params.color);
+  const brand = toList(params.brand);
+  const productSlug = toList(params.product);
+  const memory = toList(params.memory);
+  const color = toList(params.color);
   const onlyInStock = toSingle(params.inStock) === "1";
   const minPrice = toSingle(params.minPrice);
   const maxPrice = toSingle(params.maxPrice);
@@ -38,10 +41,10 @@ export default async function CatalogPage({
     getDistinctBrands(),
     getPublishedProducts({
       categorySlug: categorySlug || undefined,
-      brand: brand || undefined,
-      productSlug: productSlug || undefined,
-      memory: memory || undefined,
-      color: color || undefined,
+      brand: brand.length ? brand : undefined,
+      productSlug: productSlug.length ? productSlug : undefined,
+      memory: memory.length ? memory : undefined,
+      color: color.length ? color : undefined,
       onlyInStock,
       minPrice: minPrice ? Number(minPrice) : undefined,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
@@ -49,12 +52,12 @@ export default async function CatalogPage({
     }),
     getCatalogFilterOptions({
       categorySlug: categorySlug || undefined,
-      brand: brand || undefined,
+      brand: brand.length ? brand : undefined,
     }),
     getCatalogFilterOptions({
       categorySlug: categorySlug || undefined,
-      brand: brand || undefined,
-      productSlug: productSlug || undefined,
+      brand: brand.length ? brand : undefined,
+      productSlug: productSlug.length ? productSlug : undefined,
     }),
   ]);
 
@@ -75,7 +78,7 @@ export default async function CatalogPage({
 
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[240px_1fr]">
           <aside>
-            <form method="get" className="flex flex-col gap-6">
+            <CatalogAutoForm>
               {search && <input type="hidden" name="q" value={search} />}
               <div>
                 <div className="mb-3 text-sm font-medium text-foreground">
@@ -112,65 +115,29 @@ export default async function CatalogPage({
 
               {brands.length > 0 && (
                 <div>
-                  <label className="mb-3 block text-sm font-medium text-foreground">
-                    Бренд
-                  </label>
-                  <select
-                    name="brand"
-                    defaultValue={brand || ""}
-                    className="w-full rounded-full border border-zinc-300 px-4 py-2.5 text-sm text-zinc-700 focus:border-accent focus:outline-none"
-                  >
-                    <option value="">Все бренды</option>
-                    {brands.map((b) => (
-                      <option key={b} value={b}>
-                        {b}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="mb-3 text-sm font-medium text-foreground">Бренд</div>
+                  <div className="space-y-2">{brands.map((b) => <label key={b} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="brand" value={b} defaultChecked={brand.includes(b)} className="h-4 w-4 accent-accent" />{b}</label>)}</div>
                 </div>
               )}
 
               {modelOptions.products.length > 1 && (
                 <div>
-                  <label className="mb-3 block text-sm font-medium text-foreground">Модель</label>
-                  <select
-                    name="product"
-                    defaultValue={productSlug || ""}
-                    className="w-full rounded-full border border-zinc-300 px-4 py-2.5 text-sm text-zinc-700 focus:border-accent focus:outline-none"
-                  >
-                    <option value="">Все модели</option>
-                    {modelOptions.products.map((product) => (
-                      <option key={product.slug} value={product.slug}>{product.name}</option>
-                    ))}
-                  </select>
+                  <div className="mb-3 text-sm font-medium text-foreground">Модель</div>
+                  <div className="max-h-52 space-y-2 overflow-y-auto pr-1">{modelOptions.products.map((product) => <label key={product.slug} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="product" value={product.slug} defaultChecked={productSlug.includes(product.slug)} className="h-4 w-4 accent-accent" />{product.name}</label>)}</div>
                 </div>
               )}
 
               {attributeOptions.memory.length > 0 && (
                 <div>
                   <label className="mb-3 block text-sm font-medium text-foreground">Память</label>
-                  <select
-                    name="memory"
-                    defaultValue={memory || ""}
-                    className="w-full rounded-full border border-zinc-300 px-4 py-2.5 text-sm text-zinc-700 focus:border-accent focus:outline-none"
-                  >
-                    <option value="">Любая</option>
-                    {attributeOptions.memory.map((value) => <option key={value} value={value}>{value}</option>)}
-                  </select>
+                  <div className="space-y-2">{attributeOptions.memory.map((value) => <label key={value} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="memory" value={value} defaultChecked={memory.includes(value)} className="h-4 w-4 accent-accent" />{value}</label>)}</div>
                 </div>
               )}
 
               {attributeOptions.colors.length > 0 && (
                 <div>
                   <label className="mb-3 block text-sm font-medium text-foreground">Цвет</label>
-                  <select
-                    name="color"
-                    defaultValue={color || ""}
-                    className="w-full rounded-full border border-zinc-300 px-4 py-2.5 text-sm text-zinc-700 focus:border-accent focus:outline-none"
-                  >
-                    <option value="">Любой</option>
-                    {attributeOptions.colors.map((value) => <option key={value} value={value}>{value}</option>)}
-                  </select>
+                  <div className="space-y-2">{attributeOptions.colors.map((value) => <label key={value} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="color" value={value} defaultChecked={color.includes(value)} className="h-4 w-4 accent-accent" />{colorLabel(value)}</label>)}</div>
                 </div>
               )}
 
@@ -201,14 +168,8 @@ export default async function CatalogPage({
                 Только в наличии
               </label>
 
-              <button
-                type="submit"
-                className="rounded-full bg-brand px-4 py-2.5 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark"
-              >
-                Применить
-              </button>
               <a href="/catalog" className="text-center text-sm text-zinc-500 hover:text-accent">Сбросить фильтры</a>
-            </form>
+            </CatalogAutoForm>
           </aside>
 
           <section>
