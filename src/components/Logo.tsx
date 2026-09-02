@@ -15,10 +15,10 @@ export function Logo({
 }) {
   const src = variant === "light" ? "/brand/logo-light.svg" : "/brand/logo.svg";
   return (
-    <Link href="/" className={`flex items-center ${className}`}>
+    <Link href="/" className={`flex shrink-0 items-center ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element -- статичный
       векторный логотип, next/image по умолчанию блокирует SVG-оптимизацию */}
-      <img src={src} alt="iJoy" className="h-8 w-auto sm:h-9" />
+      <img src={src} alt="iJoy" className="h-8 w-auto shrink-0 sm:h-9" />
     </Link>
   );
 }
