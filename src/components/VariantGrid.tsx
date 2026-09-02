@@ -58,52 +58,36 @@ export function VariantGrid({
 
   const compared = variants.filter((variant) => compareIds.includes(variant.id));
 
-  return (
-    <>
-      {hasFilters && (
-        <div className="mt-8 rounded-2xl border border-zinc-200 bg-zinc-50 p-4 sm:p-5">
-          <div className="flex flex-wrap items-end gap-3">
-            {memories.length > 1 && (
-              <label className="flex min-w-36 flex-1 flex-col gap-1.5 text-xs font-medium text-zinc-600">
-                Память
-                <select value={memory} onChange={(event) => setMemory(event.target.value)} className="rounded-full border border-zinc-300 bg-white px-3 py-2 text-sm font-normal text-foreground outline-none focus:border-accent">
-                  <option value="">Любая</option>
-                  {memories.map((value) => <option key={value} value={value}>{value}</option>)}
-                </select>
-              </label>
-            )}
-            {colors.length > 1 && (
-              <label className="flex min-w-36 flex-1 flex-col gap-1.5 text-xs font-medium text-zinc-600">
-                Цвет
-                <select value={color} onChange={(event) => setColor(event.target.value)} className="rounded-full border border-zinc-300 bg-white px-3 py-2 text-sm font-normal text-foreground outline-none focus:border-accent">
-                  <option value="">Любой</option>
-                  {colors.map((value) => <option key={value} value={value}>{value}</option>)}
-                </select>
-              </label>
-            )}
-            {regions.length > 1 && (
-              <label className="flex min-w-36 flex-1 flex-col gap-1.5 text-xs font-medium text-zinc-600">
-                Регион / SIM
-                <select value={region} onChange={(event) => setRegion(event.target.value)} className="rounded-full border border-zinc-300 bg-white px-3 py-2 text-sm font-normal text-foreground outline-none focus:border-accent">
-                  <option value="">Любой</option>
-                  {regions.map((value) => <option key={value} value={value}>{value}</option>)}
-                </select>
-              </label>
-            )}
-            {variants.some((variant) => !variant.inStock) && (
-              <label className="flex cursor-pointer items-center gap-2 rounded-full px-2 py-2 text-sm text-zinc-700">
-                <input type="checkbox" checked={onlyInStock} onChange={(event) => setOnlyInStock(event.target.checked)} className="h-4 w-4 accent-accent" />
-                В наличии
-              </label>
-            )}
-            {(memory || color || region || onlyInStock) && <button type="button" onClick={reset} className="px-2 py-2 text-sm text-zinc-500 hover:text-accent">Сбросить</button>}
-          </div>
-          <p className="mt-3 text-sm text-zinc-500">Показано вариантов: {filtered.length}</p>
-        </div>
-      )}
+  function FilterGroup({ label, value, values, onChange, anyLabel }: { label: string; value: string; values: string[]; onChange: (value: string) => void; anyLabel: string }) {
+    return <div>
+      <h3 className="text-sm font-semibold text-foreground">{label}</h3>
+      <div className="mt-2 flex flex-wrap gap-2 lg:flex-col lg:items-stretch">
+        <button type="button" onClick={() => onChange("")} className={`rounded-lg border px-3 py-2 text-left text-sm transition-colors ${!value ? "border-brand bg-brand text-white" : "border-zinc-200 bg-white text-zinc-700 hover:border-accent"}`}>{anyLabel}</button>
+        {values.map((item) => <button key={item} type="button" onClick={() => onChange(item)} className={`rounded-lg border px-3 py-2 text-left text-sm transition-colors ${value === item ? "border-brand bg-brand text-white" : "border-zinc-200 bg-white text-zinc-700 hover:border-accent"}`}>{item}</button>)}
+      </div>
+    </div>;
+  }
 
-      {filtered.length > 0 ? (
-        <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+  return (
+    <div className={hasFilters ? "mt-8 grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)]" : "mt-8"}>
+      {hasFilters && <aside className="h-fit rounded-2xl border border-zinc-200 bg-zinc-50 p-4 sm:p-5 lg:sticky lg:top-36">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="font-display text-base font-semibold text-foreground">Фильтры</h2>
+          {(memory || color || region || onlyInStock) && <button type="button" onClick={reset} className="text-sm text-zinc-500 hover:text-accent">Сбросить</button>}
+        </div>
+        <p className="mt-1 text-xs leading-5 text-zinc-500">Выберите нужные характеристики.</p>
+        <div className="mt-5 space-y-5">
+          {memories.length > 1 && <FilterGroup label="Память" value={memory} values={memories} onChange={setMemory} anyLabel="Любая" />}
+          {colors.length > 1 && <FilterGroup label="Цвет" value={color} values={colors} onChange={setColor} anyLabel="Любой" />}
+          {regions.length > 1 && <FilterGroup label="Регион / SIM" value={region} values={regions} onChange={setRegion} anyLabel="Любой" />}
+          {variants.some((variant) => !variant.inStock) && <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" checked={onlyInStock} onChange={(event) => setOnlyInStock(event.target.checked)} className="h-4 w-4 accent-accent" /> Только в наличии</label>}
+        </div>
+      </aside>}
+
+      <div>
+        <p className="mb-4 text-sm text-zinc-500">Показано вариантов: {filtered.length}</p>
+        {filtered.length > 0 ? (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
           {filtered.map((variant) => {
             const selected = compareIds.includes(variant.id);
             const limitReached = !selected && compareIds.length >= 3;
@@ -122,7 +106,7 @@ export function VariantGrid({
             );
           })}
         </div>
-      ) : (
+        ) : (
         <p className="mt-5 text-sm text-zinc-500">Нет вариантов с такими параметрами.</p>
       )}
 
@@ -155,6 +139,7 @@ export function VariantGrid({
           </div>
         </section>
       )}
-    </>
+      </div>
+    </div>
   );
 }
