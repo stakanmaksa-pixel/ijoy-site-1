@@ -196,6 +196,22 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
     { label: "Наушники AirPods", test: (name) => /airpods/i.test(name), order: MODEL_DISPLAY_ORDER.airpods },
     { label: "Apple TV", test: (name) => /apple\s*tv/i.test(name) },
   ],
+  // В ноутбуках названия особенно длинные и раньше превращали меню в
+  // неудобную простыню. Группы повторяют привычную структуру Apple:
+  // Neo → Air (поколение и диагональ) → Pro (поколение). Клик по группе
+  // показывает все модели этой серии в каталоге, наведение/тап — точные
+  // конфигурации в следующей колонке.
+  noutbuki: [
+    { label: "Apple MacBook Neo", test: (name) => /macbook\s+neo/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Neo" },
+    { label: "Apple MacBook Air M5 13\"", test: (name) => /macbook\s+air/i.test(name) && /m5/i.test(name) && /13/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M5%2013" },
+    { label: "Apple MacBook Air M5 15\"", test: (name) => /macbook\s+air/i.test(name) && /m5/i.test(name) && /15/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M5%2015" },
+    { label: "Apple MacBook Air M4 13\"", test: (name) => /macbook\s+air/i.test(name) && /m4/i.test(name) && /13/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M4%2013" },
+    { label: "Apple MacBook Air M4 15\"", test: (name) => /macbook\s+air/i.test(name) && /m4/i.test(name) && /15/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M4%2015" },
+    { label: "Apple MacBook Pro M5 14\"–16\"", test: (name) => /macbook\s+pro.*m5|macbook\s+pro\s+m5/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Pro%20M5" },
+    { label: "Apple MacBook Pro M4 14\"–16\"", test: (name) => /macbook\s+pro.*m4|macbook\s+pro\s+m4/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Pro%20M4" },
+    { label: "Apple MacBook Air — другие", test: (name) => /macbook\s+air/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air" },
+    { label: "Apple MacBook Pro — другие", test: (name) => /macbook\s+pro/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Pro" },
+  ],
 };
 
 // Категории без деления на линейки (один бренд на категорию) — тут просто
