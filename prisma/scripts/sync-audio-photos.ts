@@ -13,7 +13,7 @@ import { PrismaClient } from "../../src/generated/prisma/client";
 
 type AudioJob = {
   label: string;
-  match: string;
+  matches: string[];
   sourcePage: string;
   fallbackImage?: string;
 };
@@ -21,20 +21,20 @@ type AudioJob = {
 const jobs: AudioJob[] = [
   {
     label: "AirPods Pro 3",
-    match: "AirPods Pro 3",
+    matches: ["AirPods Pro 3", "AirPods Pro (3"],
     sourcePage: "https://re-store.ru/catalog/MFHP4_BLK/",
     fallbackImage: "https://www.apple.com/newsroom/images/2025/09/introducing-airpods-pro-3-the-ultimate-audio-experience/article/Apple-AirPods-Pro-3-hero-250909_inline.jpg.large.jpg",
   },
-  { label: "AirPods 4", match: "AirPods 4", sourcePage: "https://re-store.ru/catalog/MXP63/" },
+  { label: "AirPods 4", matches: ["AirPods 4", "AirPods (4"], sourcePage: "https://re-store.ru/catalog/MXP63/" },
   {
     label: "AirPods Max 2",
-    match: "AirPods Max 2",
+    matches: ["AirPods Max 2"],
     sourcePage: "https://www.apple.com/airpods-max/",
     fallbackImage: "https://www.apple.com/newsroom/images/2026/03/apple-introduces-airpods-max-2/article/Apple-AirPods-Max-2-color-lineup_big.jpg.large.jpg",
   },
-  { label: "Galaxy Buds4 Pro", match: "Galaxy Buds4 Pro", sourcePage: "https://re-store.ru/catalog/SM-R640NWHT1S/" },
-  { label: "Galaxy Buds4", match: "Galaxy Buds4", sourcePage: "https://re-store.ru/catalog/SM-R540NBLK1S/" },
-  { label: "Galaxy Buds3 Pro", match: "Galaxy Buds3 Pro", sourcePage: "https://re-store.ru/catalog/SM-R630NZWHT1S/" },
+  { label: "Galaxy Buds4 Pro", matches: ["Galaxy Buds4 Pro"], sourcePage: "https://re-store.ru/catalog/SM-R640NWHT1S/" },
+  { label: "Galaxy Buds4", matches: ["Galaxy Buds4"], sourcePage: "https://re-store.ru/catalog/SM-R540NBLK1S/" },
+  { label: "Galaxy Buds3 Pro", matches: ["Galaxy Buds3 Pro"], sourcePage: "https://re-store.ru/catalog/SM-R630NZWHT1S/" },
 ];
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
@@ -66,13 +66,21 @@ async function main() {
   let updated = 0;
 
   for (const job of jobs) {
-    const products = await prisma.product.findMany({ where: { name: { contains: job.match, mode: "insensitive" } } });
+    const products = await prisma.product.findMany({
+      where: { OR: job.matches.map((match) => ({ name: { contains: match, mode: "insensitive" } })) },
+    });
     if (!products.length) {
       console.log(`SKIP ${job.label}: товара нет в базе`);
       continue;
     }
 
-    const imageUrl = await resolveImage(job);
+    let imageUrl: string;
+    try {
+      imageUrl = await resolveImage(job);
+    } catch (error) {
+      console.error(`SKIP ${job.label}: ${error instanceof Error ? error.message : error}`);
+      continue;
+    }
     for (const product of products) {
       const destinationDir = path.join(process.cwd(), "public", "uploads", "products", product.slug);
       await mkdir(destinationDir, { recursive: true });
