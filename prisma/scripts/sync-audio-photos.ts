@@ -16,6 +16,7 @@ type AudioJob = {
   matches: string[];
   sourcePage: string;
   fallbackImage?: string;
+  exclude?: RegExp;
 };
 
 const jobs: AudioJob[] = [
@@ -29,10 +30,9 @@ const jobs: AudioJob[] = [
   {
     label: "AirPods Max 2",
     matches: ["AirPods Max 2"],
-    sourcePage: "https://www.apple.com/airpods-max/",
-    fallbackImage: "https://www.apple.com/newsroom/images/2024/09/apple-introduces-airpods-max-in-new-colors/article/Apple-AirPods-Max-midnight-240909_inline.jpg.large.jpg",
+    sourcePage: "https://www.apple.com/newsroom/2026/03/apple-introduces-airpods-max-2-powered-by-h2/",
+    fallbackImage: "https://www.apple.com/v/airpods-max/k/images/overview/welcome/max-loop_startframe__c0vn1ukmh7ma_xlarge.jpg",
   },
-  { label: "AirPods Max", matches: ["AirPods Max"], sourcePage: "https://www.apple.com/newsroom/2024/09/apple-introduces-airpods-4-and-a-hearing-health-experience-with-airpods-pro-2/" },
   { label: "AirPods Pro 2", matches: ["AirPods Pro 2", "AirPods Pro (2"], sourcePage: "https://www.apple.com/newsroom/2023/09/apple-upgrades-airpods-pro-2nd-generation-with-usb-c-charging/" },
   { label: "Galaxy Buds4 Pro", matches: ["Galaxy Buds4 Pro"], sourcePage: "https://re-store.ru/catalog/SM-R640NWHT1S/" },
   { label: "Galaxy Buds4", matches: ["Galaxy Buds4"], sourcePage: "https://re-store.ru/catalog/SM-R540NBLK1S/" },
@@ -70,9 +70,10 @@ async function main() {
   let updated = 0;
 
   for (const job of jobs) {
-    const products = await prisma.product.findMany({
+    const matchingProducts = await prisma.product.findMany({
       where: { OR: job.matches.map((match) => ({ name: { contains: match, mode: "insensitive" } })) },
     });
+    const products = job.exclude ? matchingProducts.filter((product) => !job.exclude?.test(product.name)) : matchingProducts;
     if (!products.length) {
       console.log(`SKIP ${job.label}: товара нет в базе`);
       continue;
@@ -111,7 +112,9 @@ async function main() {
       const publicPath = `/uploads/products/${product.slug}/${fileName}`;
       await prisma.product.update({
         where: { id: product.id },
-        data: { images: Array.from(new Set([...product.images, publicPath])) },
+        // Оставляем только проверенную обложку: старая общая картинка
+        // линейки не должна оставаться первой в карточке конкретной модели.
+        data: { images: [publicPath] },
       });
       updated += 1;
       console.log(`OK   ${product.name}`);

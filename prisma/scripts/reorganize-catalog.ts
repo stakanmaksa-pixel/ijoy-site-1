@@ -14,6 +14,12 @@ async function main() {
   const tv = await prisma.category.upsert({ where: { slug: "tv-pristavki" }, update: { name: "ТВ-приставки", sortOrder: 45 }, create: { slug: "tv-pristavki", name: "ТВ-приставки", sortOrder: 45 } });
 
   const audio = await prisma.product.updateMany({ where: { OR: [{ name: { contains: "AirPods", mode: "insensitive" } }, { name: { contains: "Galaxy Buds", mode: "insensitive" } }] }, data: { categoryId: headphones.id } });
+  // В витрине остаётся актуальный AirPods Max 2. Старую модель скрываем,
+  // сохраняя её записи и историю цен в базе на случай возврата.
+  const retiredAirPodsMax = await prisma.product.updateMany({
+    where: { name: { equals: "AirPods Max", mode: "insensitive" } },
+    data: { status: "DRAFT" },
+  });
   const appleTv = await prisma.product.updateMany({ where: { name: { contains: "Apple TV", mode: "insensitive" } }, data: { categoryId: tv.id } });
 
   // Apple TV 4K на 64 и 128 ГБ — это одна модель с разной памятью, а не
@@ -65,6 +71,6 @@ async function main() {
     }
     await prisma.product.update({ where: { id: neo.id }, data: { name: "MacBook Neo", description: "MacBook Neo с чипом A18 Pro. Выберите память и цвет. Цену и доступность подтвердит менеджер." } });
   }
-  console.log(`Перенесено: наушники ${audio.count}, ТВ-приставки ${appleTv.count}, объединено Watch S11: ${shortS11.length}, Apple TV: ${appleTvProducts.length}.`);
+  console.log(`Перенесено: наушники ${audio.count}, скрыто старых AirPods Max: ${retiredAirPodsMax.count}, ТВ-приставки ${appleTv.count}, объединено Watch S11: ${shortS11.length}, Apple TV: ${appleTvProducts.length}.`);
 }
 main().catch((error) => { console.error(error); process.exitCode = 1; }).finally(() => prisma.$disconnect());
