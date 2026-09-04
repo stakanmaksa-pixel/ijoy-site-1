@@ -42,7 +42,9 @@ async function main() {
 
     await prisma.product.update({
       where: { id: product.id },
-      data: { images: Array.from(new Set([...product.images, ...paths])) },
+      // Заменяем старые пути, чтобы сломанная ссылка из прошлой попытки не
+      // оставалась первой картинкой карточки.
+      data: { images: paths },
     });
     console.log(`OK   ${product.name}: ${paths.length} фото`);
   }
