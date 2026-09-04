@@ -15,6 +15,7 @@ type AudioJob = {
   label: string;
   matches: string[];
   sourcePage: string;
+  directImage?: string;
   fallbackImage?: string;
   exclude?: RegExp;
 };
@@ -23,17 +24,23 @@ const jobs: AudioJob[] = [
   {
     label: "AirPods Pro 3",
     matches: ["AirPods Pro 3", "AirPods Pro (3"],
-    sourcePage: "https://re-store.ru/catalog/MFHP4_BLK/",
-    fallbackImage: "https://www.apple.com/newsroom/images/2025/09/introducing-airpods-pro-3-the-ultimate-audio-experience/article/Apple-AirPods-Pro-3-hero-250909_inline.jpg.large.jpg",
+    sourcePage: "https://www.apple.com/airpods-pro/",
+    directImage: "https://www.apple.com/v/airpods-pro/s/images/overview/welcome/hero__b0eal3mn03ua_large.jpg",
   },
-  { label: "AirPods 4", matches: ["AirPods 4", "AirPods (4"], sourcePage: "https://www.apple.com/newsroom/2024/09/apple-introduces-airpods-4-and-a-hearing-health-experience-with-airpods-pro-2/" },
+  {
+    label: "AirPods 4 ANC",
+    matches: ["AirPods 4 ANC"],
+    sourcePage: "https://www.apple.com/airpods-4/",
+    directImage: "https://www.apple.com/newsroom/images/2024/09/apple-introduces-airpods-4/article/Apple-AirPods-wireless-charging-240909_inline.jpg.large.jpg",
+  },
+  { label: "AirPods 4", matches: ["AirPods 4", "AirPods (4"], exclude: /anc/i, sourcePage: "https://www.apple.com/airpods-4/", directImage: "https://www.apple.com/v/airpods-4/g/images/overview/bento-gallery/bento_case_open__63kccmu775u6_xlarge.jpg" },
   {
     label: "AirPods Max 2",
     matches: ["AirPods Max 2"],
     sourcePage: "https://www.apple.com/newsroom/2026/03/apple-introduces-airpods-max-2-powered-by-h2/",
-    fallbackImage: "https://www.apple.com/v/airpods-max/k/images/overview/welcome/max-loop_startframe__c0vn1ukmh7ma_xlarge.jpg",
+    directImage: "https://www.apple.com/v/airpods-max/k/images/overview/welcome/max-loop_startframe__c0vn1ukmh7ma_xlarge.jpg",
   },
-  { label: "AirPods Pro 2", matches: ["AirPods Pro 2", "AirPods Pro (2"], sourcePage: "https://www.apple.com/newsroom/2023/09/apple-upgrades-airpods-pro-2nd-generation-with-usb-c-charging/" },
+  { label: "AirPods Pro 2", matches: ["AirPods Pro 2", "AirPods Pro (2"], sourcePage: "https://www.apple.com/newsroom/2023/09/apple-upgrades-airpods-pro-2nd-generation-with-usb-c-charging/", directImage: "https://www.apple.com/newsroom/images/2023/09/apple-introduces-new-airpods-pro-2nd-generation/article/Apple-AirPods-Pro-2nd-generation-USB-C-connection-230912_inline.jpg.large.jpg" },
   { label: "Galaxy Buds4 Pro", matches: ["Galaxy Buds4 Pro"], sourcePage: "https://re-store.ru/catalog/SM-R640NWHT1S/" },
   { label: "Galaxy Buds4", matches: ["Galaxy Buds4"], sourcePage: "https://re-store.ru/catalog/SM-R540NBLK1S/" },
   { label: "Galaxy Buds3 Pro", matches: ["Galaxy Buds3 Pro"], sourcePage: "https://re-store.ru/catalog/SM-R630NZWHT1S/" },
@@ -51,7 +58,7 @@ function extractImageUrl(html: string): string | null {
 }
 
 async function resolveImageCandidates(job: AudioJob): Promise<string[]> {
-  const candidates: string[] = [];
+  const candidates: string[] = job.directImage ? [job.directImage] : [];
   try {
     const page = await fetch(job.sourcePage, { headers: { "User-Agent": "iJoy catalog photo sync" } });
     if (page.ok) {
