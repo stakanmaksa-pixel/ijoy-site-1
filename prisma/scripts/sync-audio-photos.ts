@@ -25,15 +25,15 @@ const jobs: AudioJob[] = [
     sourcePage: "https://re-store.ru/catalog/MFHP4_BLK/",
     fallbackImage: "https://www.apple.com/newsroom/images/2025/09/introducing-airpods-pro-3-the-ultimate-audio-experience/article/Apple-AirPods-Pro-3-hero-250909_inline.jpg.large.jpg",
   },
-  { label: "AirPods 4", matches: ["AirPods 4", "AirPods (4"], sourcePage: "https://re-store.ru/catalog/MXP63/", fallbackImage: "https://www.apple.com/newsroom/images/2024/09/introducing-airpods-4-with-the-worlds-best-in-ear-active-noise-cancellation/article/Apple-AirPods-4-hero-240909_inline.jpg.large.jpg" },
+  { label: "AirPods 4", matches: ["AirPods 4", "AirPods (4"], sourcePage: "https://www.apple.com/newsroom/2024/09/apple-introduces-airpods-4-and-a-hearing-health-experience-with-airpods-pro-2/" },
   {
     label: "AirPods Max 2",
     matches: ["AirPods Max 2"],
     sourcePage: "https://www.apple.com/airpods-max/",
     fallbackImage: "https://www.apple.com/newsroom/images/2024/09/apple-introduces-airpods-max-in-new-colors/article/Apple-AirPods-Max-midnight-240909_inline.jpg.large.jpg",
   },
-  { label: "AirPods Max", matches: ["AirPods Max"], sourcePage: "https://www.apple.com/airpods-max/", fallbackImage: "https://www.apple.com/newsroom/images/2024/09/apple-introduces-airpods-max-in-new-colors/article/Apple-AirPods-Max-midnight-240909_inline.jpg.large.jpg" },
-  { label: "AirPods Pro 2", matches: ["AirPods Pro 2", "AirPods Pro (2"], sourcePage: "https://re-store.ru/catalog/MTJV3/", fallbackImage: "https://www.apple.com/newsroom/images/2023/09/apple-upgrades-airpods-pro-2nd-generation-with-usb-c-charging/article/Apple-AirPods-Pro-2nd-gen-USB-C-hero-230912_big.jpg.large.jpg" },
+  { label: "AirPods Max", matches: ["AirPods Max"], sourcePage: "https://www.apple.com/newsroom/2024/09/apple-introduces-airpods-4-and-a-hearing-health-experience-with-airpods-pro-2/" },
+  { label: "AirPods Pro 2", matches: ["AirPods Pro 2", "AirPods Pro (2"], sourcePage: "https://www.apple.com/newsroom/2023/09/apple-upgrades-airpods-pro-2nd-generation-with-usb-c-charging/" },
   { label: "Galaxy Buds4 Pro", matches: ["Galaxy Buds4 Pro"], sourcePage: "https://re-store.ru/catalog/SM-R640NWHT1S/" },
   { label: "Galaxy Buds4", matches: ["Galaxy Buds4"], sourcePage: "https://re-store.ru/catalog/SM-R540NBLK1S/" },
   { label: "Galaxy Buds3 Pro", matches: ["Galaxy Buds3 Pro"], sourcePage: "https://re-store.ru/catalog/SM-R630NZWHT1S/" },
@@ -50,17 +50,19 @@ function extractImageUrl(html: string): string | null {
   return null;
 }
 
-async function resolveImage(job: AudioJob): Promise<string> {
+async function resolveImageCandidates(job: AudioJob): Promise<string[]> {
+  const candidates: string[] = [];
   try {
     const page = await fetch(job.sourcePage, { headers: { "User-Agent": "iJoy catalog photo sync" } });
     if (page.ok) {
       const image = extractImageUrl(await page.text());
-      if (image) return image;
+      if (image) candidates.push(image);
     }
   } catch {
-    // Ниже используется подтверждённый резервный источник, если он есть.
+    // Ниже используется резервный источник, если он есть.
   }
-  if (job.fallbackImage) return job.fallbackImage;
+  if (job.fallbackImage) candidates.push(job.fallbackImage);
+  if (candidates.length) return [...new Set(candidates)];
   throw new Error(`${job.label}: не удалось получить фото из карточки источника`);
 }
 
@@ -76,21 +78,36 @@ async function main() {
       continue;
     }
 
-    let imageUrl: string;
+    let imageUrls: string[];
     try {
-      imageUrl = await resolveImage(job);
+      imageUrls = await resolveImageCandidates(job);
     } catch (error) {
       console.error(`SKIP ${job.label}: ${error instanceof Error ? error.message : error}`);
       continue;
     }
     for (const product of products) {
+      let image: Buffer | null = null;
+      for (const imageUrl of imageUrls) {
+        try {
+          const response = await fetch(imageUrl, { headers: { "User-Agent": "iJoy catalog photo sync" } });
+          if (response.ok) {
+            image = Buffer.from(await response.arrayBuffer());
+            break;
+          }
+          console.warn(`WARN ${job.label}: HTTP ${response.status} для ${imageUrl}`);
+        } catch {
+          console.warn(`WARN ${job.label}: не удалось скачать ${imageUrl}`);
+        }
+      }
+      if (!image) {
+        console.error(`SKIP ${product.name}: фото недоступно`);
+        continue;
+      }
       const destinationDir = path.join(process.cwd(), "public", "uploads", "products", product.slug);
       await mkdir(destinationDir, { recursive: true });
-      const response = await fetch(imageUrl, { headers: { "User-Agent": "iJoy catalog photo sync" } });
-      if (!response.ok) throw new Error(`${job.label}: фото недоступно, HTTP ${response.status}`);
 
       const fileName = "cover.jpg";
-      await writeFile(path.join(destinationDir, fileName), Buffer.from(await response.arrayBuffer()));
+      await writeFile(path.join(destinationDir, fileName), image);
       const publicPath = `/uploads/products/${product.slug}/${fileName}`;
       await prisma.product.update({
         where: { id: product.id },
