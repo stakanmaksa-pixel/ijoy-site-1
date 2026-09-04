@@ -38,7 +38,7 @@ export default async function CatalogPage({
 
   const [categories, brands, products, modelOptions, attributeOptions] = await Promise.all([
     getCategoriesWithCounts(),
-    getDistinctBrands(),
+    getDistinctBrands(categorySlug || undefined),
     getPublishedProducts({
       categorySlug: categorySlug || undefined,
       brand: brand.length ? brand : undefined,

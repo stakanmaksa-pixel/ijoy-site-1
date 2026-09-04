@@ -462,9 +462,15 @@ export async function getCatalogFilterOptions(filters: Pick<CatalogFilters, "cat
   };
 }
 
-export async function getDistinctBrands() {
+export async function getDistinctBrands(categorySlug?: string) {
+  const where: Prisma.ProductWhereInput = {
+    status: "PUBLISHED",
+    brand: { not: null },
+  };
+  if (categorySlug) where.category = { slug: categorySlug };
+
   const rows = await prisma.product.findMany({
-    where: { status: "PUBLISHED", brand: { not: null } },
+    where,
     distinct: ["brand"],
     select: { brand: true },
     orderBy: { brand: "asc" },
