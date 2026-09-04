@@ -5,6 +5,7 @@ import { formatPrice } from "@/lib/format";
 import { colorLabel, colorToHex } from "@/lib/colorSwatch";
 import { PhoneField, phoneWithCountryCode } from "@/components/PhoneField";
 import { CartButton } from "@/components/CartButton";
+import { AddressAutocomplete } from "@/components/AddressAutocomplete";
 
 type Variant = {
   id: string;
@@ -43,12 +44,13 @@ function memorySortValue(value: string): number {
 
 function axisLabel(axis: Axis, values: string[]): string {
   if (axis === "memory") {
-    return values.every((v) => /mm$/i.test(v)) ? "Размер" : "Память";
+    return values.every((v) => /(?:mm|мм)$/i.test(v)) ? "Размер корпуса" : "Память";
   }
   if (axis === "color") return "Цвет";
   // region
   if (values.every((v) => /^(eSIM|SIM\+eSIM|2 SIM)$/.test(v))) return "Тип SIM";
   if (values.some((v) => /\p{Regional_Indicator}/u.test(v))) return "Регион";
+  if (values.some((v) => /(?:loop|band|ремешок)/i.test(v))) return "Ремешок";
   return "Комплектация";
 }
 
@@ -406,12 +408,10 @@ export function ProductOrder({
               </p>
             )}
             {deliveryMethod === "DELIVERY" && (
-              <textarea
+              <AddressAutocomplete
                 value={deliveryAddress}
-                onChange={(e) => setDeliveryAddress(e.target.value)}
-                placeholder="Адрес доставки (необязательно)"
-                className="mt-2 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm"
-                rows={2}
+                onChange={setDeliveryAddress}
+                className="mt-2 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm outline-none focus:border-accent"
               />
             )}
           </fieldset>

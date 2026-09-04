@@ -6,7 +6,7 @@ export function CatalogAutoForm({ children }: { children: React.ReactNode }) {
   const formRef = useRef<HTMLFormElement>(null);
   function submitIfChoice(target: HTMLInputElement | HTMLSelectElement) {
     if (target.name === "category") {
-      formRef.current?.querySelectorAll<HTMLInputElement>('input[name="brand"], input[name="product"], input[name="memory"], input[name="color"], input[name="inStock"]').forEach((input) => { input.checked = false; });
+      formRef.current?.querySelectorAll<HTMLInputElement>('input[name="brand"], input[name="product"], input[name="memory"], input[name="color"], input[name="region"], input[name="inStock"]').forEach((input) => { input.checked = false; });
     }
     if (target.type === "number" || target.tagName === "TEXTAREA") return;
     formRef.current?.requestSubmit();

@@ -42,6 +42,7 @@ export function VariantGrid({
       (!onlyInStock || variant.inStock),
   );
   const hasFilters = memories.length > 1 || colors.length > 1 || regions.length > 1 || variants.some((v) => !v.inStock);
+  const isWatch = memories.length > 0 && memories.every((value) => /(?:mm|мм)$/i.test(value));
 
   function reset() {
     setMemory("");
@@ -77,9 +78,9 @@ export function VariantGrid({
         </div>
         <p className="mt-1 text-xs leading-5 text-zinc-500">Выберите нужные характеристики.</p>
         <div className="mt-5 space-y-5">
-          {memories.length > 1 && <FilterGroup label="Память" value={memory} values={memories} onChange={setMemory} anyLabel="Любая" />}
-          {colors.length > 1 && <FilterGroup label="Цвет" value={color} values={colors} onChange={setColor} anyLabel="Любой" />}
-          {regions.length > 1 && <FilterGroup label="Регион / SIM" value={region} values={regions} onChange={setRegion} anyLabel="Любой" />}
+          {memories.length > 1 && <FilterGroup label={isWatch ? "Размер корпуса" : "Память"} value={memory} values={memories} onChange={setMemory} anyLabel="Любой" />}
+          {colors.length > 1 && <FilterGroup label={isWatch ? "Цвет корпуса" : "Цвет"} value={color} values={colors} onChange={setColor} anyLabel="Любой" />}
+          {regions.length > 1 && <FilterGroup label={isWatch ? "Ремешок" : "Регион / SIM"} value={region} values={regions} onChange={setRegion} anyLabel="Любой" />}
           {variants.some((variant) => !variant.inStock) && <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" checked={onlyInStock} onChange={(event) => setOnlyInStock(event.target.checked)} className="h-4 w-4 accent-accent" /> Только в наличии</label>}
         </div>
       </aside>}
@@ -123,9 +124,9 @@ export function VariantGrid({
             <table className="w-full min-w-[520px] text-left text-sm">
               <tbody>
                 {[
-                  ["Память", (variant: ProductVariantForGrid) => variant.memory || "—"],
-                  ["Цвет", (variant: ProductVariantForGrid) => variant.color || "—"],
-                  ["Регион / SIM", (variant: ProductVariantForGrid) => variant.region || "—"],
+                  [isWatch ? "Размер корпуса" : "Память", (variant: ProductVariantForGrid) => variant.memory || "—"],
+                  [isWatch ? "Цвет корпуса" : "Цвет", (variant: ProductVariantForGrid) => variant.color || "—"],
+                  [isWatch ? "Ремешок" : "Регион / SIM", (variant: ProductVariantForGrid) => variant.region || "—"],
                   ["Наличие", (variant: ProductVariantForGrid) => (variant.inStock ? "В наличии" : "Под заказ")],
                   ["Цена", (variant: ProductVariantForGrid) => (variant.price != null ? `${variant.price.toLocaleString("ru-RU")} ₽` : "Уточняйте у менеджера")],
                 ].map(([label, value]) => (

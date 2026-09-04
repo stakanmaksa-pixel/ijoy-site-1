@@ -20,8 +20,18 @@ async function main() {
   const shortS11 = await prisma.product.findMany({ where: { name: { contains: "Watch S11", mode: "insensitive" } } });
   if (series11) for (const duplicate of shortS11) if (duplicate.id !== series11.id) await moveVariantsAndRemove(duplicate.id, series11.id);
 
-  const neo = await prisma.product.findFirst({ where: { slug: "macbook-neo-13" } });
-  if (neo) await prisma.product.update({ where: { id: neo.id }, data: { name: "MacBook Neo", description: "MacBook Neo с чипом A18 Pro. Выберите память и цвет. Цену и доступность подтвердит менеджер." } });
+  const neoCandidates = await prisma.product.findMany({
+    where: { OR: [{ slug: "macbook-neo-13" }, { slug: "macbook-neo" }, { name: { equals: "MacBook Neo", mode: "insensitive" } }] },
+    orderBy: { createdAt: "asc" },
+  });
+  const neo = neoCandidates.find((product) => product.slug === "macbook-neo-13") ?? neoCandidates[0];
+  if (neo) {
+    for (const duplicate of neoCandidates) {
+      if (duplicate.id === neo.id) continue;
+      await moveVariantsAndRemove(duplicate.id, neo.id);
+    }
+    await prisma.product.update({ where: { id: neo.id }, data: { name: "MacBook Neo", description: "MacBook Neo с чипом A18 Pro. Выберите память и цвет. Цену и доступность подтвердит менеджер." } });
+  }
   console.log(`Перенесено: наушники ${audio.count}, ТВ-приставки ${appleTv.count}, объединено Watch S11: ${shortS11.length}.`);
 }
 main().catch((error) => { console.error(error); process.exitCode = 1; }).finally(() => prisma.$disconnect());

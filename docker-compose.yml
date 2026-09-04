@@ -48,6 +48,7 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       ORDER_EMAIL_FROM: ${ORDER_EMAIL_FROM:-}
       ORDER_EMAIL_TO: ${ORDER_EMAIL_TO:-}
+      DADATA_API_KEY: ${DADATA_API_KEY:-}
       PORT: 3000
     ports:
       - "3000:3000"

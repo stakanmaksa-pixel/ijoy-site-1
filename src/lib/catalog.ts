@@ -143,6 +143,9 @@ type LineMatcher = {
   label: string;
   test: (name: string, brand: string | null) => boolean;
   groupHref?: string;
+  // У Neo один товар с несколькими конфигурациями. В меню он должен вести
+  // сразу в выдачу ноутбуков, а не открывать ещё один уровень меню.
+  alwaysUseGroupHref?: boolean;
   order?: readonly string[];
 };
 
@@ -202,7 +205,7 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
   // показывает все модели этой серии в каталоге, наведение/тап — точные
   // конфигурации в следующей колонке.
   noutbuki: [
-    { label: "Apple MacBook Neo", test: (name) => /macbook\s+neo/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Neo" },
+    { label: "Apple MacBook Neo", test: (name) => /macbook\s+neo/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Neo", alwaysUseGroupHref: true },
     { label: "Apple MacBook Air M5 13\"", test: (name) => /macbook\s+air/i.test(name) && /m5/i.test(name) && /13/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M5%2013" },
     { label: "Apple MacBook Air M5 15\"", test: (name) => /macbook\s+air/i.test(name) && /m5/i.test(name) && /15/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M5%2015" },
     { label: "Apple MacBook Air M4 13\"", test: (name) => /macbook\s+air/i.test(name) && /m4/i.test(name) && /13/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M4%2013" },
@@ -287,7 +290,9 @@ export const getCatalogNavTree = unstable_cache(async (): Promise<CatalogNavNode
         if (items.length > 0) {
           // Одна модель в серии не нуждается в лишней подкатегории:
           // MacBook Air M5 13" сразу открывает товар, как iPhone 17 Pro Max.
-          groups.push(items.length === 1 ? { ...items[0], label: matcher.label } : { label: matcher.label, href: matcher.groupHref, children: items });
+          groups.push(items.length === 1 && !matcher.alwaysUseGroupHref
+            ? { ...items[0], label: matcher.label }
+            : { label: matcher.label, href: matcher.groupHref, children: items });
         }
       }
 
@@ -349,6 +354,7 @@ export type CatalogFilters = {
   productSlug?: string[];
   memory?: string[];
   color?: string[];
+  region?: string[];
   onlyInStock?: boolean;
   minPrice?: number;
   maxPrice?: number;
@@ -386,6 +392,7 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
   }
   if (filters.memory?.length) variantWhere.memory = { in: filters.memory };
   if (filters.color?.length) variantWhere.color = { in: filters.color };
+  if (filters.region?.length) variantWhere.region = { in: filters.region };
   if (filters.onlyInStock) variantWhere.inStock = true;
 
   if (Object.keys(variantWhere).length > 0) {
@@ -421,6 +428,7 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
           if (filters.maxPrice != null && (variant.price === null || Number(variant.price) > filters.maxPrice)) return false;
           if (filters.memory?.length && (!variant.memory || !filters.memory.includes(variant.memory))) return false;
           if (filters.color?.length && (!variant.color || !filters.color.includes(variant.color))) return false;
+          if (filters.region?.length && (!variant.region || !filters.region.includes(variant.region))) return false;
           if (filters.onlyInStock && !variant.inStock) return false;
           return true;
         })
@@ -440,7 +448,7 @@ export async function getCatalogFilterOptions(filters: Pick<CatalogFilters, "cat
     select: {
       name: true,
       slug: true,
-      variants: { select: { memory: true, color: true } },
+      variants: { select: { memory: true, color: true, region: true } },
     },
     orderBy: { name: "asc" },
   });
@@ -459,6 +467,7 @@ export async function getCatalogFilterOptions(filters: Pick<CatalogFilters, "cat
     products,
     memory,
     colors: unique(products.flatMap((product) => product.variants.map((variant) => variant.color))).sort(),
+    regions: unique(products.flatMap((product) => product.variants.map((variant) => variant.region))).sort(),
   };
 }
 

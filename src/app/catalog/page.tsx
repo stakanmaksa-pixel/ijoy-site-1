@@ -31,6 +31,7 @@ export default async function CatalogPage({
   const productSlug = toList(params.product);
   const memory = toList(params.memory);
   const color = toList(params.color);
+  const region = toList(params.region);
   const onlyInStock = toSingle(params.inStock) === "1";
   const minPrice = toSingle(params.minPrice);
   const maxPrice = toSingle(params.maxPrice);
@@ -45,6 +46,7 @@ export default async function CatalogPage({
       productSlug: productSlug.length ? productSlug : undefined,
       memory: memory.length ? memory : undefined,
       color: color.length ? color : undefined,
+      region: region.length ? region : undefined,
       onlyInStock,
       minPrice: minPrice ? Number(minPrice) : undefined,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
@@ -60,6 +62,7 @@ export default async function CatalogPage({
       productSlug: productSlug.length ? productSlug : undefined,
     }),
   ]);
+  const isWatchCategory = categorySlug === "chasy";
 
   return (
     <div>
@@ -129,15 +132,22 @@ export default async function CatalogPage({
 
               {attributeOptions.memory.length > 0 && (
                 <div>
-                  <label className="mb-3 block text-sm font-medium text-foreground">Память</label>
+                  <label className="mb-3 block text-sm font-medium text-foreground">{isWatchCategory ? "Размер корпуса" : "Память"}</label>
                   <div className="space-y-2">{attributeOptions.memory.map((value) => <label key={value} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="memory" value={value} defaultChecked={memory.includes(value)} className="h-4 w-4 accent-accent" />{value}</label>)}</div>
                 </div>
               )}
 
               {attributeOptions.colors.length > 0 && (
                 <div>
-                  <label className="mb-3 block text-sm font-medium text-foreground">Цвет</label>
+                  <label className="mb-3 block text-sm font-medium text-foreground">{isWatchCategory ? "Цвет корпуса" : "Цвет"}</label>
                   <div className="space-y-2">{attributeOptions.colors.map((value) => <label key={value} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="color" value={value} defaultChecked={color.includes(value)} className="h-4 w-4 accent-accent" />{colorLabel(value)}</label>)}</div>
+                </div>
+              )}
+
+              {attributeOptions.regions.length > 0 && (
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-foreground">{isWatchCategory ? "Ремешок" : "Регион / SIM"}</label>
+                  <div className="max-h-52 space-y-2 overflow-y-auto pr-1">{attributeOptions.regions.map((value) => <label key={value} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="region" value={value} defaultChecked={region.includes(value)} className="h-4 w-4 accent-accent" />{value}</label>)}</div>
                 </div>
               )}
 
