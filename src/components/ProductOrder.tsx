@@ -68,6 +68,48 @@ function uniqueInOrder(values: (string | null)[]): string[] {
 
 type Selection = { memory: string | null; color: string | null; region: string | null };
 
+type WatchBandPart = "model" | "color" | "size";
+
+type WatchBand = {
+  model: string;
+  color: string;
+  size: string;
+};
+
+function parseWatchBand(region: string | null): WatchBand | null {
+  if (!region) return null;
+  const sizeMatch = region.trim().match(/(?:^|\s)(XS\/S|S\/M|M\/L|S|M|L)$/i);
+  const size = sizeMatch?.[1].toUpperCase() ?? "Универсальный";
+  const withoutSize = sizeMatch ? region.slice(0, sizeMatch.index).trim() : region.trim();
+  const colorMatch = withoutSize.match(/^(.*?)\s*\(([^()]+)\)$/);
+  return {
+    model: colorMatch?.[1]?.trim() || withoutSize,
+    color: colorMatch?.[2]?.trim() || "Стандартный",
+    size,
+  };
+}
+
+function watchBandLabel(value: string) {
+  const translations: Record<string, string> = {
+    "Black/Charcoal": "Чёрный/угольный",
+    "Blue/Bright Blue": "Синий/ярко-синий",
+    Black: "Чёрный",
+    "Black Titanium": "Чёрный титан",
+    "Natural Titanium": "Натуральный титан",
+    "Light Blue": "Светло-голубой",
+    "Anchor Blue": "Синий Anchor",
+    "Neon Green": "Неоново-зелёный",
+    "Purple Fog": "Сиреневый туман",
+    "Light Blush": "Светло-розовый",
+    Gold: "Золотой",
+    Natural: "Натуральный",
+    Slate: "Графитовый",
+    "Стандартный": "Стандартный",
+    "Универсальный": "Универсальный",
+  };
+  return translations[value] ?? value;
+}
+
 function findVariant(variants: Variant[], sel: Selection): Variant | undefined {
   return variants.find(
     (v) =>
@@ -98,6 +140,7 @@ export function ProductOrder({
   const hasMemory = variants.some((v) => v.memory);
   const hasColor = variants.some((v) => v.color);
   const hasRegion = variants.some((v) => v.region);
+  const isWatch = variants.some((v) => /(?:loop|band|ремешок)/i.test(v.region ?? ""));
 
   const memoryOptions = useMemo(
     () => (hasMemory ? uniqueInOrder(variants.map((v) => v.memory)).sort((a, b) => memorySortValue(a) - memorySortValue(b)) : []),
@@ -152,6 +195,32 @@ export function ProductOrder({
       const fallback = candidates.find((v) => v.inStock) ?? candidates[0];
       if (!fallback) return next;
       return { memory: fallback.memory, color: fallback.color, region: fallback.region };
+    });
+  }
+
+  function pickWatchBand(part: WatchBandPart, value: string) {
+    setSelection((prev) => {
+      const currentBand = parseWatchBand(prev.region);
+      const compatible = variants.filter((variant) =>
+        (prev.memory === null || variant.memory === prev.memory) &&
+        (prev.color === null || variant.color === prev.color) &&
+        parseWatchBand(variant.region)?.[part] === value,
+      );
+      const ranked = [...compatible].sort((a, b) => {
+        const score = (variant: Variant) => {
+          const band = parseWatchBand(variant.region);
+          if (!band || !currentBand) return variant.inStock ? 1 : 0;
+          return (variant.inStock ? 8 : 0) +
+            (band.model === currentBand.model ? 4 : 0) +
+            (band.color === currentBand.color ? 2 : 0) +
+            (band.size === currentBand.size ? 1 : 0);
+        };
+        return score(b) - score(a);
+      });
+      const fallback = ranked[0];
+      return fallback
+        ? { memory: fallback.memory, color: fallback.color, region: fallback.region }
+        : prev;
     });
   }
 
@@ -280,11 +349,61 @@ export function ProductOrder({
     );
   }
 
+  function WatchBandSelector() {
+    const current = parseWatchBand(selection.region);
+    const compatible = variants.filter((variant) =>
+      (selection.memory === null || variant.memory === selection.memory) &&
+      (selection.color === null || variant.color === selection.color),
+    );
+    const modelOptions = uniqueInOrder(compatible.map((variant) => parseWatchBand(variant.region)?.model ?? null));
+    const colorOptions = uniqueInOrder(compatible
+      .filter((variant) => parseWatchBand(variant.region)?.model === current?.model)
+      .map((variant) => parseWatchBand(variant.region)?.color ?? null));
+    const sizeOrder = ["XS/S", "S/M", "M/L", "S", "M", "L", "Универсальный"];
+    const sizeOptions = uniqueInOrder(compatible
+      .filter((variant) => {
+        const band = parseWatchBand(variant.region);
+        return band?.model === current?.model && band?.color === current?.color;
+      })
+      .map((variant) => parseWatchBand(variant.region)?.size ?? null))
+      .sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b));
+
+    function PartSelector({ label, part, options }: { label: string; part: WatchBandPart; options: string[] }) {
+      if (!options.length) return null;
+      return <div>
+        <div className="mb-2 text-sm font-medium text-foreground">{label}</div>
+        <div className="flex flex-wrap gap-2">
+          {options.map((option) => {
+            const selectedValue = current?.[part] === option;
+            return <button
+              key={option}
+              type="button"
+              onClick={() => pickWatchBand(part, option)}
+              className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+                selectedValue
+                  ? "border-brand bg-brand text-white"
+                  : "border-zinc-300 text-zinc-700 hover:border-accent"
+              }`}
+            >
+              {part === "color" ? watchBandLabel(option) : option}
+            </button>;
+          })}
+        </div>
+      </div>;
+    }
+
+    return <>
+      <PartSelector label="Модель ремешка" part="model" options={modelOptions} />
+      <PartSelector label="Цвет ремешка" part="color" options={colorOptions} />
+      <PartSelector label="Размер ремешка" part="size" options={sizeOptions} />
+    </>;
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <AxisSelector axis="memory" options={memoryOptions} />
       <AxisSelector axis="color" options={colorOptions} />
-      <AxisSelector axis="region" options={regionOptions} />
+      {isWatch ? <WatchBandSelector /> : <AxisSelector axis="region" options={regionOptions} />}
 
       {selected && (
         <div className="font-display text-2xl font-semibold text-foreground">
