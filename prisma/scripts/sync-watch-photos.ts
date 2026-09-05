@@ -1,6 +1,7 @@
 // Сохраняет официальные фото актуальных Apple Watch в общий uploads volume.
 // Ultra 3 получает фото каждой точной конфигурации (корпус + ремешок),
-// Series 11 и SE 3 — отдельное фото для каждого цвета корпуса.
+// Series 11 получает отдельное фото для каждого цвета корпуса, а SE 3 —
+// точное фото для сочетания размера и цвета корпуса.
 // docker compose --env-file .env.docker run --rm migrate npx tsx prisma/scripts/sync-watch-photos.ts
 
 import "dotenv/config";
@@ -74,11 +75,14 @@ const colorSources: Record<string, Record<string, ImageSource>> = {
     "Natural Titanium": directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/42-cell-titanium-natural-milanese-natural-s11?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-natural"),
     "Slate Titanium": directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/42-cell-titanium-slate-milanese-slate-s11?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-slate"),
   },
-  "apple-watch-se-3": {
-    Starlight: directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/40-nc-aluminum-starlight-sport-band-starlight-se?wid=1000&hei=1000&fmt=jpeg&qlt=95", "starlight"),
-    Midnight: directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/40-nc-aluminum-midnight-sport-band-midnight-se?wid=1000&hei=1000&fmt=jpeg&qlt=95", "midnight"),
-  },
 };
+
+const se3Sources = new Map<string, ImageSource>([
+  [exactKey("40 мм", "Midnight"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/40-nc-aluminum-midnight-sport-band-midnight-se?wid=1000&hei=1000&fmt=jpeg&qlt=95", "40", "midnight")],
+  [exactKey("44 мм", "Midnight"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/44-nc-aluminum-midnight-sport-band-midnight-se?wid=1000&hei=1000&fmt=jpeg&qlt=95", "44", "midnight")],
+  [exactKey("40 мм", "Starlight"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/40-nc-aluminum-starlight-sport-band-starlight-se?wid=1000&hei=1000&fmt=jpeg&qlt=95", "40", "starlight")],
+  [exactKey("44 мм", "Starlight"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/44-nc-aluminum-starlight-sport-band-starlight-se?wid=1000&hei=1000&fmt=jpeg&qlt=95", "44", "starlight")],
+]);
 
 async function downloadOfficialImage(source: ImageSource, label: string): Promise<Buffer> {
   const imageUrl = source.sourcePage;
@@ -132,7 +136,9 @@ async function main() {
       if (!variant.color) throw new Error(`${product.name}: у варианта не указан цвет корпуса`);
       const source = slug === "apple-watch-ultra-3"
         ? ultra3Sources.get(exactKey(variant.color, variant.region ?? "")) ?? fallbackUltraSource(variant)
-        : colorSources[slug]?.[variant.color];
+        : slug === "apple-watch-se-3"
+          ? se3Sources.get(exactKey(variant.memory ?? "", variant.color))
+          : colorSources[slug]?.[variant.color];
       if (!source) throw new Error(`${product.name}: нет источника фото для «${variant.color}, ${variant.region ?? "без ремешка"}»`);
 
       let image = downloaded.get(source.sourcePage);
@@ -146,7 +152,9 @@ async function main() {
         // базе. Повторная синхронизация перезапишет тот же файл и не создаст
         // новые URL, которые запущенный Next.js ещё не успел увидеть.
         ? `variant-v2-${safeFileName(`${variant.color}-${variant.region ?? "watch"}`)}.jpg`
-        : `color-${safeFileName(variant.color)}.jpg`;
+        : slug === "apple-watch-se-3"
+          ? `case-v2-${safeFileName(`${variant.memory ?? "watch"}-${variant.color}`)}.jpg`
+          : `color-${safeFileName(variant.color)}.jpg`;
       const publicPath = await writeImage(slug, fileName, image);
       colorImages[variantImageKey(variant)] = [publicPath];
       colorImages[variant.color] ??= [publicPath];

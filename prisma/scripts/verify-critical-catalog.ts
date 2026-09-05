@@ -111,24 +111,35 @@ async function checkAirPods() {
 }
 
 async function checkWatches() {
+  const legacySe = await prisma.product.findMany({
+    where: {
+      status: "PUBLISHED",
+      AND: [
+        { name: { contains: "Apple Watch SE", mode: "insensitive" } },
+        { NOT: { name: { contains: "Apple Watch SE 3", mode: "insensitive" } } },
+      ],
+    },
+    select: { name: true },
+  });
+  if (legacySe.length) failures.push(`Старые Apple Watch SE всё ещё опубликованы: ${legacySe.map((item) => item.name).join(", ")}`);
+  else console.log("OK   Старые Apple Watch SE скрыты");
+
   for (const slug of ["apple-watch-ultra-3", "apple-watch-series-11", "apple-watch-se-3"]) {
     const product = await prisma.product.findUnique({ where: { slug }, include: { variants: true } });
     if (!product) {
       failures.push(`${slug}: товар не найден`);
       continue;
     }
-    if (slug === "apple-watch-ultra-3" || slug === "apple-watch-series-11") {
-      if (!product.description || !product.specs || product.highlights.length < 3) {
-        failures.push(`${product.name}: отсутствуют описание, характеристики или ключевые преимущества`);
-      } else {
-        console.log(`OK   ${product.name}: описание и характеристики заполнены`);
-      }
+    if (!product.description || !product.specs || product.highlights.length < 3) {
+      failures.push(`${product.name}: отсутствуют описание, характеристики или ключевые преимущества`);
+    } else {
+      console.log(`OK   ${product.name}: описание и характеристики заполнены`);
     }
     if (slug === "apple-watch-series-11" && product.variants.length !== 25) {
       failures.push(`${product.name}: ожидалось 25 вариантов, получено ${product.variants.length}`);
     }
-    if (slug === "apple-watch-se-3" && product.variants.length !== 16) {
-      failures.push(`${product.name}: ожидалось 16 вариантов, получено ${product.variants.length}`);
+    if (slug === "apple-watch-se-3" && product.variants.length !== 8) {
+      failures.push(`${product.name}: ожидалось 8 вариантов, получено ${product.variants.length}`);
     }
     const byVariant = (product.colorImages as Record<string, string[]> | null) ?? {};
     for (const variant of product.variants) {
@@ -146,6 +157,23 @@ async function checkWatches() {
     }
     if (hashes.size !== colors.length) failures.push(`${product.name}: разные цвета корпуса используют одинаковое фото`);
     else console.log(`OK   ${product.name}: точные фото вариантов и ${colors.length} разных цветов корпуса`);
+
+    if (slug === "apple-watch-se-3") {
+      const cases = [...new Set(product.variants.map((variant) => `${variant.memory ?? ""}::${variant.color ?? ""}`))];
+      const caseHashes = new Set<string>();
+      for (const watchCase of cases) {
+        const [size, color] = watchCase.split("::");
+        const variant = product.variants.find((item) => item.memory === size && item.color === color);
+        const photo = variant ? byVariant[variantImageKey(variant)]?.[0] : undefined;
+        const hash = await fileHash(photo);
+        if (hash) caseHashes.add(hash);
+      }
+      if (cases.length !== 4 || caseHashes.size !== 4) {
+        failures.push(`${product.name}: ожидались 4 разные фотографии для 40/44 мм в двух цветах`);
+      } else {
+        console.log(`OK   ${product.name}: 4 разные фотографии размера и цвета корпуса`);
+      }
+    }
   }
 }
 

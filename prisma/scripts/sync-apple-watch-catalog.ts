@@ -34,8 +34,8 @@ const ultra3: WatchOption[] = [
 ];
 
 const se3: WatchOption[] = [
-  ...["Starlight", "Midnight"].flatMap((caseColor) => ["Sport Band", "Sport Loop"].flatMap((band) => ["S/M", "M/L"].map((fit) => option("40 мм", caseColor, `${band} ${fit}`)))),
-  ...["Starlight", "Midnight"].flatMap((caseColor) => ["Sport Band", "Sport Loop"].flatMap((band) => ["S/M", "M/L"].map((fit) => option("44 мм", caseColor, `${band} ${fit}`)))),
+  ...["Starlight", "Midnight"].flatMap((caseColor) => ["S/M", "M/L"].map((fit) => option("40 мм", caseColor, `Sport Band (${caseColor}) ${fit}`))),
+  ...["Starlight", "Midnight"].flatMap((caseColor) => ["S/M", "M/L"].map((fit) => option("44 мм", caseColor, `Sport Band (${caseColor}) ${fit}`))),
 ];
 
 const data = [
@@ -118,6 +118,49 @@ const series11Content = {
     "До 24 часов обычной работы вместо 18 часов",
     "Стекло Ion-X у алюминиевых моделей вдвое устойчивее к царапинам",
     "Cellular-модели получили поддержку 5G RedCap",
+  ],
+};
+
+const se3Content = {
+  description: "Apple Watch SE 3 — доступные умные часы Apple в алюминиевом корпусе 40 или 44 мм. Always-On Retina дисплей, чип S10, контроль сна и показателей здоровья, защита от воды 50 м и быстрая зарядка подходят для повседневного использования и спорта.",
+  highlights: [
+    "Always-On Retina дисплей яркостью до 1000 нит",
+    "До 18 часов работы и до 32 часов в режиме энергосбережения",
+    "Чип S10, жесты двойного касания и взмаха запястьем",
+    "Контроль пульса, температуры, сна и уведомления об апноэ",
+    "Водостойкость 50 м и быстрая зарядка до 80% примерно за 45 минут",
+  ],
+  specs: {
+    "Модельный год": "2025",
+    "Размер корпуса": "40 мм или 44 мм",
+    "Цвета": "Алюминий: сияющая звезда (Starlight) или тёмная ночь (Midnight)",
+    "Память": "64 ГБ",
+    "Дисплей": "Always-On Retina, OLED LTPO, 326 ppi",
+    "Разрешение": "40 мм — 324 × 394 пикселя; 44 мм — 368 × 448 пикселей",
+    "Яркость": "От 2 до 1000 нит",
+    "Стекло": "Ion-X с повышенной стойкостью к трещинам",
+    "Процессор": "Apple S10, 64-битный двухъядерный процессор, 4-ядерный Neural Engine",
+    "Датчики": "Оптический датчик сердца 2-го поколения, температура, компас, высотомер, акселерометр и гироскоп",
+    "Здоровье": "Пульс, уведомления о нерегулярном ритме, сон, оценка сна, уведомления об апноэ, температура и отслеживание цикла",
+    "Навигация": "GPS L1, ГЛОНАСС, Galileo, QZSS и BeiDou",
+    "Связь": "Wi-Fi 2,4 ГГц, Bluetooth 5.3; Cellular-модели поддерживают 5G RedCap и LTE — зависит от региона",
+    "Аккумулятор": "До 18 часов обычного использования; до 32 часов в режиме энергосбережения",
+    "Быстрая зарядка": "До 80% примерно за 45 минут; 15 минут зарядки дают до 8 часов работы",
+    "Материал корпуса": "Алюминий",
+    "Размеры": "40 мм — 40 × 34 × 10,7 мм; 44 мм — 44 × 38 × 10,7 мм",
+    "Вес": "40 мм — 26,3 г (GPS) или 26,4 г (Cellular); 44 мм — 32,9 г (GPS) или 33 г (Cellular)",
+    "Обхват запястья": "40 мм — 130–200 мм; 44 мм — 140–245 мм",
+    "Защита": "Водостойкость 50 м, подходит для плавания",
+    "Безопасность": "Экстренный вызов SOS, обнаружение падения и распознавание аварий",
+    "Совместимость": "iPhone 11 или новее с iOS 26 или новее",
+    "Комплектация": "Apple Watch SE 3, ремешок Sport Band, магнитный кабель быстрой зарядки USB-C длиной 1 м",
+  },
+  previousGenLabel: "Apple Watch SE (2-го поколения)",
+  previousGenHighlights: [
+    "Always-On дисплей вместо экрана, выключавшегося в покое",
+    "Чип S10 и новые жесты управления",
+    "Датчик температуры и уведомления об апноэ сна",
+    "Поддержка быстрой зарядки",
   ],
 };
 
@@ -342,6 +385,23 @@ async function syncUltra3(
 }
 
 async function main() {
+  const legacySe = await prisma.product.findMany({
+    where: {
+      AND: [
+        { name: { contains: "Apple Watch SE", mode: "insensitive" } },
+        { NOT: { name: { contains: "Apple Watch SE 3", mode: "insensitive" } } },
+      ],
+    },
+    select: { id: true, name: true },
+  });
+  if (legacySe.length) {
+    await prisma.product.updateMany({
+      where: { id: { in: legacySe.map((product) => product.id) } },
+      data: { status: "HIDDEN" },
+    });
+    console.log(`CLEAN Старые Apple Watch SE скрыты: ${legacySe.map((product) => product.name).join(", ")}`);
+  }
+
   for (const entry of data) {
     const product = await prisma.product.findUnique({ where: { slug: entry.slug }, include: { variants: true } });
     if (!product) {
@@ -362,7 +422,7 @@ async function main() {
     }
     if (entry.slug === "apple-watch-se-3") {
       await syncSe3(product, entry.options);
-      await prisma.product.update({ where: { id: product.id }, data: { description: entry.description } });
+      await prisma.product.update({ where: { id: product.id }, data: se3Content });
       console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
       continue;
     }

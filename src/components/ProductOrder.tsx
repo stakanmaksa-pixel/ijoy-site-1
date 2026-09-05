@@ -101,6 +101,8 @@ function watchBandLabel(value: string) {
     "Neon Green": "Неоново-зелёный",
     "Purple Fog": "Сиреневый туман",
     "Light Blush": "Светло-розовый",
+    Midnight: "Тёмная ночь",
+    Starlight: "Сияющая звезда",
     Gold: "Золотой",
     Natural: "Натуральный",
     Slate: "Графитовый",
