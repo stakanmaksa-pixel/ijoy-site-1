@@ -387,10 +387,7 @@ async function syncUltra3(
 async function main() {
   const legacySe = await prisma.product.findMany({
     where: {
-      AND: [
-        { name: { contains: "Apple Watch SE", mode: "insensitive" } },
-        { NOT: { name: { contains: "Apple Watch SE 3", mode: "insensitive" } } },
-      ],
+      name: { equals: "Apple Watch SE", mode: "insensitive" },
     },
     select: { id: true, name: true },
   });
@@ -410,19 +407,19 @@ async function main() {
     }
     if (entry.slug === "apple-watch-ultra-3") {
       await syncUltra3(product, entry.description, entry.options);
-      await prisma.product.update({ where: { id: product.id }, data: ultra3Content });
+      await prisma.product.update({ where: { id: product.id }, data: { ...ultra3Content, status: "PUBLISHED" } });
       console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
       continue;
     }
     if (entry.slug === "apple-watch-series-11") {
       await syncSeries11(product, entry.options);
-      await prisma.product.update({ where: { id: product.id }, data: series11Content });
+      await prisma.product.update({ where: { id: product.id }, data: { ...series11Content, status: "PUBLISHED" } });
       console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
       continue;
     }
     if (entry.slug === "apple-watch-se-3") {
       await syncSe3(product, entry.options);
-      await prisma.product.update({ where: { id: product.id }, data: se3Content });
+      await prisma.product.update({ where: { id: product.id }, data: { ...se3Content, status: "PUBLISHED" } });
       console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
       continue;
     }

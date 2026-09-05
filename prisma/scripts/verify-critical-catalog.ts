@@ -114,10 +114,7 @@ async function checkWatches() {
   const legacySe = await prisma.product.findMany({
     where: {
       status: "PUBLISHED",
-      AND: [
-        { name: { contains: "Apple Watch SE", mode: "insensitive" } },
-        { NOT: { name: { contains: "Apple Watch SE 3", mode: "insensitive" } } },
-      ],
+      name: { equals: "Apple Watch SE", mode: "insensitive" },
     },
     select: { name: true },
   });
@@ -129,6 +126,9 @@ async function checkWatches() {
     if (!product) {
       failures.push(`${slug}: товар не найден`);
       continue;
+    }
+    if (product.status !== "PUBLISHED") {
+      failures.push(`${product.name}: товар не опубликован`);
     }
     if (!product.description || !product.specs || product.highlights.length < 3) {
       failures.push(`${product.name}: отсутствуют описание, характеристики или ключевые преимущества`);
