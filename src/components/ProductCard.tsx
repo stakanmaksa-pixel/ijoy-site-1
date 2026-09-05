@@ -39,6 +39,10 @@ export function ProductCard({
   coverImage?: string | null;
 }) {
   const fallbackTheme = BRAND_CARD_THEMES[brand ?? ""] ?? "from-brand-dark via-brand to-accent";
+  const isHeadphones = /(?:airpods|earpods|galaxy-buds|headphones)/i.test(slug);
+  const imageClassName = isHeadphones
+    ? "h-full w-full object-contain"
+    : "h-full w-full object-contain p-5 sm:p-6";
 
   return (
     <Link
@@ -47,10 +51,9 @@ export function ProductCard({
     >
       <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
         {coverImage ? (
-          // Все исходники имеют разное количество белого поля. Единая
-          // внутренняя рамка не даёт одним товарам визуально занимать всю
-          // карточку, а другим выглядеть заметно меньше.
-          <img src={coverImage} alt={name} loading="lazy" decoding="async" className="h-full w-full object-contain p-5 sm:p-6" />
+          // У официальных фото наушников уже есть большие внутренние белые
+          // поля. Дополнительный padding делал сам товар слишком маленьким.
+          <img src={coverImage} alt={name} loading="lazy" decoding="async" className={imageClassName} />
         ) : (
           <div className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-br p-5 text-white ${fallbackTheme}`}>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/30 bg-white/15 font-display text-xl font-semibold shadow-lg backdrop-blur-sm">
