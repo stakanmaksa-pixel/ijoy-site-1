@@ -193,7 +193,7 @@ async function syncSeries11(
   const priced = product.variants.filter((variant) => variant.price !== null);
   const matches = new Map<number, (typeof priced)[number]>();
   const usedOptions = new Set<number>();
-  const unmatched: string[] = [];
+  const unmatched: typeof priced = [];
 
   for (const variant of priced) {
     const source = normalized([variant.memory, variant.color, variant.region, variant.rawLabel].filter(Boolean).join(" "));
@@ -201,14 +201,20 @@ async function syncSeries11(
       .map((item, index) => ({ item, index }))
       .find(({ item, index }) => !usedOptions.has(index) && matchesSeriesBase(source, item));
     if (!selected) {
-      unmatched.push(variant.rawLabel ?? variant.id);
+      unmatched.push(variant);
       continue;
     }
     usedOptions.add(selected.index);
     matches.set(selected.index, variant);
   }
 
-  if (unmatched.length) throw new Error(`Apple Watch Series 11: не удалось сопоставить строки прайса: ${unmatched.join("; ")}`);
+  // В старых импортах к Series 11 могли ошибочно попасть варианты других
+  // поколений (например Midnight от SE). В официальной линейке Series 11
+  // таких цветов нет, поэтому не переносим их в новый канонический набор.
+  if (unmatched.length) {
+    await prisma.productVariant.deleteMany({ where: { id: { in: unmatched.map((variant) => variant.id) } } });
+    console.log(`CLEAN ${product.name}: удалены устаревшие варианты — ${unmatched.map((variant) => variant.rawLabel ?? variant.id).join("; ")}`);
+  }
 
   await prisma.productVariant.deleteMany({ where: { productId: product.id, price: null } });
   for (const [index, item] of options.entries()) {
