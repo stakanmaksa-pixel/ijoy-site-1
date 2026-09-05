@@ -43,11 +43,14 @@ export function ProductCard({
   return (
     <Link
       href={`/product/${slug}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
       <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
         {coverImage ? (
-          <img src={coverImage} alt={name} loading="lazy" decoding="async" className="h-full w-full object-contain" />
+          // Все исходники имеют разное количество белого поля. Единая
+          // внутренняя рамка не даёт одним товарам визуально занимать всю
+          // карточку, а другим выглядеть заметно меньше.
+          <img src={coverImage} alt={name} loading="lazy" decoding="async" className="h-full w-full object-contain p-5 sm:p-6" />
         ) : (
           <div className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-br p-5 text-white ${fallbackTheme}`}>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/30 bg-white/15 font-display text-xl font-semibold shadow-lg backdrop-blur-sm">

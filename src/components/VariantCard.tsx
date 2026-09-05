@@ -41,11 +41,11 @@ export function VariantCard({
   return (
     <Link
       href={`/product/${slug}?variant=${variant.id}`}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
       <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
         {imageUrl ? (
-          <img src={imageUrl} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" />
+          <img src={imageUrl} alt={variantLabel(variant)} loading="lazy" decoding="async" className="h-full w-full object-contain p-5 sm:p-6" />
         ) : (
           <span className="text-sm">Фото</span>
         )}

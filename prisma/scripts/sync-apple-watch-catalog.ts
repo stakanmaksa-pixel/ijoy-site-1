@@ -39,12 +39,46 @@ const se3: WatchOption[] = [
 ];
 
 const data = [
-  { slug: "apple-watch-ultra-3", description: "Apple Watch Ultra 3 с корпусом 49 мм. Выберите цвет корпуса и ремешок. Цену и доступность подтвердит менеджер.", options: ultra3 },
+  { slug: "apple-watch-ultra-3", description: "Apple Watch Ultra 3 — прочные спортивные часы в титановом корпусе 49 мм с ярким Always-On Retina дисплеем, точным двухчастотным GPS и автономностью до 42 часов. Выберите цвет корпуса и подходящий ремешок.", options: ultra3 },
   { slug: "apple-watch-series-11", description: "Apple Watch Series 11. Выберите размер корпуса, цвет и ремешок. Цену и доступность подтвердит менеджер.", options: series11 },
   { slug: "apple-watch-se-3", description: "Apple Watch SE 3. Выберите размер корпуса, цвет и ремешок. Цену и доступность подтвердит менеджер.", options: se3 },
 ];
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
+
+const ultra3Content = {
+  description: "Apple Watch Ultra 3 — прочные спортивные часы в титановом корпусе 49 мм с ярким Always-On Retina дисплеем, точным двухчастотным GPS и автономностью до 42 часов. Выберите цвет корпуса и подходящий ремешок.",
+  highlights: [
+    "Титановый корпус Grade 5 и сапфировое стекло",
+    "До 42 часов работы и до 72 часов в режиме энергосбережения",
+    "Водонепроницаемость 100 м и погружения с аквалангом до 40 м",
+    "Точный двухчастотный GPS L1 + L5",
+  ],
+  specs: {
+    "Корпус": "49 мм, титан Grade 5 — натуральный или чёрный",
+    "Размеры": "49 × 44 × 12 мм",
+    "Вес": "61,6 г (натуральный титан) / 61,8 г (чёрный титан)",
+    "Обхват запястья": "130–210 мм",
+    "Дисплей": "Always-On Retina, широкоугольный OLED LTPO3, сапфировое стекло",
+    "Разрешение": "422 × 514 пикселей, 326 пикселей на дюйм",
+    "Яркость": "До 3000 нит, минимальная яркость 1 нит",
+    "Процессор": "Apple S10, 64-битный двухъядерный процессор, 4-ядерный Neural Engine",
+    "Память": "64 ГБ",
+    "Навигация": "Двухчастотный GPS L1 + L5, ГЛОНАСС, Galileo, QZSS и BeiDou",
+    "Датчики": "Электрический и оптический датчики сердца, температура, глубина и температура воды, компас, высотомер",
+    "Защита": "Водонепроницаемость 100 м, IP6X, погружения до 40 м, испытания MIL-STD 810H",
+    "Связь": "Wi-Fi 2,4/5 ГГц, Bluetooth 5.3, сотовая и спутниковая связь (зависит от региона)",
+    "Аккумулятор": "До 42 часов; до 72 часов в режиме энергосбережения",
+    "Быстрая зарядка": "До 80% примерно за 45 минут",
+    "Совместимость": "iPhone 11 или новее с iOS 26 или новее",
+  },
+  previousGenLabel: "Apple Watch Ultra 2",
+  previousGenHighlights: [
+    "До 42 часов обычной работы вместо 36 часов",
+    "Широкоугольный OLED LTPO3 дисплей с частотой обновления от 1 Гц",
+    "Поддержка спутниковой связи для экстренных функций, сообщений и Локатора",
+  ],
+};
 
 function normalized(value: string) {
   return value.toLowerCase().replace(/[(),-]/g, " ").replace(/\s+/g, " ").trim();
@@ -150,6 +184,7 @@ async function main() {
     }
     if (entry.slug === "apple-watch-ultra-3") {
       await syncUltra3(product, entry.description, entry.options);
+      await prisma.product.update({ where: { id: product.id }, data: ultra3Content });
       console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
       continue;
     }
