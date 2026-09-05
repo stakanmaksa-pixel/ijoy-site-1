@@ -39,6 +39,17 @@ export function VariantCard({
   imageUrl?: string | null;
 }) {
   const isWatch = /watch/i.test(slug);
+  const isSeries11 = slug === "apple-watch-series-11";
+  const isSe3 = slug === "apple-watch-se-3";
+  const isHeadphones = /(?:airpods|earpods|galaxy-buds|headphones)/i.test(slug);
+
+  const imageClassName = isSeries11 || isSe3
+    ? "h-full w-full scale-[1.08] object-contain"
+    : isWatch
+      ? "h-full w-full scale-[1.2] object-contain"
+      : isHeadphones
+        ? "h-full w-full object-contain"
+        : "h-full w-full object-contain p-5 sm:p-6";
 
   return (
     <Link
@@ -52,9 +63,7 @@ export function VariantCard({
             alt={variantLabel(variant)}
             loading="lazy"
             decoding="async"
-            className={isWatch
-              ? "h-full w-full scale-[1.32] object-contain"
-              : "h-full w-full object-contain p-5 sm:p-6"}
+            className={imageClassName}
           />
         ) : (
           <span className="text-sm">Фото</span>

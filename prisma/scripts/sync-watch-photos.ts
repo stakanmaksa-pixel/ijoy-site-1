@@ -145,7 +145,6 @@ async function main() {
 
     const colorImages: Record<string, string[]> = {};
     const downloaded = new Map<string, Buffer>();
-    let number = 0;
 
     for (const variant of product.variants) {
       if (!variant.color) throw new Error(`${product.name}: у варианта не указан цвет корпуса`);
@@ -160,9 +159,11 @@ async function main() {
         downloaded.set(source.sourcePage, image);
       }
 
-      number += 1;
       const fileName = slug === "apple-watch-ultra-3"
-        ? `variant-${number}-${safeFileName(`${variant.color}-${variant.region ?? "watch"}`)}.jpg`
+        // Имя зависит только от самой комплектации, а не от порядка строк в
+        // базе. Повторная синхронизация перезапишет тот же файл и не создаст
+        // новые URL, которые запущенный Next.js ещё не успел увидеть.
+        ? `variant-${safeFileName(`${variant.color}-${variant.region ?? "watch"}`)}.jpg`
         : `color-${safeFileName(variant.color)}.jpg`;
       const publicPath = await writeImage(slug, fileName, image);
       colorImages[variantImageKey(variant)] = [publicPath];
