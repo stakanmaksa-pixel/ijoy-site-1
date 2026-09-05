@@ -50,11 +50,6 @@ const jobs: AudioJob[] = [
     directImage: "https://www.apple.com/newsroom/images/2023/09/apple-introduces-new-airpods-pro-2nd-generation/article/Apple-AirPods-Pro-2nd-generation-USB-C-connection-230912_inline.jpg.large.jpg",
     required: true,
   },
-  // Samsung оставлен здесь на будущее, но его отсутствие не должно мешать
-  // обязательной проверке карточек AirPods.
-  { label: "Galaxy Buds4 Pro", matches: ["Galaxy Buds4 Pro"], sourcePage: "https://re-store.ru/catalog/SM-R640NWHT1S/" },
-  { label: "Galaxy Buds4", matches: ["Galaxy Buds4"], sourcePage: "https://re-store.ru/catalog/SM-R540NBLK1S/" },
-  { label: "Galaxy Buds3 Pro", matches: ["Galaxy Buds3 Pro"], sourcePage: "https://re-store.ru/catalog/SM-R630NZWHT1S/" },
 ];
 
 const max2ColorSources = {

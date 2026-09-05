@@ -60,10 +60,16 @@ async function checkAirPods() {
 
   const expectedNames = ["AirPods Pro 3", "AirPods Pro 2", "AirPods 4 ANC", "AirPods 4", "AirPods Max 2"];
   for (const expectedName of expectedNames) {
-    const product = await prisma.product.findFirst({
+    const candidates = await prisma.product.findMany({
       where: { status: "PUBLISHED", name: { contains: expectedName, mode: "insensitive" } },
       include: { variants: true },
     });
+    // "AirPods 4" является частью названия модели ANC, поэтому для обычной
+    // версии берём только строку без ANC. Иначе проверка могла бы зелёным
+    // отметить одно фото дважды и не заметить отсутствующее второе.
+    const product = expectedName === "AirPods 4"
+      ? candidates.find((item) => !/anc/i.test(item.name))
+      : candidates[0];
     if (!product) {
       failures.push(`${expectedName}: опубликованный товар не найден`);
       continue;
