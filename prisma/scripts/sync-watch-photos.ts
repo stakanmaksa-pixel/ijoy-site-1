@@ -145,7 +145,7 @@ async function main() {
         // Имя зависит только от самой комплектации, а не от порядка строк в
         // базе. Повторная синхронизация перезапишет тот же файл и не создаст
         // новые URL, которые запущенный Next.js ещё не успел увидеть.
-        ? `variant-${safeFileName(`${variant.color}-${variant.region ?? "watch"}`)}.jpg`
+        ? `variant-v2-${safeFileName(`${variant.color}-${variant.region ?? "watch"}`)}.jpg`
         : `color-${safeFileName(variant.color)}.jpg`;
       const publicPath = await writeImage(slug, fileName, image);
       colorImages[variantImageKey(variant)] = [publicPath];
