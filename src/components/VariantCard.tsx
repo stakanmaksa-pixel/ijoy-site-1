@@ -38,6 +38,8 @@ export function VariantCard({
   // нет) — см. pickCoverImage в catalog.ts.
   imageUrl?: string | null;
 }) {
+  const isWatch = /watch/i.test(slug);
+
   return (
     <Link
       href={`/product/${slug}?variant=${variant.id}`}
@@ -45,7 +47,15 @@ export function VariantCard({
     >
       <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
         {imageUrl ? (
-          <img src={imageUrl} alt={variantLabel(variant)} loading="lazy" decoding="async" className="h-full w-full object-contain p-5 sm:p-6" />
+          <img
+            src={imageUrl}
+            alt={variantLabel(variant)}
+            loading="lazy"
+            decoding="async"
+            className={isWatch
+              ? "h-full w-full scale-[1.32] object-contain"
+              : "h-full w-full object-contain p-5 sm:p-6"}
+          />
         ) : (
           <span className="text-sm">Фото</span>
         )}
