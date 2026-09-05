@@ -130,6 +130,7 @@ function optionBandType(value: string) {
   if (/alpine/i.test(value)) return "alpine";
   if (/ocean/i.test(value)) return "ocean";
   if (/milanese/i.test(value)) return "milanese";
+  if (/sport loop/i.test(value)) return "sport-loop";
   if (/sport band/i.test(value)) return "sport";
   return "";
 }
@@ -139,6 +140,7 @@ function sourceBandType(value: string) {
   if (/ocean/.test(value)) return "ocean";
   if (/alpine|\balp\b|light blue loop/.test(value)) return "alpine";
   if (/trail|charcoal|bright blue loop/.test(value)) return "trail";
+  if (/sport loop|\bsl\b/.test(value)) return "sport-loop";
   if (/sport band|\bsb\b/.test(value)) return "sport";
   return "";
 }
@@ -229,6 +231,62 @@ async function syncSeries11(
   }
 }
 
+function matchesSe3Base(source: string, item: WatchOption) {
+  const sourceSize = source.match(/\b(40|44)\b/)?.[1];
+  if (`${sourceSize ?? ""} мм` !== item.size) return false;
+  const sourceColor = /midnight/.test(source) ? "Midnight" : /starlight/.test(source) ? "Starlight" : null;
+  if (sourceColor !== item.caseColor) return false;
+
+  const wantedType = optionBandType(item.band);
+  const foundType = sourceBandType(source);
+  // В прайсе поставщика тип ремешка у SE 3 часто не указан. Такие строки
+  // относятся к базовому Sport Band; Sport Loop принимаем только явно.
+  if ((foundType || "sport") !== wantedType) return false;
+  const wantedSize = optionBandSize(item.band);
+  const foundSize = sourceBandSize(source);
+  return !wantedSize || !foundSize || wantedSize === foundSize;
+}
+
+async function syncSe3(
+  product: Awaited<ReturnType<typeof prisma.product.findUniqueOrThrow>> & { variants: Array<{ id: string; memory: string | null; color: string | null; region: string | null; price: unknown; inStock: boolean; rawLabel: string | null; sku: string | null }> },
+  options: WatchOption[],
+) {
+  const priced = product.variants.filter((variant) => variant.price !== null);
+  const matches = new Map<number, (typeof priced)[number]>();
+  const usedOptions = new Set<number>();
+  const unmatched: typeof priced = [];
+
+  for (const variant of priced) {
+    const source = normalized([variant.memory, variant.color, variant.region, variant.rawLabel].filter(Boolean).join(" "));
+    const selected = options
+      .map((item, index) => ({ item, index }))
+      .find(({ item, index }) => !usedOptions.has(index) && matchesSe3Base(source, item));
+    if (!selected) {
+      unmatched.push(variant);
+      continue;
+    }
+    usedOptions.add(selected.index);
+    matches.set(selected.index, variant);
+  }
+
+  if (unmatched.length) {
+    await prisma.productVariant.deleteMany({ where: { id: { in: unmatched.map((variant) => variant.id) } } });
+    console.log(`CLEAN ${product.name}: удалены устаревшие варианты — ${unmatched.map((variant) => variant.rawLabel ?? variant.id).join("; ")}`);
+  }
+
+  await prisma.productVariant.deleteMany({ where: { productId: product.id, price: null } });
+  for (const [index, item] of options.entries()) {
+    const existing = matches.get(index);
+    if (existing) {
+      await prisma.productVariant.update({ where: { id: existing.id }, data: { memory: item.size, color: item.caseColor, region: item.band } });
+    } else {
+      await prisma.productVariant.create({
+        data: { productId: product.id, memory: item.size, color: item.caseColor, region: item.band, price: null, inStock: true, rawLabel: `${product.name} ${item.size}, ${item.caseColor}, ${item.band} — уточнить у менеджера` },
+      });
+    }
+  }
+}
+
 async function syncUltra3(
   product: Awaited<ReturnType<typeof prisma.product.findUniqueOrThrow>> & { variants: Array<{ id: string; memory: string | null; color: string | null; region: string | null; price: unknown; inStock: boolean; rawLabel: string | null; sku: string | null }> },
   description: string,
@@ -299,6 +357,12 @@ async function main() {
     if (entry.slug === "apple-watch-series-11") {
       await syncSeries11(product, entry.options);
       await prisma.product.update({ where: { id: product.id }, data: series11Content });
+      console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
+      continue;
+    }
+    if (entry.slug === "apple-watch-se-3") {
+      await syncSe3(product, entry.options);
+      await prisma.product.update({ where: { id: product.id }, data: { description: entry.description } });
       console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
       continue;
     }

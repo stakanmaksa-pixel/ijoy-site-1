@@ -127,6 +127,9 @@ async function checkWatches() {
     if (slug === "apple-watch-series-11" && product.variants.length !== 25) {
       failures.push(`${product.name}: ожидалось 25 вариантов, получено ${product.variants.length}`);
     }
+    if (slug === "apple-watch-se-3" && product.variants.length !== 16) {
+      failures.push(`${product.name}: ожидалось 16 вариантов, получено ${product.variants.length}`);
+    }
     const byVariant = (product.colorImages as Record<string, string[]> | null) ?? {};
     for (const variant of product.variants) {
       const photo = byVariant[variantImageKey(variant)]?.[0];
