@@ -117,12 +117,15 @@ async function checkWatches() {
       failures.push(`${slug}: товар не найден`);
       continue;
     }
-    if (slug === "apple-watch-ultra-3") {
+    if (slug === "apple-watch-ultra-3" || slug === "apple-watch-series-11") {
       if (!product.description || !product.specs || product.highlights.length < 3) {
-        failures.push("Apple Watch Ultra 3: отсутствуют описание, характеристики или ключевые преимущества");
+        failures.push(`${product.name}: отсутствуют описание, характеристики или ключевые преимущества`);
       } else {
-        console.log("OK   Apple Watch Ultra 3: описание и характеристики заполнены");
+        console.log(`OK   ${product.name}: описание и характеристики заполнены`);
       }
+    }
+    if (slug === "apple-watch-series-11" && product.variants.length !== 25) {
+      failures.push(`${product.name}: ожидалось 25 вариантов, получено ${product.variants.length}`);
     }
     const byVariant = (product.colorImages as Record<string, string[]> | null) ?? {};
     for (const variant of product.variants) {

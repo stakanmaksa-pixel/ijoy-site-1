@@ -80,6 +80,47 @@ const ultra3Content = {
   ],
 };
 
+const series11Content = {
+  description: "Apple Watch Series 11 — универсальные умные часы Apple в корпусе 42 или 46 мм. Always-On Retina дисплей, чип S10, расширенные функции здоровья и автономность до 24 часов подходят для повседневного использования, спорта и контроля показателей организма.",
+  highlights: [
+    "Always-On Retina дисплей яркостью до 2000 нит",
+    "До 24 часов работы и до 38 часов в режиме энергосбережения",
+    "ЭКГ, контроль пульса, температуры, сна и показателей здоровья",
+    "Защита от воды 50 м и глубиномер до 6 м",
+    "Быстрая зарядка до 80% примерно за 30 минут",
+  ],
+  specs: {
+    "Модельный год": "2025",
+    "Размер корпуса": "42 мм или 46 мм",
+    "Цвета": "Алюминий: розовое золото, серебристый, серый космос, глянцевый чёрный. Титан: золотой, натуральный, графитовый",
+    "Память": "64 ГБ",
+    "Дисплей": "Always-On Retina, широкоугольный OLED LTPO3, 326 ppi",
+    "Разрешение": "42 мм — 374 × 446 пикселей; 46 мм — 416 × 496 пикселей",
+    "Яркость": "От 1 до 2000 нит",
+    "Стекло": "Ion-X с повышенной стойкостью к царапинам у алюминиевых моделей; сапфировое у титановых",
+    "Процессор": "Apple S10, 64-битный двухъядерный процессор, 4-ядерный Neural Engine",
+    "Датчики": "Электрический и оптический датчики сердца, температура, компас, высотомер, глубина и температура воды",
+    "Здоровье": "ЭКГ, пульс, уведомления о нерегулярном ритме, сон, оценка сна, температура и отслеживание цикла",
+    "Навигация": "GPS L1, ГЛОНАСС, Galileo, QZSS и BeiDou",
+    "Связь": "Wi-Fi 2,4/5 ГГц, Bluetooth 5.3; Cellular-модели поддерживают 5G RedCap и LTE — зависит от региона",
+    "Аккумулятор": "До 24 часов обычного использования; до 38 часов в режиме энергосбережения",
+    "Быстрая зарядка": "До 80% примерно за 30 минут; 15 минут зарядки дают до 8 часов работы",
+    "Материал корпуса": "Алюминий или титан",
+    "Размеры": "42 мм — 42 × 36 × 9,7 мм; 46 мм — 46 × 39 × 9,7 мм",
+    "Вес": "От 29,7 до 43,1 г — зависит от размера, материала и версии связи",
+    "Обхват запястья": "42 мм — 130–200 мм; 46 мм — 140–245 мм",
+    "Защита": "Водостойкость 50 м, защита от пыли IP6X, глубиномер до 6 м",
+    "Совместимость": "iPhone 11 или новее с iOS 26 или новее",
+    "Комплектация": "Apple Watch Series 11, ремешок, магнитный кабель быстрой зарядки USB-C длиной 1 м",
+  },
+  previousGenLabel: "Apple Watch Series 10",
+  previousGenHighlights: [
+    "До 24 часов обычной работы вместо 18 часов",
+    "Стекло Ion-X у алюминиевых моделей вдвое устойчивее к царапинам",
+    "Cellular-модели получили поддержку 5G RedCap",
+  ],
+};
+
 function normalized(value: string) {
   return value.toLowerCase().replace(/[(),-]/g, " ").replace(/\s+/g, " ").trim();
 }
@@ -89,6 +130,7 @@ function optionBandType(value: string) {
   if (/alpine/i.test(value)) return "alpine";
   if (/ocean/i.test(value)) return "ocean";
   if (/milanese/i.test(value)) return "milanese";
+  if (/sport band/i.test(value)) return "sport";
   return "";
 }
 
@@ -97,6 +139,7 @@ function sourceBandType(value: string) {
   if (/ocean/.test(value)) return "ocean";
   if (/alpine|\balp\b|light blue loop/.test(value)) return "alpine";
   if (/trail|charcoal|bright blue loop/.test(value)) return "trail";
+  if (/sport band|\bsb\b/.test(value)) return "sport";
   return "";
 }
 
@@ -119,6 +162,65 @@ function matchesUltraBase(source: string, item: WatchOption) {
   if (/neon green/i.test(item.band) && !/neon green/.test(source)) return false;
   if (/anchor blue/i.test(item.band) && !/anchor blue/.test(source)) return false;
   return true;
+}
+
+function sourceSeriesColor(source: string) {
+  if (/jet black/.test(source)) return "Jet Black";
+  if (/rose gold/.test(source)) return "Rose Gold";
+  if (/space gr(?:a|e)y/.test(source)) return "Space Gray";
+  if (/silver/.test(source)) return "Silver";
+  if (/natural titanium|titanium natural/.test(source)) return "Natural Titanium";
+  if (/slate titanium|titanium slate/.test(source)) return "Slate Titanium";
+  if (/gold titanium|titanium gold/.test(source)) return "Gold Titanium";
+  return null;
+}
+
+function matchesSeriesBase(source: string, item: WatchOption) {
+  const sourceSize = source.match(/\b(42|46)\b/)?.[1];
+  if (`${sourceSize ?? ""} мм` !== item.size || sourceSeriesColor(source) !== item.caseColor) return false;
+  const wantedType = optionBandType(item.band);
+  const foundType = sourceBandType(source) || (wantedType === "sport" ? "sport" : "");
+  if (wantedType !== foundType) return false;
+  const wantedSize = optionBandSize(item.band);
+  const foundSize = sourceBandSize(source);
+  return !wantedSize || !foundSize || wantedSize === foundSize;
+}
+
+async function syncSeries11(
+  product: Awaited<ReturnType<typeof prisma.product.findUniqueOrThrow>> & { variants: Array<{ id: string; memory: string | null; color: string | null; region: string | null; price: unknown; inStock: boolean; rawLabel: string | null; sku: string | null }> },
+  options: WatchOption[],
+) {
+  const priced = product.variants.filter((variant) => variant.price !== null);
+  const matches = new Map<number, (typeof priced)[number]>();
+  const usedOptions = new Set<number>();
+  const unmatched: string[] = [];
+
+  for (const variant of priced) {
+    const source = normalized([variant.memory, variant.color, variant.region, variant.rawLabel].filter(Boolean).join(" "));
+    const selected = options
+      .map((item, index) => ({ item, index }))
+      .find(({ item, index }) => !usedOptions.has(index) && matchesSeriesBase(source, item));
+    if (!selected) {
+      unmatched.push(variant.rawLabel ?? variant.id);
+      continue;
+    }
+    usedOptions.add(selected.index);
+    matches.set(selected.index, variant);
+  }
+
+  if (unmatched.length) throw new Error(`Apple Watch Series 11: не удалось сопоставить строки прайса: ${unmatched.join("; ")}`);
+
+  await prisma.productVariant.deleteMany({ where: { productId: product.id, price: null } });
+  for (const [index, item] of options.entries()) {
+    const existing = matches.get(index);
+    if (existing) {
+      await prisma.productVariant.update({ where: { id: existing.id }, data: { memory: item.size, color: item.caseColor, region: item.band } });
+    } else {
+      await prisma.productVariant.create({
+        data: { productId: product.id, memory: item.size, color: item.caseColor, region: item.band, price: null, inStock: true, rawLabel: `${product.name} ${item.size}, ${item.caseColor}, ${item.band} — уточнить у менеджера` },
+      });
+    }
+  }
 }
 
 async function syncUltra3(
@@ -185,6 +287,12 @@ async function main() {
     if (entry.slug === "apple-watch-ultra-3") {
       await syncUltra3(product, entry.description, entry.options);
       await prisma.product.update({ where: { id: product.id }, data: ultra3Content });
+      console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
+      continue;
+    }
+    if (entry.slug === "apple-watch-series-11") {
+      await syncSeries11(product, entry.options);
+      await prisma.product.update({ where: { id: product.id }, data: series11Content });
       console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
       continue;
     }

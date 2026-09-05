@@ -36,6 +36,33 @@ function strapSize(region: string | null) {
   return match?.[1].toUpperCase() ?? "Универсальный";
 }
 
+function bandChoice(region: string | null) {
+  if (!region) return null;
+  // Размер уже выбирается отдельным фильтром, поэтому не дублируем одну и
+  // ту же модель ремешка строками S/M, M/L, S, M и L.
+  return region.trim().replace(/\s+(?:XS\/S|S\/M|M\/L|S|M|L)$/i, "");
+}
+
+function bandChoiceLabel(value: string) {
+  const translations: Array<[RegExp, string]> = [
+    [/Black\/Charcoal/gi, "чёрный/угольный"],
+    [/Blue\/Bright Blue/gi, "синий/ярко-синий"],
+    [/Black Titanium/gi, "чёрный титан"],
+    [/Natural Titanium/gi, "натуральный титан"],
+    [/Light Blue/gi, "светло-голубой"],
+    [/Anchor Blue/gi, "синий Anchor"],
+    [/Neon Green/gi, "неоново-зелёный"],
+    [/Purple Fog/gi, "сиреневый туман"],
+    [/Light Blush/gi, "светло-розовый"],
+    [/\(Black\)/gi, "(чёрный)"],
+    [/\(Gold\)/gi, "(золотой)"],
+    [/\(Natural\)/gi, "(натуральный)"],
+    [/\(Slate\)/gi, "(графитовый)"],
+  ];
+  const translated = translations.reduce((label, [pattern, replacement]) => label.replace(pattern, replacement), value);
+  return translated.replace(" (", " · ").replace(/\)$/, "");
+}
+
 function toggleValue(value: string, setter: Dispatch<SetStateAction<string[]>>) {
   setter((current) => current.includes(value) ? current.filter((item) => item !== value) : [...current, value]);
 }
@@ -81,6 +108,9 @@ export function VariantGrid({
   const regions = useMemo(() => valuesOf(variants, "region"), [variants]);
   const isWatch = slug.includes("watch") || variants.some((variant) => /(?:loop|band)/i.test(variant.region ?? ""));
   const isUltra = slug.includes("ultra");
+  const bandChoices = isWatch
+    ? [...new Set(variants.map((variant) => bandChoice(variant.region)).filter(isPresent))]
+    : regions;
   const strapMaterials = [...new Set(variants.map((variant) => strapMaterial(variant.region, isUltra)).filter(isPresent))];
   const strapSizeOrder = ["XS/S", "S/M", "M/L", "S", "M", "L", "Универсальный"];
   const strapSizes = [...new Set(variants.map((variant) => strapSize(variant.region)).filter(isPresent))]
@@ -98,12 +128,12 @@ export function VariantGrid({
     (variant) =>
       (!selectedMemories.length || (variant.memory != null && selectedMemories.includes(variant.memory))) &&
       (!selectedColors.length || (variant.color != null && selectedColors.includes(variant.color))) &&
-      (!selectedRegions.length || (variant.region != null && selectedRegions.includes(variant.region))) &&
+      (!selectedRegions.length || selectedRegions.includes(isWatch ? bandChoice(variant.region) ?? "" : variant.region ?? "")) &&
       (!selectedStrapMaterials.length || selectedStrapMaterials.includes(strapMaterial(variant.region, isUltra) ?? "")) &&
       (!selectedStrapSizes.length || selectedStrapSizes.includes(strapSize(variant.region) ?? "")) &&
       (!onlyInStock || variant.inStock),
   );
-  const hasFilters = memories.length > 1 || colors.length > 1 || regions.length > 1 || variants.some((v) => !v.inStock);
+  const hasFilters = memories.length > 1 || colors.length > 1 || bandChoices.length > 1 || variants.some((v) => !v.inStock);
   const hasActiveFilters = selectedMemories.length > 0 || selectedColors.length > 0 || selectedRegions.length > 0 || selectedStrapMaterials.length > 0 || selectedStrapSizes.length > 0 || onlyInStock;
 
   function reset() {
@@ -136,7 +166,7 @@ export function VariantGrid({
           {colors.length > 1 && <FilterGroup label={isWatch ? "Цвет корпуса" : "Цвет"} selected={selectedColors} values={colors} onChange={setSelectedColors} anyLabel="Все" formatLabel={colorLabel} />}
           {isWatch && strapMaterials.length > 1 && <FilterGroup label="Материал ремешка" selected={selectedStrapMaterials} values={strapMaterials} onChange={setSelectedStrapMaterials} anyLabel="Все" />}
           {isWatch && strapSizes.length > 1 && <FilterGroup label="Размер ремешка" selected={selectedStrapSizes} values={strapSizes} onChange={setSelectedStrapSizes} anyLabel="Все" />}
-          {regions.length > 1 && <FilterGroup label={isWatch ? "Модель и цвет ремешка" : "Регион / SIM"} selected={selectedRegions} values={regions} onChange={setSelectedRegions} anyLabel="Все" />}
+          {bandChoices.length > 1 && <FilterGroup label={isWatch ? "Ремешок" : "Регион / SIM"} selected={selectedRegions} values={bandChoices} onChange={setSelectedRegions} anyLabel="Все" formatLabel={isWatch ? bandChoiceLabel : undefined} />}
           {variants.some((variant) => !variant.inStock) && <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" checked={onlyInStock} onChange={(event) => setOnlyInStock(event.target.checked)} className="h-4 w-4 accent-accent" /> Только в наличии</label>}
         </div>
       </aside>}
