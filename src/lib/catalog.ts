@@ -92,7 +92,6 @@ export const MODEL_DISPLAY_ORDER = {
     "AirPods 4 ANC",
     "AirPods 4",
     "AirPods Max 2",
-    "AirPods Max",
   ],
   gopro: [
     "GoPro MISSION 1 PRO ILS",
