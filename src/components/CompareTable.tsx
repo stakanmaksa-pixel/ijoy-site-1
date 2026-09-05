@@ -1,27 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { pickCoverImage } from "@/lib/pickCoverImage";
 import type { CompareModel } from "@/lib/catalog";
 import { iphoneColorLabel, iphoneColorSwatch } from "@/lib/iphoneColors";
+import { groupSpecKeys, PRODUCT_SPEC_ORDER } from "@/lib/productSpecs";
 
 // Порядок строк характеристик — как на apple.com/iphone/compare/: сначала
 // самое важное (экран, процессор, камеры, автономность), потом память и
 // корпус. Ключи ровно те, что после нормализации (см. IPHONE_CONTENT_OVERRIDES
 // в prisma/seed.ts) используются во всех 16 моделях единообразно.
-const PRIMARY_SPEC_ROWS = [
-  "Дисплей",
-  "Процессор",
-  "Основная камера",
-  "Фронтальная камера",
-  "Автономность",
-  "Память",
-  "Защита от воды и пыли",
-  "Корпус",
-];
-
 const MAX_COLUMNS = 3;
 
 function screenSize(specs: Record<string, string> | null): string | null {
@@ -67,13 +57,14 @@ export function CompareTable({
   for (const col of columns) {
     if (!col.specs) continue;
     for (const key of Object.keys(col.specs)) {
-      if (!PRIMARY_SPEC_ROWS.includes(key) && !extraKeys.includes(key)) {
+      if (!PRODUCT_SPEC_ORDER.includes(key as (typeof PRODUCT_SPEC_ORDER)[number]) && !extraKeys.includes(key)) {
         extraKeys.push(key);
       }
     }
   }
-  const rows = [...PRIMARY_SPEC_ROWS, ...extraKeys];
+  const rows = [...PRODUCT_SPEC_ORDER, ...extraKeys];
   const rowsWithData = rows.filter((row) => columns.some((c) => c.specs?.[row]));
+  const rowGroups = groupSpecKeys(rowsWithData);
 
   return (
     <div className="flex flex-col gap-8">
@@ -189,17 +180,26 @@ export function CompareTable({
         <div className="mt-5 overflow-x-auto rounded-2xl border border-zinc-100">
         <table className="w-full min-w-[620px] border-collapse text-sm">
           <tbody>
-            {rowsWithData.map((row, idx) => (
-              <tr key={row} className={idx % 2 === 0 ? "bg-white" : "bg-zinc-50/60"}>
-                <td className="w-44 shrink-0 border-r border-zinc-100 px-4 py-4 align-top font-semibold text-zinc-600">
-                  {row}
-                </td>
-                {columns.map((m) => (
-                  <td key={m.slug} className="px-4 py-4 align-top leading-6 text-foreground">
-                    {m.specs?.[row] ?? <span className="text-zinc-300">–</span>}
-                  </td>
+            {rowGroups.map((group) => (
+              <Fragment key={group.title}>
+                <tr className="border-y border-zinc-100 bg-zinc-100/80 first:border-t-0">
+                  <th colSpan={columns.length + 1} className="px-4 py-3 text-left font-display text-base font-semibold text-foreground">
+                    {group.title}
+                  </th>
+                </tr>
+                {group.keys.map((row, idx) => (
+                  <tr key={row} className={idx % 2 === 0 ? "bg-white" : "bg-zinc-50/60"}>
+                    <td className="w-44 shrink-0 border-r border-zinc-100 px-4 py-4 align-top font-semibold text-zinc-600">
+                      {row}
+                    </td>
+                    {columns.map((m) => (
+                      <td key={m.slug} className="px-4 py-4 align-top leading-6 text-foreground">
+                        {m.specs?.[row] ?? <span className="text-zinc-300">–</span>}
+                      </td>
+                    ))}
+                  </tr>
                 ))}
-              </tr>
+              </Fragment>
             ))}
           </tbody>
         </table>

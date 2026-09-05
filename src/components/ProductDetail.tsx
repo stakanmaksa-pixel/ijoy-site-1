@@ -5,6 +5,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import { CompareButton } from "@/components/CompareButton";
 import { ProductOrder } from "@/components/ProductOrder";
 import { pickVariantImages } from "@/lib/pickCoverImage";
+import { groupProductSpecs } from "@/lib/productSpecs";
 
 type Variant = {
   id: string;
@@ -70,7 +71,8 @@ export function ProductDetail({
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const activeImage = galleryImages.includes(selectedImage ?? "") ? selectedImage : galleryImages[0];
 
-  const specEntries = specs ? Object.entries(specs) : [];
+  const specGroups = groupProductSpecs(specs);
+  const hasSpecs = specGroups.length > 0;
   // На карточке товара (рядом с фото) показываем только самое важное —
   // первые 3 пункта из highlights (они в prisma/seed.ts уже отсортированы
   // по значимости). Полный список особенностей и так дублируется в
@@ -164,7 +166,7 @@ export function ProductDetail({
           определяет порядок сверху вниз, т.к. на маленьком экране колонки
           складываются в одну. Оба блока не рендерятся, если данных нет —
           старые товары выглядят как раньше. */}
-      {(specEntries.length > 0 || hasComparison) && (
+      {(hasSpecs || hasComparison) && (
         // Специально в одну колонку (не side-by-side), чтобы характеристики
         // гарантированно шли НИЖЕ сравнения на любом экране, а не просто
         // слева/справа на десктопе.
@@ -185,27 +187,26 @@ export function ProductDetail({
             </div>
           )}
 
-          {specEntries.length > 0 && (
+          {hasSpecs && (
             <div>
               <h2 className="font-display text-xl font-semibold text-foreground">
                 Характеристики
               </h2>
-              <dl className="mt-4 grid gap-3 md:grid-cols-2">
-                {specEntries.map(([label, value]) => (
-                  // Раньше значение было прижато к правому краю и при переносе
-                  // на две строки текст "лесенкой" съезжал влево — из-за этого
-                  // таблица выглядела "криво". Теперь подпись и значение — два
-                  // отдельных ряда: подпись сверху мелким серым, значение
-                  // снизу обычным текстом с выравниванием по левому краю, так
-                  // длинные значения переносятся ровно, без лесенки.
-                  <div key={label} className="flex flex-col gap-1 rounded-2xl border border-zinc-100 px-4 py-4 text-sm">
-                    <dt className="shrink-0 text-xs uppercase tracking-wide text-zinc-400">
-                      {label}
-                    </dt>
-                    <dd className="text-left font-medium leading-6 text-foreground">{value}</dd>
-                  </div>
+              <div className="mt-6 space-y-8">
+                {specGroups.map((group) => (
+                  <section key={group.title}>
+                    <h3 className="mb-3 text-base font-semibold text-foreground">{group.title}</h3>
+                    <dl className="grid gap-3 md:grid-cols-2">
+                      {group.entries.map(([label, value]) => (
+                        <div key={label} className="flex flex-col gap-1 rounded-2xl border border-zinc-100 px-4 py-4 text-sm">
+                          <dt className="shrink-0 text-xs uppercase tracking-wide text-zinc-400">{label}</dt>
+                          <dd className="text-left font-medium leading-6 text-foreground">{value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </section>
                 ))}
-              </dl>
+              </div>
             </div>
           )}
         </div>

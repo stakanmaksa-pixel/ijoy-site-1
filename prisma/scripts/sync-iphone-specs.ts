@@ -21,7 +21,21 @@ import { IPHONE_DISPLAY_NAME_OVERRIDES, IPHONE_CONTENT_OVERRIDES } from "../ipho
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
+function assertSameSpecKeys(models: string[]) {
+  const [referenceModel, ...rest] = models;
+  const reference = Object.keys(IPHONE_CONTENT_OVERRIDES[referenceModel]?.specs ?? {}).sort();
+  for (const model of rest) {
+    const current = Object.keys(IPHONE_CONTENT_OVERRIDES[model]?.specs ?? {}).sort();
+    if (reference.join("\n") !== current.join("\n")) {
+      throw new Error(`${model}: набор характеристик отличается от ${referenceModel}`);
+    }
+  }
+}
+
 async function main() {
+  // Эти модели участвуют в прямом сравнении и обязаны иметь одинаковые
+  // названия строк, иначе значения визуально разъедутся по таблице.
+  assertSameSpecKeys(["17 Pro Max", "17 Pro"]);
   let updated = 0;
   let notFound = 0;
 
@@ -32,6 +46,7 @@ async function main() {
     const result = await prisma.product.updateMany({
       where: { name },
       data: {
+        description: content.description,
         specs: content.specs,
         highlights: content.highlights,
         previousGenLabel: content.previousGenLabel ?? null,
