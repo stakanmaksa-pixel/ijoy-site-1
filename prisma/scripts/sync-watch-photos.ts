@@ -71,20 +71,17 @@ const ultra3Sources = new Map<string, ImageSource>([
 
 const colorSources: Record<string, Record<string, ImageSource>> = {
   "apple-watch-series-11": {
-    "Space Gray": productCodeSource("apple-watch", "MEQW4LW/A", "spacegray"),
-    "Rose Gold": productCodeSource("apple-watch", "MEU04LW/A", "rosegold"),
-    "Jet Black": productCodeSource("apple-watch", "MEQT4LW/A", "jetblack"),
-    Silver: {
-      sourcePage: "https://www.apple.com/shop/product/feva4lw/a/refurbished-apple-watch-series-11-gps-46mm-silver-aluminum-case-with-m-l-purple-fog-sport-band",
-      expectedTokens: ["silver"],
-    },
-    "Gold Titanium": productCodeSource("apple-watch", "MF8Y4LW/A", "titanium-gold"),
-    "Natural Titanium": productCodeSource("apple-watch", "MF8P4LW/A", "titanium-natural"),
-    "Slate Titanium": productCodeSource("apple-watch", "MF8U4LW/A", "titanium-slate"),
+    "Space Gray": directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/42-nc-aluminum-spacegray-sport-band-black-s11?wid=1000&hei=1000&fmt=jpeg&qlt=95", "spacegray"),
+    "Rose Gold": directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/42-nc-aluminum-rosegold-sport-band-lightblush-s11?wid=1000&hei=1000&fmt=jpeg&qlt=95", "rosegold"),
+    "Jet Black": directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/42-nc-aluminum-jetblack-sport-band-black-s11?wid=1000&hei=1000&fmt=jpeg&qlt=95", "jetblack"),
+    Silver: directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/refurb-46-s11-alum-silver-sport-band-fog?wid=1000&hei=1000&fmt=jpeg&qlt=95", "silver"),
+    "Gold Titanium": directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/42-cell-titanium-gold-milanese-gold-s11?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-gold"),
+    "Natural Titanium": directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/42-cell-titanium-natural-milanese-natural-s11?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-natural"),
+    "Slate Titanium": directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/42-cell-titanium-slate-milanese-slate-s11?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-slate"),
   },
   "apple-watch-se-3": {
-    Starlight: productCodeSource("apple-watch-se", "MEH34LW/A", "starlight"),
-    Midnight: productCodeSource("apple-watch-se", "MEH94LW/A", "midnight"),
+    Starlight: directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/40-nc-aluminum-starlight-sport-band-starlight-se?wid=1000&hei=1000&fmt=jpeg&qlt=95", "starlight"),
+    Midnight: directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/40-nc-aluminum-midnight-sport-band-midnight-se?wid=1000&hei=1000&fmt=jpeg&qlt=95", "midnight"),
   },
 };
 
