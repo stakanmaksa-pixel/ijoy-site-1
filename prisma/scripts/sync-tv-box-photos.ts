@@ -18,6 +18,39 @@ const photos = [
   },
 ];
 
+const appleTvContent = {
+  description: "Apple TV 4K (3-го поколения) — компактная медиаприставка с чипом A15 Bionic для фильмов, сериалов, музыки и игр в разрешении 4K. Поддерживает Dolby Vision, HDR10+ и Dolby Atmos, комплектуется пультом Siri Remote с зарядкой USB-C. Версия 64 ГБ работает по Wi-Fi, а версия 128 ГБ дополнительно оснащена Gigabit Ethernet и поддержкой Thread.",
+  highlights: [
+    "Видео 4K HDR с Dolby Vision и HDR10+",
+    "Объёмный звук Dolby Atmos",
+    "Производительный чип A15 Bionic",
+    "Пульт Siri Remote 3-го поколения с USB-C",
+    "Версия 128 ГБ поддерживает Gigabit Ethernet и Thread",
+  ],
+  specs: {
+    "Поколение": "Apple TV 4K, 3-е поколение (2022)",
+    "Процессор": "Apple A15 Bionic",
+    "Накопитель": "64 ГБ (Wi-Fi) / 128 ГБ (Wi-Fi + Ethernet)",
+    "Видео": "До 4K 60 кадров/с; Dolby Vision, HDR10+, HDR10 и HLG",
+    "Звук": "Dolby Atmos, Dolby Digital 5.1 и Dolby Digital Plus 7.1",
+    "Беспроводная связь": "Wi-Fi 6 (802.11ax) 2×2 MIMO, Bluetooth 5.0",
+    "Разъёмы": "HDMI 2.1; у версии 128 ГБ — Gigabit Ethernet",
+    "Умный дом": "Thread — в версии 128 ГБ Wi-Fi + Ethernet",
+    "Размеры": "93 × 93 × 31 мм",
+    "Вес": "208 г (64 ГБ) / 214 г (128 ГБ)",
+    "Пульт": "Siri Remote 3-го поколения, Bluetooth 5.0, ИК-передатчик, зарядка USB-C",
+    "Совместимость": "Телевизоры HD и UHD с HDMI; для 4K HDR требуется совместимый телевизор и HDMI-кабель",
+    "Комплект": "Apple TV 4K, Siri Remote, кабель питания и документация. HDMI-кабель и кабель USB-C продаются отдельно",
+  },
+  previousGenLabel: "Apple TV 4K 2-го поколения",
+  previousGenHighlights: [
+    "Чип A15 Bionic вместо A12 Bionic",
+    "Поддержка HDR10+ в дополнение к Dolby Vision и HDR10",
+    "Более компактный и значительно более лёгкий корпус",
+    "Siri Remote 3-го поколения заряжается через USB-C вместо Lightning",
+  ],
+};
+
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
@@ -103,8 +136,8 @@ async function main() {
   await prisma.product.update({
     where: { id: primary.id },
     data: {
+      ...appleTvContent,
       name: "Apple TV 4K (3-го поколения)",
-      description: "Apple TV 4K (3-го поколения). Выберите объём памяти 64 или 128 ГБ.",
       images: paths,
     },
   });

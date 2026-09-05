@@ -46,6 +46,11 @@ async function checkAppleTv() {
     failures.push("Apple TV: товар не найден");
     return;
   }
+  if (!product.description || !product.specs || product.highlights.length < 3) {
+    failures.push("Apple TV: отсутствуют описание, характеристики или ключевые преимущества");
+  } else {
+    console.log("OK   Apple TV: описание и характеристики заполнены");
+  }
   const actual = product.variants.map((variant) => `${variant.memory}:${variant.price?.toString() ?? "null"}`).sort();
   const expected = ["128GB:19900", "64GB:15900"];
   if (actual.length !== expected.length || actual.some((value, index) => value !== expected[index])) {
