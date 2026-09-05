@@ -13,6 +13,7 @@ import { variantImageKey } from "../../src/lib/pickCoverImage";
 type ImageSource = {
   sourcePage: string;
   expectedTokens: string[];
+  directImage?: boolean;
 };
 
 type WatchVariant = {
@@ -35,6 +36,10 @@ function productCodeSource(
   return { sourcePage: appleProductPage(line, code), expectedTokens };
 }
 
+function directAppleImage(imageUrl: string, ...expectedTokens: string[]): ImageSource {
+  return { sourcePage: imageUrl, expectedTokens, directImage: true };
+}
+
 function exactKey(color: string, band: string) {
   return `${color}::${band}`;
 }
@@ -48,15 +53,15 @@ const ultra3Sources = new Map<string, ImageSource>([
   [exactKey("Black Titanium", "Alpine Loop (Black) S"), productCodeSource("apple-watch-ultra", "MF0Q4LW/A", "titanium-black", "alpine")],
   [exactKey("Black Titanium", "Alpine Loop (Black) M"), productCodeSource("apple-watch-ultra", "MF0V4LW/A", "titanium-black", "alpine")],
   [exactKey("Black Titanium", "Alpine Loop (Black) L"), productCodeSource("apple-watch-ultra", "MF0X4LW/A", "titanium-black", "alpine")],
-  [exactKey("Black Titanium", "Alpine Loop (Light Blue) M"), { sourcePage: "https://www.apple.com/my/shop/buy-watch/apple-watch-ultra/49mm-cellular-black-titanium-light-blue-alpine-loop", expectedTokens: ["titanium-black", "alpine"] }],
+  [exactKey("Black Titanium", "Alpine Loop (Light Blue) M"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MG9K4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_MY?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-black", "alpine")],
   [exactKey("Black Titanium", "Ocean Band (Black)"), productCodeSource("apple-watch-ultra", "MF0J4LW/A", "titanium-black", "ocean")],
-  [exactKey("Black Titanium", "Ocean Band (Neon Green)"), { sourcePage: "https://www.apple.com/nz-edu/shop/buy-watch/apple-watch-ultra/49-mm-cellular-black-titanium-neon-green-ocean-band", expectedTokens: ["titanium-black", "ocean"] }],
+  [exactKey("Black Titanium", "Ocean Band (Neon Green)"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MGCL4_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-ocean-ultra3_VW_34FR_GEO_NZ?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-black", "ocean")],
   [exactKey("Black Titanium", "Milanese Loop (Black Titanium) S"), productCodeSource("apple-watch-ultra", "MF1N4LW/A", "titanium-black", "milanese")],
   [exactKey("Black Titanium", "Milanese Loop (Black Titanium) M"), productCodeSource("apple-watch-ultra", "MF1Q4LW/A", "titanium-black", "milanese")],
   [exactKey("Black Titanium", "Milanese Loop (Black Titanium) L"), productCodeSource("apple-watch-ultra", "MF1T4LW/A", "titanium-black", "milanese")],
   [exactKey("Natural Titanium", "Trail Loop (Blue/Bright Blue) S/M"), productCodeSource("apple-watch-ultra", "MEWR4LW/A", "titanium-natural", "trail")],
   [exactKey("Natural Titanium", "Trail Loop (Blue/Bright Blue) M/L"), productCodeSource("apple-watch-ultra", "MEWU4LW/A", "titanium-natural", "trail")],
-  [exactKey("Natural Titanium", "Alpine Loop (Black) L"), { sourcePage: "https://www.apple.com/my/shop/buy-watch/apple-watch-ultra/49mm-cellular-natural-titanium-black-alpine-loop", expectedTokens: ["titanium-natural", "alpine"] }],
+  [exactKey("Natural Titanium", "Alpine Loop (Black) L"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MFTE4ref_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_US?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-natural", "alpine")],
   [exactKey("Natural Titanium", "Alpine Loop (Light Blue) M"), productCodeSource("apple-watch-ultra", "MEWM4LW/A", "titanium-natural", "alpine")],
   [exactKey("Natural Titanium", "Ocean Band (Anchor Blue)"), productCodeSource("apple-watch-ultra", "MEWH4LW/A", "titanium-natural", "ocean")],
   [exactKey("Natural Titanium", "Milanese Loop (Natural Titanium) S"), productCodeSource("apple-watch-ultra", "MEWW4LW/A", "titanium-natural", "milanese")],
@@ -90,10 +95,14 @@ function extractImageUrl(html: string): string | null {
 }
 
 async function downloadOfficialImage(source: ImageSource, label: string): Promise<Buffer> {
-  const page = await fetch(source.sourcePage, { headers: { "User-Agent": "Mozilla/5.0 iJoy catalog photo sync" } });
-  if (!page.ok) throw new Error(`${label}: страница Apple вернула HTTP ${page.status}`);
-  const imageUrl = extractImageUrl(await page.text());
-  if (!imageUrl) throw new Error(`${label}: Apple не отдала og:image`);
+  let imageUrl = source.sourcePage;
+  if (!source.directImage) {
+    const page = await fetch(source.sourcePage, { headers: { "User-Agent": "Mozilla/5.0 iJoy catalog photo sync" } });
+    if (!page.ok) throw new Error(`${label}: страница Apple вернула HTTP ${page.status}`);
+    const pageImageUrl = extractImageUrl(await page.text());
+    if (!pageImageUrl) throw new Error(`${label}: Apple не отдала og:image`);
+    imageUrl = pageImageUrl;
+  }
   const normalizedUrl = imageUrl.toLowerCase().replaceAll("-", "");
   if (source.expectedTokens.some((token) => !normalizedUrl.includes(token.toLowerCase().replaceAll("-", "")))) {
     throw new Error(`${label}: Apple вернула общую картинку вместо нужной конфигурации`);
