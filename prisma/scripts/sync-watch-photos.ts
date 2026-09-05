@@ -13,7 +13,6 @@ import { variantImageKey } from "../../src/lib/pickCoverImage";
 type ImageSource = {
   sourcePage: string;
   expectedTokens: string[];
-  directImage?: boolean;
 };
 
 type WatchVariant = {
@@ -24,49 +23,45 @@ type WatchVariant = {
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 
-function appleProductPage(line: "apple-watch" | "apple-watch-se" | "apple-watch-ultra", code: string) {
-  return `https://www.apple.com/shop/buy-watch/${line}?product=${encodeURIComponent(code)}&step=select`;
-}
-
-function productCodeSource(
-  line: "apple-watch" | "apple-watch-se" | "apple-watch-ultra",
-  code: string,
-  ...expectedTokens: string[]
-): ImageSource {
-  return { sourcePage: appleProductPage(line, code), expectedTokens };
-}
-
 function directAppleImage(imageUrl: string, ...expectedTokens: string[]): ImageSource {
-  return { sourcePage: imageUrl, expectedTokens, directImage: true };
+  return { sourcePage: imageUrl, expectedTokens };
+}
+
+function ultraAppleImage(asset: string, ...expectedTokens: string[]): ImageSource {
+  return directAppleImage(
+    `https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/${asset}?wid=1600&hei=1025&bgc=fafafa&trim=1&fmt=p-jpg&qlt=90`,
+    ...expectedTokens,
+  );
 }
 
 function exactKey(color: string, band: string) {
   return `${color}::${band}`;
 }
 
-// Артикулы Apple дают устойчивую страницу именно выбранной комплектации,
-// а не общую рекламную картинку линейки. Три нестандартных сочетания из
-// витрины Store77 берём с региональных официальных страниц Apple.
+// Используем главное фото выбранной комплектации, а не og:image страницы:
+// og:image имеет другой кроп и для части ремешков визуально подменяет товар.
+// Все изображения запрашиваются в одном соотношении сторон, поэтому часы в
+// карточках имеют одинаковый масштаб и не обрезаются.
 const ultra3Sources = new Map<string, ImageSource>([
-  [exactKey("Black Titanium", "Trail Loop (Black/Charcoal) S/M"), productCodeSource("apple-watch-ultra", "MF1D4LW/A", "titanium-black", "trail")],
-  [exactKey("Black Titanium", "Trail Loop (Black/Charcoal) M/L"), productCodeSource("apple-watch-ultra", "MF1H4LW/A", "titanium-black", "trail")],
-  [exactKey("Black Titanium", "Alpine Loop (Black) S"), productCodeSource("apple-watch-ultra", "MF0Q4LW/A", "titanium-black", "alpine")],
-  [exactKey("Black Titanium", "Alpine Loop (Black) M"), productCodeSource("apple-watch-ultra", "MF0V4LW/A", "titanium-black", "alpine")],
-  [exactKey("Black Titanium", "Alpine Loop (Black) L"), productCodeSource("apple-watch-ultra", "MF0X4LW/A", "titanium-black", "alpine")],
-  [exactKey("Black Titanium", "Alpine Loop (Light Blue) M"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MG9K4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_MY?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-black", "alpine")],
-  [exactKey("Black Titanium", "Ocean Band (Black)"), productCodeSource("apple-watch-ultra", "MF0J4LW/A", "titanium-black", "ocean")],
-  [exactKey("Black Titanium", "Ocean Band (Neon Green)"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MGCL4_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-ocean-ultra3_VW_34FR_GEO_NZ?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-black", "ocean")],
-  [exactKey("Black Titanium", "Milanese Loop (Black Titanium) S"), productCodeSource("apple-watch-ultra", "MF1N4LW/A", "titanium-black", "milanese")],
-  [exactKey("Black Titanium", "Milanese Loop (Black Titanium) M"), productCodeSource("apple-watch-ultra", "MF1Q4LW/A", "titanium-black", "milanese")],
-  [exactKey("Black Titanium", "Milanese Loop (Black Titanium) L"), productCodeSource("apple-watch-ultra", "MF1T4LW/A", "titanium-black", "milanese")],
-  [exactKey("Natural Titanium", "Trail Loop (Blue/Bright Blue) S/M"), productCodeSource("apple-watch-ultra", "MEWR4LW/A", "titanium-natural", "trail")],
-  [exactKey("Natural Titanium", "Trail Loop (Blue/Bright Blue) M/L"), productCodeSource("apple-watch-ultra", "MEWU4LW/A", "titanium-natural", "trail")],
-  [exactKey("Natural Titanium", "Alpine Loop (Black) L"), directAppleImage("https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MFTE4ref_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_US?wid=1000&hei=1000&fmt=jpeg&qlt=95", "titanium-natural", "alpine")],
-  [exactKey("Natural Titanium", "Alpine Loop (Light Blue) M"), productCodeSource("apple-watch-ultra", "MEWM4LW/A", "titanium-natural", "alpine")],
-  [exactKey("Natural Titanium", "Ocean Band (Anchor Blue)"), productCodeSource("apple-watch-ultra", "MEWH4LW/A", "titanium-natural", "ocean")],
-  [exactKey("Natural Titanium", "Milanese Loop (Natural Titanium) S"), productCodeSource("apple-watch-ultra", "MEWW4LW/A", "titanium-natural", "milanese")],
-  [exactKey("Natural Titanium", "Milanese Loop (Natural Titanium) M"), productCodeSource("apple-watch-ultra", "MEWY4LW/A", "titanium-natural", "milanese")],
-  [exactKey("Natural Titanium", "Milanese Loop (Natural Titanium) L"), productCodeSource("apple-watch-ultra", "MF0E4LW/A", "titanium-natural", "milanese")],
+  [exactKey("Black Titanium", "Trail Loop (Black/Charcoal) S/M"), ultraAppleImage("MG9T4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-trail-ultra3_VW_34FR_GEO_US", "titanium-black", "trail")],
+  [exactKey("Black Titanium", "Trail Loop (Black/Charcoal) M/L"), ultraAppleImage("MG9T4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-trail-ultra3_VW_34FR_GEO_US", "titanium-black", "trail")],
+  [exactKey("Black Titanium", "Alpine Loop (Black) S"), ultraAppleImage("MG9G4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_US", "titanium-black", "alpine")],
+  [exactKey("Black Titanium", "Alpine Loop (Black) M"), ultraAppleImage("MG9G4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_US", "titanium-black", "alpine")],
+  [exactKey("Black Titanium", "Alpine Loop (Black) L"), ultraAppleImage("MG9G4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_US", "titanium-black", "alpine")],
+  [exactKey("Black Titanium", "Alpine Loop (Light Blue) M"), ultraAppleImage("MG9K4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_MY", "titanium-black", "alpine")],
+  [exactKey("Black Titanium", "Ocean Band (Black)"), ultraAppleImage("MYPD3ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-ocean-ultra3_VW_34FR_GEO_US", "titanium-black", "ocean")],
+  [exactKey("Black Titanium", "Ocean Band (Neon Green)"), ultraAppleImage("MGCL4_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-ocean-ultra3_VW_34FR_GEO_NZ", "titanium-black", "ocean")],
+  [exactKey("Black Titanium", "Milanese Loop (Black Titanium) S"), ultraAppleImage("MGHR4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-milanese-ultra3_VW_34FR_GEO_US", "titanium-black", "milanese")],
+  [exactKey("Black Titanium", "Milanese Loop (Black Titanium) M"), ultraAppleImage("MGHR4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-milanese-ultra3_VW_34FR_GEO_US", "titanium-black", "milanese")],
+  [exactKey("Black Titanium", "Milanese Loop (Black Titanium) L"), ultraAppleImage("MGHR4ref_VW_34FR+watch-case-49-titanium-black-ultra3_VW_34FR+watch-face-49-milanese-ultra3_VW_34FR_GEO_US", "titanium-black", "milanese")],
+  [exactKey("Natural Titanium", "Trail Loop (Blue/Bright Blue) S/M"), ultraAppleImage("MFT64ref_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-trail-ultra3_VW_34FR_GEO_US", "titanium-natural", "trail")],
+  [exactKey("Natural Titanium", "Trail Loop (Blue/Bright Blue) M/L"), ultraAppleImage("MFT64ref_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-trail-ultra3_VW_34FR_GEO_US", "titanium-natural", "trail")],
+  [exactKey("Natural Titanium", "Alpine Loop (Black) L"), ultraAppleImage("MFTE4ref_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_US", "titanium-natural", "alpine")],
+  [exactKey("Natural Titanium", "Alpine Loop (Light Blue) M"), ultraAppleImage("MFTH4ref_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-alpine-ultra3_VW_34FR_GEO_US", "titanium-natural", "alpine")],
+  [exactKey("Natural Titanium", "Ocean Band (Anchor Blue)"), ultraAppleImage("MGCC4_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-ocean-ultra3_VW_34FR_GEO_US", "titanium-natural", "ocean")],
+  [exactKey("Natural Titanium", "Milanese Loop (Natural Titanium) S"), ultraAppleImage("MGHN4ref_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-milanese-ultra3_VW_34FR_GEO_US", "titanium-natural", "milanese")],
+  [exactKey("Natural Titanium", "Milanese Loop (Natural Titanium) M"), ultraAppleImage("MGHN4ref_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-milanese-ultra3_VW_34FR_GEO_US", "titanium-natural", "milanese")],
+  [exactKey("Natural Titanium", "Milanese Loop (Natural Titanium) L"), ultraAppleImage("MGHN4ref_VW_34FR+watch-case-49-titanium-natural-ultra3_VW_34FR+watch-face-49-milanese-ultra3_VW_34FR_GEO_US", "titanium-natural", "milanese")],
 ]);
 
 const colorSources: Record<string, Record<string, ImageSource>> = {
@@ -85,21 +80,8 @@ const colorSources: Record<string, Record<string, ImageSource>> = {
   },
 };
 
-function extractImageUrl(html: string): string | null {
-  const meta = html.match(/<meta[^>]+(?:property|name)=["']og:image["'][^>]+content=["']([^"']+)["']/i)
-    ?? html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']og:image["']/i);
-  return meta?.[1]?.startsWith("https://") ? meta[1].replaceAll("&amp;", "&") : null;
-}
-
 async function downloadOfficialImage(source: ImageSource, label: string): Promise<Buffer> {
-  let imageUrl = source.sourcePage;
-  if (!source.directImage) {
-    const page = await fetch(source.sourcePage, { headers: { "User-Agent": "Mozilla/5.0 iJoy catalog photo sync" } });
-    if (!page.ok) throw new Error(`${label}: страница Apple вернула HTTP ${page.status}`);
-    const pageImageUrl = extractImageUrl(await page.text());
-    if (!pageImageUrl) throw new Error(`${label}: Apple не отдала og:image`);
-    imageUrl = pageImageUrl;
-  }
+  const imageUrl = source.sourcePage;
   const normalizedUrl = imageUrl.toLowerCase().replaceAll("-", "");
   if (source.expectedTokens.some((token) => !normalizedUrl.includes(token.toLowerCase().replaceAll("-", "")))) {
     throw new Error(`${label}: Apple вернула общую картинку вместо нужной конфигурации`);
