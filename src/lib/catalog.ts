@@ -92,6 +92,7 @@ export const MODEL_DISPLAY_ORDER = {
     "AirPods 4 ANC",
     "AirPods 4",
     "AirPods Max 2",
+    "Apple EarPods USB-C",
   ],
   gopro: [
     "GoPro MISSION 1 PRO ILS",
@@ -134,7 +135,7 @@ function resolveOrderList(
   if (categorySlug === "noutbuki") return MODEL_DISPLAY_ORDER.macbook;
   if (categorySlug === "chasy") return MODEL_DISPLAY_ORDER.watch;
   if (categorySlug === "ekshn-kamery") return MODEL_DISPLAY_ORDER.gopro;
-  if (categorySlug === "aksessuary" && /^AirPods/.test(name)) return MODEL_DISPLAY_ORDER.airpods;
+  if (["aksessuary", "naushniki"].includes(categorySlug) && /^(?:AirPods|Apple EarPods)/.test(name)) return MODEL_DISPLAY_ORDER.airpods;
   return undefined;
 }
 
@@ -236,6 +237,7 @@ const CATEGORY_ORDER: Record<string, readonly string[]> = {
   chasy: MODEL_DISPLAY_ORDER.watch,
   planshety: MODEL_DISPLAY_ORDER.ipad,
   noutbuki: MODEL_DISPLAY_ORDER.macbook,
+  naushniki: MODEL_DISPLAY_ORDER.airpods,
   "ekshn-kamery": MODEL_DISPLAY_ORDER.gopro,
 };
 

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CompareButton } from "@/components/CompareButton";
 import { ProductOrder } from "@/components/ProductOrder";
+import { pickVariantImages } from "@/lib/pickCoverImage";
 
 type Variant = {
   id: string;
@@ -60,11 +61,9 @@ export function ProductDetail({
 
   const selectedVariant = variants.find((v) => v.id === selectedId);
   const activeColor = selectedVariant?.color ?? null;
-  // Фото именно этого цвета — если их ещё не загрузили, откатываемся на
-  // общие фото товара, а не на фото другого цвета (иначе на карточке будет
-  // виден не тот цвет, который выбрал покупатель).
-  const galleryImages =
-    (activeColor && colorImages?.[activeColor]?.length ? colorImages[activeColor] : images) ?? [];
+  // Сначала ищем фотографию точной модификации (корпус + ремешок + размер),
+  // затем фото цвета корпуса и только потом общее фото товара.
+  const galleryImages = pickVariantImages(images ?? [], colorImages ?? null, selectedVariant);
   // Храним URL, а не индекс: при переключении цвета старый URL отсутствует
   // в новом наборе, поэтому автоматически берётся первое фото нового цвета
   // без дополнительного setState внутри effect.

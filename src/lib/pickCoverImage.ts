@@ -24,3 +24,38 @@ export function pickCoverImage(
   }
   return null;
 }
+
+export type VariantImageSelector = {
+  memory?: string | null;
+  color?: string | null;
+  region?: string | null;
+};
+
+// colorImages исторически хранит изображения по цвету. Для часов одного
+// цвета этого недостаточно: в рамках одного корпуса есть разные ремешки и
+// размеры. Точный составной ключ позволяет привязать фото к модификации,
+// не меняя схему БД и сохраняя совместимость со старыми товарами.
+export function variantImageKey(variant: VariantImageSelector): string {
+  return `variant:${variant.memory ?? ""}::${variant.color ?? ""}::${variant.region ?? ""}`;
+}
+
+export function pickVariantImages(
+  images: string[],
+  colorImages: Record<string, string[]> | null,
+  variant?: VariantImageSelector | null,
+): string[] {
+  if (variant) {
+    const exact = colorImages?.[variantImageKey(variant)];
+    if (exact?.length) return exact;
+    if (variant.color && colorImages?.[variant.color]?.length) {
+      return colorImages[variant.color];
+    }
+  }
+  if (images.length) return images;
+  if (colorImages) {
+    for (const list of Object.values(colorImages)) {
+      if (list?.length) return list;
+    }
+  }
+  return [];
+}

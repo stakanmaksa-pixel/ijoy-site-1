@@ -5,10 +5,12 @@
 // docker compose --env-file .env.docker run --rm migrate npx tsx prisma/scripts/verify-critical-catalog.ts
 
 import "dotenv/config";
-import { access } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../../src/generated/prisma/client";
+import { variantImageKey } from "../../src/lib/pickCoverImage";
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 const failures: string[] = [];
@@ -22,6 +24,16 @@ async function assertFile(productName: string, publicPath: string | undefined) {
     await access(path.join(process.cwd(), "public", publicPath.slice(1)));
   } catch {
     failures.push(`${productName}: файл не найден (${publicPath})`);
+  }
+}
+
+async function fileHash(publicPath: string | undefined) {
+  if (!publicPath?.startsWith("/uploads/")) return null;
+  try {
+    const contents = await readFile(path.join(process.cwd(), "public", publicPath.slice(1)));
+    return createHash("sha256").update(contents).digest("hex");
+  } catch {
+    return null;
   }
 }
 
@@ -58,7 +70,7 @@ async function checkAirPods() {
   if (oldMaxPublished.length) failures.push(`Старые AirPods Max всё ещё опубликованы: ${oldMaxPublished.map((item) => item.name).join(", ")}`);
   else console.log("OK   Старые AirPods Max скрыты");
 
-  const expectedNames = ["AirPods Pro 3", "AirPods Pro 2", "AirPods 4 ANC", "AirPods 4", "AirPods Max 2"];
+  const expectedNames = ["AirPods Pro 3", "AirPods Pro 2", "AirPods 4 ANC", "AirPods 4", "AirPods Max 2", "Apple EarPods USB-C"];
   for (const expectedName of expectedNames) {
     const candidates = await prisma.product.findMany({
       where: { status: "PUBLISHED", name: { contains: expectedName, mode: "insensitive" } },
@@ -76,10 +88,15 @@ async function checkAirPods() {
     }
     if (expectedName === "AirPods Max 2") {
       const byColor = (product.colorImages as Record<string, string[]> | null) ?? {};
+      const hashes = new Set<string>();
       for (const variant of product.variants) {
         const photo = variant.color ? byColor[variant.color]?.[0] : undefined;
         await assertFile(`${product.name}, ${variant.color ?? "без цвета"}`, photo);
+        const hash = await fileHash(photo);
+        if (hash) hashes.add(hash);
       }
+      const colors = new Set(product.variants.map((variant) => variant.color).filter(Boolean));
+      if (hashes.size !== colors.size) failures.push(`${product.name}: цвета используют одинаковые фотографии`);
       console.log(`OK   ${product.name}: проверены фото ${product.variants.length} цветов`);
     } else {
       await assertFile(product.name, product.images[0]);
@@ -88,9 +105,36 @@ async function checkAirPods() {
   }
 }
 
+async function checkWatches() {
+  for (const slug of ["apple-watch-ultra-3", "apple-watch-series-11", "apple-watch-se-3"]) {
+    const product = await prisma.product.findUnique({ where: { slug }, include: { variants: true } });
+    if (!product) {
+      failures.push(`${slug}: товар не найден`);
+      continue;
+    }
+    const byVariant = (product.colorImages as Record<string, string[]> | null) ?? {};
+    for (const variant of product.variants) {
+      const photo = byVariant[variantImageKey(variant)]?.[0];
+      await assertFile(`${product.name}, ${variant.color ?? "без цвета"}, ${variant.region ?? "без ремешка"}`, photo);
+    }
+
+    const colors = [...new Set(product.variants.map((variant) => variant.color).filter((value): value is string => Boolean(value)))];
+    const hashes = new Set<string>();
+    for (const color of colors) {
+      const photo = byVariant[color]?.[0];
+      await assertFile(`${product.name}, цвет ${color}`, photo);
+      const hash = await fileHash(photo);
+      if (hash) hashes.add(hash);
+    }
+    if (hashes.size !== colors.length) failures.push(`${product.name}: разные цвета корпуса используют одинаковое фото`);
+    else console.log(`OK   ${product.name}: точные фото вариантов и ${colors.length} разных цветов корпуса`);
+  }
+}
+
 async function main() {
   await checkAppleTv();
   await checkAirPods();
+  await checkWatches();
   if (failures.length) {
     for (const failure of failures) console.error(`FAIL ${failure}`);
     process.exitCode = 2;

@@ -46,11 +46,111 @@ const data = [
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 
+function normalized(value: string) {
+  return value.toLowerCase().replace(/[(),-]/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function optionBandType(value: string) {
+  if (/trail/i.test(value)) return "trail";
+  if (/alpine/i.test(value)) return "alpine";
+  if (/ocean/i.test(value)) return "ocean";
+  if (/milanese/i.test(value)) return "milanese";
+  return "";
+}
+
+function sourceBandType(value: string) {
+  if (/milanese/.test(value)) return "milanese";
+  if (/ocean/.test(value)) return "ocean";
+  if (/alpine|\balp\b|light blue loop/.test(value)) return "alpine";
+  if (/trail|charcoal|bright blue loop/.test(value)) return "trail";
+  return "";
+}
+
+function sourceBandSize(value: string) {
+  const mixed = value.match(/\b(s\/m|m\/l)\b/i)?.[1];
+  if (mixed) return mixed.toUpperCase();
+  return value.match(/\b([sml])\b(?=\s+[a-z0-9]{4,}\b)/i)?.[1]?.toUpperCase() ?? null;
+}
+
+function optionBandSize(value: string) {
+  return value.match(/(?:^|\s)(S\/M|M\/L|S|M|L)$/)?.[1] ?? null;
+}
+
+function matchesUltraBase(source: string, item: WatchOption) {
+  const caseMatches = item.caseColor === "Natural Titanium" ? /natural/.test(source) : /black/.test(source) && !/natural/.test(source);
+  if (!caseMatches || sourceBandType(source) !== optionBandType(item.band)) return false;
+  if (/black\/charcoal/i.test(item.band) && !/charcoal/.test(source)) return false;
+  if (/blue\/bright blue/i.test(item.band) && !/bright blue/.test(source)) return false;
+  if (/light blue/i.test(item.band) && !/light blue/.test(source)) return false;
+  if (/neon green/i.test(item.band) && !/neon green/.test(source)) return false;
+  if (/anchor blue/i.test(item.band) && !/anchor blue/.test(source)) return false;
+  return true;
+}
+
+async function syncUltra3(
+  product: Awaited<ReturnType<typeof prisma.product.findUniqueOrThrow>> & { variants: Array<{ id: string; memory: string | null; color: string | null; region: string | null; price: unknown; inStock: boolean; rawLabel: string | null; sku: string | null }> },
+  description: string,
+  options: WatchOption[],
+) {
+  const priced = product.variants.filter((variant) => variant.price !== null);
+  const matches = new Map<number, (typeof priced)[number]>();
+  const usedOptions = new Set<number>();
+  const unmatched: string[] = [];
+
+  for (const variant of priced) {
+    const source = normalized([variant.memory, variant.color, variant.region, variant.rawLabel].filter(Boolean).join(" "));
+    const candidates = options
+      .map((item, index) => ({ item, index }))
+      .filter(({ item, index }) => !usedOptions.has(index) && matchesUltraBase(source, item));
+    const size = sourceBandSize(source);
+    const selected = candidates.find(({ item }) => optionBandSize(item.band) === size) ?? candidates[0];
+    if (!selected) {
+      unmatched.push(variant.rawLabel ?? variant.id);
+      continue;
+    }
+    usedOptions.add(selected.index);
+    matches.set(selected.index, variant);
+  }
+
+  if (unmatched.length) {
+    throw new Error(`Apple Watch Ultra 3: не удалось сопоставить строки прайса: ${unmatched.join("; ")}`);
+  }
+
+  await prisma.productVariant.deleteMany({ where: { productId: product.id, price: null } });
+  for (const [index, item] of options.entries()) {
+    const existing = matches.get(index);
+    if (existing) {
+      await prisma.productVariant.update({
+        where: { id: existing.id },
+        data: { memory: item.size, color: item.caseColor, region: item.band },
+      });
+    } else {
+      await prisma.productVariant.create({
+        data: {
+          productId: product.id,
+          memory: item.size,
+          color: item.caseColor,
+          region: item.band,
+          price: null,
+          inStock: true,
+          rawLabel: `${product.name} ${item.size}, ${item.caseColor}, ${item.band} — уточнить у менеджера`,
+        },
+      });
+    }
+  }
+  await prisma.product.update({ where: { id: product.id }, data: { description } });
+}
+
 async function main() {
   for (const entry of data) {
     const product = await prisma.product.findUnique({ where: { slug: entry.slug }, include: { variants: true } });
     if (!product) {
       console.log(`SKIP ${entry.slug}: товара нет в базе`);
+      continue;
+    }
+    if (entry.slug === "apple-watch-ultra-3") {
+      await syncUltra3(product, entry.description, entry.options);
+      console.log(`OK   ${product.name}: ${entry.options.length} вариантов без дублей`);
       continue;
     }
     // Заменяем только сгенерированные варианты без прайсовой цены. Реальные

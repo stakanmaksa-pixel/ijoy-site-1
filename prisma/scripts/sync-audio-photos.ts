@@ -24,6 +24,13 @@ type AudioJob = ImageSource & {
 
 const jobs: AudioJob[] = [
   {
+    label: "Apple EarPods USB-C",
+    matches: ["EarPods USB-C", "EarPods (USB-C)"],
+    sourcePage: "https://www.apple.com/shop/product/myqy3am/a/earpods-usb-c",
+    directImage: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MTJY3?wid=1200&hei=630&fmt=jpeg&qlt=95&.v=1692824492931",
+    required: true,
+  },
+  {
     label: "AirPods Pro 3",
     matches: ["AirPods Pro 3", "AirPods Pro (3"],
     sourcePage: "https://www.apple.com/airpods-pro/",
@@ -133,7 +140,11 @@ async function syncAirPodsMax2(): Promise<string[]> {
 
   const officialImages = new Map<Max2Color, Buffer>();
   for (const [color, sourcePage] of Object.entries(max2ColorSources) as [Max2Color, string][]) {
-    officialImages.set(color, await downloadImage(await resolveImageCandidates({ sourcePage }), `AirPods Max 2 ${color}`));
+    const candidates = await resolveImageCandidates({ sourcePage });
+    if (!candidates.some((url) => url.toLowerCase().includes(color.toLowerCase()))) {
+      throw new Error(`AirPods Max 2 ${color}: Apple вернула фото другого цвета`);
+    }
+    officialImages.set(color, await downloadImage(candidates, `AirPods Max 2 ${color}`));
   }
 
   const failures: string[] = [];
@@ -163,6 +174,47 @@ async function syncAirPodsMax2(): Promise<string[]> {
 }
 
 async function main() {
+  const headphones = await prisma.category.upsert({
+    where: { slug: "naushniki" },
+    update: { name: "Наушники", sortOrder: 35 },
+    create: { slug: "naushniki", name: "Наушники", sortOrder: 35 },
+  });
+  const earPods = await prisma.product.upsert({
+    where: { slug: "apple-earpods-usb-c" },
+    update: {
+      name: "Apple EarPods USB-C",
+      brand: "Apple",
+      description: "Проводные наушники Apple EarPods с разъёмом USB-C, встроенным пультом и микрофоном. Цену и наличие подтвердит менеджер.",
+      categoryId: headphones.id,
+      status: "PUBLISHED",
+      specs: { "Подключение": "USB-C", "Тип": "Проводные наушники", "Артикул Apple": "MYQY3AM/A" },
+      highlights: ["Встроенный пульт и микрофон", "Управление музыкой и звонками", "Защита от пота и воды"],
+    },
+    create: {
+      name: "Apple EarPods USB-C",
+      slug: "apple-earpods-usb-c",
+      brand: "Apple",
+      description: "Проводные наушники Apple EarPods с разъёмом USB-C, встроенным пультом и микрофоном. Цену и наличие подтвердит менеджер.",
+      categoryId: headphones.id,
+      status: "PUBLISHED",
+      specs: { "Подключение": "USB-C", "Тип": "Проводные наушники", "Артикул Apple": "MYQY3AM/A" },
+      highlights: ["Встроенный пульт и микрофон", "Управление музыкой и звонками", "Защита от пота и воды"],
+    },
+    include: { variants: true },
+  });
+  if (!earPods.variants.length) {
+    await prisma.productVariant.create({
+      data: {
+        productId: earPods.id,
+        color: "White",
+        region: "USB-C",
+        price: null,
+        inStock: true,
+        rawLabel: "Apple EarPods USB-C MYQY3AM/A — уточнить у менеджера",
+      },
+    });
+  }
+
   let updated = 0;
   const requiredFailures: string[] = [];
 

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProductBySlug, pickCoverImage } from "@/lib/catalog";
+import { getProductBySlug } from "@/lib/catalog";
+import { pickVariantImages } from "@/lib/pickCoverImage";
 import { ProductDetail } from "@/components/ProductDetail";
 import { VariantGrid } from "@/components/VariantGrid";
 
@@ -92,10 +93,10 @@ export default async function ProductPage({
           <VariantGrid
             slug={slug}
             variants={product.variants}
-            imageByColor={Object.fromEntries(
+            imageByVariant={Object.fromEntries(
               product.variants.map((variant) => [
-                variant.color ?? "",
-                pickCoverImage(product.images, product.colorImages, variant.color),
+                variant.id,
+                pickVariantImages(product.images, product.colorImages, variant)[0] ?? null,
               ]),
             )}
           />
