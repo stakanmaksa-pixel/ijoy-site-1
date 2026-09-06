@@ -71,6 +71,12 @@ export function ProductDetail({
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const activeImage = galleryImages.includes(selectedImage ?? "") ? selectedImage : galleryImages[0];
   const isIpad = /^ipad-/i.test(productSlug);
+  const isPencil = /^apple-pencil-/i.test(productSlug);
+  const productImageClass = isPencil
+    ? "rotate-[42deg] scale-[1.55]"
+    : isIpad
+      ? "scale-[1.45]"
+      : "";
 
   const specGroups = groupProductSpecs(specs);
   const hasSpecs = specGroups.length > 0;
@@ -93,7 +99,7 @@ export function ProductDetail({
               <img
                 src={activeImage}
                 alt={`${productName}${activeColor ? `, ${activeColor}` : ""}`}
-                className={`h-full w-full rounded-2xl object-contain sm:rounded-3xl ${isIpad ? "scale-[1.45]" : ""}`}
+                className={`h-full w-full rounded-2xl object-contain sm:rounded-3xl ${productImageClass}`}
               />
             ) : (
               <span className="text-sm">Фото скоро появится</span>
