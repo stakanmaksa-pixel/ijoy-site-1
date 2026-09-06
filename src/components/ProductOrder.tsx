@@ -140,6 +140,7 @@ export function ProductOrder({
   variants,
   initialVariantId,
   onSelectedVariantChange,
+  allowUnavailableSelection = false,
 }: {
   productName: string;
   variants: Variant[];
@@ -152,6 +153,9 @@ export function ProductOrder({
   // чтобы сердечко избранного над фото всегда относилось к тому, что сейчас
   // выбрано, а не к товару вообще. См. ProductDetail.tsx.
   onSelectedVariantChange?: (variantId: string | undefined) => void;
+  // Some catalogues list the complete configuration matrix, including offers on request.
+  // Browsing those configurations must not imply stock or allow an unpriced purchase.
+  allowUnavailableSelection?: boolean;
 }) {
   const hasMemory = variants.some((v) => v.memory);
   const hasColor = variants.some((v) => v.color);
@@ -205,7 +209,8 @@ export function ProductOrder({
   function pick(axis: Axis, value: string) {
     setSelection((prev) => {
       const next = { ...prev, [axis]: value };
-      if (findVariant(variants, next)?.inStock) return next;
+      const exact = findVariant(variants, next);
+      if (exact && (exact.inStock || allowUnavailableSelection)) return next;
       // Текущая комбинация недоступна с новым значением — подбираем
       // ближайший реальный (желательно в наличии) вариант с этим значением.
       const candidates = variants.filter((v) => v[axis] === value);
@@ -332,7 +337,7 @@ export function ProductOrder({
             {options.map((opt) => {
               const isSelected = value === opt;
               const previewVariant = findVariant(variants, { ...selection, color: opt });
-              const available = variants.some((v) => v.color === opt && v.inStock);
+              const available = variants.some((v) => v.color === opt && (v.inStock || allowUnavailableSelection));
               return (
                 <button
                   key={opt}
@@ -366,7 +371,7 @@ export function ProductOrder({
           {options.map((opt) => {
             const isSelected = value === opt;
             const previewVariant = findVariant(variants, { ...selection, [axis]: opt });
-            const available = variants.some((v) => v[axis] === opt && v.inStock);
+            const available = variants.some((v) => v[axis] === opt && (v.inStock || allowUnavailableSelection));
             return (
               <button
                 key={opt}
@@ -509,7 +514,7 @@ export function ProductOrder({
           <button
             type="button"
             onClick={() => setFormOpen(true)}
-            disabled={!selected?.inStock}
+            disabled={!selected || (!selected.inStock && !(allowUnavailableSelection && selected.price == null))}
             className="w-full rounded-full bg-brand px-6 py-3 font-display text-sm font-medium text-white transition-colors hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-40 sm:w-fit"
           >
             {selected?.price != null ? "Оформить сейчас" : "Уточнить цену"}

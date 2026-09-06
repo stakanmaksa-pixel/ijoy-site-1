@@ -161,6 +161,7 @@ export function ProductDetail({
               variants={variants}
               initialVariantId={initialVariantId}
               onSelectedVariantChange={setSelectedId}
+              allowUnavailableSelection={productSlug === "ipad-mini-a17-pro"}
             />
           </div>
         </div>

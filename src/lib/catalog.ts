@@ -67,6 +67,7 @@ export const MODEL_DISPLAY_ORDER = {
     "Apple iPad Air 11″ M4 (2026)",
     "Apple iPad Air 13″ M4 (2026)",
     "Apple iPad A16 (2025)",
+    "Apple iPad mini (A17 Pro)",
     "iPad Pro 11 (2025, M5)",
     "iPad Pro 11-inch (M5)",
     "iPad Pro 13-inch (M5)",

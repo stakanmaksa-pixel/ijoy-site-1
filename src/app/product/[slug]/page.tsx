@@ -32,7 +32,7 @@ export default async function ProductPage({
   const { slug } = await params;
   const sp = await searchParams;
   const variantId = toSingle(sp.variant);
-  const pencilSlug = ["ipad-pro-11-m5", "ipad-pro-13-m5", "ipad-air-11-m4", "ipad-air-13-m4"].includes(slug)
+  const pencilSlug = ["ipad-pro-11-m5", "ipad-pro-13-m5", "ipad-air-11-m4", "ipad-air-13-m4", "ipad-mini-a17-pro"].includes(slug)
     ? "apple-pencil-pro"
     : slug === "ipad-a16"
       ? "apple-pencil-usb-c"

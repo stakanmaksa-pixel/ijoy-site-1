@@ -119,7 +119,7 @@ export function VariantGrid({
   const colors = useMemo(() => valuesOf(variants, "color"), [variants]);
   const regions = useMemo(() => valuesOf(variants, "region"), [variants]);
   const isWatch = slug.includes("watch") || variants.some((variant) => /(?:loop|band)/i.test(variant.region ?? ""));
-  const isIpad = /^(?:ipad-pro-(?:11|13)-m5|ipad-air-(?:11|13)-m4|ipad-a16)$/.test(slug);
+  const isIpad = /^(?:ipad-pro-(?:11|13)-m5|ipad-air-(?:11|13)-m4|ipad-a16|ipad-mini-a17-pro)$/.test(slug);
   const isUltra = slug.includes("ultra");
   const bandChoices = isWatch
     ? [...new Set(variants.map((variant) => bandChoice(variant.region)).filter(isPresent))]

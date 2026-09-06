@@ -41,12 +41,13 @@ export function ProductCard({
   const fallbackTheme = BRAND_CARD_THEMES[brand ?? ""] ?? "from-brand-dark via-brand to-accent";
   const isHeadphones = /(?:airpods|earpods|galaxy-buds|headphones)/i.test(slug);
   const isIpad = /^ipad-/i.test(slug);
+  const isAppleTvPhoto = coverImage?.startsWith("/catalog/product-photos/apple-tv-4k/");
   const isPencil = /^apple-pencil-/i.test(slug);
   const imageClassName = isPencil
     ? "h-full w-full rotate-[34deg] scale-[1.1] object-contain"
     : isHeadphones
     ? "h-full w-full object-contain"
-    : isIpad
+    : isIpad || isAppleTvPhoto
       ? "absolute inset-0 h-full w-full object-contain p-3"
     : "h-full w-full object-contain p-5 sm:p-6";
 
@@ -55,7 +56,7 @@ export function ProductCard({
       href={`/product/${slug}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isIpad ? "bg-white" : "bg-zinc-50"}`}>
+      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isIpad || isAppleTvPhoto ? "bg-white" : "bg-zinc-50"}`}>
         {coverImage ? (
           // У официальных фото наушников уже есть большие внутренние белые
           // поля. Дополнительный padding делал сам товар слишком маленьким.

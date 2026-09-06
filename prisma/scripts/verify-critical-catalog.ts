@@ -16,7 +16,7 @@ const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: proc
 const failures: string[] = [];
 
 async function assertFile(productName: string, publicPath: string | undefined) {
-  if (!publicPath?.startsWith("/uploads/")) {
+  if (!publicPath?.startsWith("/uploads/") && !publicPath?.startsWith("/catalog/product-photos/")) {
     failures.push(`${productName}: нет пути к фото`);
     return;
   }
@@ -28,7 +28,7 @@ async function assertFile(productName: string, publicPath: string | undefined) {
 }
 
 async function fileHash(publicPath: string | undefined) {
-  if (!publicPath?.startsWith("/uploads/")) return null;
+  if (!publicPath?.startsWith("/uploads/") && !publicPath?.startsWith("/catalog/product-photos/")) return null;
   try {
     const contents = await readFile(path.join(process.cwd(), "public", publicPath.slice(1)));
     return createHash("sha256").update(contents).digest("hex");
@@ -234,6 +234,7 @@ async function checkIpadsAndPencils() {
     { slug: "ipad-air-11-m4", variants: 32, memories: 4, colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
     { slug: "ipad-air-13-m4", variants: 32, memories: 4, colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
     { slug: "ipad-a16", variants: 24, memories: 3, colors: ["Blue", "Pink", "Yellow", "Silver"] },
+    { slug: "ipad-mini-a17-pro", variants: 24, memories: 3, colors: ["Blue", "Purple", "Starlight", "Space Gray"] },
   ] as const;
   for (const expectedIpad of standardIpads) {
     const product = await prisma.product.findUnique({ where: { slug: expectedIpad.slug }, include: { variants: true } });

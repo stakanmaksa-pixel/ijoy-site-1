@@ -43,6 +43,7 @@ export function VariantCard({
   const isSe3 = slug === "apple-watch-se-3";
   const isHeadphones = /(?:airpods|earpods|galaxy-buds|headphones)/i.test(slug);
   const isIpad = /^ipad-/i.test(slug);
+  const isAppleTvPhoto = imageUrl?.startsWith("/catalog/product-photos/apple-tv-4k/");
 
   const imageClassName = isSeries11 || isSe3
     ? "h-full w-full scale-[1.08] object-contain"
@@ -50,7 +51,7 @@ export function VariantCard({
       ? "h-full w-full scale-[1.2] object-contain"
       : isHeadphones
         ? "h-full w-full object-contain"
-        : isIpad
+        : isIpad || isAppleTvPhoto
           ? "absolute inset-0 h-full w-full object-contain p-3"
         : "h-full w-full object-contain p-5 sm:p-6";
 
@@ -59,7 +60,7 @@ export function VariantCard({
       href={`/product/${slug}?variant=${variant.id}`}
       className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isIpad ? "bg-white" : "bg-zinc-50"}`}>
+      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isIpad || isAppleTvPhoto ? "bg-white" : "bg-zinc-50"}`}>
         {imageUrl ? (
           <img
             src={imageUrl}
