@@ -71,14 +71,11 @@ export function ProductDetail({
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const activeImage = galleryImages.includes(selectedImage ?? "") ? selectedImage : galleryImages[0];
   const isIpad = /^ipad-/i.test(productSlug);
-  const isIpadA16 = productSlug === "ipad-a16";
   const isPencil = /^apple-pencil-/i.test(productSlug);
   const productImageClass = isPencil
     ? "rotate-[34deg] scale-[1.0]"
-    : isIpadA16
-      ? "scale-[1.12]"
     : isIpad
-      ? "scale-[1.45]"
+      ? "absolute inset-0 p-4 sm:p-6"
       : "";
 
   const specGroups = groupProductSpecs(specs);
@@ -126,7 +123,7 @@ export function ProductDetail({
                       : "border-zinc-200 hover:border-zinc-300"
                   }`}
                 >
-                  <img src={url} alt="" className="h-full w-full object-cover" />
+                  <img src={url} alt="" className={`h-full w-full ${isIpad ? "object-contain p-1" : "object-cover"}`} />
                 </button>
               ))}
             </div>

@@ -3,6 +3,16 @@
 // безопасно импортировать и в клиентские компоненты (например CompareTable),
 // не затягивая за собой драйвер БД в бандл для браузера.
 
+// Старый импорт Air использовал широкие баннеры с маленьким планшетом.
+// Предметные фото поставляются вместе с сайтом, поэтому исправление не
+// требует повторной синхронизации БД. Пользовательские фото не заменяем.
+function resolveProductImage(url: string): string {
+  const legacyAir = url.match(/^\/uploads\/products\/(ipad-air-(?:11|13)-m4)\/official-v1-(blue|purple|space-gray|starlight)\.jpg$/);
+  return legacyAir
+    ? `/catalog/product-photos/${legacyAir[1]}/${legacyAir[2]}.jpg`
+    : url;
+}
+
 // Фото "по умолчанию" для карточки без выбора конкретного цвета: фото цвета
 // приоритетного варианта (обычно самого дешёвого — с ним же связано
 // сердечко избранного на карточке), иначе первое общее фото, иначе первое
@@ -14,12 +24,12 @@ export function pickCoverImage(
   preferredColor?: string | null,
 ): string | null {
   if (preferredColor && colorImages?.[preferredColor]?.length) {
-    return colorImages[preferredColor][0];
+    return resolveProductImage(colorImages[preferredColor][0]);
   }
-  if (images.length > 0) return images[0];
+  if (images.length > 0) return resolveProductImage(images[0]);
   if (colorImages) {
     for (const list of Object.values(colorImages)) {
-      if (list?.length) return list[0];
+      if (list?.length) return resolveProductImage(list[0]);
     }
   }
   return null;
@@ -46,15 +56,15 @@ export function pickVariantImages(
 ): string[] {
   if (variant) {
     const exact = colorImages?.[variantImageKey(variant)];
-    if (exact?.length) return exact;
+    if (exact?.length) return exact.map(resolveProductImage);
     if (variant.color && colorImages?.[variant.color]?.length) {
-      return colorImages[variant.color];
+      return colorImages[variant.color].map(resolveProductImage);
     }
   }
-  if (images.length) return images;
+  if (images.length) return images.map(resolveProductImage);
   if (colorImages) {
     for (const list of Object.values(colorImages)) {
-      if (list?.length) return list;
+      if (list?.length) return list.map(resolveProductImage);
     }
   }
   return [];

@@ -43,7 +43,6 @@ export function VariantCard({
   const isSe3 = slug === "apple-watch-se-3";
   const isHeadphones = /(?:airpods|earpods|galaxy-buds|headphones)/i.test(slug);
   const isIpad = /^ipad-/i.test(slug);
-  const isIpadA16 = slug === "ipad-a16";
 
   const imageClassName = isSeries11 || isSe3
     ? "h-full w-full scale-[1.08] object-contain"
@@ -51,10 +50,8 @@ export function VariantCard({
       ? "h-full w-full scale-[1.2] object-contain"
       : isHeadphones
         ? "h-full w-full object-contain"
-        : isIpadA16
-          ? "h-full w-full scale-[1.12] object-contain"
         : isIpad
-          ? "h-full w-full scale-[1.55] object-contain"
+          ? "absolute inset-0 h-full w-full object-contain p-3"
         : "h-full w-full object-contain p-5 sm:p-6";
 
   return (
@@ -62,7 +59,7 @@ export function VariantCard({
       href={`/product/${slug}?variant=${variant.id}`}
       className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-zinc-50 text-zinc-300">
+      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isIpad ? "bg-white" : "bg-zinc-50"}`}>
         {imageUrl ? (
           <img
             src={imageUrl}
@@ -74,19 +71,23 @@ export function VariantCard({
         ) : (
           <span className="text-sm">Фото</span>
         )}
-        <FavoriteButton variantId={variant.id} className="absolute right-3 top-3" />
-        {variant.price != null && variant.inStock && <CartButton variantId={variant.id} compact className="absolute left-3 top-3" />}
+        {!isIpad && <FavoriteButton variantId={variant.id} className="absolute right-3 top-3" />}
+        {!isIpad && variant.price != null && variant.inStock && <CartButton variantId={variant.id} compact className="absolute left-3 top-3" />}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
         <div className="text-sm text-zinc-500">{variantLabel(variant)}</div>
-        <div className="mt-auto flex items-center justify-between pt-2">
+        <div className={`mt-auto flex items-center justify-between pt-2 ${isIpad ? "flex-wrap gap-2" : ""}`}>
           <span className="text-base font-semibold text-foreground">
             {variant.price != null ? formatPrice(variant.price) : "Уточняйте у менеджера"}
           </span>
           {!variant.inStock && (
             <span className="text-xs text-zinc-400">Под заказ</span>
           )}
+          {isIpad && <FavoriteButton variantId={variant.id} className="shrink-0" />}
         </div>
+        {isIpad && variant.price != null && variant.inStock && (
+          <CartButton variantId={variant.id} compact className="mt-3 w-full" />
+        )}
       </div>
     </Link>
   );

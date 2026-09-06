@@ -205,14 +205,14 @@ export function VariantGrid({
             return (
               <div key={variant.id} className="relative">
                 <VariantCard slug={slug} variant={variant} imageUrl={imageByVariant[variant.id] ?? null} />
-                <button
+                {!isIpad && <button
                   type="button"
                   onClick={() => toggleCompare(variant.id)}
                   disabled={limitReached}
                   className={`absolute left-3 top-3 rounded-full px-3 py-1.5 text-xs font-medium shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${selected ? "bg-accent text-white" : "bg-white text-zinc-700 hover:text-accent"}`}
                 >
                   {selected ? "Выбрано" : "Сравнить"}
-                </button>
+                </button>}
               </div>
             );
           })}
@@ -221,7 +221,7 @@ export function VariantGrid({
         <p className="mt-5 text-sm text-zinc-500">Нет вариантов с такими параметрами.</p>
       )}
 
-      {compared.length > 0 && (
+      {!isIpad && compared.length > 0 && (
         <section className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
           <div className="flex items-center justify-between gap-3 border-b border-zinc-100 px-4 py-4 sm:px-5">
             <div>
