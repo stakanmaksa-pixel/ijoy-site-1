@@ -70,6 +70,7 @@ export function ProductDetail({
   // без дополнительного setState внутри effect.
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const activeImage = galleryImages.includes(selectedImage ?? "") ? selectedImage : galleryImages[0];
+  const isIpad = /^ipad-/i.test(productSlug);
 
   const specGroups = groupProductSpecs(specs);
   const hasSpecs = specGroups.length > 0;
@@ -92,7 +93,7 @@ export function ProductDetail({
               <img
                 src={activeImage}
                 alt={`${productName}${activeColor ? `, ${activeColor}` : ""}`}
-                className="h-full w-full rounded-2xl object-contain sm:rounded-3xl"
+                className={`h-full w-full rounded-2xl object-contain sm:rounded-3xl ${isIpad ? "scale-[1.45]" : ""}`}
               />
             ) : (
               <span className="text-sm">Фото скоро появится</span>

@@ -71,6 +71,10 @@ function ipadRegion(region: string | null) {
     : null;
 }
 
+function ipadConnectivityOrder(value: string) {
+  return value === "Wi‑Fi" ? 0 : value === "Wi‑Fi + Cellular" ? 1 : 2;
+}
+
 function toggleValue(value: string, setter: Dispatch<SetStateAction<string[]>>) {
   setter((current) => current.includes(value) ? current.filter((item) => item !== value) : [...current, value]);
 }
@@ -124,7 +128,8 @@ export function VariantGrid({
   const strapSizeOrder = ["XS/S", "S/M", "M/L", "S", "M", "L", "Универсальный"];
   const strapSizes = [...new Set(variants.map((variant) => strapSize(variant.region)).filter(isPresent))]
     .sort((a, b) => strapSizeOrder.indexOf(a) - strapSizeOrder.indexOf(b));
-  const ipadConnectivity = [...new Set(variants.map((variant) => ipadRegion(variant.region)?.connectivity).filter(isPresent))];
+  const ipadConnectivity = [...new Set(variants.map((variant) => ipadRegion(variant.region)?.connectivity).filter(isPresent))]
+    .sort((a, b) => ipadConnectivityOrder(a) - ipadConnectivityOrder(b));
   const ipadGlass = [...new Set(variants.map((variant) => ipadRegion(variant.region)?.glass).filter(isPresent))];
 
   const [selectedMemories, setSelectedMemories] = useState<string[]>([]);

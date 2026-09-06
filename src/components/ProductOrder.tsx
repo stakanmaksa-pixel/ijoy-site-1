@@ -122,6 +122,10 @@ function parseIpadRegion(region: string | null) {
   return { connectivity, glass: glass || null };
 }
 
+function ipadConnectivityOrder(value: string) {
+  return value === "Wi‑Fi" ? 0 : value === "Wi‑Fi + Cellular" ? 1 : 2;
+}
+
 function findVariant(variants: Variant[], sel: Selection): Variant | undefined {
   return variants.find(
     (v) =>
@@ -441,7 +445,8 @@ export function ProductOrder({
       (selection.memory === null || variant.memory === selection.memory) &&
       (selection.color === null || variant.color === selection.color),
     );
-    const connectivityOptions = uniqueInOrder(compatible.map((variant) => parseIpadRegion(variant.region)?.connectivity ?? null));
+    const connectivityOptions = uniqueInOrder(compatible.map((variant) => parseIpadRegion(variant.region)?.connectivity ?? null))
+      .sort((a, b) => ipadConnectivityOrder(a) - ipadConnectivityOrder(b));
     const glassOptions = uniqueInOrder(compatible.map((variant) => parseIpadRegion(variant.region)?.glass ?? null));
 
     function Part({ label, part, options }: { label: string; part: IpadOptionPart; options: string[] }) {

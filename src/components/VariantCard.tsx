@@ -42,6 +42,7 @@ export function VariantCard({
   const isSeries11 = slug === "apple-watch-series-11";
   const isSe3 = slug === "apple-watch-se-3";
   const isHeadphones = /(?:airpods|earpods|galaxy-buds|headphones)/i.test(slug);
+  const isIpad = /^ipad-/i.test(slug);
 
   const imageClassName = isSeries11 || isSe3
     ? "h-full w-full scale-[1.08] object-contain"
@@ -49,6 +50,8 @@ export function VariantCard({
       ? "h-full w-full scale-[1.2] object-contain"
       : isHeadphones
         ? "h-full w-full object-contain"
+        : isIpad
+          ? "h-full w-full scale-[1.55] object-contain"
         : "h-full w-full object-contain p-5 sm:p-6";
 
   return (

@@ -40,8 +40,11 @@ export function ProductCard({
 }) {
   const fallbackTheme = BRAND_CARD_THEMES[brand ?? ""] ?? "from-brand-dark via-brand to-accent";
   const isHeadphones = /(?:airpods|earpods|galaxy-buds|headphones)/i.test(slug);
+  const isIpad = /^ipad-/i.test(slug);
   const imageClassName = isHeadphones
     ? "h-full w-full object-contain"
+    : isIpad
+      ? "h-full w-full scale-[1.55] object-contain"
     : "h-full w-full object-contain p-5 sm:p-6";
 
   return (
