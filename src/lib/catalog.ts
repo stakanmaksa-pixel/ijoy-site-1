@@ -62,6 +62,8 @@ export const MODEL_DISPLAY_ORDER = {
   ],
   sony: ["Sony Xperia 1 VIII", "Sony Xperia 10 VII"],
   ipad: [
+    "Apple iPad Pro 11″ M5 (2025)",
+    "Apple iPad Pro 13″ M5 (2025)",
     "iPad Pro 11 (2025, M5)",
     "iPad Pro 11-inch (M5)",
     "iPad Pro 13-inch (M5)",
@@ -74,6 +76,11 @@ export const MODEL_DISPLAY_ORDER = {
     "iPad 11 (2025)",
     "iPad Mini 7",
     "iPad Air 8 11",
+  ],
+  pencil: [
+    "Apple Pencil Pro",
+    "Apple Pencil (USB‑C)",
+    "Apple Pencil (2‑го поколения)",
   ],
   macbook: [
     "MacBook Neo",
@@ -131,7 +138,9 @@ function resolveOrderList(
     if (brand === "Sony") return MODEL_DISPLAY_ORDER.sony;
     return undefined;
   }
-  if (categorySlug === "planshety") return MODEL_DISPLAY_ORDER.ipad;
+  if (categorySlug === "planshety") {
+    return /apple\s+pencil/i.test(name) ? MODEL_DISPLAY_ORDER.pencil : MODEL_DISPLAY_ORDER.ipad;
+  }
   if (categorySlug === "noutbuki") return MODEL_DISPLAY_ORDER.macbook;
   if (categorySlug === "chasy") return MODEL_DISPLAY_ORDER.watch;
   if (categorySlug === "ekshn-kamery") return MODEL_DISPLAY_ORDER.gopro;
@@ -216,7 +225,8 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
     { label: "Apple MacBook Pro — другие", test: (name) => /macbook\s+pro/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Pro" },
   ],
   planshety: [
-    { label: "Apple iPad", test: (_name, brand) => brand === "Apple", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Apple")}`, order: MODEL_DISPLAY_ORDER.ipad },
+    { label: "Apple iPad", test: (name, brand) => brand === "Apple" && /ipad/i.test(name), groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Apple")}`, order: MODEL_DISPLAY_ORDER.ipad },
+    { label: "Стилусы", test: (name, brand) => brand === "Apple" && /apple\s+pencil/i.test(name), groupHref: "/catalog?category=planshety&q=Apple%20Pencil", order: MODEL_DISPLAY_ORDER.pencil },
     { label: "Samsung Galaxy Tab", test: (_name, brand) => brand === "Samsung", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Samsung")}` },
     { label: "Xiaomi Pad", test: (_name, brand) => brand === "Xiaomi", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Xiaomi")}` },
     { label: "HUAWEI MatePad", test: (_name, brand) => brand === "HUAWEI", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("HUAWEI")}` },
@@ -546,15 +556,26 @@ export type CompareModel = {
 // ключи в нём приведены к единому виду (см. prisma/seed.ts,
 // IPHONE_CONTENT_OVERRIDES), поэтому строки таблицы сравнения совпадают
 // между моделями там, где данные реально есть.
-export async function getIphoneCompareLineup(): Promise<CompareModel[]> {
+export async function getDeviceCompareLineup(): Promise<CompareModel[]> {
   const products = await prisma.product.findMany({
-    where: { status: "PUBLISHED", brand: "Apple", name: { startsWith: "iPhone" } },
-    include: { variants: true },
+    where: {
+      status: "PUBLISHED",
+      brand: "Apple",
+      OR: [
+        { name: { startsWith: "iPhone" } },
+        { name: { contains: "iPad", mode: "insensitive" } },
+      ],
+    },
+    include: { variants: true, category: true },
   });
 
-  const sorted = [...products].sort(
-    (a, b) => rankInList(MODEL_DISPLAY_ORDER.iphone, a.name) - rankInList(MODEL_DISPLAY_ORDER.iphone, b.name),
-  );
+  const sorted = [...products].sort((a, b) => {
+    const familyA = /^iphone/i.test(a.name) ? 0 : 1;
+    const familyB = /^iphone/i.test(b.name) ? 0 : 1;
+    if (familyA !== familyB) return familyA - familyB;
+    const order = familyA === 0 ? MODEL_DISPLAY_ORDER.iphone : MODEL_DISPLAY_ORDER.ipad;
+    return rankInList(order, a.name) - rankInList(order, b.name);
+  });
 
   return sorted.map((product) => {
     const priced = product.variants.filter((v) => v.price !== null);
@@ -575,6 +596,9 @@ export async function getIphoneCompareLineup(): Promise<CompareModel[]> {
     };
   });
 }
+
+// Обратная совместимость для существующих импортов.
+export const getIphoneCompareLineup = getDeviceCompareLineup;
 
 // Товары по списку слагов — оставлено на случай, если понадобится подборка
 // товаров целиком по слагам (сейчас /favorites работает через

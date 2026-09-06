@@ -177,10 +177,81 @@ async function checkWatches() {
   }
 }
 
+async function checkIpadsAndPencils() {
+  const pencilPrices = new Map([
+    ["apple-pencil-2", 8000],
+    ["apple-pencil-usb-c", 8100],
+    ["apple-pencil-pro", 11000],
+  ]);
+  for (const [slug, expectedPrice] of pencilPrices) {
+    const product = await prisma.product.findUnique({ where: { slug }, include: { variants: true } });
+    if (!product || product.status !== "PUBLISHED") {
+      failures.push(`${slug}: стилус не найден или не опубликован`);
+      continue;
+    }
+    if (product.variants.length !== 1 || Number(product.variants[0]?.price) !== expectedPrice) {
+      failures.push(`${product.name}: ожидался один вариант за ${expectedPrice} ₽`);
+    }
+    if (!product.description || !product.specs || product.highlights.length < 3) {
+      failures.push(`${product.name}: не заполнены описание и характеристики`);
+    }
+    await assertFile(product.name, product.images[0]);
+    console.log(`OK   ${product.name}: ${expectedPrice} ₽, описание и фото`);
+  }
+
+  for (const slug of ["ipad-pro-11-m5", "ipad-pro-13-m5"]) {
+    const product = await prisma.product.findUnique({ where: { slug }, include: { variants: true } });
+    if (!product || product.status !== "PUBLISHED") {
+      failures.push(`${slug}: iPad не найден или не опубликован`);
+      continue;
+    }
+    if (product.variants.length !== 24) {
+      failures.push(`${product.name}: ожидалось 24 допустимых варианта, получено ${product.variants.length}`);
+    }
+    if (!product.description || !product.specs || product.highlights.length < 5) {
+      failures.push(`${product.name}: не заполнены описание, характеристики или особенности`);
+    }
+    const invalidNano = product.variants.filter((variant) =>
+      /нанотекстур/i.test(variant.region ?? "") && !["1TB", "2TB"].includes(variant.memory ?? ""),
+    );
+    if (invalidNano.length) failures.push(`${product.name}: нанотекстурное стекло ошибочно доступно для 256/512 ГБ`);
+
+    const imageMap = (product.colorImages as Record<string, string[]> | null) ?? {};
+    for (const variant of product.variants) {
+      await assertFile(`${product.name}, ${variant.memory}, ${variant.color}, ${variant.region}`, imageMap[variantImageKey(variant)]?.[0]);
+    }
+    const hashes = new Set<string>();
+    for (const color of ["Space Black", "Silver"]) {
+      await assertFile(`${product.name}, ${color}`, imageMap[color]?.[0]);
+      const hash = await fileHash(imageMap[color]?.[0]);
+      if (hash) hashes.add(hash);
+    }
+    if (hashes.size !== 2) failures.push(`${product.name}: у двух цветов нет двух разных фото`);
+    else console.log(`OK   ${product.name}: 24 варианта, 2 точных фото и полные характеристики`);
+  }
+
+  const publishedM5 = await prisma.product.findMany({
+    where: {
+      status: "PUBLISHED",
+      brand: "Apple",
+      AND: [
+        { name: { contains: "iPad Pro", mode: "insensitive" } },
+        { name: { contains: "M5", mode: "insensitive" } },
+      ],
+    },
+    select: { slug: true },
+  });
+  const expected = new Set(["ipad-pro-11-m5", "ipad-pro-13-m5"]);
+  const unexpected = publishedM5.filter((product) => !expected.has(product.slug));
+  if (unexpected.length) failures.push(`Опубликованы дубли iPad Pro M5: ${unexpected.map((product) => product.slug).join(", ")}`);
+  else console.log("OK   iPad Pro M5: опубликованы только модели 11″ и 13″ без дублей");
+}
+
 async function main() {
   await checkAppleTv();
   await checkAirPods();
   await checkWatches();
+  await checkIpadsAndPencils();
   if (failures.length) {
     for (const failure of failures) console.error(`FAIL ${failure}`);
     process.exitCode = 2;

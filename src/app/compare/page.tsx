@@ -1,10 +1,10 @@
 import { PageHero } from "@/components/PageHero";
-import { getIphoneCompareLineup } from "@/lib/catalog";
+import { getDeviceCompareLineup } from "@/lib/catalog";
 import { CompareTable } from "@/components/CompareTable";
 
 export const metadata = {
-  title: "Сравнить iPhone — iJoy Gadget Store",
-  description: "Сравнение моделей iPhone по характеристикам, как на сайте Apple.",
+  title: "Сравнить устройства — iJoy Gadget Store",
+  description: "Сравнение iPhone и iPad по единым характеристикам.",
 };
 
 // Страница сравнения — по образцу apple.com/iphone/compare/: колонки по
@@ -18,7 +18,7 @@ export default async function ComparePage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const models = await getIphoneCompareLineup();
+  const models = await getDeviceCompareLineup();
   const params = await searchParams;
   const raw = Array.isArray(params.models) ? params.models[0] : params.models;
   const requested = raw?.split(",").filter(Boolean) ?? [];
@@ -29,11 +29,11 @@ export default async function ComparePage({
 
   return (
     <div>
-      <PageHero title="Сравнить iPhone iJoy Gadget Store" highlight="Сравнить" />
+      <PageHero title="Сравнить устройства iJoy Gadget Store" highlight="Сравнить" />
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         {models.length === 0 ? (
           <p className="text-sm text-zinc-500">
-            Сейчас нет моделей iPhone в наличии для сравнения.
+            Сейчас нет устройств в наличии для сравнения.
           </p>
         ) : (
           <CompareTable models={models} initialSlugs={initialSlugs} />

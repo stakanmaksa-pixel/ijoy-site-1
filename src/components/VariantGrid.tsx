@@ -63,6 +63,12 @@ function bandChoiceLabel(value: string) {
   return translated.replace(" (", " · ").replace(/\)$/, "");
 }
 
+function ipadRegion(region: string | null) {
+  if (!region) return null;
+  const [connectivity, glass] = region.split(" · ").map((value) => value.trim());
+  return connectivity && glass ? { connectivity, glass } : null;
+}
+
 function toggleValue(value: string, setter: Dispatch<SetStateAction<string[]>>) {
   setter((current) => current.includes(value) ? current.filter((item) => item !== value) : [...current, value]);
 }
@@ -107,6 +113,7 @@ export function VariantGrid({
   const colors = useMemo(() => valuesOf(variants, "color"), [variants]);
   const regions = useMemo(() => valuesOf(variants, "region"), [variants]);
   const isWatch = slug.includes("watch") || variants.some((variant) => /(?:loop|band)/i.test(variant.region ?? ""));
+  const isIpadPro = /^ipad-pro-(?:11|13)-m5$/.test(slug);
   const isUltra = slug.includes("ultra");
   const bandChoices = isWatch
     ? [...new Set(variants.map((variant) => bandChoice(variant.region)).filter(isPresent))]
@@ -115,12 +122,16 @@ export function VariantGrid({
   const strapSizeOrder = ["XS/S", "S/M", "M/L", "S", "M", "L", "Универсальный"];
   const strapSizes = [...new Set(variants.map((variant) => strapSize(variant.region)).filter(isPresent))]
     .sort((a, b) => strapSizeOrder.indexOf(a) - strapSizeOrder.indexOf(b));
+  const ipadConnectivity = [...new Set(variants.map((variant) => ipadRegion(variant.region)?.connectivity).filter(isPresent))];
+  const ipadGlass = [...new Set(variants.map((variant) => ipadRegion(variant.region)?.glass).filter(isPresent))];
 
   const [selectedMemories, setSelectedMemories] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
   const [selectedStrapMaterials, setSelectedStrapMaterials] = useState<string[]>([]);
   const [selectedStrapSizes, setSelectedStrapSizes] = useState<string[]>([]);
+  const [selectedConnectivity, setSelectedConnectivity] = useState<string[]>([]);
+  const [selectedGlass, setSelectedGlass] = useState<string[]>([]);
   const [onlyInStock, setOnlyInStock] = useState(false);
   const [compareIds, setCompareIds] = useState<string[]>([]);
 
@@ -131,10 +142,12 @@ export function VariantGrid({
       (!selectedRegions.length || selectedRegions.includes(isWatch ? bandChoice(variant.region) ?? "" : variant.region ?? "")) &&
       (!selectedStrapMaterials.length || selectedStrapMaterials.includes(strapMaterial(variant.region, isUltra) ?? "")) &&
       (!selectedStrapSizes.length || selectedStrapSizes.includes(strapSize(variant.region) ?? "")) &&
+      (!selectedConnectivity.length || selectedConnectivity.includes(ipadRegion(variant.region)?.connectivity ?? "")) &&
+      (!selectedGlass.length || selectedGlass.includes(ipadRegion(variant.region)?.glass ?? "")) &&
       (!onlyInStock || variant.inStock),
   );
-  const hasFilters = memories.length > 1 || colors.length > 1 || bandChoices.length > 1 || variants.some((v) => !v.inStock);
-  const hasActiveFilters = selectedMemories.length > 0 || selectedColors.length > 0 || selectedRegions.length > 0 || selectedStrapMaterials.length > 0 || selectedStrapSizes.length > 0 || onlyInStock;
+  const hasFilters = memories.length > 1 || colors.length > 1 || bandChoices.length > 1 || ipadConnectivity.length > 1 || ipadGlass.length > 1 || variants.some((v) => !v.inStock);
+  const hasActiveFilters = selectedMemories.length > 0 || selectedColors.length > 0 || selectedRegions.length > 0 || selectedStrapMaterials.length > 0 || selectedStrapSizes.length > 0 || selectedConnectivity.length > 0 || selectedGlass.length > 0 || onlyInStock;
 
   function reset() {
     setSelectedMemories([]);
@@ -142,6 +155,8 @@ export function VariantGrid({
     setSelectedRegions([]);
     setSelectedStrapMaterials([]);
     setSelectedStrapSizes([]);
+    setSelectedConnectivity([]);
+    setSelectedGlass([]);
     setOnlyInStock(false);
   }
 
@@ -166,7 +181,9 @@ export function VariantGrid({
           {colors.length > 1 && <FilterGroup label={isWatch ? "Цвет корпуса" : "Цвет"} selected={selectedColors} values={colors} onChange={setSelectedColors} anyLabel="Все" formatLabel={colorLabel} />}
           {isWatch && strapMaterials.length > 1 && <FilterGroup label="Материал ремешка" selected={selectedStrapMaterials} values={strapMaterials} onChange={setSelectedStrapMaterials} anyLabel="Все" />}
           {isWatch && strapSizes.length > 1 && <FilterGroup label="Размер ремешка" selected={selectedStrapSizes} values={strapSizes} onChange={setSelectedStrapSizes} anyLabel="Все" />}
-          {bandChoices.length > 1 && <FilterGroup label={isWatch ? "Ремешок" : "Регион / SIM"} selected={selectedRegions} values={bandChoices} onChange={setSelectedRegions} anyLabel="Все" formatLabel={isWatch ? bandChoiceLabel : undefined} />}
+          {isIpadPro && ipadConnectivity.length > 1 && <FilterGroup label="Подключение" selected={selectedConnectivity} values={ipadConnectivity} onChange={setSelectedConnectivity} anyLabel="Все" />}
+          {isIpadPro && ipadGlass.length > 1 && <FilterGroup label="Стекло дисплея" selected={selectedGlass} values={ipadGlass} onChange={setSelectedGlass} anyLabel="Все" />}
+          {!isIpadPro && bandChoices.length > 1 && <FilterGroup label={isWatch ? "Ремешок" : "Регион / SIM"} selected={selectedRegions} values={bandChoices} onChange={setSelectedRegions} anyLabel="Все" formatLabel={isWatch ? bandChoiceLabel : undefined} />}
           {variants.some((variant) => !variant.inStock) && <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" checked={onlyInStock} onChange={(event) => setOnlyInStock(event.target.checked)} className="h-4 w-4 accent-accent" /> Только в наличии</label>}
         </div>
       </aside>}
@@ -216,7 +233,12 @@ export function VariantGrid({
                     ["Материал ремешка", (variant: ProductVariantForGrid) => strapMaterial(variant.region, isUltra) || "—"],
                     ["Размер ремешка", (variant: ProductVariantForGrid) => strapSize(variant.region) || "—"],
                   ] as const : []),
-                  [isWatch ? "Ремешок" : "Регион / SIM", (variant: ProductVariantForGrid) => variant.region || "—"],
+                  ...(isIpadPro ? [
+                    ["Подключение", (variant: ProductVariantForGrid) => ipadRegion(variant.region)?.connectivity || "—"],
+                    ["Стекло дисплея", (variant: ProductVariantForGrid) => ipadRegion(variant.region)?.glass || "—"],
+                  ] as const : [
+                    [isWatch ? "Ремешок" : "Регион / SIM", (variant: ProductVariantForGrid) => variant.region || "—"],
+                  ] as const),
                   ["Наличие", (variant: ProductVariantForGrid) => (variant.inStock ? "В наличии" : "Под заказ")],
                   ["Цена", (variant: ProductVariantForGrid) => (variant.price != null ? `${variant.price.toLocaleString("ru-RU")} ₽` : "Уточняйте у менеджера")],
                 ].map(([label, value]) => (

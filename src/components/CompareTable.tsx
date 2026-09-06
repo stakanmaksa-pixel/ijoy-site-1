@@ -5,7 +5,7 @@ import Link from "next/link";
 import { formatPrice } from "@/lib/format";
 import { pickCoverImage } from "@/lib/pickCoverImage";
 import type { CompareModel } from "@/lib/catalog";
-import { iphoneColorLabel, iphoneColorSwatch } from "@/lib/iphoneColors";
+import { colorLabel, colorToHex } from "@/lib/colorSwatch";
 import { groupSpecKeys, PRODUCT_SPEC_ORDER } from "@/lib/productSpecs";
 
 // Порядок строк характеристик — как на apple.com/iphone/compare/: сначала
@@ -17,7 +17,7 @@ const MAX_COLUMNS = 3;
 function screenSize(specs: Record<string, string> | null): string | null {
   const value = specs?.["Дисплей"];
   if (!value) return null;
-  const match = value.match(/^(\d+[.,]\d+)/);
+  const match = value.match(/^(\d+(?:[.,]\d+)?)/);
   if (!match) return null;
   return `${match[1].replace(",", ".")}″`;
 }
@@ -137,19 +137,19 @@ export function CompareTable({
                       <button
                         key={color}
                         type="button"
-                        title={iphoneColorLabel(color)}
-                        aria-label={iphoneColorLabel(color)}
+                        title={colorLabel(color)}
+                        aria-label={colorLabel(color)}
                         onClick={() => setActiveColors((prev) => ({ ...prev, [m.slug]: color }))}
                         className={`h-7 w-7 rounded-full border transition-transform ${
                           activeColor === color
                             ? "scale-110 border-white ring-2 ring-accent"
                             : "border-zinc-300 hover:scale-105"
                         }`}
-                        style={{ backgroundColor: iphoneColorSwatch(color) }}
+                        style={{ backgroundColor: colorToHex(color) }}
                       />
                     ))}
                   </div>
-                  {activeColor && <div className="mt-2 text-xs font-medium text-zinc-600">{iphoneColorLabel(activeColor)}</div>}
+                  {activeColor && <div className="mt-2 text-xs font-medium text-zinc-600">{colorLabel(activeColor)}</div>}
                 </div>
               )}
 

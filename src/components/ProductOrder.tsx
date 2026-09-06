@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable react-hooks/static-components -- локальные селекторы замыкаются на текущее состояние формы */
+
 import { useEffect, useMemo, useState } from "react";
 import { formatPrice } from "@/lib/format";
 import { colorLabel, colorToHex } from "@/lib/colorSwatch";
@@ -69,6 +71,7 @@ function uniqueInOrder(values: (string | null)[]): string[] {
 type Selection = { memory: string | null; color: string | null; region: string | null };
 
 type WatchBandPart = "model" | "color" | "size";
+type IpadOptionPart = "connectivity" | "glass";
 
 type WatchBand = {
   model: string;
@@ -112,6 +115,13 @@ function watchBandLabel(value: string) {
   return translations[value] ?? value;
 }
 
+function parseIpadRegion(region: string | null) {
+  if (!region || !/(?:Wi.?Fi|Cellular|стекло)/i.test(region)) return null;
+  const [connectivity, glass] = region.split(" · ").map((part) => part.trim());
+  if (!connectivity || !glass) return null;
+  return { connectivity, glass };
+}
+
 function findVariant(variants: Variant[], sel: Selection): Variant | undefined {
   return variants.find(
     (v) =>
@@ -143,6 +153,7 @@ export function ProductOrder({
   const hasColor = variants.some((v) => v.color);
   const hasRegion = variants.some((v) => v.region);
   const isWatch = variants.some((v) => /(?:loop|band|ремешок)/i.test(v.region ?? ""));
+  const isIpadPro = /iPad Pro.*M5/i.test(productName) && variants.some((v) => parseIpadRegion(v.region));
 
   const memoryOptions = useMemo(
     () => (hasMemory ? uniqueInOrder(variants.map((v) => v.memory)).sort((a, b) => memorySortValue(a) - memorySortValue(b)) : []),
@@ -223,6 +234,29 @@ export function ProductOrder({
       return fallback
         ? { memory: fallback.memory, color: fallback.color, region: fallback.region }
         : prev;
+    });
+  }
+
+  function pickIpadOption(part: IpadOptionPart, value: string) {
+    setSelection((prev) => {
+      const current = parseIpadRegion(prev.region);
+      const compatible = variants.filter((variant) => {
+        const parsed = parseIpadRegion(variant.region);
+        return parsed?.[part] === value &&
+          (prev.memory === null || variant.memory === prev.memory) &&
+          (prev.color === null || variant.color === prev.color);
+      });
+      const ranked = [...compatible].sort((a, b) => {
+        const score = (variant: Variant) => {
+          const parsed = parseIpadRegion(variant.region);
+          if (!parsed) return 0;
+          const otherPart: IpadOptionPart = part === "connectivity" ? "glass" : "connectivity";
+          return (variant.inStock ? 4 : 0) + (parsed[otherPart] === current?.[otherPart] ? 2 : 0) + (variant.price != null ? 1 : 0);
+        };
+        return score(b) - score(a);
+      });
+      const fallback = ranked[0];
+      return fallback ? { memory: fallback.memory, color: fallback.color, region: fallback.region } : prev;
     });
   }
 
@@ -401,11 +435,51 @@ export function ProductOrder({
     </>;
   }
 
+  function IpadOptionSelector() {
+    const current = parseIpadRegion(selection.region);
+    const compatible = variants.filter((variant) =>
+      (selection.memory === null || variant.memory === selection.memory) &&
+      (selection.color === null || variant.color === selection.color),
+    );
+    const connectivityOptions = uniqueInOrder(compatible.map((variant) => parseIpadRegion(variant.region)?.connectivity ?? null));
+    const glassOptions = uniqueInOrder(compatible.map((variant) => parseIpadRegion(variant.region)?.glass ?? null));
+
+    function Part({ label, part, options }: { label: string; part: IpadOptionPart; options: string[] }) {
+      if (!options.length) return null;
+      return <div>
+        <div className="mb-2 text-sm font-medium text-foreground">{label}</div>
+        <div className="flex flex-wrap gap-2">
+          {options.map((option) => <button
+            key={option}
+            type="button"
+            onClick={() => pickIpadOption(part, option)}
+            className={`rounded-full border px-4 py-2 text-sm transition-colors ${
+              current?.[part] === option
+                ? "border-brand bg-brand text-white"
+                : "border-zinc-300 text-zinc-700 hover:border-accent"
+            }`}
+          >
+            {option}
+          </button>)}
+        </div>
+      </div>;
+    }
+
+    return <>
+      <Part label="Подключение" part="connectivity" options={connectivityOptions} />
+      <Part label="Стекло дисплея" part="glass" options={glassOptions} />
+    </>;
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <AxisSelector axis="memory" options={memoryOptions} />
       <AxisSelector axis="color" options={colorOptions} />
-      {isWatch ? <WatchBandSelector /> : <AxisSelector axis="region" options={regionOptions} />}
+      {isWatch
+        ? <WatchBandSelector />
+        : isIpadPro
+          ? <IpadOptionSelector />
+          : <AxisSelector axis="region" options={regionOptions} />}
 
       {selected && (
         <div className="font-display text-2xl font-semibold text-foreground">
