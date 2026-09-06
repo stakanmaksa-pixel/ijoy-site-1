@@ -32,11 +32,16 @@ export default async function ProductPage({
   const { slug } = await params;
   const sp = await searchParams;
   const variantId = toSingle(sp.variant);
+  const pencilSlug = ["ipad-pro-11-m5", "ipad-pro-13-m5", "ipad-air-11-m4", "ipad-air-13-m4"].includes(slug)
+    ? "apple-pencil-pro"
+    : slug === "ipad-a16"
+      ? "apple-pencil-usb-c"
+      : null;
 
   const [product, compatibleAccessories] = await Promise.all([
     getProductBySlug(slug),
-    ["ipad-pro-11-m5", "ipad-pro-13-m5"].includes(slug)
-      ? getProductsBySlugs(["apple-pencil-pro"])
+    pencilSlug
+      ? getProductsBySlugs([pencilSlug])
       : Promise.resolve([]),
   ]);
 
@@ -128,11 +133,20 @@ export default async function ProductPage({
         <section className="mt-16 border-t border-zinc-100 pt-10">
           <div className="max-w-2xl">
             <div className="text-sm font-medium uppercase tracking-wide text-accent">Совместимый аксессуар</div>
-            <h2 className="mt-2 font-display text-2xl font-semibold text-foreground">Купите в комплект Apple Pencil Pro</h2>
-            <p className="mt-3 text-sm leading-6 text-zinc-600">
-              Apple Pencil Pro полностью совместим с этой моделью iPad Pro M5: поддерживаются наведение,
-              чувствительность к нажатию и наклону, сжатие, вращение пера и магнитная зарядка. Стилус продаётся отдельно.
-            </p>
+            <h2 className="mt-2 font-display text-2xl font-semibold text-foreground">
+              Купите в комплект {compatibleAccessories[0]?.name}
+            </h2>
+            {pencilSlug === "apple-pencil-pro" ? (
+              <p className="mt-3 text-sm leading-6 text-zinc-600">
+                Apple Pencil Pro полностью совместим с этой моделью iPad: поддерживаются наведение,
+                чувствительность к нажатию и наклону, сжатие, вращение пера и магнитная зарядка. Стилус продаётся отдельно.
+              </p>
+            ) : (
+              <p className="mt-3 text-sm leading-6 text-zinc-600">
+                Apple Pencil (USB‑C) совместим с iPad A16, подходит для заметок, разметки и рисования,
+                крепится магнитом и заряжается через USB‑C. Apple Pencil Pro с iPad A16 не совместим. Стилус продаётся отдельно.
+              </p>
+            )}
           </div>
           <div className="mt-6 w-full max-w-[280px]">
             {compatibleAccessories.map((accessory) => (

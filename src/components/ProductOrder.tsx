@@ -118,8 +118,8 @@ function watchBandLabel(value: string) {
 function parseIpadRegion(region: string | null) {
   if (!region || !/(?:Wi.?Fi|Cellular|стекло)/i.test(region)) return null;
   const [connectivity, glass] = region.split(" · ").map((part) => part.trim());
-  if (!connectivity || !glass) return null;
-  return { connectivity, glass };
+  if (!connectivity) return null;
+  return { connectivity, glass: glass || null };
 }
 
 function findVariant(variants: Variant[], sel: Selection): Variant | undefined {
@@ -153,7 +153,7 @@ export function ProductOrder({
   const hasColor = variants.some((v) => v.color);
   const hasRegion = variants.some((v) => v.region);
   const isWatch = variants.some((v) => /(?:loop|band|ремешок)/i.test(v.region ?? ""));
-  const isIpadPro = /iPad Pro.*M5/i.test(productName) && variants.some((v) => parseIpadRegion(v.region));
+  const isIpad = /iPad/i.test(productName) && variants.some((v) => parseIpadRegion(v.region));
 
   const memoryOptions = useMemo(
     () => (hasMemory ? uniqueInOrder(variants.map((v) => v.memory)).sort((a, b) => memorySortValue(a) - memorySortValue(b)) : []),
@@ -477,7 +477,7 @@ export function ProductOrder({
       <AxisSelector axis="color" options={colorOptions} />
       {isWatch
         ? <WatchBandSelector />
-        : isIpadPro
+        : isIpad
           ? <IpadOptionSelector />
           : <AxisSelector axis="region" options={regionOptions} />}
 

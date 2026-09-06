@@ -230,6 +230,46 @@ async function checkIpadsAndPencils() {
     else console.log(`OK   ${product.name}: 24 варианта, 2 точных фото и полные характеристики`);
   }
 
+  const standardIpads = [
+    { slug: "ipad-air-11-m4", variants: 32, memories: 4, colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
+    { slug: "ipad-air-13-m4", variants: 32, memories: 4, colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
+    { slug: "ipad-a16", variants: 24, memories: 3, colors: ["Blue", "Pink", "Yellow", "Silver"] },
+  ] as const;
+  for (const expectedIpad of standardIpads) {
+    const product = await prisma.product.findUnique({ where: { slug: expectedIpad.slug }, include: { variants: true } });
+    if (!product || product.status !== "PUBLISHED") {
+      failures.push(`${expectedIpad.slug}: iPad не найден или не опубликован`);
+      continue;
+    }
+    if (product.variants.length !== expectedIpad.variants) {
+      failures.push(`${product.name}: ожидалось ${expectedIpad.variants} вариантов, получено ${product.variants.length}`);
+    }
+    if (!product.description || !product.specs || product.highlights.length < 5) {
+      failures.push(`${product.name}: не заполнены описание, характеристики или особенности`);
+    }
+    const memories = new Set(product.variants.map((variant) => variant.memory).filter(Boolean));
+    const colors = new Set(product.variants.map((variant) => variant.color).filter(Boolean));
+    const connections = new Set(product.variants.map((variant) => variant.region).filter(Boolean));
+    if (memories.size !== expectedIpad.memories) failures.push(`${product.name}: неверное количество вариантов памяти (${memories.size})`);
+    if (colors.size !== expectedIpad.colors.length) failures.push(`${product.name}: неверное количество цветов (${colors.size})`);
+    if (connections.size !== 2 || !connections.has("Wi‑Fi") || !connections.has("Wi‑Fi + Cellular")) {
+      failures.push(`${product.name}: должны быть подключения Wi‑Fi и Wi‑Fi + Cellular`);
+    }
+
+    const imageMap = (product.colorImages as Record<string, string[]> | null) ?? {};
+    for (const variant of product.variants) {
+      await assertFile(`${product.name}, ${variant.memory}, ${variant.color}, ${variant.region}`, imageMap[variantImageKey(variant)]?.[0]);
+    }
+    const hashes = new Set<string>();
+    for (const color of expectedIpad.colors) {
+      await assertFile(`${product.name}, ${color}`, imageMap[color]?.[0]);
+      const hash = await fileHash(imageMap[color]?.[0]);
+      if (hash) hashes.add(hash);
+    }
+    if (hashes.size !== expectedIpad.colors.length) failures.push(`${product.name}: у каждого цвета должно быть своё фото`);
+    else console.log(`OK   ${product.name}: ${expectedIpad.variants} вариантов и ${expectedIpad.colors.length} точных фото`);
+  }
+
   const publishedM5 = await prisma.product.findMany({
     where: {
       status: "PUBLISHED",
@@ -245,6 +285,22 @@ async function checkIpadsAndPencils() {
   const unexpected = publishedM5.filter((product) => !expected.has(product.slug));
   if (unexpected.length) failures.push(`Опубликованы дубли iPad Pro M5: ${unexpected.map((product) => product.slug).join(", ")}`);
   else console.log("OK   iPad Pro M5: опубликованы только модели 11″ и 13″ без дублей");
+
+  const canonicalStandard = new Set(["ipad-air-11-m4", "ipad-air-13-m4", "ipad-a16"]);
+  const publishedStandard = await prisma.product.findMany({
+    where: {
+      status: "PUBLISHED",
+      brand: "Apple",
+      OR: [
+        { AND: [{ name: { contains: "iPad Air", mode: "insensitive" } }, { name: { contains: "M4", mode: "insensitive" } }] },
+        { name: { contains: "iPad A16", mode: "insensitive" } },
+      ],
+    },
+    select: { slug: true },
+  });
+  const unexpectedStandard = publishedStandard.filter((product) => !canonicalStandard.has(product.slug));
+  if (unexpectedStandard.length) failures.push(`Опубликованы дубли iPad Air M4 / A16: ${unexpectedStandard.map((product) => product.slug).join(", ")}`);
+  else console.log("OK   iPad Air M4 и iPad A16: опубликованы без дублей");
 }
 
 async function main() {

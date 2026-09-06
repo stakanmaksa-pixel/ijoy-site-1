@@ -66,7 +66,9 @@ function bandChoiceLabel(value: string) {
 function ipadRegion(region: string | null) {
   if (!region) return null;
   const [connectivity, glass] = region.split(" · ").map((value) => value.trim());
-  return connectivity && glass ? { connectivity, glass } : null;
+  return connectivity && /(?:Wi.?Fi|Cellular)/i.test(connectivity)
+    ? { connectivity, glass: glass || null }
+    : null;
 }
 
 function toggleValue(value: string, setter: Dispatch<SetStateAction<string[]>>) {
@@ -113,7 +115,7 @@ export function VariantGrid({
   const colors = useMemo(() => valuesOf(variants, "color"), [variants]);
   const regions = useMemo(() => valuesOf(variants, "region"), [variants]);
   const isWatch = slug.includes("watch") || variants.some((variant) => /(?:loop|band)/i.test(variant.region ?? ""));
-  const isIpadPro = /^ipad-pro-(?:11|13)-m5$/.test(slug);
+  const isIpad = /^(?:ipad-pro-(?:11|13)-m5|ipad-air-(?:11|13)-m4|ipad-a16)$/.test(slug);
   const isUltra = slug.includes("ultra");
   const bandChoices = isWatch
     ? [...new Set(variants.map((variant) => bandChoice(variant.region)).filter(isPresent))]
@@ -181,9 +183,9 @@ export function VariantGrid({
           {colors.length > 1 && <FilterGroup label={isWatch ? "Цвет корпуса" : "Цвет"} selected={selectedColors} values={colors} onChange={setSelectedColors} anyLabel="Все" formatLabel={colorLabel} />}
           {isWatch && strapMaterials.length > 1 && <FilterGroup label="Материал ремешка" selected={selectedStrapMaterials} values={strapMaterials} onChange={setSelectedStrapMaterials} anyLabel="Все" />}
           {isWatch && strapSizes.length > 1 && <FilterGroup label="Размер ремешка" selected={selectedStrapSizes} values={strapSizes} onChange={setSelectedStrapSizes} anyLabel="Все" />}
-          {isIpadPro && ipadConnectivity.length > 1 && <FilterGroup label="Подключение" selected={selectedConnectivity} values={ipadConnectivity} onChange={setSelectedConnectivity} anyLabel="Все" />}
-          {isIpadPro && ipadGlass.length > 1 && <FilterGroup label="Стекло дисплея" selected={selectedGlass} values={ipadGlass} onChange={setSelectedGlass} anyLabel="Все" />}
-          {!isIpadPro && bandChoices.length > 1 && <FilterGroup label={isWatch ? "Ремешок" : "Регион / SIM"} selected={selectedRegions} values={bandChoices} onChange={setSelectedRegions} anyLabel="Все" formatLabel={isWatch ? bandChoiceLabel : undefined} />}
+          {isIpad && ipadConnectivity.length > 1 && <FilterGroup label="Подключение" selected={selectedConnectivity} values={ipadConnectivity} onChange={setSelectedConnectivity} anyLabel="Все" />}
+          {isIpad && ipadGlass.length > 1 && <FilterGroup label="Стекло дисплея" selected={selectedGlass} values={ipadGlass} onChange={setSelectedGlass} anyLabel="Все" />}
+          {!isIpad && bandChoices.length > 1 && <FilterGroup label={isWatch ? "Ремешок" : "Регион / SIM"} selected={selectedRegions} values={bandChoices} onChange={setSelectedRegions} anyLabel="Все" formatLabel={isWatch ? bandChoiceLabel : undefined} />}
           {variants.some((variant) => !variant.inStock) && <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" checked={onlyInStock} onChange={(event) => setOnlyInStock(event.target.checked)} className="h-4 w-4 accent-accent" /> Только в наличии</label>}
         </div>
       </aside>}
@@ -233,9 +235,9 @@ export function VariantGrid({
                     ["Материал ремешка", (variant: ProductVariantForGrid) => strapMaterial(variant.region, isUltra) || "—"],
                     ["Размер ремешка", (variant: ProductVariantForGrid) => strapSize(variant.region) || "—"],
                   ] as const : []),
-                  ...(isIpadPro ? [
+                  ...(isIpad ? [
                     ["Подключение", (variant: ProductVariantForGrid) => ipadRegion(variant.region)?.connectivity || "—"],
-                    ["Стекло дисплея", (variant: ProductVariantForGrid) => ipadRegion(variant.region)?.glass || "—"],
+                    ...(ipadGlass.length > 0 ? [["Стекло дисплея", (variant: ProductVariantForGrid) => ipadRegion(variant.region)?.glass || "—"]] as const : []),
                   ] as const : [
                     [isWatch ? "Ремешок" : "Регион / SIM", (variant: ProductVariantForGrid) => variant.region || "—"],
                   ] as const),

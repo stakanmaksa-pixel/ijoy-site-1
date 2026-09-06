@@ -1,4 +1,4 @@
-// Загружает официальные фото Apple для iPad Pro M5 и Apple Pencil.
+// Загружает официальные фото Apple для актуальных iPad и Apple Pencil.
 // docker compose --env-file .env.docker run --rm migrate npx tsx prisma/scripts/sync-ipad-photos.ts
 
 import "dotenv/config";
@@ -18,6 +18,24 @@ const sources: Record<string, Record<string, string>> = {
   "ipad-pro-13-m5": {
     "Space Black": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-select-wifi-spaceblack-202405?wid=1200&hei=1200&fmt=jpeg&qlt=95",
     Silver: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-select-wifi-silver-202405?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+  },
+  "ipad-air-11-m4": {
+    "Space Gray": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-finish-select-gallery-202405-11inch-space-gray-wifi?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+    Blue: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-finish-select-gallery-202405-11inch-blue-wifi?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+    Purple: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-finish-select-gallery-202405-11inch-purple-wifi?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+    Starlight: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-finish-select-gallery-202405-11inch-starlight-wifi?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+  },
+  "ipad-air-13-m4": {
+    "Space Gray": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-finish-select-gallery-202405-13inch-space-gray-wifi?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+    Blue: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-finish-select-gallery-202405-13inch-blue-wifi?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+    Purple: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-finish-select-gallery-202405-13inch-purple-wifi?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+    Starlight: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-finish-select-gallery-202405-13inch-starlight-wifi?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+  },
+  "ipad-a16": {
+    Blue: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-2022-hero-blue-wifi-select?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+    Pink: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-2022-hero-pink-wifi-select?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+    Yellow: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-2022-hero-yellow-wifi-select?wid=1200&hei=1200&fmt=jpeg&qlt=95",
+    Silver: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-2022-hero-silver-wifi-select?wid=1200&hei=1200&fmt=jpeg&qlt=95",
   },
   "apple-pencil-2": {
     White: "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MU8F2?wid=1200&hei=1200&fmt=jpeg&qlt=95",
