@@ -44,7 +44,7 @@ export function ProductCard({
   const isIpadA16 = slug === "ipad-a16";
   const isPencil = /^apple-pencil-/i.test(slug);
   const imageClassName = isPencil
-    ? "h-full w-full rotate-[38deg] scale-[1.35] object-contain"
+    ? "h-full w-full rotate-[34deg] scale-[1.1] object-contain"
     : isHeadphones
     ? "h-full w-full object-contain"
     : isIpadA16

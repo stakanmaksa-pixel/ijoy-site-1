@@ -74,7 +74,7 @@ export function ProductDetail({
   const isIpadA16 = productSlug === "ipad-a16";
   const isPencil = /^apple-pencil-/i.test(productSlug);
   const productImageClass = isPencil
-    ? "rotate-[38deg] scale-[1.3]"
+    ? "rotate-[34deg] scale-[1.0]"
     : isIpadA16
       ? "scale-[1.12]"
     : isIpad
