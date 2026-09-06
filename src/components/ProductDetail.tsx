@@ -71,9 +71,12 @@ export function ProductDetail({
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const activeImage = galleryImages.includes(selectedImage ?? "") ? selectedImage : galleryImages[0];
   const isIpad = /^ipad-/i.test(productSlug);
+  const isIpadA16 = productSlug === "ipad-a16";
   const isPencil = /^apple-pencil-/i.test(productSlug);
   const productImageClass = isPencil
     ? "rotate-[42deg] scale-[1.55]"
+    : isIpadA16
+      ? "scale-[1.12]"
     : isIpad
       ? "scale-[1.45]"
       : "";
