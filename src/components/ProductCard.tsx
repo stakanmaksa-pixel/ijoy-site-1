@@ -44,7 +44,7 @@ export function ProductCard({
   const isIpadA16 = slug === "ipad-a16";
   const isPencil = /^apple-pencil-/i.test(slug);
   const imageClassName = isPencil
-    ? "h-full w-full rotate-[42deg] scale-[1.55] object-contain"
+    ? "h-full w-full rotate-[38deg] scale-[1.35] object-contain"
     : isHeadphones
     ? "h-full w-full object-contain"
     : isIpadA16
@@ -58,7 +58,7 @@ export function ProductCard({
       href={`/product/${slug}`}
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
+      <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-zinc-50 text-zinc-300">
         {coverImage ? (
           // У официальных фото наушников уже есть большие внутренние белые
           // поля. Дополнительный padding делал сам товар слишком маленьким.

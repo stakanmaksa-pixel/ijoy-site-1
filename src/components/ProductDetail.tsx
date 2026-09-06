@@ -74,7 +74,7 @@ export function ProductDetail({
   const isIpadA16 = productSlug === "ipad-a16";
   const isPencil = /^apple-pencil-/i.test(productSlug);
   const productImageClass = isPencil
-    ? "rotate-[42deg] scale-[1.55]"
+    ? "rotate-[38deg] scale-[1.3]"
     : isIpadA16
       ? "scale-[1.12]"
     : isIpad
@@ -97,7 +97,7 @@ export function ProductDetail({
         <div>
           {/* Минималистично: одно крупное фото + ряд миниатюр под ним, без
               лишних рамок и подписей — как просили, "чисто, но понятно". */}
-          <div className="relative flex aspect-square items-center justify-center rounded-2xl bg-white text-zinc-300 sm:rounded-3xl">
+          <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-white text-zinc-300 sm:rounded-3xl">
             {activeImage ? (
               <img
                 src={activeImage}

@@ -62,7 +62,7 @@ export function VariantCard({
       href={`/product/${slug}?variant=${variant.id}`}
       className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className="relative flex aspect-square items-center justify-center bg-zinc-50 text-zinc-300">
+      <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-zinc-50 text-zinc-300">
         {imageUrl ? (
           <img
             src={imageUrl}
