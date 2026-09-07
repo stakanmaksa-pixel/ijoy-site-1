@@ -18,12 +18,6 @@ type Variant = {
   inStock: boolean;
 };
 
-type VariantComparison = {
-  selected: boolean;
-  disabled: boolean;
-  onToggle: () => void;
-};
-
 function variantLabel(v: Variant, isSmartGlasses = false) {
   return isSmartGlasses
     ? smartGlassesVariantLabel(v)
@@ -43,14 +37,12 @@ export function VariantCard({
   slug,
   variant,
   imageUrl,
-  comparison,
 }: {
   slug: string;
   variant: Variant;
   // Фото именно этого цвета (или общее фото товара, если по цвету пока
   // нет) — см. pickCoverImage в catalog.ts.
   imageUrl?: string | null;
-  comparison?: VariantComparison;
 }) {
   const isWatch = /watch/i.test(slug);
   const isSeries11 = slug === "apple-watch-series-11";
@@ -105,40 +97,21 @@ export function VariantCard({
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
         <div className={`text-sm text-zinc-500 ${isHeadphones ? "min-h-12" : ""}`}>{variantLabel(variant, isSmartGlasses)}</div>
-        <div className={`mt-auto flex items-center justify-between pt-2 ${isIpad ? "flex-wrap gap-2" : ""}`}>
+        <div className={`mt-auto flex items-center pt-2 ${isIpad ? "flex-col gap-1 text-center" : "justify-between"}`}>
           <span className="text-base font-semibold text-foreground">
             {variant.price != null ? formatPrice(variant.price) : "Уточняйте у менеджера"}
           </span>
           {!variant.inStock && (
             <span className="text-xs text-zinc-400">Под заказ</span>
           )}
-          {isIpad && <div className="ml-auto flex shrink-0 items-center gap-2">
-            {comparison && <button
-              type="button"
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                comparison.onToggle();
-              }}
-              disabled={comparison.disabled}
-              aria-pressed={comparison.selected}
-              aria-label={comparison.selected ? "Убрать вариант из сравнения" : "Добавить вариант к сравнению"}
-              title={comparison.disabled ? "В сравнении может быть до 3 вариантов" : comparison.selected ? "Убрать из сравнения" : "Сравнить варианты"}
-              className={`flex h-11 w-11 items-center justify-center rounded-full shadow-sm ring-1 ring-black/5 transition-all duration-150 hover:scale-105 active:scale-90 disabled:cursor-not-allowed disabled:opacity-45 ${comparison.selected ? "bg-accent text-white" : "bg-white/95 text-zinc-500 hover:bg-white hover:text-accent"}`}
-            >
-              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 4v16" />
-                <path d="M5 7h14" />
-                <path d="m5 7-3 6h6L5 7Z" />
-                <path d="m19 7-3 6h6l-3-6Z" />
-                <path d="M8 20h8" />
-              </svg>
-            </button>}
-            <FavoriteButton variantId={variant.id} />
-          </div>}
         </div>
-        {isIpad && variant.price != null && variant.inStock && (
-          <CartButton variantId={variant.id} compact className="mt-3 w-full" />
+        {isIpad && (
+          <div className="mt-3 flex items-center gap-2">
+            {variant.price != null && variant.inStock && (
+              <CartButton variantId={variant.id} compact className="min-w-0 flex-1" />
+            )}
+            <FavoriteButton variantId={variant.id} className={variant.price != null && variant.inStock ? "shrink-0" : "ml-auto shrink-0"} />
+          </div>
         )}
         {isHeadphones && <HeadphoneCardActions slug={slug} variantId={variant.id} canBuy={variant.price != null && variant.inStock} />}
       </div>
