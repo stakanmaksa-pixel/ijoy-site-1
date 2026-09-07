@@ -9,6 +9,7 @@ import { PhoneField, phoneWithCountryCode } from "@/components/PhoneField";
 import { CartButton } from "@/components/CartButton";
 import { AddressAutocomplete } from "@/components/AddressAutocomplete";
 import { isSmartGlassesProductName, smartGlassesVariantLabel } from "@/lib/smartGlasses";
+import { gamingLifestyleAxisLabel, gamingLifestyleCategoryForProduct } from "@/lib/catalogAxes";
 
 type Variant = {
   id: string;
@@ -47,12 +48,13 @@ function memorySortValue(value: string): number {
   return num;
 }
 
-function axisLabel(axis: Axis, values: string[], isSmartGlasses = false): string {
+function axisLabel(axis: Axis, values: string[], isSmartGlasses = false, gamingLifestyleCategory?: string | null): string {
   if (isSmartGlasses) {
     if (axis === "memory") return "Размер";
     if (axis === "color") return "Оправа";
     return "Линзы";
   }
+  if (gamingLifestyleCategory) return gamingLifestyleAxisLabel(axis, values, gamingLifestyleCategory);
   if (axis === "memory") {
     return values.every((v) => /(?:mm|мм)$/i.test(v)) ? "Размер корпуса" : "Память";
   }
@@ -145,12 +147,14 @@ function findVariant(variants: Variant[], sel: Selection): Variant | undefined {
 
 export function ProductOrder({
   productName,
+  productSlug,
   variants,
   initialVariantId,
   onSelectedVariantChange,
   allowUnavailableSelection = false,
 }: {
   productName: string;
+  productSlug: string;
   variants: Variant[];
   // Модификация, выбранная ещё до открытия формы (пришли по ссылке на
   // конкретную память/цвет из карточки в сетке модификаций) — если задана,
@@ -171,6 +175,8 @@ export function ProductOrder({
   const isWatch = variants.some((v) => /(?:loop|band|ремешок)/i.test(v.region ?? ""));
   const isIpad = /iPad/i.test(productName) && variants.some((v) => parseIpadRegion(v.region));
   const isSmartGlasses = isSmartGlassesProductName(productName);
+  const gamingLifestyleCategory = gamingLifestyleCategoryForProduct(productSlug);
+  const isGamingLifestyle = gamingLifestyleCategory != null;
 
   const memoryOptions = useMemo(
     () => (hasMemory ? uniqueInOrder(variants.map((v) => v.memory)).sort((a, b) => memorySortValue(a) - memorySortValue(b)) : []),
@@ -335,11 +341,11 @@ export function ProductOrder({
 
     // Ось "цвет" — кружки-свотчи вместо текстовых пилюль, чтобы было видно
     // цвет, не читая название.
-    if (axis === "color" && !isSmartGlasses) {
+    if (axis === "color" && !isSmartGlasses && !isGamingLifestyle) {
       return (
         <div>
           <div className="mb-2 text-sm font-medium text-foreground">
-            {axisLabel(axis, options, isSmartGlasses)}
+            {axisLabel(axis, options, isSmartGlasses, gamingLifestyleCategory)}
             {value && <span className="font-normal text-zinc-500"> · {colorLabel(value)}</span>}
           </div>
           <div className="flex flex-wrap gap-3">
@@ -374,7 +380,7 @@ export function ProductOrder({
     return (
       <div>
         <div className="mb-2 text-sm font-medium text-foreground">
-          {axisLabel(axis, options, isSmartGlasses)}
+          {axisLabel(axis, options, isSmartGlasses, gamingLifestyleCategory)}
         </div>
         <div className="flex flex-wrap gap-2">
           {options.map((opt) => {

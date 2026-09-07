@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductBySlug, getProductsBySlugs } from "@/lib/catalog";
+import { getCompatibleAccessoryBundle } from "@/lib/compatibleAccessories";
 import { pickVariantImages } from "@/lib/pickCoverImage";
 import { ProductDetail } from "@/components/ProductDetail";
 import { VariantGrid } from "@/components/VariantGrid";
@@ -32,16 +33,12 @@ export default async function ProductPage({
   const { slug } = await params;
   const sp = await searchParams;
   const variantId = toSingle(sp.variant);
-  const pencilSlug = ["ipad-pro-11-m5", "ipad-pro-13-m5", "ipad-air-11-m4", "ipad-air-13-m4", "ipad-mini-a17-pro"].includes(slug)
-    ? "apple-pencil-pro"
-    : slug === "ipad-a16"
-      ? "apple-pencil-usb-c"
-      : null;
+  const compatibleBundle = getCompatibleAccessoryBundle(slug);
 
   const [product, compatibleAccessories] = await Promise.all([
     getProductBySlug(slug),
-    pencilSlug
-      ? getProductsBySlugs([pencilSlug])
+    compatibleBundle
+      ? getProductsBySlugs(compatibleBundle.slugs)
       : Promise.resolve([]),
   ]);
 
@@ -129,26 +126,16 @@ export default async function ProductPage({
         />
       )}
 
-      {compatibleAccessories.length > 0 && (
+      {compatibleBundle && compatibleAccessories.length > 0 && (
         <section className="mt-16 border-t border-zinc-100 pt-10">
           <div className="max-w-2xl">
-            <div className="text-sm font-medium uppercase tracking-wide text-accent">Совместимый аксессуар</div>
+            <div className="text-sm font-medium uppercase tracking-wide text-accent">{compatibleBundle.eyebrow}</div>
             <h2 className="mt-2 font-display text-2xl font-semibold text-foreground">
-              Купите в комплект {compatibleAccessories[0]?.name}
+              {compatibleBundle.title}
             </h2>
-            {pencilSlug === "apple-pencil-pro" ? (
-              <p className="mt-3 text-sm leading-6 text-zinc-600">
-                Apple Pencil Pro полностью совместим с этой моделью iPad: поддерживаются наведение,
-                чувствительность к нажатию и наклону, сжатие, вращение пера и магнитная зарядка. Стилус продаётся отдельно.
-              </p>
-            ) : (
-              <p className="mt-3 text-sm leading-6 text-zinc-600">
-                Apple Pencil (USB‑C) совместим с iPad A16, подходит для заметок, разметки и рисования,
-                крепится магнитом и заряжается через USB‑C. Apple Pencil Pro с iPad A16 не совместим. Стилус продаётся отдельно.
-              </p>
-            )}
+            <p className="mt-3 text-sm leading-6 text-zinc-600">{compatibleBundle.description}</p>
           </div>
-          <div className="mt-6 w-full max-w-[280px]">
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {compatibleAccessories.map((accessory) => (
               <ProductCard
                 key={accessory.slug}

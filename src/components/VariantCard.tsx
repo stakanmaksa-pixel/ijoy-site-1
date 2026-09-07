@@ -6,6 +6,7 @@ import { colorLabel } from "@/lib/colorSwatch";
 import { HeadphoneCardActions } from "@/components/HeadphoneCardActions";
 import { headphonePhotoPadding, isHeadphoneProduct, resolveHeadphonePhoto } from "@/lib/headphonePhotos";
 import { isSmartGlassesSlug, smartGlassesVariantLabel } from "@/lib/smartGlasses";
+import { isGamingLifestyleProduct } from "@/lib/catalogAxes";
 
 type Variant = {
   id: string;
@@ -50,6 +51,7 @@ export function VariantCard({
   const photo = imageUrl ? resolveHeadphonePhoto(imageUrl) : imageUrl;
   const isIpad = /^ipad-/i.test(slug);
   const isSmartGlasses = isSmartGlassesSlug(slug);
+  const isGamingLifestyle = isGamingLifestyleProduct(slug);
   const isAppleTvPhoto = imageUrl?.startsWith("/catalog/product-photos/apple-tv-4k/");
   const isMetaPhotoLifestyle = /\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(imageUrl ?? "");
   const isDjiMobilePhoto = imageUrl?.endsWith("/meta-photo/dji-osmo-mobile-7p.png");
@@ -66,6 +68,8 @@ export function VariantCard({
         ? "absolute inset-0 h-full w-full object-contain"
         : isSmartGlasses
           ? "h-full w-full object-contain p-4 sm:p-5"
+        : isGamingLifestyle
+          ? "absolute inset-0 h-full w-full object-contain p-4 sm:p-5"
         : isIpad || isAppleTvPhoto
           ? "absolute inset-0 h-full w-full object-contain p-3"
         : "h-full w-full object-contain p-5 sm:p-6";
@@ -75,7 +79,7 @@ export function VariantCard({
       href={`/product/${slug}?variant=${variant.id}`}
       className="@container group relative flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isSmartGlasses || isAppleTvPhoto ? "bg-white" : isMetaPhotoLifestyle ? "bg-black" : "bg-zinc-50"}`}>
+      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isSmartGlasses || isAppleTvPhoto || isGamingLifestyle ? "bg-white" : isMetaPhotoLifestyle ? "bg-black" : "bg-zinc-50"}`}>
         {photo ? (
           <img
             src={photo}

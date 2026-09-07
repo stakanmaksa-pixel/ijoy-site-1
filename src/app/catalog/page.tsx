@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { CallbackForm } from "@/components/CallbackForm";
 import { CatalogAutoForm } from "@/components/CatalogAutoForm";
 import { colorLabel } from "@/lib/colorSwatch";
+import { gamingLifestyleAxisLabel, isGamingLifestyleCategory } from "@/lib/catalogAxes";
 import {
   getCategoriesWithCounts,
   getCatalogFilterOptions,
@@ -63,6 +64,7 @@ export default async function CatalogPage({
     }),
   ]);
   const isWatchCategory = categorySlug === "chasy";
+  const isGamingLifestyle = isGamingLifestyleCategory(categorySlug);
 
   return (
     <div>
@@ -132,21 +134,21 @@ export default async function CatalogPage({
 
               {attributeOptions.memory.length > 0 && (
                 <div>
-                  <label className="mb-3 block text-sm font-medium text-foreground">{isWatchCategory ? "Размер корпуса" : "Память"}</label>
+                  <label className="mb-3 block text-sm font-medium text-foreground">{isWatchCategory ? "Размер корпуса" : isGamingLifestyle ? gamingLifestyleAxisLabel("memory", attributeOptions.memory, categorySlug) : "Память"}</label>
                   <div className="space-y-2">{attributeOptions.memory.map((value) => <label key={value} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="memory" value={value} defaultChecked={memory.includes(value)} className="h-4 w-4 accent-accent" />{value}</label>)}</div>
                 </div>
               )}
 
               {attributeOptions.colors.length > 0 && (
                 <div>
-                  <label className="mb-3 block text-sm font-medium text-foreground">{isWatchCategory ? "Цвет корпуса" : "Цвет"}</label>
+                  <label className="mb-3 block text-sm font-medium text-foreground">{isWatchCategory ? "Цвет корпуса" : isGamingLifestyle ? gamingLifestyleAxisLabel("color", attributeOptions.colors, categorySlug) : "Цвет"}</label>
                   <div className="space-y-2">{attributeOptions.colors.map((value) => <label key={value} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="color" value={value} defaultChecked={color.includes(value)} className="h-4 w-4 accent-accent" />{colorLabel(value)}</label>)}</div>
                 </div>
               )}
 
               {attributeOptions.regions.length > 0 && (
                 <div>
-                  <label className="mb-3 block text-sm font-medium text-foreground">{isWatchCategory ? "Ремешок" : "Регион / SIM"}</label>
+                  <label className="mb-3 block text-sm font-medium text-foreground">{isWatchCategory ? "Ремешок" : isGamingLifestyle ? gamingLifestyleAxisLabel("region", attributeOptions.regions, categorySlug) : "Регион / SIM"}</label>
                   <div className="max-h-52 space-y-2 overflow-y-auto pr-1">{attributeOptions.regions.map((value) => <label key={value} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="region" value={value} defaultChecked={region.includes(value)} className="h-4 w-4 accent-accent" />{value}</label>)}</div>
                 </div>
               )}

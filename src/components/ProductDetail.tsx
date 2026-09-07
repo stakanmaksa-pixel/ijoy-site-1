@@ -8,6 +8,7 @@ import { pickVariantImages } from "@/lib/pickCoverImage";
 import { groupProductSpecs } from "@/lib/productSpecs";
 import { headphonePhotoPadding, isHeadphoneProduct } from "@/lib/headphonePhotos";
 import { isSmartGlassesSlug } from "@/lib/smartGlasses";
+import { isGamingLifestyleProduct } from "@/lib/catalogAxes";
 
 type Variant = {
   id: string;
@@ -76,6 +77,7 @@ export function ProductDetail({
   const isHeadphones = isHeadphoneProduct(productSlug);
   const isPencil = /^apple-pencil-/i.test(productSlug);
   const isSmartGlasses = isSmartGlassesSlug(productSlug);
+  const isGamingLifestyle = isGamingLifestyleProduct(productSlug);
   const isMetaPhotoLifestyle = /\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(activeImage ?? "");
   const isDjiMobilePhoto = activeImage?.endsWith("/meta-photo/dji-osmo-mobile-7p.png");
   const productImageClass = isMetaPhotoLifestyle
@@ -88,6 +90,8 @@ export function ProductDetail({
       ? "absolute inset-0"
       : isSmartGlasses
         ? "p-6 sm:p-10"
+      : isGamingLifestyle
+        ? "absolute inset-0 p-5 sm:p-8"
       : isIpad
       ? "absolute inset-0 p-4 sm:p-6"
       : "";
@@ -138,7 +142,7 @@ export function ProductDetail({
                       : "border-zinc-200 hover:border-zinc-300"
                   }`}
                 >
-                  <img src={url} alt="" className={`h-full w-full ${/\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(url) ? "object-cover" : url.endsWith("/meta-photo/dji-osmo-mobile-7p.png") ? "scale-[2.5] object-contain" : isIpad || isHeadphones || isSmartGlasses ? "object-contain p-1" : "object-cover"}`} />
+                  <img src={url} alt="" className={`h-full w-full ${/\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(url) ? "object-cover" : url.endsWith("/meta-photo/dji-osmo-mobile-7p.png") ? "scale-[2.5] object-contain" : isIpad || isHeadphones || isSmartGlasses || isGamingLifestyle ? "object-contain p-1" : "object-cover"}`} />
                 </button>
               ))}
             </div>
@@ -173,6 +177,7 @@ export function ProductDetail({
           <div className="mt-6">
             <ProductOrder
               productName={productName}
+              productSlug={productSlug}
               variants={variants}
               initialVariantId={initialVariantId}
               onSelectedVariantChange={setSelectedId}

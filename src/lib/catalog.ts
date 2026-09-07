@@ -128,6 +128,55 @@ export const MODEL_DISPLAY_ORDER = {
     "Ray-Ban Meta Wayfarer RW4008 (Gen 1)",
     "Ray-Ban Meta Skyler RW4010 (Gen 1)",
   ],
+  gameConsoles: [
+    "PlayStation 5 Pro",
+    "PlayStation 5 Slim с дисководом (ревизия 2)",
+    "PlayStation 5 Slim Digital (ревизия 2)",
+    "Nintendo Switch 2",
+    "Nintendo Switch OLED",
+    "Xbox Series X",
+    "Valve Steam Machine",
+  ],
+  portableConsoles: [
+    "PlayStation Portal Remote Player",
+    "ASUS ROG Xbox Ally",
+    "Lenovo Legion Go S SteamOS",
+    "Steam Deck OLED",
+    "Nintendo Switch Lite",
+  ],
+  vrHeadsets: ["Meta Quest 3", "Meta Quest 3S", "PlayStation VR2"],
+  gamingAccessories: [
+    "DualSense — лимитированные издания",
+    "DualSense Edge",
+    "DualSense для PS5",
+    "Victrix Pro BFG",
+    "Руль Logitech G923",
+    "Руль Logitech G29",
+    "Коробка передач Logitech Driving Force",
+    "Зарядная станция для DualSense",
+    "Дисковод для PS5",
+    "Вертикальная подставка для PS5",
+    "Док-станция для Steam Deck",
+  ],
+  fitness: ["Google Fitbit Air", "WHOOP"],
+  portableAudio: [
+    "Marshall Kilburn III",
+    "Marshall Emberton III",
+    "Marshall Middleton",
+    "Marshall Stanmore III",
+    "Marshall Woburn III",
+  ],
+  headphones: [
+    "AirPods Pro 3",
+    "AirPods Pro 2 Type-C",
+    "AirPods 4 ANC",
+    "AirPods 4",
+    "AirPods Max 2",
+    "Apple EarPods USB-C",
+    "Sony PULSE Elite",
+    "Sony PULSE 3D",
+    "Marshall Major V",
+  ],
 } as const satisfies Record<string, readonly string[]>;
 
 // Место товара в его списке "новые сверху"; товары без списка (или не
@@ -161,7 +210,14 @@ function resolveOrderList(
   if (categorySlug === "chasy") return MODEL_DISPLAY_ORDER.watch;
   if (categorySlug === "ekshn-kamery") return MODEL_DISPLAY_ORDER.gopro;
   if (categorySlug === "smart-ochki") return MODEL_DISPLAY_ORDER.smartGlasses;
-  if (["aksessuary", "naushniki"].includes(categorySlug) && /^(?:AirPods|Apple EarPods)/.test(name)) return MODEL_DISPLAY_ORDER.airpods;
+  if (categorySlug === "igrovye-pristavki") return MODEL_DISPLAY_ORDER.gameConsoles;
+  if (categorySlug === "portativnye-konsoli") return MODEL_DISPLAY_ORDER.portableConsoles;
+  if (categorySlug === "vr-garnitury") return MODEL_DISPLAY_ORDER.vrHeadsets;
+  if (categorySlug === "igrovye-aksessuary") return MODEL_DISPLAY_ORDER.gamingAccessories;
+  if (categorySlug === "fitnes-braslety") return MODEL_DISPLAY_ORDER.fitness;
+  if (categorySlug === "portativnaya-akustika") return MODEL_DISPLAY_ORDER.portableAudio;
+  if (categorySlug === "naushniki") return MODEL_DISPLAY_ORDER.headphones;
+  if (categorySlug === "aksessuary" && /^(?:AirPods|Apple EarPods)/.test(name)) return MODEL_DISPLAY_ORDER.airpods;
   return undefined;
 }
 
@@ -256,6 +312,30 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
     { label: "HUAWEI Watch", test: (_name, brand) => brand === "HUAWEI", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("HUAWEI")}` },
     { label: "OnePlus Watch", test: (_name, brand) => brand === "OnePlus", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("OnePlus")}` },
   ],
+  "igrovye-pristavki": [
+    { label: "PlayStation 5", test: (_name, brand) => brand === "Sony PlayStation", groupHref: "/catalog?category=igrovye-pristavki&brand=Sony%20PlayStation", order: MODEL_DISPLAY_ORDER.gameConsoles },
+    { label: "Nintendo Switch", test: (_name, brand) => brand === "Nintendo", groupHref: "/catalog?category=igrovye-pristavki&brand=Nintendo", order: MODEL_DISPLAY_ORDER.gameConsoles },
+    { label: "Xbox", test: (_name, brand) => brand === "Xbox", groupHref: "/catalog?category=igrovye-pristavki&brand=Xbox", order: MODEL_DISPLAY_ORDER.gameConsoles },
+    { label: "Valve Steam Machine", test: (_name, brand) => brand === "Valve", groupHref: "/catalog?category=igrovye-pristavki&brand=Valve", order: MODEL_DISPLAY_ORDER.gameConsoles },
+  ],
+  "portativnye-konsoli": [
+    { label: "PlayStation Portal", test: (_name, brand) => brand === "Sony PlayStation", groupHref: "/catalog?category=portativnye-konsoli&brand=Sony%20PlayStation", order: MODEL_DISPLAY_ORDER.portableConsoles },
+    { label: "Nintendo Switch Lite", test: (_name, brand) => brand === "Nintendo", groupHref: "/catalog?category=portativnye-konsoli&brand=Nintendo", order: MODEL_DISPLAY_ORDER.portableConsoles },
+    { label: "ASUS ROG Ally", test: (_name, brand) => brand === "ASUS ROG", groupHref: "/catalog?category=portativnye-konsoli&brand=ASUS%20ROG", order: MODEL_DISPLAY_ORDER.portableConsoles },
+    { label: "Lenovo Legion Go", test: (_name, brand) => brand === "Lenovo", groupHref: "/catalog?category=portativnye-konsoli&brand=Lenovo", order: MODEL_DISPLAY_ORDER.portableConsoles },
+    { label: "Steam Deck", test: (_name, brand) => brand === "Valve", groupHref: "/catalog?category=portativnye-konsoli&brand=Valve", order: MODEL_DISPLAY_ORDER.portableConsoles },
+  ],
+  "igrovye-aksessuary": [
+    { label: "Контроллеры PlayStation", test: (name) => /dualsense|victrix/i.test(name), groupHref: "/catalog?category=igrovye-aksessuary", order: MODEL_DISPLAY_ORDER.gamingAccessories },
+    { label: "Аксессуары PS5", test: (name) => /подставка|зарядная станция|дисковод/i.test(name), groupHref: "/catalog?category=igrovye-aksessuary&brand=Sony%20PlayStation", order: MODEL_DISPLAY_ORDER.gamingAccessories },
+    { label: "Гоночные аксессуары Logitech", test: (_name, brand) => brand === "Logitech G", groupHref: "/catalog?category=igrovye-aksessuary&brand=Logitech%20G", order: MODEL_DISPLAY_ORDER.gamingAccessories },
+    { label: "Steam Deck", test: (_name, brand) => brand === "Valve", groupHref: "/catalog?category=igrovye-aksessuary&brand=Valve", order: MODEL_DISPLAY_ORDER.gamingAccessories },
+  ],
+  naushniki: [
+    { label: "Наушники AirPods", test: (name) => /airpods|earpods/i.test(name), groupHref: "/catalog?category=naushniki&brand=Apple", order: MODEL_DISPLAY_ORDER.airpods },
+    { label: "Игровые гарнитуры PlayStation", test: (_name, brand) => brand === "Sony PlayStation", groupHref: "/catalog?category=naushniki&brand=Sony%20PlayStation", order: MODEL_DISPLAY_ORDER.headphones },
+    { label: "Marshall", test: (_name, brand) => brand === "Marshall", groupHref: "/catalog?category=naushniki&brand=Marshall", order: MODEL_DISPLAY_ORDER.headphones },
+  ],
 };
 
 // Категории без деления на линейки (один бренд на категорию) — тут просто
@@ -264,9 +344,15 @@ const CATEGORY_ORDER: Record<string, readonly string[]> = {
   chasy: MODEL_DISPLAY_ORDER.watch,
   planshety: MODEL_DISPLAY_ORDER.ipad,
   noutbuki: MODEL_DISPLAY_ORDER.macbook,
-  naushniki: MODEL_DISPLAY_ORDER.airpods,
+  naushniki: MODEL_DISPLAY_ORDER.headphones,
   "ekshn-kamery": MODEL_DISPLAY_ORDER.gopro,
   "smart-ochki": MODEL_DISPLAY_ORDER.smartGlasses,
+  "igrovye-pristavki": MODEL_DISPLAY_ORDER.gameConsoles,
+  "portativnye-konsoli": MODEL_DISPLAY_ORDER.portableConsoles,
+  "vr-garnitury": MODEL_DISPLAY_ORDER.vrHeadsets,
+  "igrovye-aksessuary": MODEL_DISPLAY_ORDER.gamingAccessories,
+  "fitnes-braslety": MODEL_DISPLAY_ORDER.fitness,
+  "portativnaya-akustika": MODEL_DISPLAY_ORDER.portableAudio,
 };
 
 // Шапка отображается на каждой странице. Без кэша её запрос к БД выполнялся

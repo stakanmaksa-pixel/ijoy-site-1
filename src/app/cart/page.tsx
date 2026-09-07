@@ -42,6 +42,12 @@ export default function CartPage() {
   const lineById = new Map(lines.map((line) => [line.variantId, line]));
   const unavailable = items.filter((item) => !item.inStock || item.price == null);
   const total = useMemo(() => items.reduce((sum, item) => sum + (item.price ?? 0) * (lineById.get(item.variantId)?.quantity ?? 0), 0), [items, idsKey]);
+  const itemCount = lines.reduce((sum, line) => sum + line.quantity, 0);
+  const itemWord = itemCount % 10 === 1 && itemCount % 100 !== 11
+    ? "товар"
+    : itemCount % 10 >= 2 && itemCount % 10 <= 4 && (itemCount % 100 < 12 || itemCount % 100 > 14)
+      ? "товара"
+      : "товаров";
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -63,7 +69,7 @@ export default function CartPage() {
   return <div>
     <PageHero title="Корзина iJoy Gadget Store" highlight="Корзина" />
     <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-      {loading ? <p className="text-sm text-zinc-500">Загружаем корзину…</p> : items.length === 0 ? <div className="rounded-2xl bg-zinc-50 p-6 text-sm text-zinc-600">Корзина пока пуста. <Link href="/catalog" className="font-semibold text-accent hover:text-brand">Перейти в каталог</Link></div> : <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
+      {loading ? <p className="text-sm text-zinc-500">Загружаем корзину…</p> : items.length === 0 ? <section className="rounded-3xl border border-zinc-200 bg-zinc-50 px-6 py-12 text-center sm:px-10"><div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl shadow-sm">🛍️</div><h2 className="mt-5 font-display text-2xl font-semibold text-foreground">Корзина пока пуста</h2><p className="mx-auto mt-2 max-w-md text-sm leading-6 text-zinc-600">Добавьте понравившийся гаджет — здесь можно будет выбрать количество, способ получения и отправить одну общую заявку.</p><Link href="/catalog" className="mt-6 inline-flex rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">Вернуться в каталог</Link></section> : <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
         <section className="space-y-3">
           {items.map((item) => {
             const quantity = lineById.get(item.variantId)?.quantity ?? 1;
@@ -73,9 +79,9 @@ export default function CartPage() {
             </article>;
           })}
         </section>
-        <aside className="h-fit rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-7">
-          <div className="flex items-end justify-between gap-4 border-b border-zinc-100 pb-5"><span className="font-display text-xl font-semibold">Итого</span><span className="font-display text-2xl font-semibold text-brand">{formatPrice(total)}</span></div>
-          <p className="mt-4 text-sm leading-6 text-zinc-600">Оплату и точную стоимость доставки менеджер согласует с вами после заявки.</p>
+        <aside className="h-fit rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm lg:sticky lg:top-28 sm:p-7">
+          <div className="flex items-end justify-between gap-4 border-b border-zinc-100 pb-5"><div><span className="font-display text-xl font-semibold">Итого</span><p className="mt-1 text-sm text-zinc-500">{itemCount} {itemWord} в заявке</p></div><span className="font-display text-2xl font-semibold text-brand">{formatPrice(total)}</span></div>
+          <div className="mt-4 grid gap-2 rounded-2xl bg-zinc-50 p-3 text-xs leading-5 text-zinc-600"><p><span className="font-semibold text-foreground">Самовывоз:</span> подтвердим наличие и время с менеджером.</p><p><span className="font-semibold text-foreground">Доставка:</span> адрес и точную стоимость согласуем после заявки.</p></div>
           {unavailable.length === 0 ? <form onSubmit={submit} className="mt-6 space-y-5"><label className="absolute -left-[10000px]"><input tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} /></label><input required placeholder="Ваше имя" value={name} onChange={(event) => setName(event.target.value)} className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-base outline-none transition-colors placeholder:text-zinc-400 focus:border-accent" /><PhoneField countryCode={countryCode} onCountryCodeChange={setCountryCode} phone={phone} onPhoneChange={setPhone} className="text-foreground" /><fieldset><legend className="text-sm font-medium text-foreground">Как получить заказ</legend><div className="mt-2 grid gap-2"><label className={`cursor-pointer rounded-xl border px-4 py-3 text-sm transition-colors ${deliveryMethod === "UNSPECIFIED" ? "border-brand bg-brand/5 text-brand" : "border-zinc-200 text-zinc-700 hover:border-accent"}`}><input type="radio" name="deliveryMethod" checked={deliveryMethod === "UNSPECIFIED"} onChange={() => setDeliveryMethod("UNSPECIFIED")} className="sr-only" /><span className="font-medium">Обсудить с менеджером</span><span className="mt-0.5 block text-xs text-zinc-500">Выберем удобный вариант позже.</span></label><div className="grid grid-cols-2 gap-2"><label className={`cursor-pointer rounded-xl border px-3 py-3 text-sm transition-colors ${deliveryMethod === "PICKUP" ? "border-brand bg-brand/5 text-brand" : "border-zinc-200 text-zinc-700 hover:border-accent"}`}><input type="radio" name="deliveryMethod" checked={deliveryMethod === "PICKUP"} onChange={() => setDeliveryMethod("PICKUP")} className="sr-only" /><span className="font-medium">Самовывоз</span></label><label className={`cursor-pointer rounded-xl border px-3 py-3 text-sm transition-colors ${deliveryMethod === "DELIVERY" ? "border-brand bg-brand/5 text-brand" : "border-zinc-200 text-zinc-700 hover:border-accent"}`}><input type="radio" name="deliveryMethod" checked={deliveryMethod === "DELIVERY"} onChange={() => setDeliveryMethod("DELIVERY")} className="sr-only" /><span className="font-medium">Доставка</span></label></div></div></fieldset>{deliveryMethod === "DELIVERY" && <AddressAutocomplete value={deliveryAddress} onChange={setDeliveryAddress} className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-base outline-none focus:border-accent" />}<textarea value={comment} onChange={(event) => setComment(event.target.value)} placeholder="Комментарий (необязательно)" rows={2} className="w-full rounded-xl border border-zinc-300 px-4 py-3 text-base outline-none focus:border-accent" /><button disabled={status === "sending"} className="w-full rounded-full bg-brand px-5 py-4 font-display text-base font-medium text-white transition-colors hover:bg-brand-dark disabled:opacity-60">{status === "sending" ? "Отправляем…" : "Оформить заявку"}</button>{status === "error" && <p className="text-sm text-[#f95d51]">Не удалось отправить заявку. Попробуйте ещё раз.</p>}</form> : <p className="mt-5 rounded-xl bg-amber-50 p-3 text-sm text-amber-800">Уберите недоступные позиции, чтобы оформить заказ.</p>}
         </aside>
       </div>}
