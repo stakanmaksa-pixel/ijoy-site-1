@@ -5,13 +5,21 @@ export type CompatibleAccessoryBundle = {
   slugs: string[];
 };
 
-const IPAD_PRO_SLUGS = new Set([
+const IPAD_PENCIL_PRO_SLUGS = new Set([
   "ipad-pro-11-m5",
   "ipad-pro-13-m5",
   "ipad-air-11-m4",
   "ipad-air-13-m4",
   "ipad-mini-a17-pro",
 ]);
+
+const IPAD_KEYBOARD_BY_SLUG: Record<string, string> = {
+  "ipad-pro-11-m5": "magic-keyboard-ipad-pro-11-m5",
+  "ipad-pro-13-m5": "magic-keyboard-ipad-pro-13-m5",
+  "ipad-air-11-m4": "magic-keyboard-ipad-air-11-m4",
+  "ipad-air-13-m4": "magic-keyboard-ipad-air-13-m4",
+  "ipad-a16": "magic-keyboard-folio-ipad-a16",
+};
 
 const PS5_SLUGS = new Set([
   "playstation-5-pro",
@@ -20,20 +28,23 @@ const PS5_SLUGS = new Set([
 ]);
 
 export function getCompatibleAccessoryBundle(productSlug: string): CompatibleAccessoryBundle | null {
-  if (IPAD_PRO_SLUGS.has(productSlug)) {
+  if (IPAD_PENCIL_PRO_SLUGS.has(productSlug)) {
+    const keyboardSlug = IPAD_KEYBOARD_BY_SLUG[productSlug];
     return {
-      eyebrow: "Совместимый аксессуар",
-      title: "Купите в комплект Apple Pencil Pro",
-      description: "Apple Pencil Pro полностью совместим с этой моделью iPad: поддерживаются наведение, чувствительность к нажатию и наклону, сжатие, вращение пера и магнитная зарядка. Стилус продаётся отдельно.",
-      slugs: ["apple-pencil-pro"],
+      eyebrow: "Совместимые аксессуары",
+      title: keyboardSlug ? "Дополните iPad Pencil Pro и Magic Keyboard" : "Купите в комплект Apple Pencil Pro",
+      description: keyboardSlug
+        ? "Для этой модели iPad подобраны Apple Pencil Pro и Magic Keyboard нужной диагонали. Стилус и клавиатура продаются отдельно; версии для другой диагонали не подойдут."
+        : "Apple Pencil Pro полностью совместим с iPad mini: поддерживаются наведение, чувствительность к нажатию и наклону, сжатие, вращение пера и магнитная зарядка. Фирменной Magic Keyboard со Smart Connector для iPad mini нет.",
+      slugs: keyboardSlug ? ["apple-pencil-pro", keyboardSlug] : ["apple-pencil-pro"],
     };
   }
   if (productSlug === "ipad-a16") {
     return {
-      eyebrow: "Совместимый аксессуар",
-      title: "Купите в комплект Apple Pencil (USB‑C)",
-      description: "Apple Pencil (USB‑C) совместим с iPad A16, подходит для заметок, разметки и рисования, крепится магнитом и заряжается через USB‑C. Apple Pencil Pro с iPad A16 не совместим. Стилус продаётся отдельно.",
-      slugs: ["apple-pencil-usb-c"],
+      eyebrow: "Совместимые аксессуары",
+      title: "Дополните iPad Pencil и Magic Keyboard Folio",
+      description: "Apple Pencil (USB‑C) и Magic Keyboard Folio подходят к iPad A16. Pencil Pro, а также Magic Keyboard для iPad Air и iPad Pro с этой моделью не совместимы. Аксессуары продаются отдельно.",
+      slugs: ["apple-pencil-usb-c", IPAD_KEYBOARD_BY_SLUG[productSlug]],
     };
   }
 

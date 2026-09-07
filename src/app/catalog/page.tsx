@@ -65,6 +65,7 @@ export default async function CatalogPage({
   ]);
   const isWatchCategory = categorySlug === "chasy";
   const isGamingLifestyle = isGamingLifestyleCategory(categorySlug);
+  const showAllSamsungModels = categorySlug === "telefony" && brand.includes("Samsung");
 
   return (
     <div>
@@ -128,7 +129,7 @@ export default async function CatalogPage({
               {modelOptions.products.length > 1 && (
                 <div>
                   <div className="mb-3 text-sm font-medium text-foreground">Модель</div>
-                  <div className="max-h-52 space-y-2 overflow-y-auto pr-1">{modelOptions.products.map((product) => <label key={product.slug} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="product" value={product.slug} defaultChecked={productSlug.includes(product.slug)} className="h-4 w-4 accent-accent" />{product.name}</label>)}</div>
+                  <div className={showAllSamsungModels ? "space-y-2" : "scrollbar-none max-h-52 space-y-2 overflow-y-auto pr-1"}>{modelOptions.products.map((product) => <label key={product.slug} className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" name="product" value={product.slug} defaultChecked={productSlug.includes(product.slug)} className="h-4 w-4 accent-accent" />{product.name}</label>)}</div>
                 </div>
               )}
 

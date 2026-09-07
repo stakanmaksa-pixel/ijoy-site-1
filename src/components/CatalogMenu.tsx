@@ -71,7 +71,7 @@ export function CatalogMenu({ tree }: { tree: CatalogNavNode[] }) {
                 return (
                   <div
                     key={depth}
-                    className="flex w-60 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-zinc-100 p-2 last:border-r-0"
+                    className="scrollbar-none flex w-60 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-zinc-100 p-2 last:border-r-0"
                   >
                     {viewAllHref && (
                       <Link

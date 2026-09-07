@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
 import { pickCoverImage } from "@/lib/pickCoverImage";
+import { getSamsungPhoneMenuGroup, SAMSUNG_PHONE_MENU_GROUPS } from "@/lib/samsungPhones";
 import { unstable_cache } from "next/cache";
 
 // ---------------------------------------------------------------------
@@ -48,17 +49,26 @@ export const MODEL_DISPLAY_ORDER = {
     "Samsung Galaxy S26 Ultra",
     "Samsung Galaxy S26+",
     "Samsung Galaxy S26",
+    "Samsung Galaxy S26 FE",
     "Samsung Galaxy S25 Ultra",
+    "Samsung Galaxy S25 Edge",
     "Samsung Galaxy S25 FE 5G",
     "Samsung Galaxy S25",
-    "Samsung Galaxy S23+",
+    "Samsung Galaxy S25+",
+    "Samsung Galaxy Z Fold8 Ultra",
+    "Samsung Galaxy Z Fold8",
+    "Samsung Galaxy Z Flip8",
+    "Samsung Galaxy Z Fold7",
+    "Samsung Galaxy Z Flip7",
+    "Samsung Galaxy Z Flip7 FE",
     "Samsung Galaxy A57 5G",
     "Samsung Galaxy A56 5G",
     "Samsung Galaxy A37 5G",
     "Samsung Galaxy A27 5G",
+    "Samsung Galaxy A36",
+    "Samsung Galaxy A26",
+    "Samsung Galaxy A07",
     "Samsung Galaxy A17 4G",
-    "Samsung Galaxy A16",
-    "Samsung Galaxy M56 5G",
   ],
   sony: ["Sony Xperia 1 VIII", "Sony Xperia 10 VII"],
   ipad: [
@@ -85,6 +95,13 @@ export const MODEL_DISPLAY_ORDER = {
     "Apple Pencil Pro",
     "Apple Pencil (USB‑C)",
     "Apple Pencil (2‑го поколения)",
+  ],
+  keyboard: [
+    "Magic Keyboard для iPad Pro 11″ M5",
+    "Magic Keyboard для iPad Pro 13″ M5",
+    "Magic Keyboard для iPad Air 11″ M4",
+    "Magic Keyboard для iPad Air 13″ M4",
+    "Magic Keyboard Folio для iPad A16",
   ],
   macbook: [
     "MacBook Neo",
@@ -204,7 +221,9 @@ function resolveOrderList(
     return undefined;
   }
   if (categorySlug === "planshety") {
-    return /apple\s+pencil/i.test(name) ? MODEL_DISPLAY_ORDER.pencil : MODEL_DISPLAY_ORDER.ipad;
+    if (/apple\s+pencil/i.test(name)) return MODEL_DISPLAY_ORDER.pencil;
+    if (/magic\s+keyboard|keyboard\s+folio/i.test(name)) return MODEL_DISPLAY_ORDER.keyboard;
+    return MODEL_DISPLAY_ORDER.ipad;
   }
   if (categorySlug === "noutbuki") return MODEL_DISPLAY_ORDER.macbook;
   if (categorySlug === "chasy") return MODEL_DISPLAY_ORDER.watch;
@@ -221,6 +240,8 @@ function resolveOrderList(
   return undefined;
 }
 
+type CatalogNavProduct = { name: string; slug: string; brand: string | null };
+
 type LineMatcher = {
   label: string;
   test: (name: string, brand: string | null) => boolean;
@@ -229,7 +250,21 @@ type LineMatcher = {
   // сразу в выдачу ноутбуков, а не открывать ещё один уровень меню.
   alwaysUseGroupHref?: boolean;
   order?: readonly string[];
+  buildChildren?: (items: CatalogNavProduct[]) => CatalogNavNode[];
 };
+
+function samsungGroupHref(items: CatalogNavProduct[]) {
+  const params = new URLSearchParams({ category: "telefony", brand: "Samsung" });
+  for (const item of items) params.append("product", item.slug);
+  return `/catalog?${params.toString()}`;
+}
+
+function buildSamsungMenuGroups(items: CatalogNavProduct[]): CatalogNavNode[] {
+  return SAMSUNG_PHONE_MENU_GROUPS.flatMap((group) => {
+    const products = items.filter((item) => getSamsungPhoneMenuGroup(item.name, item.slug)?.label === group.label);
+    return products.length ? [{ label: group.label, href: samsungGroupHref(products) }] : [];
+  });
+}
 
 const LINE_MATCHERS: Record<string, LineMatcher[]> = {
   telefony: [
@@ -244,6 +279,7 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
       test: (_n, brand) => brand === "Samsung",
       groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("Samsung")}`,
       order: MODEL_DISPLAY_ORDER.samsung,
+      buildChildren: buildSamsungMenuGroups,
     },
     {
       label: "Sony Xperia",
@@ -298,8 +334,9 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
     { label: "Apple MacBook Pro — другие", test: (name) => /macbook\s+pro/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Pro" },
   ],
   planshety: [
-    { label: "Apple iPad", test: (name, brand) => brand === "Apple" && /ipad/i.test(name), groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Apple")}`, order: MODEL_DISPLAY_ORDER.ipad },
+    { label: "Apple iPad", test: (name, brand) => brand === "Apple" && /ipad/i.test(name) && !/apple\s+pencil|magic\s+keyboard|keyboard\s+folio/i.test(name), groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Apple")}`, order: MODEL_DISPLAY_ORDER.ipad },
     { label: "Стилусы", test: (name, brand) => brand === "Apple" && /apple\s+pencil/i.test(name), groupHref: "/catalog?category=planshety&q=Apple%20Pencil", order: MODEL_DISPLAY_ORDER.pencil },
+    { label: "Клавиатуры для iPad", test: (name, brand) => brand === "Apple" && /magic\s+keyboard|keyboard\s+folio/i.test(name), groupHref: "/catalog?category=planshety&q=Magic%20Keyboard", order: MODEL_DISPLAY_ORDER.keyboard },
     { label: "Samsung Galaxy Tab", test: (_name, brand) => brand === "Samsung", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Samsung")}` },
     { label: "Xiaomi Pad", test: (_name, brand) => brand === "Xiaomi", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Xiaomi")}` },
     { label: "HUAWEI MatePad", test: (_name, brand) => brand === "HUAWEI", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("HUAWEI")}` },
@@ -391,18 +428,26 @@ export const getCatalogNavTree = unstable_cache(async (): Promise<CatalogNavNode
       const matchedSlugs = new Set<string>();
 
       for (const matcher of matchers) {
-        const items = category.products
+        const matchedProducts = category.products
           .filter((p) => matcher.test(p.name, p.brand))
           // Новые модели сверху — для линеек без заданного порядка
           // сортировка ничего не меняет, они остаются в прежнем порядке
           // (по имени).
           .slice()
-          .sort((a, b) => rankInList(matcher.order, a.name) - rankInList(matcher.order, b.name))
-          .map((p) => {
-            matchedSlugs.add(p.slug);
-            return { label: p.name, href: `/product/${p.slug}` };
-          });
+          .sort((a, b) => rankInList(matcher.order, a.name) - rankInList(matcher.order, b.name));
+        for (const product of matchedProducts) matchedSlugs.add(product.slug);
+        const items = matchedProducts.map((product) => ({
+          label: product.name,
+          href: `/product/${product.slug}`,
+        }));
         if (items.length > 0) {
+          if (matcher.buildChildren) {
+            const children = matcher.buildChildren(matchedProducts);
+            if (children.length > 0) {
+              groups.push({ label: matcher.label, href: matcher.groupHref, children });
+            }
+            continue;
+          }
           // Одна модель в серии не нуждается в лишней подкатегории:
           // MacBook Air M5 13" сразу открывает товар, как iPhone 17 Pro Max.
           groups.push(items.length === 1 && !matcher.alwaysUseGroupHref
