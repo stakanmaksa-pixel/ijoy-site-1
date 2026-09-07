@@ -126,7 +126,9 @@ export function VariantGrid({
   const isSmartGlasses = isSmartGlassesSlug(slug);
   const gamingLifestyleCategory = gamingLifestyleCategoryForProduct(slug);
   const isGamingLifestyle = gamingLifestyleCategory != null;
-  const hasVariantComparison = !isIpad && !isHeadphoneProduct(slug);
+  // У iPad сравнение особенно полезно: оно показывает различия конкретных
+  // конфигураций памяти, связи и стекла, а не просто одну и ту же модель.
+  const hasVariantComparison = !isHeadphoneProduct(slug);
   const isUltra = slug.includes("ultra");
   const bandChoices = isWatch
     ? [...new Set(variants.map((variant) => bandChoice(variant.region)).filter(isPresent))]
@@ -211,8 +213,17 @@ export function VariantGrid({
             const limitReached = !selected && compareIds.length >= 3;
             return (
               <div key={variant.id} className="relative">
-                <VariantCard slug={slug} variant={variant} imageUrl={imageByVariant[variant.id] ?? null} />
-                {hasVariantComparison && <button
+                <VariantCard
+                  slug={slug}
+                  variant={variant}
+                  imageUrl={imageByVariant[variant.id] ?? null}
+                  comparison={isIpad && hasVariantComparison ? {
+                    selected,
+                    disabled: limitReached,
+                    onToggle: () => toggleCompare(variant.id),
+                  } : undefined}
+                />
+                {hasVariantComparison && !isIpad && <button
                   type="button"
                   onClick={() => toggleCompare(variant.id)}
                   disabled={limitReached}
