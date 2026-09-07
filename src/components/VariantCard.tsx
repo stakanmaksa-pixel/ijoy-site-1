@@ -92,7 +92,7 @@ export function VariantCard({
         ) : (
           <span className="text-sm">Фото</span>
         )}
-        {!isIpad && !isHeadphones && <FavoriteButton variantId={variant.id} className="absolute right-3 top-3" />}
+        {!isHeadphones && <FavoriteButton variantId={variant.id} overlay={isIpad} className="absolute right-3 top-3" />}
         {!isIpad && !isHeadphones && variant.price != null && variant.inStock && <CartButton variantId={variant.id} compact className="absolute left-3 top-3" />}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
@@ -105,13 +105,8 @@ export function VariantCard({
             <span className="text-xs text-zinc-400">Под заказ</span>
           )}
         </div>
-        {isIpad && (
-          <div className="mt-3 flex items-center gap-2">
-            {variant.price != null && variant.inStock && (
-              <CartButton variantId={variant.id} compact className="min-w-0 flex-1" />
-            )}
-            <FavoriteButton variantId={variant.id} className={variant.price != null && variant.inStock ? "shrink-0" : "ml-auto shrink-0"} />
-          </div>
+        {isIpad && variant.price != null && variant.inStock && (
+          <CartButton variantId={variant.id} compact className="mt-3 w-full" />
         )}
         {isHeadphones && <HeadphoneCardActions slug={slug} variantId={variant.id} canBuy={variant.price != null && variant.inStock} />}
       </div>
