@@ -6,11 +6,13 @@
 // Старый импорт Air использовал широкие баннеры с маленьким планшетом.
 // Предметные фото поставляются вместе с сайтом, поэтому исправление не
 // требует повторной синхронизации БД. Пользовательские фото не заменяем.
+import { resolveHeadphonePhoto } from "./headphonePhotos";
+
 function resolveProductImage(url: string): string {
   const legacyAir = url.match(/^\/uploads\/products\/(ipad-air-(?:11|13)-m4)\/official-v1-(blue|purple|space-gray|starlight)\.jpg$/);
   return legacyAir
     ? `/catalog/product-photos/${legacyAir[1]}/${legacyAir[2]}.jpg`
-    : url;
+    : resolveHeadphonePhoto(url);
 }
 
 // Фото "по умолчанию" для карточки без выбора конкретного цвета: фото цвета

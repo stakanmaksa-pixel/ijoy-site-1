@@ -3,6 +3,8 @@ import { formatPrice } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CartButton } from "@/components/CartButton";
 import { colorLabel } from "@/lib/colorSwatch";
+import { HeadphoneCardActions } from "@/components/HeadphoneCardActions";
+import { headphonePhotoPadding, isHeadphoneProduct, resolveHeadphonePhoto } from "@/lib/headphonePhotos";
 
 type Variant = {
   id: string;
@@ -41,7 +43,8 @@ export function VariantCard({
   const isWatch = /watch/i.test(slug);
   const isSeries11 = slug === "apple-watch-series-11";
   const isSe3 = slug === "apple-watch-se-3";
-  const isHeadphones = /(?:airpods|earpods|galaxy-buds|headphones)/i.test(slug);
+  const isHeadphones = isHeadphoneProduct(slug);
+  const photo = imageUrl ? resolveHeadphonePhoto(imageUrl) : imageUrl;
   const isIpad = /^ipad-/i.test(slug);
   const isAppleTvPhoto = imageUrl?.startsWith("/catalog/product-photos/apple-tv-4k/");
 
@@ -50,7 +53,7 @@ export function VariantCard({
     : isWatch
       ? "h-full w-full scale-[1.2] object-contain"
       : isHeadphones
-        ? "h-full w-full object-contain"
+        ? "absolute inset-0 h-full w-full object-contain"
         : isIpad || isAppleTvPhoto
           ? "absolute inset-0 h-full w-full object-contain p-3"
         : "h-full w-full object-contain p-5 sm:p-6";
@@ -58,25 +61,26 @@ export function VariantCard({
   return (
     <Link
       href={`/product/${slug}?variant=${variant.id}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
+      className="@container group relative flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isIpad || isAppleTvPhoto ? "bg-white" : "bg-zinc-50"}`}>
-        {imageUrl ? (
+      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isAppleTvPhoto ? "bg-white" : "bg-zinc-50"}`}>
+        {photo ? (
           <img
-            src={imageUrl}
+            src={photo}
             alt={variantLabel(variant)}
             loading="lazy"
             decoding="async"
             className={imageClassName}
+            style={isHeadphones ? { padding: headphonePhotoPadding(photo) } : undefined}
           />
         ) : (
           <span className="text-sm">Фото</span>
         )}
-        {!isIpad && <FavoriteButton variantId={variant.id} className="absolute right-3 top-3" />}
-        {!isIpad && variant.price != null && variant.inStock && <CartButton variantId={variant.id} compact className="absolute left-3 top-3" />}
+        {!isIpad && !isHeadphones && <FavoriteButton variantId={variant.id} className="absolute right-3 top-3" />}
+        {!isIpad && !isHeadphones && variant.price != null && variant.inStock && <CartButton variantId={variant.id} compact className="absolute left-3 top-3" />}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
-        <div className="text-sm text-zinc-500">{variantLabel(variant)}</div>
+        <div className={`text-sm text-zinc-500 ${isHeadphones ? "min-h-12" : ""}`}>{variantLabel(variant)}</div>
         <div className={`mt-auto flex items-center justify-between pt-2 ${isIpad ? "flex-wrap gap-2" : ""}`}>
           <span className="text-base font-semibold text-foreground">
             {variant.price != null ? formatPrice(variant.price) : "Уточняйте у менеджера"}
@@ -89,6 +93,7 @@ export function VariantCard({
         {isIpad && variant.price != null && variant.inStock && (
           <CartButton variantId={variant.id} compact className="mt-3 w-full" />
         )}
+        {isHeadphones && <HeadphoneCardActions slug={slug} variantId={variant.id} canBuy={variant.price != null && variant.inStock} />}
       </div>
     </Link>
   );

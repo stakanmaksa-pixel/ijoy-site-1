@@ -11,9 +11,11 @@ import { toggleFavorite, useIsFavorite } from "@/lib/favorites";
 export function FavoriteButton({
   variantId,
   className = "",
+  compact = false,
 }: {
   variantId: string;
   className?: string;
+  compact?: boolean;
 }) {
   const active = useIsFavorite(variantId);
 
@@ -28,7 +30,7 @@ export function FavoriteButton({
       aria-pressed={active}
       aria-label={active ? "Убрать из избранного" : "Добавить в избранное"}
       title={active ? "Убрать из избранного" : "Добавить в избранное"}
-      className={`flex h-11 w-11 items-center justify-center rounded-full bg-white/95 shadow-sm ring-1 ring-black/5 transition-all duration-150 hover:scale-105 hover:bg-white active:scale-90 ${className}`}
+      className={`flex shrink-0 ${compact ? "h-9 w-9" : "h-11 w-11"} items-center justify-center rounded-full bg-white/95 shadow-sm ring-1 ring-black/5 transition-all duration-150 hover:scale-105 hover:bg-white active:scale-90 ${className}`}
     >
       <svg
         viewBox="0 0 24 24"

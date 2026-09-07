@@ -3,6 +3,8 @@ import { formatPrice } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CompareButton } from "@/components/CompareButton";
 import { CartButton } from "@/components/CartButton";
+import { HeadphoneCardActions } from "@/components/HeadphoneCardActions";
+import { headphonePhotoPadding, isHeadphoneProduct, resolveHeadphonePhoto } from "@/lib/headphonePhotos";
 
 const BRAND_CARD_THEMES: Record<string, string> = {
   Apple: "from-zinc-950 via-zinc-800 to-zinc-600",
@@ -39,14 +41,15 @@ export function ProductCard({
   coverImage?: string | null;
 }) {
   const fallbackTheme = BRAND_CARD_THEMES[brand ?? ""] ?? "from-brand-dark via-brand to-accent";
-  const isHeadphones = /(?:airpods|earpods|galaxy-buds|headphones)/i.test(slug);
+  const isHeadphones = isHeadphoneProduct(slug);
+  const photo = coverImage ? resolveHeadphonePhoto(coverImage) : coverImage;
   const isIpad = /^ipad-/i.test(slug);
   const isAppleTvPhoto = coverImage?.startsWith("/catalog/product-photos/apple-tv-4k/");
   const isPencil = /^apple-pencil-/i.test(slug);
   const imageClassName = isPencil
     ? "h-full w-full rotate-[34deg] scale-[1.1] object-contain"
     : isHeadphones
-    ? "h-full w-full object-contain"
+    ? "absolute inset-0 h-full w-full object-contain"
     : isIpad || isAppleTvPhoto
       ? "absolute inset-0 h-full w-full object-contain p-3"
     : "h-full w-full object-contain p-5 sm:p-6";
@@ -54,13 +57,13 @@ export function ProductCard({
   return (
     <Link
       href={`/product/${slug}`}
-      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
+      className="@container group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isIpad || isAppleTvPhoto ? "bg-white" : "bg-zinc-50"}`}>
-        {coverImage ? (
+      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isAppleTvPhoto ? "bg-white" : "bg-zinc-50"}`}>
+        {photo ? (
           // У официальных фото наушников уже есть большие внутренние белые
           // поля. Дополнительный padding делал сам товар слишком маленьким.
-          <img src={coverImage} alt={name} loading="lazy" decoding="async" className={imageClassName} />
+          <img src={photo} alt={name} loading="lazy" decoding="async" className={imageClassName} style={isHeadphones ? { padding: headphonePhotoPadding(photo) } : undefined} />
         ) : (
           <div className={`absolute inset-0 flex flex-col justify-between bg-gradient-to-br p-5 text-white ${fallbackTheme}`}>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/30 bg-white/15 font-display text-xl font-semibold shadow-lg backdrop-blur-sm">
@@ -79,11 +82,11 @@ export function ProductCard({
             </div>
           </div>
         )}
-        <div className="absolute right-3 top-3 flex gap-2">
+        {!isHeadphones && <div className="absolute right-3 top-3 flex gap-2">
           <CompareButton slug={slug} />
           {defaultVariantId && <FavoriteButton variantId={defaultVariantId} />}
-        </div>
-        {defaultVariantId && minPrice != null && hasStock && <CartButton variantId={defaultVariantId} compact className="absolute left-3 top-3" />}
+        </div>}
+        {!isHeadphones && defaultVariantId && minPrice != null && hasStock && <CartButton variantId={defaultVariantId} compact className="absolute left-3 top-3" />}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
         {brand ? (
@@ -91,8 +94,8 @@ export function ProductCard({
             {brand}
           </div>
         ) : null}
-        <div className="font-medium text-foreground">{name}</div>
-        <div className="mt-auto pt-2 flex items-center justify-between">
+        <div className={`font-medium text-foreground ${isHeadphones ? "min-h-18 leading-6 sm:min-h-12" : ""}`}>{name}</div>
+        <div className={`mt-auto pt-2 flex items-center justify-between ${isHeadphones ? "min-h-14 flex-wrap gap-1 sm:min-h-8" : ""}`}>
           <span className="text-base font-semibold text-foreground">
             {minPrice != null ? `от ${formatPrice(minPrice)}` : "Уточняйте цену"}
           </span>
@@ -100,6 +103,7 @@ export function ProductCard({
             <span className="text-xs text-zinc-400">Под заказ</span>
           )}
         </div>
+        {isHeadphones && <HeadphoneCardActions slug={slug} variantId={defaultVariantId} canBuy={minPrice != null && hasStock} />}
       </div>
     </Link>
   );

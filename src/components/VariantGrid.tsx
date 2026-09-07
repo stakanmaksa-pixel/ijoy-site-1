@@ -3,6 +3,7 @@
 import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { VariantCard } from "@/components/VariantCard";
 import { colorLabel } from "@/lib/colorSwatch";
+import { isHeadphoneProduct } from "@/lib/headphonePhotos";
 
 export type ProductVariantForGrid = {
   id: string;
@@ -120,6 +121,7 @@ export function VariantGrid({
   const regions = useMemo(() => valuesOf(variants, "region"), [variants]);
   const isWatch = slug.includes("watch") || variants.some((variant) => /(?:loop|band)/i.test(variant.region ?? ""));
   const isIpad = /^(?:ipad-pro-(?:11|13)-m5|ipad-air-(?:11|13)-m4|ipad-a16|ipad-mini-a17-pro)$/.test(slug);
+  const hasVariantComparison = !isIpad && !isHeadphoneProduct(slug);
   const isUltra = slug.includes("ultra");
   const bandChoices = isWatch
     ? [...new Set(variants.map((variant) => bandChoice(variant.region)).filter(isPresent))]
@@ -205,7 +207,7 @@ export function VariantGrid({
             return (
               <div key={variant.id} className="relative">
                 <VariantCard slug={slug} variant={variant} imageUrl={imageByVariant[variant.id] ?? null} />
-                {!isIpad && <button
+                {hasVariantComparison && <button
                   type="button"
                   onClick={() => toggleCompare(variant.id)}
                   disabled={limitReached}
@@ -221,7 +223,7 @@ export function VariantGrid({
         <p className="mt-5 text-sm text-zinc-500">Нет вариантов с такими параметрами.</p>
       )}
 
-      {!isIpad && compared.length > 0 && (
+      {hasVariantComparison && compared.length > 0 && (
         <section className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
           <div className="flex items-center justify-between gap-3 border-b border-zinc-100 px-4 py-4 sm:px-5">
             <div>

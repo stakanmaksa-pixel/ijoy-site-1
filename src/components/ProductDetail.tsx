@@ -6,6 +6,7 @@ import { CompareButton } from "@/components/CompareButton";
 import { ProductOrder } from "@/components/ProductOrder";
 import { pickVariantImages } from "@/lib/pickCoverImage";
 import { groupProductSpecs } from "@/lib/productSpecs";
+import { headphonePhotoPadding, isHeadphoneProduct } from "@/lib/headphonePhotos";
 
 type Variant = {
   id: string;
@@ -71,9 +72,12 @@ export function ProductDetail({
   const [selectedImage, setSelectedImage] = useState<string | undefined>();
   const activeImage = galleryImages.includes(selectedImage ?? "") ? selectedImage : galleryImages[0];
   const isIpad = /^ipad-/i.test(productSlug);
+  const isHeadphones = isHeadphoneProduct(productSlug);
   const isPencil = /^apple-pencil-/i.test(productSlug);
   const productImageClass = isPencil
     ? "rotate-[34deg] scale-[1.0]"
+    : isHeadphones
+      ? "absolute inset-0"
     : isIpad
       ? "absolute inset-0 p-4 sm:p-6"
       : "";
@@ -100,6 +104,7 @@ export function ProductDetail({
                 src={activeImage}
                 alt={`${productName}${activeColor ? `, ${activeColor}` : ""}`}
                 className={`h-full w-full rounded-2xl object-contain sm:rounded-3xl ${productImageClass}`}
+                style={isHeadphones ? { padding: headphonePhotoPadding(activeImage) } : undefined}
               />
             ) : (
               <span className="text-sm">Фото скоро появится</span>
@@ -123,7 +128,7 @@ export function ProductDetail({
                       : "border-zinc-200 hover:border-zinc-300"
                   }`}
                 >
-                  <img src={url} alt="" className={`h-full w-full ${isIpad ? "object-contain p-1" : "object-cover"}`} />
+                  <img src={url} alt="" className={`h-full w-full ${isIpad || isHeadphones ? "object-contain p-1" : "object-cover"}`} />
                 </button>
               ))}
             </div>
