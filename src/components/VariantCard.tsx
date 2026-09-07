@@ -5,6 +5,7 @@ import { CartButton } from "@/components/CartButton";
 import { colorLabel } from "@/lib/colorSwatch";
 import { HeadphoneCardActions } from "@/components/HeadphoneCardActions";
 import { headphonePhotoPadding, isHeadphoneProduct, resolveHeadphonePhoto } from "@/lib/headphonePhotos";
+import { isSmartGlassesSlug, smartGlassesVariantLabel } from "@/lib/smartGlasses";
 
 type Variant = {
   id: string;
@@ -16,8 +17,10 @@ type Variant = {
   inStock: boolean;
 };
 
-function variantLabel(v: Variant) {
-  return [v.memory, colorLabel(v.color), v.region].filter(Boolean).join(" · ") || "Стандарт";
+function variantLabel(v: Variant, isSmartGlasses = false) {
+  return isSmartGlasses
+    ? smartGlassesVariantLabel(v)
+    : [v.memory, colorLabel(v.color), v.region].filter(Boolean).join(" · ") || "Стандарт";
 }
 
 // Карточка одной конкретной модификации товара (память + цвет + регион) —
@@ -46,14 +49,23 @@ export function VariantCard({
   const isHeadphones = isHeadphoneProduct(slug);
   const photo = imageUrl ? resolveHeadphonePhoto(imageUrl) : imageUrl;
   const isIpad = /^ipad-/i.test(slug);
+  const isSmartGlasses = isSmartGlassesSlug(slug);
   const isAppleTvPhoto = imageUrl?.startsWith("/catalog/product-photos/apple-tv-4k/");
+  const isMetaPhotoLifestyle = /\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(imageUrl ?? "");
+  const isDjiMobilePhoto = imageUrl?.endsWith("/meta-photo/dji-osmo-mobile-7p.png");
 
-  const imageClassName = isSeries11 || isSe3
+  const imageClassName = isMetaPhotoLifestyle
+    ? "absolute inset-0 h-full w-full object-cover"
+    : isDjiMobilePhoto
+      ? "h-full w-full scale-[3.1] object-contain"
+      : isSeries11 || isSe3
     ? "h-full w-full scale-[1.08] object-contain"
     : isWatch
       ? "h-full w-full scale-[1.2] object-contain"
       : isHeadphones
         ? "absolute inset-0 h-full w-full object-contain"
+        : isSmartGlasses
+          ? "h-full w-full object-contain p-4 sm:p-5"
         : isIpad || isAppleTvPhoto
           ? "absolute inset-0 h-full w-full object-contain p-3"
         : "h-full w-full object-contain p-5 sm:p-6";
@@ -63,11 +75,11 @@ export function VariantCard({
       href={`/product/${slug}?variant=${variant.id}`}
       className="@container group relative flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isAppleTvPhoto ? "bg-white" : "bg-zinc-50"}`}>
+      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isSmartGlasses || isAppleTvPhoto ? "bg-white" : isMetaPhotoLifestyle ? "bg-black" : "bg-zinc-50"}`}>
         {photo ? (
           <img
             src={photo}
-            alt={variantLabel(variant)}
+            alt={variantLabel(variant, isSmartGlasses)}
             loading="lazy"
             decoding="async"
             className={imageClassName}
@@ -80,7 +92,7 @@ export function VariantCard({
         {!isIpad && !isHeadphones && variant.price != null && variant.inStock && <CartButton variantId={variant.id} compact className="absolute left-3 top-3" />}
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
-        <div className={`text-sm text-zinc-500 ${isHeadphones ? "min-h-12" : ""}`}>{variantLabel(variant)}</div>
+        <div className={`text-sm text-zinc-500 ${isHeadphones ? "min-h-12" : ""}`}>{variantLabel(variant, isSmartGlasses)}</div>
         <div className={`mt-auto flex items-center justify-between pt-2 ${isIpad ? "flex-wrap gap-2" : ""}`}>
           <span className="text-base font-semibold text-foreground">
             {variant.price != null ? formatPrice(variant.price) : "Уточняйте у менеджера"}

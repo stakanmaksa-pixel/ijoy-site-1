@@ -7,6 +7,7 @@ import { ProductOrder } from "@/components/ProductOrder";
 import { pickVariantImages } from "@/lib/pickCoverImage";
 import { groupProductSpecs } from "@/lib/productSpecs";
 import { headphonePhotoPadding, isHeadphoneProduct } from "@/lib/headphonePhotos";
+import { isSmartGlassesSlug } from "@/lib/smartGlasses";
 
 type Variant = {
   id: string;
@@ -74,11 +75,20 @@ export function ProductDetail({
   const isIpad = /^ipad-/i.test(productSlug);
   const isHeadphones = isHeadphoneProduct(productSlug);
   const isPencil = /^apple-pencil-/i.test(productSlug);
-  const productImageClass = isPencil
+  const isSmartGlasses = isSmartGlassesSlug(productSlug);
+  const isMetaPhotoLifestyle = /\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(activeImage ?? "");
+  const isDjiMobilePhoto = activeImage?.endsWith("/meta-photo/dji-osmo-mobile-7p.png");
+  const productImageClass = isMetaPhotoLifestyle
+    ? "absolute inset-0 object-cover"
+    : isDjiMobilePhoto
+      ? "scale-[3.1]"
+      : isPencil
     ? "rotate-[34deg] scale-[1.0]"
     : isHeadphones
       ? "absolute inset-0"
-    : isIpad
+      : isSmartGlasses
+        ? "p-6 sm:p-10"
+      : isIpad
       ? "absolute inset-0 p-4 sm:p-6"
       : "";
 
@@ -98,7 +108,7 @@ export function ProductDetail({
         <div>
           {/* Минималистично: одно крупное фото + ряд миниатюр под ним, без
               лишних рамок и подписей — как просили, "чисто, но понятно". */}
-          <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-white text-zinc-300 sm:rounded-3xl">
+          <div className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl text-zinc-300 sm:rounded-3xl ${isMetaPhotoLifestyle ? "bg-black" : "bg-white"}`}>
             {activeImage ? (
               <img
                 src={activeImage}
@@ -128,7 +138,7 @@ export function ProductDetail({
                       : "border-zinc-200 hover:border-zinc-300"
                   }`}
                 >
-                  <img src={url} alt="" className={`h-full w-full ${isIpad || isHeadphones ? "object-contain p-1" : "object-cover"}`} />
+                  <img src={url} alt="" className={`h-full w-full ${/\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(url) ? "object-cover" : url.endsWith("/meta-photo/dji-osmo-mobile-7p.png") ? "scale-[2.5] object-contain" : isIpad || isHeadphones || isSmartGlasses ? "object-contain p-1" : "object-cover"}`} />
                 </button>
               ))}
             </div>

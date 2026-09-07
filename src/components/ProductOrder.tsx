@@ -8,6 +8,7 @@ import { colorLabel, colorToHex } from "@/lib/colorSwatch";
 import { PhoneField, phoneWithCountryCode } from "@/components/PhoneField";
 import { CartButton } from "@/components/CartButton";
 import { AddressAutocomplete } from "@/components/AddressAutocomplete";
+import { isSmartGlassesProductName, smartGlassesVariantLabel } from "@/lib/smartGlasses";
 
 type Variant = {
   id: string;
@@ -24,8 +25,10 @@ type Axis = "memory" | "color" | "region";
 
 const PRICE_ON_REQUEST = "Уточняйте у менеджера";
 
-function variantLabel(v: Variant) {
-  return [v.memory, colorLabel(v.color), v.region].filter(Boolean).join(" · ") || "Стандарт";
+function variantLabel(v: Variant, isSmartGlasses = false) {
+  return isSmartGlasses
+    ? smartGlassesVariantLabel(v)
+    : [v.memory, colorLabel(v.color), v.region].filter(Boolean).join(" · ") || "Стандарт";
 }
 
 function priceLabel(v: Variant | undefined): string {
@@ -44,7 +47,12 @@ function memorySortValue(value: string): number {
   return num;
 }
 
-function axisLabel(axis: Axis, values: string[]): string {
+function axisLabel(axis: Axis, values: string[], isSmartGlasses = false): string {
+  if (isSmartGlasses) {
+    if (axis === "memory") return "Размер";
+    if (axis === "color") return "Оправа";
+    return "Линзы";
+  }
   if (axis === "memory") {
     return values.every((v) => /(?:mm|мм)$/i.test(v)) ? "Размер корпуса" : "Память";
   }
@@ -162,6 +170,7 @@ export function ProductOrder({
   const hasRegion = variants.some((v) => v.region);
   const isWatch = variants.some((v) => /(?:loop|band|ремешок)/i.test(v.region ?? ""));
   const isIpad = /iPad/i.test(productName) && variants.some((v) => parseIpadRegion(v.region));
+  const isSmartGlasses = isSmartGlassesProductName(productName);
 
   const memoryOptions = useMemo(
     () => (hasMemory ? uniqueInOrder(variants.map((v) => v.memory)).sort((a, b) => memorySortValue(a) - memorySortValue(b)) : []),
@@ -289,7 +298,7 @@ export function ProductOrder({
           deliveryMethod,
           deliveryAddress,
           comment: priceOnRequest
-            ? [`Уточнить цену: «${productName}» (${variantLabel(selected)})`, comment]
+            ? [`Уточнить цену: «${productName}» (${variantLabel(selected, isSmartGlasses)})`, comment]
                 .filter(Boolean)
                 .join(". ")
             : comment,
@@ -314,7 +323,7 @@ export function ProductOrder({
   if (status === "sent") {
     return (
       <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6 text-sm text-zinc-700">
-        Спасибо! Заявка на «{productName}» ({selected ? variantLabel(selected) : ""})
+        Спасибо! Заявка на «{productName}» ({selected ? variantLabel(selected, isSmartGlasses) : ""})
         принята — мы свяжемся с вами по указанному телефону.
       </div>
     );
@@ -326,11 +335,11 @@ export function ProductOrder({
 
     // Ось "цвет" — кружки-свотчи вместо текстовых пилюль, чтобы было видно
     // цвет, не читая название.
-    if (axis === "color") {
+    if (axis === "color" && !isSmartGlasses) {
       return (
         <div>
           <div className="mb-2 text-sm font-medium text-foreground">
-            {axisLabel(axis, options)}
+            {axisLabel(axis, options, isSmartGlasses)}
             {value && <span className="font-normal text-zinc-500"> · {colorLabel(value)}</span>}
           </div>
           <div className="flex flex-wrap gap-3">
@@ -365,7 +374,7 @@ export function ProductOrder({
     return (
       <div>
         <div className="mb-2 text-sm font-medium text-foreground">
-          {axisLabel(axis, options)}
+          {axisLabel(axis, options, isSmartGlasses)}
         </div>
         <div className="flex flex-wrap gap-2">
           {options.map((opt) => {

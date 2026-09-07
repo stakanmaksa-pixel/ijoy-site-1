@@ -106,15 +106,27 @@ export const MODEL_DISPLAY_ORDER = {
     "Apple EarPods USB-C",
   ],
   gopro: [
-    "GoPro MISSION 1 PRO ILS",
-    "GoPro MISSION 1 PRO",
-    "GoPro MISSION 1",
-    "GoPro MAX2",
-    "GoPro HERO13 Black",
-    "GoPro HERO12 Black",
-    "GoPro MAX",
-    "GoPro LIT HERO",
-    "GoPro HERO",
+    "Insta360 X5",
+    "Insta360 X3",
+    "Insta360 GO Ultra",
+    "Insta360 GO 3S",
+    "DJI Osmo 360 Standard Combo",
+    "DJI Osmo Mobile 7P",
+    "GoPro HERO 13 (Black)",
+    "GoPro HERO 12 (Black)",
+    "Canon PowerShot G7 X Mark III",
+    "Fujifilm Instax Mini 13",
+  ],
+  smartGlasses: [
+    "Ray-Ban Meta Starfire Kylie Edition",
+    "Meta Ray-Ban Display",
+    "Ray-Ban Meta Wayfarer RW4012 (Gen 2)",
+    "Ray-Ban Meta Headliner RW4013 (Gen 2)",
+    "Ray-Ban Meta Skyler RW4014 (Gen 2)",
+    "Ray-Ban Meta Blayzer Optics (Gen 2)",
+    "Ray-Ban Meta Wayfarer RW4006 (Gen 1)",
+    "Ray-Ban Meta Wayfarer RW4008 (Gen 1)",
+    "Ray-Ban Meta Skyler RW4010 (Gen 1)",
   ],
 } as const satisfies Record<string, readonly string[]>;
 
@@ -148,6 +160,7 @@ function resolveOrderList(
   if (categorySlug === "noutbuki") return MODEL_DISPLAY_ORDER.macbook;
   if (categorySlug === "chasy") return MODEL_DISPLAY_ORDER.watch;
   if (categorySlug === "ekshn-kamery") return MODEL_DISPLAY_ORDER.gopro;
+  if (categorySlug === "smart-ochki") return MODEL_DISPLAY_ORDER.smartGlasses;
   if (["aksessuary", "naushniki"].includes(categorySlug) && /^(?:AirPods|Apple EarPods)/.test(name)) return MODEL_DISPLAY_ORDER.airpods;
   return undefined;
 }
@@ -253,6 +266,7 @@ const CATEGORY_ORDER: Record<string, readonly string[]> = {
   noutbuki: MODEL_DISPLAY_ORDER.macbook,
   naushniki: MODEL_DISPLAY_ORDER.airpods,
   "ekshn-kamery": MODEL_DISPLAY_ORDER.gopro,
+  "smart-ochki": MODEL_DISPLAY_ORDER.smartGlasses,
 };
 
 // Шапка отображается на каждой странице. Без кэша её запрос к БД выполнялся

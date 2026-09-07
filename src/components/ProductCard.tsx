@@ -46,7 +46,13 @@ export function ProductCard({
   const isIpad = /^ipad-/i.test(slug);
   const isAppleTvPhoto = coverImage?.startsWith("/catalog/product-photos/apple-tv-4k/");
   const isPencil = /^apple-pencil-/i.test(slug);
-  const imageClassName = isPencil
+  const isMetaPhotoLifestyle = /\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(coverImage ?? "");
+  const isDjiMobilePhoto = coverImage?.endsWith("/meta-photo/dji-osmo-mobile-7p.png");
+  const imageClassName = isMetaPhotoLifestyle
+    ? "absolute inset-0 h-full w-full object-cover"
+    : isDjiMobilePhoto
+      ? "h-full w-full scale-[3.1] object-contain"
+      : isPencil
     ? "h-full w-full rotate-[34deg] scale-[1.1] object-contain"
     : isHeadphones
     ? "absolute inset-0 h-full w-full object-contain"
@@ -59,7 +65,7 @@ export function ProductCard({
       href={`/product/${slug}`}
       className="@container group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isAppleTvPhoto ? "bg-white" : "bg-zinc-50"}`}>
+      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isAppleTvPhoto ? "bg-white" : isMetaPhotoLifestyle ? "bg-black" : "bg-zinc-50"}`}>
         {photo ? (
           // У официальных фото наушников уже есть большие внутренние белые
           // поля. Дополнительный padding делал сам товар слишком маленьким.
