@@ -45,6 +45,10 @@ export function ProductCard({
   const isHeadphones = isHeadphoneProduct(slug);
   const photo = coverImage ? resolveHeadphonePhoto(coverImage) : coverImage;
   const isIpad = /^ipad-/i.test(slug);
+  // У фото Magic Keyboard уже есть белый фон. Обычный padding карточки
+  // дополнительно уменьшал и без того компактное устройство. Увеличиваем
+  // только картинку внутри, обрезая исключительно белые поля изображения.
+  const isIpadKeyboard = /^magic-keyboard(?:-|$)/i.test(slug);
   const isAppleTvPhoto = coverImage?.startsWith("/catalog/product-photos/apple-tv-4k/");
   const isPencil = /^apple-pencil-/i.test(slug);
   const isGamingLifestyle = isGamingLifestyleProduct(slug);
@@ -60,6 +64,8 @@ export function ProductCard({
     ? "absolute inset-0 h-full w-full object-contain"
     : isGamingLifestyle
       ? "absolute inset-0 h-full w-full object-contain p-4 sm:p-5"
+    : isIpadKeyboard
+      ? "absolute inset-0 h-full w-full scale-[1.18] object-contain"
     : isIpad || isAppleTvPhoto
       ? "absolute inset-0 h-full w-full object-contain p-3"
     : "h-full w-full object-contain p-5 sm:p-6";
@@ -69,7 +75,7 @@ export function ProductCard({
       href={`/product/${slug}`}
       className="@container group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent"
     >
-      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isAppleTvPhoto || isGamingLifestyle ? "bg-white" : isMetaPhotoLifestyle ? "bg-black" : "bg-zinc-50"}`}>
+      <div className={`relative flex aspect-square shrink-0 items-center justify-center overflow-hidden text-zinc-300 ${isHeadphones || isIpad || isIpadKeyboard || isAppleTvPhoto || isGamingLifestyle ? "bg-white" : isMetaPhotoLifestyle ? "bg-black" : "bg-zinc-50"}`}>
         {photo ? (
           // У официальных фото наушников уже есть большие внутренние белые
           // поля. Дополнительный padding делал сам товар слишком маленьким.
