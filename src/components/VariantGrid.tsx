@@ -3,7 +3,6 @@
 import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { VariantCard } from "@/components/VariantCard";
 import { colorLabel } from "@/lib/colorSwatch";
-import { isHeadphoneProduct } from "@/lib/headphonePhotos";
 import { isSmartGlassesSlug } from "@/lib/smartGlasses";
 import { gamingLifestyleAxisLabel, gamingLifestyleCategoryForProduct } from "@/lib/catalogAxes";
 
@@ -126,7 +125,6 @@ export function VariantGrid({
   const isSmartGlasses = isSmartGlassesSlug(slug);
   const gamingLifestyleCategory = gamingLifestyleCategoryForProduct(slug);
   const isGamingLifestyle = gamingLifestyleCategory != null;
-  const hasVariantComparison = !isIpad && !isHeadphoneProduct(slug);
   const isUltra = slug.includes("ultra");
   const bandChoices = isWatch
     ? [...new Set(variants.map((variant) => bandChoice(variant.region)).filter(isPresent))]
@@ -147,7 +145,6 @@ export function VariantGrid({
   const [selectedConnectivity, setSelectedConnectivity] = useState<string[]>([]);
   const [selectedGlass, setSelectedGlass] = useState<string[]>([]);
   const [onlyInStock, setOnlyInStock] = useState(false);
-  const [compareIds, setCompareIds] = useState<string[]>([]);
 
   const filtered = variants.filter(
     (variant) =>
@@ -174,14 +171,6 @@ export function VariantGrid({
     setOnlyInStock(false);
   }
 
-  function toggleCompare(id: string) {
-    setCompareIds((current) =>
-      current.includes(id) ? current.filter((item) => item !== id) : current.length < 3 ? [...current, id] : current,
-    );
-  }
-
-  const compared = variants.filter((variant) => compareIds.includes(variant.id));
-
   return (
     <div className={hasFilters ? "mt-8 grid gap-6 lg:grid-cols-[220px_minmax(0,1fr)]" : "mt-8"}>
       {hasFilters && <aside className="h-fit rounded-2xl border border-zinc-200 bg-zinc-50 p-4 sm:p-5 lg:sticky lg:top-36">
@@ -206,66 +195,12 @@ export function VariantGrid({
         <p className="mb-4 text-sm text-zinc-500">Показано вариантов: {filtered.length}</p>
         {filtered.length > 0 ? (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((variant) => {
-            const selected = compareIds.includes(variant.id);
-            const limitReached = !selected && compareIds.length >= 3;
-            return (
-              <div key={variant.id} className="relative">
-                <VariantCard slug={slug} variant={variant} imageUrl={imageByVariant[variant.id] ?? null} />
-                {hasVariantComparison && <button
-                  type="button"
-                  onClick={() => toggleCompare(variant.id)}
-                  disabled={limitReached}
-                  className={`absolute left-3 top-3 rounded-full px-3 py-1.5 text-xs font-medium shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${selected ? "bg-accent text-white" : "bg-white text-zinc-700 hover:text-accent"}`}
-                >
-                  {selected ? "Выбрано" : "Сравнить"}
-                </button>}
-              </div>
-            );
-          })}
+          {filtered.map((variant) => <VariantCard key={variant.id} slug={slug} variant={variant} imageUrl={imageByVariant[variant.id] ?? null} />)}
         </div>
         ) : (
         <p className="mt-5 text-sm text-zinc-500">Нет вариантов с такими параметрами.</p>
       )}
 
-      {hasVariantComparison && compared.length > 0 && (
-        <section className="mt-8 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
-          <div className="flex items-center justify-between gap-3 border-b border-zinc-100 px-4 py-4 sm:px-5">
-            <div>
-              <h2 className="font-display text-lg font-semibold text-foreground">Сравнение вариантов</h2>
-              <p className="mt-0.5 text-sm text-zinc-500">Выбрано: {compared.length} из 3</p>
-            </div>
-            <button type="button" onClick={() => setCompareIds([])} className="text-sm text-zinc-500 hover:text-accent">Очистить</button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[520px] text-left text-sm">
-              <tbody>
-                {[
-                  [isSmartGlasses ? "Размер" : isWatch ? "Размер корпуса" : isGamingLifestyle ? gamingLifestyleAxisLabel("memory", memories, gamingLifestyleCategory) : "Память", (variant: ProductVariantForGrid) => variant.memory || "—"],
-                  [isSmartGlasses ? "Оправа" : isWatch ? "Цвет корпуса" : isGamingLifestyle ? gamingLifestyleAxisLabel("color", colors, gamingLifestyleCategory) : "Цвет", (variant: ProductVariantForGrid) => variant.color || "—"],
-                  ...(isWatch ? [
-                    ["Материал ремешка", (variant: ProductVariantForGrid) => strapMaterial(variant.region, isUltra) || "—"],
-                    ["Размер ремешка", (variant: ProductVariantForGrid) => strapSize(variant.region) || "—"],
-                  ] as const : []),
-                  ...(isIpad ? [
-                    ["Подключение", (variant: ProductVariantForGrid) => ipadRegion(variant.region)?.connectivity || "—"],
-                    ...(ipadGlass.length > 0 ? [["Стекло дисплея", (variant: ProductVariantForGrid) => ipadRegion(variant.region)?.glass || "—"]] as const : []),
-                  ] as const : [
-                    [isSmartGlasses ? "Линзы" : isWatch ? "Ремешок" : isGamingLifestyle ? gamingLifestyleAxisLabel("region", regions, gamingLifestyleCategory) : "Регион / SIM", (variant: ProductVariantForGrid) => variant.region || "—"],
-                  ] as const),
-                  ["Наличие", (variant: ProductVariantForGrid) => (variant.inStock ? "В наличии" : "Под заказ")],
-                  ["Цена", (variant: ProductVariantForGrid) => (variant.price != null ? `${variant.price.toLocaleString("ru-RU")} ₽` : "Уточняйте у менеджера")],
-                ].map(([label, value]) => (
-                  <tr key={label as string} className="border-b border-zinc-100 last:border-0">
-                    <th className="w-40 bg-zinc-50 px-4 py-3 font-medium text-zinc-600 sm:px-5">{label as string}</th>
-                    {compared.map((variant) => <td key={variant.id} className="px-4 py-3 text-foreground sm:px-5">{(value as (item: ProductVariantForGrid) => string)(variant)}</td>)}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      )}
       </div>
     </div>
   );

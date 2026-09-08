@@ -9,6 +9,8 @@ import { groupProductSpecs } from "@/lib/productSpecs";
 import { headphonePhotoPadding, isHeadphoneProduct } from "@/lib/headphonePhotos";
 import { isSmartGlassesSlug } from "@/lib/smartGlasses";
 import { isGamingLifestyleProduct } from "@/lib/catalogAxes";
+import { ProductPhoto } from "@/components/ProductPhoto";
+import { catalogPhotoBounds, resolveCatalogPhoto } from "@/lib/catalogPhotos";
 
 type Variant = {
   id: string;
@@ -114,7 +116,7 @@ export function ProductDetail({
               лишних рамок и подписей — как просили, "чисто, но понятно". */}
           <div className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl text-zinc-300 sm:rounded-3xl ${isMetaPhotoLifestyle ? "bg-black" : "bg-white"}`}>
             {activeImage ? (
-              <img
+              catalogPhotoBounds(resolveCatalogPhoto(activeImage, productSlug)) ? <ProductPhoto src={activeImage} slug={productSlug} region={selectedVariant?.region} alt={`${productName}${activeColor ? `, ${activeColor}` : ""}`} /> : <img
                 src={activeImage}
                 alt={`${productName}${activeColor ? `, ${activeColor}` : ""}`}
                 className={`h-full w-full rounded-2xl object-contain sm:rounded-3xl ${productImageClass}`}
@@ -136,13 +138,13 @@ export function ProductDetail({
                   key={url}
                   type="button"
                   onClick={() => setSelectedImage(url)}
-                  className={`h-14 w-14 shrink-0 overflow-hidden rounded-xl border transition-colors sm:h-16 sm:w-16 ${
+                  className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border transition-colors sm:h-16 sm:w-16 ${
                     url === activeImage
                       ? "border-accent"
                       : "border-zinc-200 hover:border-zinc-300"
                   }`}
                 >
-                  <img src={url} alt="" className={`h-full w-full ${/\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(url) ? "object-cover" : url.endsWith("/meta-photo/dji-osmo-mobile-7p.png") ? "scale-[2.5] object-contain" : isIpad || isHeadphones || isSmartGlasses || isGamingLifestyle ? "object-contain p-1" : "object-cover"}`} />
+                  {catalogPhotoBounds(resolveCatalogPhoto(url, productSlug)) ? <ProductPhoto src={url} slug={productSlug} alt={`${productName}: дополнительное фото`} /> : <img src={url} alt="" className={`h-full w-full ${/\/meta-photo\/(?:insta360-x5|gopro-hero12)\.jpg$/.test(url) ? "object-cover" : url.endsWith("/meta-photo/dji-osmo-mobile-7p.png") ? "scale-[2.5] object-contain" : isIpad || isHeadphones || isSmartGlasses || isGamingLifestyle ? "object-contain p-1" : "object-cover"}`} />}
                 </button>
               ))}
             </div>

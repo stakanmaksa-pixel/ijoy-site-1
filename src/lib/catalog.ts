@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
-import { pickCoverImage } from "@/lib/pickCoverImage";
+import { pickCoverImage, pickVariantImages } from "@/lib/pickCoverImage";
 import { getSamsungPhoneMenuGroup, SAMSUNG_PHONE_MENU_GROUPS } from "@/lib/samsungPhones";
 import { unstable_cache } from "next/cache";
 
@@ -849,10 +849,10 @@ function toProductSummary(
     hasStock,
     variantCount: variants.length,
     defaultVariantId: cheapest?.id ?? null,
-    coverImage: pickCoverImage(
+    coverImage: pickVariantImages(
       product.images,
       (product.colorImages as Record<string, string[]> | null) ?? null,
-      cheapest?.color,
-    ),
+      cheapest,
+    )[0] ?? null,
   };
 }

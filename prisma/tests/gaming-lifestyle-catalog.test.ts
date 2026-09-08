@@ -3,6 +3,7 @@ import { access } from "node:fs/promises";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 import { pickVariantImages } from "../../src/lib/pickCoverImage";
+import { resolveCatalogPhoto } from "../../src/lib/catalogPhotos";
 import { getCompatibleAccessoryBundle } from "../../src/lib/compatibleAccessories";
 import {
   GAMING_LIFESTYLE_CATALOG,
@@ -59,7 +60,7 @@ test("every exact variant has a stable visible product photo", () => {
     for (const variant of product.variants) {
       const image = pickVariantImages(product.images, product.colorImages, variant)[0];
       assert(image, `${product.name}: ${variant.rawLabel}`);
-      assert(product.images.includes(image!), `${product.name}: ${variant.rawLabel}`);
+      assert(product.images.map(url => resolveCatalogPhoto(url, undefined, variant.region)).includes(image!), `${product.name}: ${variant.rawLabel}`);
     }
   }
 });

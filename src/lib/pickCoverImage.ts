@@ -6,13 +6,13 @@
 // Старый импорт Air использовал широкие баннеры с маленьким планшетом.
 // Предметные фото поставляются вместе с сайтом, поэтому исправление не
 // требует повторной синхронизации БД. Пользовательские фото не заменяем.
-import { resolveHeadphonePhoto } from "./headphonePhotos";
+import { resolveCatalogPhoto } from "./catalogPhotos";
 
 function resolveProductImage(url: string): string {
   const legacyAir = url.match(/^\/uploads\/products\/(ipad-air-(?:11|13)-m4)\/official-v1-(blue|purple|space-gray|starlight)\.jpg$/);
   return legacyAir
     ? `/catalog/product-photos/${legacyAir[1]}/${legacyAir[2]}.jpg`
-    : resolveHeadphonePhoto(url);
+    : resolveCatalogPhoto(url);
 }
 
 // Фото "по умолчанию" для карточки без выбора конкретного цвета: фото цвета
@@ -56,17 +56,18 @@ export function pickVariantImages(
   colorImages: Record<string, string[]> | null,
   variant?: VariantImageSelector | null,
 ): string[] {
+  const resolveVariantImage = (url: string) => resolveCatalogPhoto(resolveProductImage(url), undefined, variant?.region);
   if (variant) {
     const exact = colorImages?.[variantImageKey(variant)];
-    if (exact?.length) return exact.map(resolveProductImage);
+    if (exact?.length) return exact.map(resolveVariantImage);
     if (variant.color && colorImages?.[variant.color]?.length) {
-      return colorImages[variant.color].map(resolveProductImage);
+      return colorImages[variant.color].map(resolveVariantImage);
     }
   }
-  if (images.length) return images.map(resolveProductImage);
+  if (images.length) return images.map(resolveVariantImage);
   if (colorImages) {
     for (const list of Object.values(colorImages)) {
-      if (list?.length) return list.map(resolveProductImage);
+      if (list?.length) return list.map(resolveVariantImage);
     }
   }
   return [];
