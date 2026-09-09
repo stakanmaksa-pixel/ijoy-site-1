@@ -4,7 +4,7 @@ import { CompareTable } from "@/components/CompareTable";
 
 export const metadata = {
   title: "Сравнить устройства — iJoy Gadget Store",
-  description: "Сравнение iPhone и iPad по единым характеристикам.",
+  description: "Сравнение смартфонов и планшетов Apple, Samsung, Google, Sony, Xiaomi и POCO по характеристикам.",
 };
 
 // Страница сравнения — по образцу apple.com/iphone/compare/: колонки по

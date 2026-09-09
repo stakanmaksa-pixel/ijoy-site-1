@@ -3,6 +3,8 @@ import type { Prisma } from "@/generated/prisma/client";
 import { pickCoverImage, pickVariantImages } from "@/lib/pickCoverImage";
 import { getSamsungPhoneMenuGroup, SAMSUNG_PHONE_MENU_GROUPS } from "@/lib/samsungPhones";
 import { unstable_cache } from "next/cache";
+import { directModelLink, isIpadKeyboard, isSamsungPhone, samsungMemoryColorGrid } from "@/lib/catalogPresentation";
+import { colorLabel } from "@/lib/colorSwatch";
 
 // ---------------------------------------------------------------------
 // Многоуровневое меню каталога (бургер-меню на мобильном / выпадающая
@@ -70,7 +72,12 @@ export const MODEL_DISPLAY_ORDER = {
     "Samsung Galaxy A07",
     "Samsung Galaxy A17 4G",
   ],
-  sony: ["Sony Xperia 1 VIII", "Sony Xperia 10 VII"],
+  sony: ["Sony Xperia 1 VII"],
+  pixel: ["Google Pixel 11 Pro Fold", "Google Pixel 11 Pro XL", "Google Pixel 11 Pro", "Google Pixel 11", "Google Pixel 10a"],
+  xiaomi: ["Xiaomi 17 Ultra", "Xiaomi 17T Pro", "Xiaomi 17", "Xiaomi 17T", "REDMI Note 15 Pro+ 5G", "REDMI Note 15 Pro 5G", "REDMI Note 15 Pro", "REDMI Note 15 5G", "REDMI Note 15"],
+  poco: ["POCO F9 Ultra", "POCO F8 Ultra", "POCO F8 Pro", "POCO X8 Pro Max", "POCO X8 Pro", "POCO C81 Pro"],
+  samsungTablets: ["Samsung Galaxy Tab S11 Ultra", "Samsung Galaxy Tab S11", "Samsung Galaxy Tab S10+", "Samsung Galaxy Tab S10 Lite", "Samsung Galaxy Tab S10 FE", "Samsung Galaxy Tab S10 FE+", "Samsung Galaxy Tab A11", "Samsung Galaxy Tab A11+"],
+  samsungWatches: ["Samsung Galaxy Watch Ultra 2", "Samsung Galaxy Watch 9"],
   ipad: [
     "Apple iPad Pro 11″ M5 (2025)",
     "Apple iPad Pro 13″ M5 (2025)",
@@ -218,15 +225,19 @@ function resolveOrderList(
     if (brand === "Apple") return MODEL_DISPLAY_ORDER.iphone;
     if (brand === "Samsung") return MODEL_DISPLAY_ORDER.samsung;
     if (brand === "Sony") return MODEL_DISPLAY_ORDER.sony;
+    if (brand === "Google") return MODEL_DISPLAY_ORDER.pixel;
+    if (brand === "Xiaomi") return MODEL_DISPLAY_ORDER.xiaomi;
+    if (brand === "POCO") return MODEL_DISPLAY_ORDER.poco;
     return undefined;
   }
   if (categorySlug === "planshety") {
+    if (brand === "Samsung") return MODEL_DISPLAY_ORDER.samsungTablets;
     if (/apple\s+pencil/i.test(name)) return MODEL_DISPLAY_ORDER.pencil;
     if (/magic\s+keyboard|keyboard\s+folio/i.test(name)) return MODEL_DISPLAY_ORDER.keyboard;
     return MODEL_DISPLAY_ORDER.ipad;
   }
   if (categorySlug === "noutbuki") return MODEL_DISPLAY_ORDER.macbook;
-  if (categorySlug === "chasy") return MODEL_DISPLAY_ORDER.watch;
+  if (categorySlug === "chasy") return brand === "Samsung" ? MODEL_DISPLAY_ORDER.samsungWatches : MODEL_DISPLAY_ORDER.watch;
   if (categorySlug === "ekshn-kamery") return MODEL_DISPLAY_ORDER.gopro;
   if (categorySlug === "smart-ochki") return MODEL_DISPLAY_ORDER.smartGlasses;
   if (categorySlug === "igrovye-pristavki") return MODEL_DISPLAY_ORDER.gameConsoles;
@@ -249,20 +260,15 @@ type LineMatcher = {
   // У Neo один товар с несколькими конфигурациями. В меню он должен вести
   // сразу в выдачу ноутбуков, а не открывать ещё один уровень меню.
   alwaysUseGroupHref?: boolean;
+  directListing?: boolean;
   order?: readonly string[];
   buildChildren?: (items: CatalogNavProduct[]) => CatalogNavNode[];
 };
 
-function samsungGroupHref(items: CatalogNavProduct[]) {
-  const params = new URLSearchParams({ category: "telefony", brand: "Samsung" });
-  for (const item of items) params.append("product", item.slug);
-  return `/catalog?${params.toString()}`;
-}
-
 function buildSamsungMenuGroups(items: CatalogNavProduct[]): CatalogNavNode[] {
   return SAMSUNG_PHONE_MENU_GROUPS.flatMap((group) => {
     const products = items.filter((item) => getSamsungPhoneMenuGroup(item.name, item.slug)?.label === group.label);
-    return products.length ? [{ label: group.label, href: samsungGroupHref(products) }] : [];
+    return products.map(directModelLink);
   });
 }
 
@@ -288,14 +294,22 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
       order: MODEL_DISPLAY_ORDER.sony,
     },
     {
+      label: "Google Pixel",
+      test: (_n, brand) => brand === "Google",
+      groupHref: "/catalog?category=telefony&brand=Google",
+      order: MODEL_DISPLAY_ORDER.pixel,
+    },
+    {
       label: "Xiaomi и REDMI",
       test: (_n, brand) => brand === "Xiaomi",
       groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("Xiaomi")}`,
+      order: MODEL_DISPLAY_ORDER.xiaomi,
     },
     {
       label: "POCO",
       test: (_n, brand) => brand === "POCO",
       groupHref: `/catalog?category=telefony&brand=${encodeURIComponent("POCO")}`,
+      order: MODEL_DISPLAY_ORDER.poco,
     },
     {
       label: "HUAWEI",
@@ -336,8 +350,10 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
   planshety: [
     { label: "Apple iPad", test: (name, brand) => brand === "Apple" && /ipad/i.test(name) && !/apple\s+pencil|magic\s+keyboard|keyboard\s+folio/i.test(name), groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Apple")}`, order: MODEL_DISPLAY_ORDER.ipad },
     { label: "Стилусы", test: (name, brand) => brand === "Apple" && /apple\s+pencil/i.test(name), groupHref: "/catalog?category=planshety&q=Apple%20Pencil", order: MODEL_DISPLAY_ORDER.pencil },
-    { label: "Клавиатуры для iPad", test: (name, brand) => brand === "Apple" && /magic\s+keyboard|keyboard\s+folio/i.test(name), groupHref: "/catalog?category=planshety&q=Magic%20Keyboard", order: MODEL_DISPLAY_ORDER.keyboard },
-    { label: "Samsung Galaxy Tab", test: (_name, brand) => brand === "Samsung", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Samsung")}` },
+    { label: "Клавиатуры для iPad", test: (name, brand) => brand === "Apple" && /magic\s+keyboard|keyboard\s+folio/i.test(name), groupHref: "/catalog?category=planshety&q=Magic%20Keyboard", order: MODEL_DISPLAY_ORDER.keyboard, directListing: true },
+    { label: "Samsung Galaxy Tab", test: (name, brand) => brand === "Samsung" && /^Samsung Galaxy Tab/i.test(name), groupHref: "/catalog?category=planshety&brand=Samsung&q=Samsung%20Galaxy%20Tab", order: MODEL_DISPLAY_ORDER.samsungTablets },
+    { label: "S Pen для Samsung", test: (name, brand) => brand === "Samsung" && /S Pen/i.test(name), groupHref: "/catalog?category=planshety&brand=Samsung&q=S%20Pen", directListing: true },
+    { label: "Клавиатуры для Samsung", test: (name, brand) => brand === "Samsung" && /Book Cover Keyboard/i.test(name), groupHref: "/catalog?category=planshety&brand=Samsung&q=Book%20Cover%20Keyboard", directListing: true },
     { label: "Xiaomi Pad", test: (_name, brand) => brand === "Xiaomi", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("Xiaomi")}` },
     { label: "HUAWEI MatePad", test: (_name, brand) => brand === "HUAWEI", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("HUAWEI")}` },
     { label: "HONOR Pad", test: (_name, brand) => brand === "HONOR", groupHref: `/catalog?category=planshety&brand=${encodeURIComponent("HONOR")}` },
@@ -345,7 +361,7 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
   ],
   chasy: [
     { label: "Apple Watch", test: (_name, brand) => brand === "Apple", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("Apple")}`, order: MODEL_DISPLAY_ORDER.watch },
-    { label: "Samsung Galaxy Watch", test: (_name, brand) => brand === "Samsung", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("Samsung")}` },
+    { label: "Samsung Galaxy Watch", test: (_name, brand) => brand === "Samsung", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("Samsung")}`, order: MODEL_DISPLAY_ORDER.samsungWatches },
     { label: "HUAWEI Watch", test: (_name, brand) => brand === "HUAWEI", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("HUAWEI")}` },
     { label: "OnePlus Watch", test: (_name, brand) => brand === "OnePlus", groupHref: `/catalog?category=chasy&brand=${encodeURIComponent("OnePlus")}` },
   ],
@@ -441,6 +457,10 @@ export const getCatalogNavTree = unstable_cache(async (): Promise<CatalogNavNode
           href: `/product/${product.slug}`,
         }));
         if (items.length > 0) {
+          if (matcher.directListing) {
+            groups.push({ label: matcher.label, href: matcher.groupHref });
+            continue;
+          }
           if (matcher.buildChildren) {
             const children = matcher.buildChildren(matchedProducts);
             if (children.length > 0) {
@@ -523,6 +543,11 @@ export type CatalogFilters = {
 };
 
 export async function getPublishedProducts(filters: CatalogFilters = {}) {
+  // Ignore obsolete regional URLs when browsing Samsung phones only.
+  const samsungOnly = filters.productSlug?.length
+    ? filters.productSlug.every(isSamsungPhone)
+    : filters.categorySlug === "telefony" && filters.brand?.length === 1 && filters.brand[0] === "Samsung";
+  const selectedRegions = samsungOnly ? undefined : filters.region;
   const where: Prisma.ProductWhereInput = {
     status: "PUBLISHED",
   };
@@ -552,7 +577,7 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
   }
   if (filters.memory?.length) variantWhere.memory = { in: filters.memory };
   if (filters.color?.length) variantWhere.color = { in: filters.color };
-  if (filters.region?.length) variantWhere.region = { in: filters.region };
+  if (selectedRegions?.length) variantWhere.region = { in: selectedRegions };
   if (filters.onlyInStock) variantWhere.inStock = true;
 
   if (Object.keys(variantWhere).length > 0) {
@@ -581,19 +606,28 @@ export async function getPublishedProducts(filters: CatalogFilters = {}) {
     return rankA - rankB;
   });
 
-  return sorted.map((product) => {
+  return sorted.flatMap((product) => {
     const visibleVariants = Object.keys(variantWhere).length > 0
       ? product.variants.filter((variant) => {
           if (filters.minPrice != null && (variant.price === null || Number(variant.price) < filters.minPrice)) return false;
           if (filters.maxPrice != null && (variant.price === null || Number(variant.price) > filters.maxPrice)) return false;
           if (filters.memory?.length && (!variant.memory || !filters.memory.includes(variant.memory))) return false;
           if (filters.color?.length && (!variant.color || !filters.color.includes(variant.color))) return false;
-          if (filters.region?.length && (!variant.region || !filters.region.includes(variant.region))) return false;
+          if (selectedRegions?.length && (!variant.region || !selectedRegions.includes(variant.region))) return false;
           if (filters.onlyInStock && !variant.inStock) return false;
           return true;
         })
       : product.variants;
-    return toProductSummary(product, visibleVariants);
+    if (isIpadKeyboard(product.slug)) {
+      return [...visibleVariants].sort((a, b) => (a.color === "White" ? 0 : 1) - (b.color === "White" ? 0 : 1)).map(variant => ({
+        ...toProductSummary(product, [variant]),
+        id: `${product.id}:${variant.id}`,
+        name: `${product.name} · ${colorLabel(variant.color)}`,
+        cardVariantId: variant.id,
+        exactPrice: true,
+      }));
+    }
+    return [toProductSummary(product, visibleVariants)];
   });
 }
 
@@ -627,7 +661,7 @@ export async function getCatalogFilterOptions(filters: Pick<CatalogFilters, "cat
     products,
     memory,
     colors: unique(products.flatMap((product) => product.variants.map((variant) => variant.color))).sort(),
-    regions: unique(products.flatMap((product) => product.variants.map((variant) => variant.region))).sort(),
+    regions: unique(products.filter(product => !isSamsungPhone(product.slug)).flatMap((product) => product.variants.map((variant) => variant.region))).sort(),
   };
 }
 
@@ -662,6 +696,9 @@ export async function getProductBySlug(slug: string) {
     return null;
   }
 
+  const offers = product.variants.map(v => ({ id: v.id, memory: v.memory, color: v.color, region: v.region, price: v.price !== null ? Number(v.price) : null, inStock: v.inStock }));
+  const presentation = isSamsungPhone(slug) ? samsungMemoryColorGrid(offers) : { variants: offers, aliases: {} as Record<string, string> };
+
   return {
     ...toProductSummary(product),
     description: product.description,
@@ -674,16 +711,8 @@ export async function getProductBySlug(slug: string) {
     highlights: product.highlights,
     previousGenLabel: product.previousGenLabel,
     previousGenHighlights: product.previousGenHighlights,
-    variants: product.variants.map((v) => ({
-      id: v.id,
-      memory: v.memory,
-      color: v.color,
-      region: v.region,
-      // null — комбинации нет в прайсе, цена уточняется у менеджера
-      // (см. prisma/seed.ts, buildLiveIphoneProducts).
-      price: v.price !== null ? Number(v.price) : null,
-      inStock: v.inStock,
-    })),
+    variants: presentation.variants,
+    variantAliases: presentation.aliases,
   };
 }
 
@@ -709,10 +738,10 @@ export async function getDeviceCompareLineup(): Promise<CompareModel[]> {
   const products = await prisma.product.findMany({
     where: {
       status: "PUBLISHED",
-      brand: "Apple",
       OR: [
-        { name: { startsWith: "iPhone" } },
-        { name: { contains: "iPad", mode: "insensitive" } },
+        { category: { slug: "telefony" } },
+        { category: { slug: "planshety" }, brand: "Apple", slug: { startsWith: "ipad-" } },
+        { category: { slug: "planshety" }, brand: "Samsung", slug: { startsWith: "samsung-galaxy-tab-" } },
       ],
     },
     include: { variants: true, category: true },
@@ -790,7 +819,7 @@ export async function getFavoriteVariants(variantIds: string[]) {
           variantId: v.id,
           memory: v.memory,
           color: v.color,
-          region: v.region,
+          region: isSamsungPhone(v.product.slug) ? null : v.region,
           price: v.price !== null ? Number(v.price) : null,
           inStock: v.inStock,
           productSlug: v.product.slug,
@@ -849,6 +878,8 @@ function toProductSummary(
     hasStock,
     variantCount: variants.length,
     defaultVariantId: cheapest?.id ?? null,
+    cardVariantId: null as string | null,
+    exactPrice: false,
     coverImage: pickVariantImages(
       product.images,
       (product.colorImages as Record<string, string[]> | null) ?? null,

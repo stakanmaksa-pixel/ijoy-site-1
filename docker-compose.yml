@@ -30,6 +30,7 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:-ijoy}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-ijoy}?schema=public
     volumes:
       - uploads_data:/app/public/uploads
+      - catalog_backups:/app/backups
     depends_on:
       postgres:
         condition: service_healthy
@@ -66,3 +67,4 @@ services:
 volumes:
   postgres_data:
   uploads_data:
+  catalog_backups:

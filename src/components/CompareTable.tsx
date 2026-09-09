@@ -7,6 +7,7 @@ import { pickCoverImage } from "@/lib/pickCoverImage";
 import type { CompareModel } from "@/lib/catalog";
 import { colorLabel, colorToHex } from "@/lib/colorSwatch";
 import { groupSpecKeys, PRODUCT_SPEC_ORDER } from "@/lib/productSpecs";
+import { ProductPhoto } from "@/components/ProductPhoto";
 
 // Порядок строк характеристик — как на apple.com/iphone/compare/: сначала
 // самое важное (экран, процессор, камеры, автономность), потом память и
@@ -33,6 +34,8 @@ export function CompareTable({
     initialSlugs.length > 0 ? initialSlugs : models.slice(0, MAX_COLUMNS).map((m) => m.slug),
   );
   const [activeColors, setActiveColors] = useState<Record<string, string>>({});
+  const [modelSearch, setModelSearch] = useState("");
+  const visibleModels = models.filter(m => m.name.toLocaleLowerCase().includes(modelSearch.trim().toLocaleLowerCase()));
 
   function toggle(slug: string) {
     setSelected((prev) => {
@@ -73,8 +76,12 @@ export function CompareTable({
       <div>
         <h2 className="font-display text-2xl font-semibold text-foreground">Выберите модели</h2>
         <p className="mt-2 text-sm text-zinc-500">До трёх моделей одновременно.</p>
+        <label className="mt-4 block max-w-md text-sm text-zinc-600">
+          Найти модель
+          <input type="search" value={modelSearch} onChange={event => setModelSearch(event.target.value)} placeholder="Например, Samsung Galaxy Tab" className="mt-2 w-full rounded-xl border border-zinc-200 px-4 py-3 text-foreground" />
+        </label>
         <div className="mt-4 flex flex-wrap gap-2">
-        {models.map((m) => {
+        {visibleModels.map((m) => {
           const isActive = selected.includes(m.slug);
           return (
             <button
@@ -91,6 +98,7 @@ export function CompareTable({
             </button>
           );
         })}
+        {!visibleModels.length && <p className="text-sm text-zinc-500">Модели не найдены.</p>}
         </div>
       </div>
 
@@ -112,9 +120,9 @@ export function CompareTable({
 
           return (
             <div key={m.slug} className="flex flex-col items-center text-center">
-              <Link href={`/product/${m.slug}`} className="mb-3 flex aspect-square w-full max-w-[220px] items-center justify-center rounded-2xl bg-zinc-50 text-zinc-300">
+              <Link href={`/product/${m.slug}`} className="relative mb-3 flex aspect-square w-full max-w-[220px] items-center justify-center rounded-2xl bg-white text-zinc-300">
                 {cover ? (
-                  <img src={cover} alt={m.name} loading="lazy" decoding="async" className="h-full w-full object-contain" />
+                  <ProductPhoto src={cover} alt={m.name} slug={m.slug} />
                 ) : (
                   <span className="text-sm">Фото</span>
                 )}

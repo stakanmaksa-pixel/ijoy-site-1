@@ -1,0 +1,430 @@
+[
+  {
+    "model": "s11",
+    "color": "Gray",
+    "file": "samsung-tablets/s11-gray.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x730nzareub/gallery/uk-galaxy-tab-s11-sm-x730-sm-x730nzareub-548915510?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s11",
+    "color": "Gray",
+    "file": "samsung-tablets/s11-gray-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s11/buy/colour-selection/TS11_Color_Selection_Gray_PC_1600x864.png"
+  },
+  {
+    "model": "s11",
+    "color": "Silver",
+    "file": "samsung-tablets/s11-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x730nzsreub/gallery/uk-galaxy-tab-s11-sm-x730-sm-x730nzsreub-548915574?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s11",
+    "color": "Silver",
+    "file": "samsung-tablets/s11-silver-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s11/buy/colour-selection/TS11_Color_Selection_Silver_PC_1600x864.png"
+  },
+  {
+    "model": "s11-ultra",
+    "color": "Gray",
+    "file": "samsung-tablets/s11-ultra-gray.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x930nzareub/gallery/uk-galaxy-tab-s11-ultra-sm-x930-sm-x930nzareub-548916190?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s11-ultra",
+    "color": "Gray",
+    "file": "samsung-tablets/s11-ultra-gray-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s11/buy/colour-selection/TS11_Ultra_Color_Selection_Gray_PC_1600x864.png"
+  },
+  {
+    "model": "s11-ultra",
+    "color": "Silver",
+    "file": "samsung-tablets/s11-ultra-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x930nzsreub/gallery/uk-galaxy-tab-s11-ultra-sm-x930-sm-x930nzsreub-548916258?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s11-ultra",
+    "color": "Silver",
+    "file": "samsung-tablets/s11-ultra-silver-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s11/buy/colour-selection/TS11_Ultra_Color_Selection_Silver_PC_1600x864.png"
+  },
+  {
+    "model": "s10-plus",
+    "color": "Moonstone Gray",
+    "file": "samsung-tablets/s10-plus-moonstone-gray.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/us/sm-x820nzaaxar/gallery/us-galaxy-tab-s10-plus-sm-x820-sm-x820nzaaxar-553570680?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-plus",
+    "color": "Moonstone Gray",
+    "file": "samsung-tablets/s10-plus-moonstone-gray-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/us/sm-x820nzaaxar/gallery/us-galaxy-tab-s10-plus-sm-x820-sm-x820nzaaxar-551218677?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-plus",
+    "color": "Platinum Silver",
+    "file": "samsung-tablets/s10-plus-platinum-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/us/sm-x820nzsaxar/gallery/us-galaxy-tab-s10-plus-sm-x820-sm-x820nzsaxar-553570718?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-plus",
+    "color": "Platinum Silver",
+    "file": "samsung-tablets/s10-plus-platinum-silver-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/us/sm-x820nzsaxar/gallery/us-galaxy-tab-s10-plus-sm-x820-sm-x820nzsaxar-551322207?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-lite",
+    "color": "Gray",
+    "file": "samsung-tablets/s10-lite-gray.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzareub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzareub-548559614?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-lite",
+    "color": "Gray",
+    "file": "samsung-tablets/s10-lite-gray-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzareub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzareub-548559593?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-lite",
+    "color": "Silver",
+    "file": "samsung-tablets/s10-lite-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzsreub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzsreub-548559706?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-lite",
+    "color": "Silver",
+    "file": "samsung-tablets/s10-lite-silver-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzsreub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzsreub-548559685?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-lite",
+    "color": "Coral Red",
+    "file": "samsung-tablets/s10-lite-coral-red.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzrpeub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzrpeub-548559637?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-lite",
+    "color": "Coral Red",
+    "file": "samsung-tablets/s10-lite-coral-red-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x400nzrpeub/gallery/uk-galaxy-tab-s10-lite-sm-x406-sm-x400nzrpeub-548559616?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-fe",
+    "color": "Gray",
+    "file": "samsung-tablets/s10-fe-gray.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x520nzareub/gallery/uk-galaxy-tab-s10-fe-sm-x526-sm-x520nzareub-545667963?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-fe",
+    "color": "Gray",
+    "file": "samsung-tablets/s10-fe-gray-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s10-fe/buy/02-colour-section/S10FE_Color_Selection_Gray_PC_1600x864.png"
+  },
+  {
+    "model": "s10-fe",
+    "color": "Silver",
+    "file": "samsung-tablets/s10-fe-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x520nzsreub/gallery/uk-galaxy-tab-s10-fe-sm-x526-sm-x520nzsreub-545668046?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-fe",
+    "color": "Silver",
+    "file": "samsung-tablets/s10-fe-silver-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s10-fe/buy/02-colour-section/S10FE_Color_Selection_Silver_PC_1600x864.png"
+  },
+  {
+    "model": "s10-fe",
+    "color": "Blue",
+    "file": "samsung-tablets/s10-fe-blue.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x520nlbreub/gallery/uk-galaxy-tab-s-sm-x520nlbreub-front-blue-545806637?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-fe",
+    "color": "Blue",
+    "file": "samsung-tablets/s10-fe-blue-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s10-fe/buy/02-colour-section/S10FE_Color_Selection_Blue_PC_1600x864.png"
+  },
+  {
+    "model": "s10-fe-plus",
+    "color": "Gray",
+    "file": "samsung-tablets/s10-fe-plus-gray.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x620nzareub/gallery/uk-galaxy-tab-s10-fe-plus-sm-x626-sm-x620nzareub-545671580?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-fe-plus",
+    "color": "Gray",
+    "file": "samsung-tablets/s10-fe-plus-gray-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s10-fe/buy/02-colour-section/S10FE_Color_Selection_Gray_PC_1600x864.png"
+  },
+  {
+    "model": "s10-fe-plus",
+    "color": "Silver",
+    "file": "samsung-tablets/s10-fe-plus-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x620nzsreub/gallery/uk-galaxy-tab-s10-fe-plus-sm-x626-sm-x620nzsreub-545671646?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-fe-plus",
+    "color": "Silver",
+    "file": "samsung-tablets/s10-fe-plus-silver-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s10-fe/buy/02-colour-section/S10FE_Color_Selection_Silver_PC_1600x864.png"
+  },
+  {
+    "model": "s10-fe-plus",
+    "color": "Blue",
+    "file": "samsung-tablets/s10-fe-plus-blue.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x620nlbreub/gallery/uk-galaxy-tab-s10-fe-plus-sm-x626-sm-x620nlbreub-545671536?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "s10-fe-plus",
+    "color": "Blue",
+    "file": "samsung-tablets/s10-fe-plus-blue-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x620nlbpeub/gallery/uk-galaxy-tab-s10-fe-plus-sm-x626-sm-x620nlbpeub-545671510?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "a11",
+    "color": "Gray",
+    "file": "samsung-tablets/a11-gray.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x130nzaaeub/gallery/uk-galaxy-tab-a11-sm-x130-sm-x130nzaaeub-549348051?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "a11",
+    "color": "Gray",
+    "file": "samsung-tablets/a11-gray-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x130nzaaeub/gallery/uk-galaxy-tab-a11-sm-x130-sm-x130nzaaeub-549348038?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "a11",
+    "color": "Silver",
+    "file": "samsung-tablets/a11-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/in/sm-x135gzseins/gallery/in-galaxy-tab-a11-sm-x130-565469-sm-x135gzseins-549176053?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "a11",
+    "color": "Silver",
+    "file": "samsung-tablets/a11-silver-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/in/sm-x135gzseins/gallery/in-galaxy-tab-a11-sm-x130-565469-sm-x135gzseins-549176040?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "a11-plus",
+    "color": "Gray",
+    "file": "samsung-tablets/a11-plus-gray.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x230nzareub/gallery/uk-galaxy-tab-a11-plus-sm-x230-570754-sm-x230nzareub-550010014?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "a11-plus",
+    "color": "Gray",
+    "file": "samsung-tablets/a11-plus-gray-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x230nzareub/gallery/uk-galaxy-tab-a11-plus-sm-x230-570754-sm-x230nzareub-550010001?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "a11-plus",
+    "color": "Silver",
+    "file": "samsung-tablets/a11-plus-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x230nzsreub/gallery/uk-galaxy-tab-a11-plus-sm-x230-570754-sm-x230nzsreub-550010044?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "model": "a11-plus",
+    "color": "Silver",
+    "file": "samsung-tablets/a11-plus-silver-back.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-x230nzsreub/gallery/uk-galaxy-tab-a11-plus-sm-x230-570754-sm-x230nzsreub-550010031?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-tablets/keyboard-s11.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/ef-dx730bbeggb/gallery/uk-galaxy-tab-s11-book-cover-keyboard-slim-ef-dx730-ef-dx730bbeggb-548764848?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-tablets/keyboard-s11-ultra.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/ef-dx930bbeggb/gallery/uk-galaxy-tab-s11-ultra-book-cover-keyboard-slim-ef-dx930-ef-dx930bbeggb-548763905?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-tablets/keyboard-s10-plus.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/ef-dx820bbeggb/gallery/uk-galaxy-tab-s10-plus-book-cover-keyboard-slim-ai-ef-dx820-ef-dx820bbeggb-543690891?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-tablets/keyboard-s10-fe.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/ef-dx720bbeggb/gallery/uk-galaxy-tab-s9-book-cover-keyboard-slim-ai-ef-dx720-ef-dx720bbeggb-543692997?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-tablets/keyboard-s10-fe-plus.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/ef-dx620bbeggb/gallery/uk-galaxy-tab-s10-fe-plus-book-cover-keyboard-slim-ai-ef-dx620-ef-dx620bbeggb-545795351?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-tablets/pen-s11.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/ej-px730bwegeu/gallery/uk-galaxy-tab-s11-series-s-pen-ej-px730-ej-px730bwegeu-548765529?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-tablets/pen-s10.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/us/ej-px710bleguj/gallery/us-galaxy-tab-s9-series-s-pen-ej-px710-ej-px710bleguj-551043436?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-tablets/pen-s10-lite.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/uk/ej-pp610bwegeu/gallery/uk-galaxy-tab-s10-lite-ej-pp610-ej-pp610bwegeu-548878265?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "phones/google-pixel-11-obsidian.png",
+    "url": "https://lh3.googleusercontent.com/eidMOLW8BNKptJyMYyCRPJSEgw4i0fkAiNqaDp8KiEVofvpSudQVGGhaWvX-JOx_YZ119Idni0as6MDPYHiiiOi1Pd5jxXDFYoU=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-frost.png",
+    "url": "https://lh3.googleusercontent.com/5hwicQBGDmOgZeEkNp_DNxvriurezoqbwgMi8RCgQCIPY7BgGSPzTMXY4Y3gzAYOUFQPaDv6H1Dn2dD8pUGAj04l6f2oYwdPMA=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pistachio.png",
+    "url": "https://lh3.googleusercontent.com/Ij3GXiSSA1Bn1otGf6cJSnB3apLRfD3cNZoojYWNAyuRxqDyk70b2ju7MGVtSLa9PBhzmgd76JRes4wYJhiZiCUs4mljtZQmFbQ=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-hibiscus.png",
+    "url": "https://lh3.googleusercontent.com/XkqnTGx0yQSAX_SAMxjCxij5_-ne0dJovszVFq7gzQzfaauYWPgLvbmrq4SY3766MzfrIcaHP1k0f1zgH-ytnltWOX4nw1XqjYQ=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-canyon.png",
+    "url": "https://lh3.googleusercontent.com/beOpcloabeF__4tAXQNPZhrLwrCQcydc0MwgriEsw091bZezEmD00e_uSfumkQCr1ye-lZFvDd-oQQFtg2DBxYelQGi-BxUDMVo=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-fog.png",
+    "url": "https://lh3.googleusercontent.com/edICfzQSarAfdpwDdKjmr7W9PrwI8dm_hzNOjRTlqjfs0mNI6UN0STWUF_o0H5cKo8IR4G5PQv-SGme3DOk48oClU4dyv-LJOX6G=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-obsidian-(matte).png",
+    "url": "https://lh3.googleusercontent.com/3OIZr2U4Hzf2BU3S-UvqqlNjHMx_OVRu5pBytlNNc_LT8ZhPOMIKQx8iCnYR4hYAi6t-PnbCdX6II8nZmxGOtubibIjyJ0osOg=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-olive.png",
+    "url": "https://lh3.googleusercontent.com/G1uPViXaL1ql6aNkeq0m_G8VXnzSe5kNaPiwR0f93cljJO99HiGv01KcGUlsIVQfY98vt1Wt0SOqMM-iCoLk9gJtT73I_e65dg=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-xl-canyon.png",
+    "url": "https://lh3.googleusercontent.com/8gtow6gwa9Q6CIkyiQV0fhrmZ2McRXgYbVie8htTdtCJ2gJWXkHkXpDiPDMBnW3LIHrY_Yy8VwNB900Nd2QMf-_PqEWE1gF9qRA=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-xl-fog.png",
+    "url": "https://lh3.googleusercontent.com/hihucXgSbfaHL-7e5aSt_1zOPxJ6fkscfzjC1b2Xt7ulEwSL33QxaSWQUUBwfdwzTteG2nzUTkWQnF6dIxFlnEmpXCN7fLv73y9S=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-xl-obsidian-(matte).png",
+    "url": "https://lh3.googleusercontent.com/aNzkSOZIOrUd6FwpNRDFyVtDlutMvwRpIedz45n_4Izw96c9wZlbpR-m0bas0BFjrwvPeh_cuh9I6jizgK6noO6hEDoM9jd_2rA=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-xl-olive.png",
+    "url": "https://lh3.googleusercontent.com/3f9k2e-MKvO3au69yMQJQZ9TF6yTgMfbmcxLi2hJ9yo25LU1AT3Rnwsz-DLQIH8VMhnqN9_FafbjCqai4cbXrO5QcpZkEXr2JS0=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-fold-obsidian.png",
+    "url": "https://lh3.googleusercontent.com/FSUReWBAL3dUbfvsU4ui21IadC8bDqwPgz_liH_sCawgHkp-_I7lFa_XKvineCVe1FgN-u86_Bl2LNpopdq21Ix1qQmmjqg3g2w=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-11-pro-fold-olive.png",
+    "url": "https://lh3.googleusercontent.com/lZKnUKTAv9MCwq26TtNxkHC54VAEhshcX3gbKEM3Do3J9qb2t7VaOcZ5F3hpRHsids4oymQ7sujEqpnMlFi3ZZcJCAWRlfj4svg=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-10a-obsidian.png",
+    "url": "https://lh3.googleusercontent.com/D5icple_N2oELSuOKPpMRDjjBJoQj2xDRJmt81rMC12JllvYHhuCPlAGcK-44QGu0XFKwbwNTcn4pRiqaFP-qZv3liRQzm7eFGg=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-10a-fog.png",
+    "url": "https://lh3.googleusercontent.com/YkxY9n62QUccprN507-3zaTLzxwQtnPalsx-ySsAZYONEwN8YPtFhnw5VpVybqT29F8JFTA8hbumGvZY-16gtv_NjErJkkKxuWM=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-10a-lavender.png",
+    "url": "https://lh3.googleusercontent.com/IdB9Le3UUPMZBqGC5TduhBB8n12Dv8xKFJpmOnyWzLf0IHN_4qoXupO-3mTGstYuI-NETHcrhG2LdU85dXCH59OJ8HVf_-WftV8=w1200-h1200"
+  },
+  {
+    "file": "phones/google-pixel-10a-berry.png",
+    "url": "https://lh3.googleusercontent.com/rWU2B8yua68XtuX54-Bj9E_PEMofnkWnhjJf0Hokv5Z3n8KVEO2Jy_uwdZPE_vFlAbP1B4ev2b7RFsJVurpv8ndu8NipanmvjBSD=w1200-h1200"
+  },
+  {
+    "file": "phones/poco-f9-ultra-colors.png",
+    "url": "https://i02.appmifile.com/545_operator_sg/15/08/2026/66a9735335fd7a6b04318ac96e917565.png"
+  },
+  {
+    "file": "phones/poco-c81-pro-colors.png",
+    "url": "https://i02.appmifile.com/351_operator_sg/31/03/2026/b56965676b895308dacfc9d7048a9bcb.png"
+  },
+  {
+    "file": "phones/poco-f8-pro-colors.png",
+    "url": "https://i02.appmifile.com/550_operator_sg/16/11/2025/2b8e8a7404eee32e1034bce875893472.png"
+  },
+  {
+    "file": "phones/poco-f8-ultra-colors.png",
+    "url": "https://i02.appmifile.com/869_operator_sg/17/11/2025/b0fc8559de0f1379aa5f181792a6c40a.png"
+  },
+  {
+    "file": "phones/poco-x8-pro-max-colors.png",
+    "url": "https://i02.appmifile.com/104_operator_sg/23/04/2026/e0a5d3945c522f4c1794ecc9879a5dcb.png"
+  },
+  {
+    "file": "phones/poco-x8-pro-colors.png",
+    "url": "https://i02.appmifile.com/864_operator_sg/25/05/2026/831c2a6a5d280720bf6544a34ce09b17.png"
+  },
+  {
+    "file": "phones/redmi-note-15-5g-colors.png",
+    "url": "https://i02.appmifile.com/44_operator_sg/17/12/2025/22b1834a956a8ead431b7ea6a5dde37d.png"
+  },
+  {
+    "file": "phones/redmi-note-15-pro-5g-colors.png",
+    "url": "https://i02.appmifile.com/119_operator_sg/19/12/2025/f8f0bfcf12f78974ff0fbb65d37b4401.png"
+  },
+  {
+    "file": "phones/redmi-note-15-pro-plus-5g-colors.png",
+    "url": "https://i02.appmifile.com/406_operator_sg/19/12/2025/fb10071c2470a9cb0fef185b74c136ff.png"
+  },
+  {
+    "file": "phones/redmi-note-15-pro-colors.png",
+    "url": "https://i02.appmifile.com/47_operator_sg/19/12/2025/5e434dcb9f897ee5791cc019ceb831bc.png"
+  },
+  {
+    "file": "phones/redmi-note-15-colors.png",
+    "url": "https://i02.appmifile.com/150_operator_sg/17/12/2025/d000ba27b1503fbf4ce97f4ecfda314a.png"
+  },
+  {
+    "file": "phones/xiaomi-17-ultra-colors.png",
+    "url": "https://i02.appmifile.com/809_operator_sg/07/02/2026/befa336850fc137b9a0bb3fabcfca3f5.png"
+  },
+  {
+    "file": "phones/xiaomi-17t-pro-colors.png",
+    "url": "https://i02.appmifile.com/313_operator_sg/15/05/2026/3c3085bee86cffd47a8dd3c47d012c5e.png"
+  },
+  {
+    "file": "phones/xiaomi-17t-colors.png",
+    "url": "https://i02.appmifile.com/736_operator_sg/15/05/2026/0924a5020417dfe742677bbf4939a25a.png"
+  },
+  {
+    "file": "phones/xiaomi-17-colors.jpg",
+    "url": "https://i02.appmifile.com/566_operator_sg/11/02/2026/9af57f0d1f83bedaf13a3c721ccd205e.jpg"
+  },
+  {
+    "file": "phones/sony-xperia-1-vii-black.png",
+    "url": "https://www.sony.jp/imag/product/XQ-FS44_1_B"
+  },
+  {
+    "file": "phones/sony-xperia-1-vii-green.png",
+    "url": "https://www.sony.jp/imag/product/XQ-FS44_1_G"
+  },
+  {
+    "file": "phones/sony-xperia-1-vii-purple.png",
+    "url": "https://www.sony.jp/imag/product/XQ-FS44_1_V"
+  },
+  {
+    "file": "samsung-watches/watch9-40-graphite.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzkdxaa/gallery/us-galaxy-watch9-l340-sm-l340nzkdxaa-554172706?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-watches/watch9-40-cream.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l340nzeaxaa/gallery/us-galaxy-watch9-l340-sm-l340nzeaxaa-554054538?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-watches/watch9-44-graphite.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzkaxaa/gallery/us-galaxy-watch-sm-l350nzkaxaa-galaxy-watch-----mm--bluetooth--graphite-graphite-554056107?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-watches/watch9-44-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/us/sm-l350nzsaxaa/gallery/us-galaxy-watch-sm-l350nzsaxaa-galaxy-watch-----mm--bluetooth--silver-silver-554056335?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-watches/ultra2-gray.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/in/f2607/gallery/in-galaxy-watch-ultra2-l710-sm-l715fzkains-553717139?wid=1200&hei=1200&fmt=png-alpha"
+  },
+  {
+    "file": "samsung-watches/ultra2-silver.png",
+    "url": "https://images.samsung.com/is/image/samsung/p6pim/in/f2607/gallery/in-galaxy-watch-ultra2-l710-sm-l715fzsains-553717152?wid=1200&hei=1200&fmt=png-alpha"
+  }
+]

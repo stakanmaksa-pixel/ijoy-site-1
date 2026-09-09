@@ -28,6 +28,15 @@ const PS5_SLUGS = new Set([
 ]);
 
 export function getCompatibleAccessoryBundle(productSlug: string): CompatibleAccessoryBundle | null {
+  const samsung = SAMSUNG_TABLET_COMPATIBILITY[productSlug];
+  if (samsung?.pen || samsung?.keyboard) {
+    return {
+      eyebrow: "Совместимые аксессуары",
+      title: "Клавиатура и сменный S Pen для этого Galaxy Tab",
+      description: "S Pen уже входит в комплект планшета — отдельный стилус нужен как замена или запасной. Клавиатура приобретается отдельно. Ниже указаны совместимые модели; клавиатуры другой диагонали не подойдут.",
+      slugs: [samsung.keyboard, samsung.pen].filter((slug): slug is string => Boolean(slug)),
+    };
+  }
   if (IPAD_PENCIL_PRO_SLUGS.has(productSlug)) {
     const keyboardSlug = IPAD_KEYBOARD_BY_SLUG[productSlug];
     return {
@@ -100,3 +109,4 @@ export function getCompatibleAccessoryBundle(productSlug: string): CompatibleAcc
 
   return null;
 }
+import { SAMSUNG_TABLET_COMPATIBILITY } from "../../prisma/data/samsung-tablet-catalog";

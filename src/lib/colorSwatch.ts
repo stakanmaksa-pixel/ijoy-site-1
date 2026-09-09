@@ -4,6 +4,18 @@
 // заглушка, если ничего не подошло.
 
 const EXACT: Record<string, string> = {
+  // Approximate on-screen swatches; keep manufacturer colour names in the DB.
+  obsidian: "#303030", "obsidian (matte)": "#303030", frost: "#dce6e7",
+  pistachio: "#d3ddad", hibiscus: "#df889e", canyon: "#c77858",
+  olive: "#788365", fog: "#d6dcd9", berry: "#ab3859",
+  "moonstone gray": "#7d7d80", "platinum silver": "#d8dadd", gray: "#85858a",
+  "coral red": "#d78b88", "slate black": "#3a3b3a", "moss green": "#6d765d",
+  "orchid purple": "#867195", "titanium gray": "#8d8c88", "titanium silver": "#c7c8c7",
+  "titanium color": "#bdb5a6", "mint green": "#c0d1b7", "denim blue": "#5b789b",
+  "alpine pink": "#e2c9c7", "ice blue": "#c2d6e1", "venture green": "#849b78",
+  "starlit green": "#a4bab0", "opal white": "#eeeee7", "deep violet": "#726589",
+  "deep blue": "#50698b", "glacier blue": "#bad7e0", "mist purple": "#bab2d1",
+  "forest green": "#497467", "mocha brown": "#937a67",
   black: "#1c1c1e",
   white: "#f5f5f7",
   silver: "#e3e4e6",
@@ -76,6 +88,18 @@ const KEYWORDS: [RegExp, string][] = [
 // сохраняем оригинал (он нужен менеджеру и для точной модификации), а
 // покупателю показываем понятный русский вариант с оригиналом в скобках.
 const RUSSIAN_NAMES: Record<string, string> = {
+  obsidian: "Обсидиан", "obsidian (matte)": "Матовый обсидиан", frost: "Иней",
+  pistachio: "Фисташковый", hibiscus: "Гибискус", canyon: "Каньон",
+  olive: "Оливковый", fog: "Туман", berry: "Ягодный", gray: "Серый",
+  "moonstone gray": "Лунный серый", "platinum silver": "Платиновый серебристый",
+  "coral red": "Коралловый красный", "slate black": "Сланцевый чёрный",
+  "moss green": "Зелёный мох", "orchid purple": "Фиолетовая орхидея",
+  "titanium gray": "Серый титан", "titanium silver": "Серебристый титан",
+  "titanium color": "Титановый", "mint green": "Мятный зелёный", "denim blue": "Джинсовый синий",
+  "alpine pink": "Альпийский розовый", "ice blue": "Ледяной голубой", "venture green": "Зелёный",
+  "starlit green": "Звёздный зелёный", "opal white": "Опаловый белый", "deep violet": "Тёмно-фиолетовый",
+  "deep blue": "Тёмно-синий", "glacier blue": "Ледниковый голубой", "mist purple": "Туманный фиолетовый",
+  "forest green": "Лесной зелёный", "mocha brown": "Коричневый мокко",
   black: "Чёрный", white: "Белый", silver: "Серебристый", gold: "Золотой",
   graphite: "Графитовый", midnight: "Тёмная ночь", starlight: "Сияющая звезда",
   "space gray": "Серый космос", "space grey": "Серый космос", titanium: "Титан",

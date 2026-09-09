@@ -59,6 +59,7 @@ function axisLabel(axis: Axis, values: string[], isSmartGlasses = false, gamingL
     return values.every((v) => /(?:mm|мм)$/i.test(v)) ? "Размер корпуса" : "Память";
   }
   if (axis === "color") return "Цвет";
+  if (values.length && values.every((v) => /^(?:Bluetooth|LTE|Bluetooth \+ LTE|Wi.?Fi.*)$/i.test(v))) return "Подключение";
   // region
   if (values.every((v) => /^(eSIM|SIM\+eSIM|2 SIM)$/.test(v))) return "Тип SIM";
   if (values.some((v) => /\p{Regional_Indicator}/u.test(v))) return "Регион";
@@ -173,7 +174,7 @@ export function ProductOrder({
   const hasColor = variants.some((v) => v.color);
   const hasRegion = variants.some((v) => v.region);
   const isWatch = variants.some((v) => /(?:loop|band|ремешок)/i.test(v.region ?? ""));
-  const isIpad = /iPad/i.test(productName) && variants.some((v) => parseIpadRegion(v.region));
+  const isIpad = /iPad|Galaxy Tab/i.test(productName) && variants.some((v) => parseIpadRegion(v.region));
   const isSmartGlasses = isSmartGlassesProductName(productName);
   const gamingLifestyleCategory = gamingLifestyleCategoryForProduct(productSlug);
   const isGamingLifestyle = gamingLifestyleCategory != null;

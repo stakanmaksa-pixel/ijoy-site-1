@@ -47,7 +47,7 @@ export default async function ProductPage({
   }
 
   const selectedVariant = variantId
-    ? product.variants.find((v) => v.id === variantId)
+    ? product.variants.find((v) => v.id === (product.variantAliases[variantId] ?? variantId))
     : undefined;
 
   // У модели несколько модификаций (память/цвет/регион), и конкретная ещё

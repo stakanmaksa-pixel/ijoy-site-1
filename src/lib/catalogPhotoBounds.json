@@ -551,6 +551,710 @@
     "w": 1010,
     "h": 760
   },
+  "/catalog/product-photos/samsung-tablets/a11-gray-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 278,
+    "y": 267,
+    "w": 644,
+    "h": 666
+  },
+  "/catalog/product-photos/samsung-tablets/a11-gray.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 395,
+    "y": 268,
+    "w": 410,
+    "h": 664
+  },
+  "/catalog/product-photos/samsung-tablets/a11-plus-gray-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 164,
+    "y": 287,
+    "w": 872,
+    "h": 626
+  },
+  "/catalog/product-photos/samsung-tablets/a11-plus-gray.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 198,
+    "y": 329,
+    "w": 804,
+    "h": 542
+  },
+  "/catalog/product-photos/samsung-tablets/a11-plus-silver-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 164,
+    "y": 287,
+    "w": 872,
+    "h": 626
+  },
+  "/catalog/product-photos/samsung-tablets/a11-plus-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 198,
+    "y": 329,
+    "w": 804,
+    "h": 542
+  },
+  "/catalog/product-photos/samsung-tablets/a11-silver-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 278,
+    "y": 267,
+    "w": 644,
+    "h": 666
+  },
+  "/catalog/product-photos/samsung-tablets/a11-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 395,
+    "y": 268,
+    "w": 410,
+    "h": 664
+  },
+  "/catalog/product-photos/samsung-tablets/keyboard-s10-fe-plus.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 68,
+    "y": 195,
+    "w": 1064,
+    "h": 810
+  },
+  "/catalog/product-photos/samsung-tablets/keyboard-s10-fe.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 89,
+    "y": 195,
+    "w": 1022,
+    "h": 810
+  },
+  "/catalog/product-photos/samsung-tablets/keyboard-s10-plus.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 35,
+    "y": 222,
+    "w": 1130,
+    "h": 756
+  },
+  "/catalog/product-photos/samsung-tablets/keyboard-s11-ultra.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 88,
+    "y": 195,
+    "w": 1024,
+    "h": 810
+  },
+  "/catalog/product-photos/samsung-tablets/keyboard-s11.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 83,
+    "y": 195,
+    "w": 1034,
+    "h": 810
+  },
+  "/catalog/product-photos/samsung-tablets/pen-s10-lite.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 562,
+    "y": 208,
+    "w": 76,
+    "h": 784
+  },
+  "/catalog/product-photos/samsung-tablets/pen-s10.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 560,
+    "y": 195,
+    "w": 81,
+    "h": 811
+  },
+  "/catalog/product-photos/samsung-tablets/pen-s11.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 561,
+    "y": 195,
+    "w": 78,
+    "h": 810
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-blue-back.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 326,
+    "y": 144,
+    "w": 949,
+    "h": 589
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-blue.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 132,
+    "y": 290,
+    "w": 936,
+    "h": 625
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-gray-back.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 326,
+    "y": 144,
+    "w": 949,
+    "h": 589
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-gray.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 132,
+    "y": 290,
+    "w": 936,
+    "h": 625
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-plus-blue-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 74,
+    "y": 229,
+    "w": 1056,
+    "h": 738
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-plus-blue.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 74,
+    "y": 229,
+    "w": 1056,
+    "h": 738
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-plus-gray-back.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 326,
+    "y": 144,
+    "w": 949,
+    "h": 589
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-plus-gray.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 74,
+    "y": 229,
+    "w": 1056,
+    "h": 738
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-plus-silver-back.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 325,
+    "y": 144,
+    "w": 950,
+    "h": 589
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-plus-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 74,
+    "y": 229,
+    "w": 1056,
+    "h": 738
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-silver-back.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 325,
+    "y": 144,
+    "w": 950,
+    "h": 589
+  },
+  "/catalog/product-photos/samsung-tablets/s10-fe-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 132,
+    "y": 290,
+    "w": 936,
+    "h": 625
+  },
+  "/catalog/product-photos/samsung-tablets/s10-lite-coral-red-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 145,
+    "y": 278,
+    "w": 911,
+    "h": 643
+  },
+  "/catalog/product-photos/samsung-tablets/s10-lite-coral-red.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 132,
+    "y": 286,
+    "w": 936,
+    "h": 626
+  },
+  "/catalog/product-photos/samsung-tablets/s10-lite-gray-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 145,
+    "y": 278,
+    "w": 911,
+    "h": 643
+  },
+  "/catalog/product-photos/samsung-tablets/s10-lite-gray.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 132,
+    "y": 287,
+    "w": 936,
+    "h": 625
+  },
+  "/catalog/product-photos/samsung-tablets/s10-lite-silver-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 145,
+    "y": 278,
+    "w": 911,
+    "h": 643
+  },
+  "/catalog/product-photos/samsung-tablets/s10-lite-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 132,
+    "y": 286,
+    "w": 936,
+    "h": 626
+  },
+  "/catalog/product-photos/samsung-tablets/s10-plus-moonstone-gray-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 174,
+    "y": 279,
+    "w": 800,
+    "h": 642
+  },
+  "/catalog/product-photos/samsung-tablets/s10-plus-moonstone-gray.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 72,
+    "y": 225,
+    "w": 1055,
+    "h": 749
+  },
+  "/catalog/product-photos/samsung-tablets/s10-plus-platinum-silver-back.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 174,
+    "y": 279,
+    "w": 800,
+    "h": 642
+  },
+  "/catalog/product-photos/samsung-tablets/s10-plus-platinum-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 73,
+    "y": 225,
+    "w": 1054,
+    "h": 748
+  },
+  "/catalog/product-photos/samsung-tablets/s11-gray-back.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 248,
+    "y": 123,
+    "w": 1195,
+    "h": 636
+  },
+  "/catalog/product-photos/samsung-tablets/s11-gray.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 126,
+    "y": 286,
+    "w": 947,
+    "h": 632
+  },
+  "/catalog/product-photos/samsung-tablets/s11-silver-back.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 248,
+    "y": 123,
+    "w": 1195,
+    "h": 636
+  },
+  "/catalog/product-photos/samsung-tablets/s11-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 126,
+    "y": 286,
+    "w": 947,
+    "h": 632
+  },
+  "/catalog/product-photos/samsung-tablets/s11-ultra-gray-back.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 214,
+    "y": 106,
+    "w": 1250,
+    "h": 679
+  },
+  "/catalog/product-photos/samsung-tablets/s11-ultra-gray.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 55,
+    "y": 243,
+    "w": 1090,
+    "h": 712
+  },
+  "/catalog/product-photos/samsung-tablets/s11-ultra-silver-back.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 214,
+    "y": 106,
+    "w": 1252,
+    "h": 679
+  },
+  "/catalog/product-photos/samsung-tablets/s11-ultra-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 55,
+    "y": 243,
+    "w": 1090,
+    "h": 712
+  },
+  "/catalog/product-photos/samsung-watches/ultra2-gray.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 285,
+    "y": 237,
+    "w": 637,
+    "h": 727
+  },
+  "/catalog/product-photos/samsung-watches/ultra2-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 285,
+    "y": 237,
+    "w": 637,
+    "h": 727
+  },
+  "/catalog/product-photos/samsung-watches/watch9-40-cream.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 352,
+    "y": 315,
+    "w": 497,
+    "h": 572
+  },
+  "/catalog/product-photos/samsung-watches/watch9-40-graphite.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 438,
+    "y": 427,
+    "w": 325,
+    "h": 371
+  },
+  "/catalog/product-photos/samsung-watches/watch9-44-graphite.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 350,
+    "y": 312,
+    "w": 500,
+    "h": 577
+  },
+  "/catalog/product-photos/samsung-watches/watch9-44-silver.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 350,
+    "y": 312,
+    "w": 499,
+    "h": 577
+  },
+  "/catalog/product-photos/phones/google-pixel-10a-berry.png": {
+    "width": 1024,
+    "height": 1024,
+    "x": 312,
+    "y": 113,
+    "w": 397,
+    "h": 797
+  },
+  "/catalog/product-photos/phones/google-pixel-10a-fog.png": {
+    "width": 1024,
+    "height": 1024,
+    "x": 312,
+    "y": 113,
+    "w": 397,
+    "h": 797
+  },
+  "/catalog/product-photos/phones/google-pixel-10a-lavender.png": {
+    "width": 1024,
+    "height": 1024,
+    "x": 312,
+    "y": 113,
+    "w": 397,
+    "h": 797
+  },
+  "/catalog/product-photos/phones/google-pixel-10a-obsidian.png": {
+    "width": 1024,
+    "height": 1024,
+    "x": 312,
+    "y": 113,
+    "w": 397,
+    "h": 797
+  },
+  "/catalog/product-photos/phones/google-pixel-11-frost.png": {
+    "width": 512,
+    "height": 512,
+    "x": 156,
+    "y": 56,
+    "w": 198,
+    "h": 400
+  },
+  "/catalog/product-photos/phones/google-pixel-11-hibiscus.png": {
+    "width": 512,
+    "height": 512,
+    "x": 156,
+    "y": 56,
+    "w": 198,
+    "h": 400
+  },
+  "/catalog/product-photos/phones/google-pixel-11-obsidian.png": {
+    "width": 512,
+    "height": 512,
+    "x": 156,
+    "y": 56,
+    "w": 198,
+    "h": 400
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pistachio.png": {
+    "width": 512,
+    "height": 512,
+    "x": 156,
+    "y": 56,
+    "w": 198,
+    "h": 400
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-canyon.png": {
+    "width": 512,
+    "height": 512,
+    "x": 162,
+    "y": 79,
+    "w": 187,
+    "h": 378
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-fog.png": {
+    "width": 512,
+    "height": 512,
+    "x": 162,
+    "y": 79,
+    "w": 187,
+    "h": 378
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-fold-obsidian.png": {
+    "width": 512,
+    "height": 512,
+    "x": 154,
+    "y": 56,
+    "w": 206,
+    "h": 400
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-fold-olive.png": {
+    "width": 512,
+    "height": 512,
+    "x": 154,
+    "y": 56,
+    "w": 205,
+    "h": 400
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-obsidian-(matte).png": {
+    "width": 512,
+    "height": 512,
+    "x": 162,
+    "y": 79,
+    "w": 187,
+    "h": 378
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-olive.png": {
+    "width": 512,
+    "height": 512,
+    "x": 162,
+    "y": 79,
+    "w": 187,
+    "h": 378
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-xl-canyon.png": {
+    "width": 512,
+    "height": 512,
+    "x": 156,
+    "y": 56,
+    "w": 199,
+    "h": 401
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-xl-fog.png": {
+    "width": 512,
+    "height": 512,
+    "x": 156,
+    "y": 56,
+    "w": 199,
+    "h": 401
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-xl-obsidian-(matte).png": {
+    "width": 512,
+    "height": 512,
+    "x": 156,
+    "y": 56,
+    "w": 199,
+    "h": 401
+  },
+  "/catalog/product-photos/phones/google-pixel-11-pro-xl-olive.png": {
+    "width": 512,
+    "height": 512,
+    "x": 156,
+    "y": 56,
+    "w": 199,
+    "h": 401
+  },
+  "/catalog/product-photos/phones/poco-c81-pro-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 216,
+    "y": 0,
+    "w": 769,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/poco-f8-pro-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 184,
+    "y": 0,
+    "w": 832,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/poco-f8-ultra-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 278,
+    "y": 0,
+    "w": 645,
+    "h": 599
+  },
+  "/catalog/product-photos/phones/poco-f9-ultra-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 296,
+    "y": 0,
+    "w": 608,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-colors.png": {
+    "width": 1200,
+    "height": 660,
+    "x": 152,
+    "y": 0,
+    "w": 896,
+    "h": 660
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-max-colors.png": {
+    "width": 1200,
+    "height": 660,
+    "x": 171,
+    "y": 0,
+    "w": 858,
+    "h": 660
+  },
+  "/catalog/product-photos/phones/redmi-note-15-5g-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 185,
+    "y": 0,
+    "w": 830,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/redmi-note-15-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 117,
+    "y": 0,
+    "w": 966,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-5g-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 82,
+    "y": 0,
+    "w": 1037,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 159,
+    "y": 0,
+    "w": 883,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 159,
+    "y": 0,
+    "w": 883,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/sony-xperia-1-vii-black.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 370,
+    "y": 116,
+    "w": 456,
+    "h": 940
+  },
+  "/catalog/product-photos/phones/sony-xperia-1-vii-green.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 370,
+    "y": 116,
+    "w": 456,
+    "h": 940
+  },
+  "/catalog/product-photos/phones/sony-xperia-1-vii-purple.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 370,
+    "y": 116,
+    "w": 456,
+    "h": 940
+  },
+  "/catalog/product-photos/phones/xiaomi-17-colors.jpg": {
+    "width": 1200,
+    "height": 600,
+    "x": 161,
+    "y": 0,
+    "w": 879,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/xiaomi-17-ultra-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 166,
+    "y": 0,
+    "w": 869,
+    "h": 600
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 150,
+    "y": 1,
+    "w": 893,
+    "h": 599
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-pro-colors.png": {
+    "width": 1200,
+    "height": 600,
+    "x": 241,
+    "y": 0,
+    "w": 718,
+    "h": 600
+  },
   "/uploads/products/samsung-galaxy-s26-ultra/restore-9ca30cb069-01.webp": {
     "width": 1204,
     "height": 1213,

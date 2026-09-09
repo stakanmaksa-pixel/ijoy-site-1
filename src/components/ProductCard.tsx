@@ -4,7 +4,7 @@ import { FavoriteButton } from "@/components/FavoriteButton";
 import { CatalogCardFooter } from "@/components/CatalogCardFooter";
 import { ProductPhoto } from "@/components/ProductPhoto";
 
-export function ProductCard({ name, slug, brand, minPrice, hasStock, defaultVariantId, coverImage }: {
+export function ProductCard({ name, slug, brand, minPrice, hasStock, defaultVariantId, coverImage, cardVariantId, exactPrice = false }: {
   name: string;
   slug: string;
   brand?: string | null;
@@ -13,8 +13,10 @@ export function ProductCard({ name, slug, brand, minPrice, hasStock, defaultVari
   // The cover, favorite and cart all refer to the same default modification.
   defaultVariantId: string | null;
   coverImage?: string | null;
+  cardVariantId?: string | null;
+  exactPrice?: boolean;
 }) {
-  return <Link href={`/product/${slug}`}
+  return <Link href={`/product/${slug}${cardVariantId ? `?variant=${encodeURIComponent(cardVariantId)}` : ""}`}
     className="@container group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-colors hover:border-accent">
     <div className="relative aspect-square shrink-0 overflow-hidden bg-white">
       {coverImage ? <ProductPhoto src={coverImage} alt={name} slug={slug} /> :
@@ -24,7 +26,7 @@ export function ProductCard({ name, slug, brand, minPrice, hasStock, defaultVari
     <div className="flex flex-1 flex-col gap-1 p-3 sm:p-4">
       {brand && <div className="text-xs uppercase tracking-wide text-zinc-400">{brand}</div>}
       <div className="font-medium leading-6 text-foreground">{name}</div>
-      <CatalogCardFooter priceLabel={minPrice != null ? `от ${formatPrice(minPrice)}` : "Уточняйте цену"}
+      <CatalogCardFooter priceLabel={minPrice != null ? `${exactPrice ? "" : "от "}${formatPrice(minPrice)}` : "Уточняйте цену"}
         variantId={defaultVariantId} canBuy={minPrice != null && hasStock} inStock={hasStock} />
     </div>
   </Link>;

@@ -120,8 +120,9 @@ export function VariantGrid({
   const memories = useMemo(() => valuesOf(variants, "memory"), [variants]);
   const colors = useMemo(() => valuesOf(variants, "color"), [variants]);
   const regions = useMemo(() => valuesOf(variants, "region"), [variants]);
-  const isWatch = slug.includes("watch") || variants.some((variant) => /(?:loop|band)/i.test(variant.region ?? ""));
-  const isIpad = /^(?:ipad-pro-(?:11|13)-m5|ipad-air-(?:11|13)-m4|ipad-a16|ipad-mini-a17-pro)$/.test(slug);
+  const isWatch = variants.some((variant) => /(?:loop|band)/i.test(variant.region ?? ""));
+  const isGalaxyWatch = /^samsung-galaxy-watch-/.test(slug);
+  const isIpad = /^(?:ipad-|samsung-galaxy-tab-)/.test(slug);
   const isSmartGlasses = isSmartGlassesSlug(slug);
   const gamingLifestyleCategory = gamingLifestyleCategoryForProduct(slug);
   const isGamingLifestyle = gamingLifestyleCategory != null;
@@ -180,13 +181,13 @@ export function VariantGrid({
         </div>
         <p className="mt-1 text-xs leading-5 text-zinc-500">Выберите нужные характеристики.</p>
         <div className="mt-5 space-y-5">
-          {memories.length > 1 && <FilterGroup label={isSmartGlasses ? "Размер" : isWatch ? "Размер корпуса" : isGamingLifestyle ? gamingLifestyleAxisLabel("memory", memories, gamingLifestyleCategory) : "Память"} selected={selectedMemories} values={memories} onChange={setSelectedMemories} anyLabel="Все" />}
+          {memories.length > 1 && <FilterGroup label={isSmartGlasses ? "Размер" : isWatch || isGalaxyWatch ? "Размер корпуса" : isGamingLifestyle ? gamingLifestyleAxisLabel("memory", memories, gamingLifestyleCategory) : "Память"} selected={selectedMemories} values={memories} onChange={setSelectedMemories} anyLabel="Все" />}
           {colors.length > 1 && <FilterGroup label={isSmartGlasses ? "Оправа" : isWatch ? "Цвет корпуса" : isGamingLifestyle ? gamingLifestyleAxisLabel("color", colors, gamingLifestyleCategory) : "Цвет"} selected={selectedColors} values={colors} onChange={setSelectedColors} anyLabel="Все" formatLabel={isSmartGlasses ? undefined : colorLabel} />}
           {isWatch && strapMaterials.length > 1 && <FilterGroup label="Материал ремешка" selected={selectedStrapMaterials} values={strapMaterials} onChange={setSelectedStrapMaterials} anyLabel="Все" />}
           {isWatch && strapSizes.length > 1 && <FilterGroup label="Размер ремешка" selected={selectedStrapSizes} values={strapSizes} onChange={setSelectedStrapSizes} anyLabel="Все" />}
           {isIpad && ipadConnectivity.length > 1 && <FilterGroup label="Подключение" selected={selectedConnectivity} values={ipadConnectivity} onChange={setSelectedConnectivity} anyLabel="Все" />}
           {isIpad && ipadGlass.length > 1 && <FilterGroup label="Стекло дисплея" selected={selectedGlass} values={ipadGlass} onChange={setSelectedGlass} anyLabel="Все" />}
-          {!isIpad && bandChoices.length > 1 && <FilterGroup label={isSmartGlasses ? "Линзы" : isWatch ? "Ремешок" : isGamingLifestyle ? gamingLifestyleAxisLabel("region", bandChoices, gamingLifestyleCategory) : "Регион / SIM"} selected={selectedRegions} values={bandChoices} onChange={setSelectedRegions} anyLabel="Все" formatLabel={isWatch ? bandChoiceLabel : undefined} />}
+          {!isIpad && bandChoices.length > 1 && <FilterGroup label={isSmartGlasses ? "Линзы" : isWatch ? "Ремешок" : isGalaxyWatch ? "Подключение" : isGamingLifestyle ? gamingLifestyleAxisLabel("region", bandChoices, gamingLifestyleCategory) : "Регион / SIM"} selected={selectedRegions} values={bandChoices} onChange={setSelectedRegions} anyLabel="Все" formatLabel={isWatch ? bandChoiceLabel : undefined} />}
           {variants.some((variant) => !variant.inStock) && <label className="flex cursor-pointer items-center gap-2 text-sm text-zinc-700"><input type="checkbox" checked={onlyInStock} onChange={(event) => setOnlyInStock(event.target.checked)} className="h-4 w-4 accent-accent" /> Только в наличии</label>}
         </div>
       </aside>}

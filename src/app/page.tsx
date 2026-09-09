@@ -191,6 +191,8 @@ export default async function HomePage() {
                   hasStock={p.hasStock}
                   defaultVariantId={p.defaultVariantId}
                   coverImage={p.coverImage}
+                  cardVariantId={p.cardVariantId}
+                  exactPrice={p.exactPrice}
                 />
               ))}
             </div>

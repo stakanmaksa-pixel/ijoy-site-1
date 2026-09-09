@@ -1,0 +1,9 @@
+import type { RefreshProduct } from "./catalog-refresh-types";
+export const SONY_XPERIA_CATALOG: RefreshProduct[] = [{
+  slug:"sony-xperia-1-vii",name:"Sony Xperia 1 VII",brand:"Sony",category:"telefony",aliases:["sony-xperia-1-7","xperia-1-vii"],
+  description:"Sony Xperia 1 VII — смартфон для съёмки, просмотра видео и музыки. Оснащён OLED-экраном 6,5″, процессором Snapdragon 8 Elite, оптическим телезумом и разъёмом 3,5 мм. Доступны варианты памяти 256 и 512 ГБ; комплектацию поставки уточняйте перед заказом.",
+  highlights:["6,5″ FHD+ HDR OLED, 120 Гц","Snapdragon 8 Elite","Оптический телезум 85–170 мм и телемакро","microSD до 2 ТБ и разъём 3,5 мм"],
+  specs:{"Дисплей":"6,5″ HDR OLED, 120 Гц","Разрешение":"1080 × 2340","Процессор":"Snapdragon 8 Elite","Память":"12/256 ГБ, 12/512 ГБ или 16/512 ГБ; конфигурации зависят от рынка","Основная камера":"48 Мп основная; 12 Мп телефото 85–170 мм; сверхширокоугольная 48 Мп (эффективное разрешение)","Фронтальная камера":"12 Мп","Аккумулятор":"5000 мА·ч","Карта памяти":"microSD до 2 ТБ, отдельно","Аудио":"Стереодинамики; разъём 3,5 мм","Размеры":"162 × 74 × 8,2 мм","Вес":"197 г","Защита":"IPX5/IPX8 и IP6X","SIM":"Формат SIM/eSIM зависит от региональной версии. Конфигурации 512 ГБ представлены в том числе японской SIM-free поставкой","Комплектация":"Смартфон и документация; адаптер питания приобретается отдельно"},
+  sources:["https://www.sony.co.uk/electronics/support/mobile-phones-tablets-mobile-phones/xperia-1-vii-256gb/specifications","https://www.sony.jp/xperia/products/xperia1m7/spec.html","https://pur.store.sony.jp/xperia/products/xperia1m7/xperia1m7_purchase/"],
+  variants:["12/256GB","12/512GB","16/512GB"].flatMap(memory=>[{color:"Slate Black",file:"black"},{color:"Moss Green",file:"green"},{color:"Orchid Purple",file:"purple"}].map(({color,file})=>({memory,color,region:null,image:`/catalog/product-photos/phones/sony-xperia-1-vii-${file}.png`}))),
+}];
