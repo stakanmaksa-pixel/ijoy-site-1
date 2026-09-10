@@ -1,0 +1,335 @@
+{
+  "verifiedAt": "2026-09-10",
+  "entries": [
+    {
+      "slug": "huawei-watch-fit-5",
+      "color": "Silver",
+      "file": "watches-tablets/huawei-watch-fit-5-silver.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-fit5/specs-silver.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-fit5/specs/",
+      "sha256": "873babb991c32b714f16d3418ac38b340bc5c32a7f1d9a481f41064bbbec7998"
+    },
+    {
+      "slug": "huawei-watch-fit-5",
+      "color": "Purple",
+      "file": "watches-tablets/huawei-watch-fit-5-purple.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-fit5/specs-purple.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-fit5/specs/",
+      "sha256": "47aa13abdf5acb86c6ebbd19243d47b3328d6dcf71e8bd3874292a52f6abff0c"
+    },
+    {
+      "slug": "huawei-watch-fit-5",
+      "color": "Green",
+      "file": "watches-tablets/huawei-watch-fit-5-green.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-fit5/specs-green.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-fit5/specs/",
+      "sha256": "adb73cde4a2341b32f0d987f6d289fa5f298c0b243ce303dfead91481844dc4a"
+    },
+    {
+      "slug": "huawei-watch-fit-5",
+      "color": "White",
+      "file": "watches-tablets/huawei-watch-fit-5-white.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-fit5/specs-white.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-fit5/specs/",
+      "sha256": "f02c2683ee5c251779f44ba7be93fad53fb555dd1ebd99c6d9d3c1f7671805d1"
+    },
+    {
+      "slug": "huawei-watch-fit-5",
+      "color": "Black",
+      "file": "watches-tablets/huawei-watch-fit-5-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-fit5/specs-black.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-fit5/specs/",
+      "sha256": "7f65cbcac54c15e702ef6969d212475b68b16672645d1a611d3e5c3483b25a7a"
+    },
+    {
+      "slug": "huawei-watch-fit-5-pro",
+      "color": "Orange",
+      "file": "watches-tablets/huawei-watch-fit-5-pro-orange.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-fit5-pro/specs-orange.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-fit5-pro/specs/",
+      "sha256": "3c3cb72aadd96c58eb9e072fc363807f0fb5ba8c37405922aed3d8a188d3cd7c"
+    },
+    {
+      "slug": "huawei-watch-fit-5-pro",
+      "color": "White",
+      "file": "watches-tablets/huawei-watch-fit-5-pro-white.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-fit5-pro/specs-white.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-fit5-pro/specs/",
+      "sha256": "4bad6200448f1b9282ea80a03847a2d904bc773e81a83a6125b9a3ef6e4e726b"
+    },
+    {
+      "slug": "huawei-watch-fit-5-pro",
+      "color": "Black",
+      "file": "watches-tablets/huawei-watch-fit-5-pro-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-fit5-pro/specs-black.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-fit5-pro/specs/",
+      "sha256": "311cf3eddda5768fd25d169fccb3964f0abe16e9398110843357eefb2198c05d"
+    },
+    {
+      "slug": "huawei-watch-ultimate-2",
+      "color": "Black",
+      "file": "watches-tablets/huawei-watch-ultimate-2-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-ultimate-2/specs-black.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-ultimate-2/specs/",
+      "sha256": "7bc0c1f44e7ce659352d77514776c702698495de74d8ea37f154e465f21974bb"
+    },
+    {
+      "slug": "huawei-watch-ultimate-2",
+      "color": "Blue",
+      "file": "watches-tablets/huawei-watch-ultimate-2-blue.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-ultimate-2/specs-blue.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-ultimate-2/specs/",
+      "sha256": "8b9e5fdbf80ca33b47a1e241498025352cb80854bc4796049a728f28ed9ffdd2"
+    },
+    {
+      "slug": "huawei-watch-ultimate-2",
+      "color": "Green",
+      "file": "watches-tablets/huawei-watch-ultimate-2-green.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-ultimate-2/new/specs-green.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-ultimate-2/specs/",
+      "sha256": "8567be2161d2abb09fce88b2cfcb892a39838d7ff2f23ed69f71c90d20fa96b9"
+    },
+    {
+      "slug": "huawei-watch-gt-runner-2",
+      "color": "Racing Legend",
+      "file": "watches-tablets/huawei-watch-gt-runner-2-racing-legend.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-gt-runner-2/specs-racing-legend.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-gt-runner-2/specs/",
+      "sha256": "7debab6172713933708a113be3243b84a25b2b232ac0120fb8f31ba73ffa7747"
+    },
+    {
+      "slug": "huawei-watch-gt-runner-2",
+      "color": "Dusk Blue",
+      "file": "watches-tablets/huawei-watch-gt-runner-2-dusk-blue.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-gt-runner-2/specs-blue.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-gt-runner-2/specs/",
+      "sha256": "a061550df8a886ebe09d23a609f62b6595a8ff952692671ed8374afd081712d8"
+    },
+    {
+      "slug": "huawei-watch-gt-runner-2",
+      "color": "Dawn Orange",
+      "file": "watches-tablets/huawei-watch-gt-runner-2-dawn-orange.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-gt-runner-2/specs-orange.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-gt-runner-2/specs/",
+      "sha256": "0107073b979384d207e28f569329a8c018630f2676ad91c646d9857dcaebf386"
+    },
+    {
+      "slug": "huawei-watch-gt-runner-2",
+      "color": "Midnight Black",
+      "file": "watches-tablets/huawei-watch-gt-runner-2-midnight-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-gt-runner-2/specs-black.png",
+      "source": "https://consumer.huawei.com/en/wearables/watch-gt-runner-2/specs/",
+      "sha256": "0187099f2311be11e0b5226f9cc29e010eef4ce22f7583a74a5d94c85fd7cdf9"
+    },
+    {
+      "slug": "huawei-matepad-mini",
+      "color": "Spruce Green",
+      "file": "watches-tablets/huawei-matepad-mini-spruce-green.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-mini/specs-green.png",
+      "source": "https://consumer.huawei.com/en/tablets/matepad-mini/specs/",
+      "sha256": "31dc33919b164c4530e44f079509143c6482aad146db4a9b941284a6fbcd29ef"
+    },
+    {
+      "slug": "huawei-matepad-mini",
+      "color": "Graphite Black",
+      "file": "watches-tablets/huawei-matepad-mini-graphite-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-mini/specs-black.png",
+      "source": "https://consumer.huawei.com/en/tablets/matepad-mini/specs/",
+      "sha256": "09c0ece3683c3b234be935074a067087ace45eb86ee3f49dcd66591eee1492ee"
+    },
+    {
+      "slug": "huawei-matepad-air",
+      "color": "Sakura Pink",
+      "file": "watches-tablets/huawei-matepad-air-sakura-pink.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-air-new/specs-sakura-pink.png",
+      "source": "https://consumer.huawei.com/en/tablets/matepad-air/specs/",
+      "sha256": "25fd142a1220181f0a0f94e944b291278839c42313f20189135d8de971719cb6"
+    },
+    {
+      "slug": "huawei-matepad-air",
+      "color": "Airy Blue",
+      "file": "watches-tablets/huawei-matepad-air-airy-blue.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-air-new/specs-airy-blue.png",
+      "source": "https://consumer.huawei.com/en/tablets/matepad-air/specs/",
+      "sha256": "c506bf1ad1d065d41a3c810c1e352609064a1e98c84d1b137d5bd1d8f03e875e"
+    },
+    {
+      "slug": "huawei-matepad-air",
+      "color": "White",
+      "file": "watches-tablets/huawei-matepad-air-white.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-air-new/specs-white.png",
+      "source": "https://consumer.huawei.com/en/tablets/matepad-air/specs/",
+      "sha256": "6d8abec583b7b125e410ec10a88a305834efa49614add301a791a087dc8d7ba1"
+    },
+    {
+      "slug": "huawei-matepad-pro-max",
+      "color": "Blue",
+      "file": "watches-tablets/huawei-matepad-pro-max-blue.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-pro-max/specs-blue.png",
+      "source": "https://consumer.huawei.com/en/tablets/matepad-pro-max/specs/",
+      "sha256": "508bcaf15802c6ec807591c89f5c851da9034da0c618951bd4d8469aa27530c2"
+    },
+    {
+      "slug": "huawei-matepad-pro-max",
+      "color": "Space Gray",
+      "file": "watches-tablets/huawei-matepad-pro-max-space-gray.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-pro-max/specs-space-gray.png",
+      "source": "https://consumer.huawei.com/en/tablets/matepad-pro-max/specs/",
+      "sha256": "dcb06ba16d46179ae495411e3d501df25dd7c234a03b5b03d91f7309bcf3e32b"
+    },
+    {
+      "slug": "xiaomi-pad-7",
+      "color": "Gray",
+      "file": "watches-tablets/xiaomi-pad-7-gray.png",
+      "url": "https://i05.appmifile.com/331_item_es/26/02/2025/76200e741a50edc6ea184ce222aa7379.png",
+      "source": "https://www.mi.com/es/product/xiaomi-pad-7/buy/",
+      "side": false,
+      "sourceLabel": "Xiaomi Pad 7 Gris 8 GB + 128 GB",
+      "sha256": "4c26d26193ec0113ffea442eecc828b6ae3a3412aaed9b56372b45869fb1641a"
+    },
+    {
+      "slug": "xiaomi-pad-7",
+      "color": "Blue",
+      "file": "watches-tablets/xiaomi-pad-7-blue.png",
+      "url": "https://i05.appmifile.com/108_item_es/26/02/2025/44512a960b161be5cabfd59b574dd816.png",
+      "source": "https://www.mi.com/es/product/xiaomi-pad-7/buy/",
+      "side": false,
+      "sourceLabel": "Xiaomi Pad 7 Azul  8 GB + 128 GB",
+      "sha256": "513880d09bd407f445dfe00ec8ea9e1f32fd2f6ae3b0c1446e3ef7745bd92864"
+    },
+    {
+      "slug": "xiaomi-pad-7",
+      "color": "Green",
+      "file": "watches-tablets/xiaomi-pad-7-green.png",
+      "url": "https://i05.appmifile.com/922_item_es/26/02/2025/5b4dabd082060ebc6eeafee64137587e.png",
+      "source": "https://www.mi.com/es/product/xiaomi-pad-7/buy/",
+      "side": false,
+      "sourceLabel": "Xiaomi Pad 7 Verde 8 GB + 128 GB",
+      "sha256": "32e101f67b0d27d1074f9d8223224481c8387d1ef7b23bde58934501f2daf8a8"
+    },
+    {
+      "slug": "xiaomi-pad-7-pro",
+      "color": "Gray",
+      "file": "watches-tablets/xiaomi-pad-7-pro-gray.png",
+      "url": "https://i05.appmifile.com/452_item_es/26/02/2025/49bba83b8521b367c2dcba3d020bb42c.png",
+      "source": "https://www.mi.com/es/product/xiaomi-pad-7-pro/buy/",
+      "side": false,
+      "sourceLabel": "Xiaomi Pad 7 Pro Gris 12 GB + 512 GB",
+      "sha256": "d5d933b1afd890f47ec127730c136116823cbc0d37f49d1a8a34abb5bab96ce1"
+    },
+    {
+      "slug": "xiaomi-pad-7-pro",
+      "color": "Blue",
+      "file": "watches-tablets/xiaomi-pad-7-pro-blue.png",
+      "url": "https://i05.appmifile.com/499_item_es/26/02/2025/974171836b77516fd8ed745d75a2e2af.png",
+      "source": "https://www.mi.com/es/product/xiaomi-pad-7-pro/buy/",
+      "side": false,
+      "sourceLabel": "Xiaomi Pad 7 Pro Azul  12 GB + 512 GB",
+      "sha256": "03c9e6d67ed7baee059f82193288e85f5a52f7b44271f0392d869da670d03dea"
+    },
+    {
+      "slug": "xiaomi-pad-7-pro",
+      "color": "Green",
+      "file": "watches-tablets/xiaomi-pad-7-pro-green.png",
+      "url": "https://i05.appmifile.com/901_item_es/26/02/2025/4ba52c691a1323607264e194c48590fd.png",
+      "source": "https://www.mi.com/es/product/xiaomi-pad-7-pro/buy/",
+      "side": false,
+      "sourceLabel": "Xiaomi Pad 7 Pro Verde 8 GB + 256 GB",
+      "sha256": "6ac0254b846ee8c3f8f6952c0255bfe41775c0a1979a1397dec9e643a6ea1996"
+    },
+    {
+      "slug": "samsung-galaxy-watch8",
+      "color": "Graphite",
+      "file": "watches-tablets/samsung-galaxy-watch8-graphite.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/global/global-wearable-Galaxy_Watch8_graphite_44_Side_Sport_ml_graphite_1600x864_PC-549944666?wid=1600&fmt=png-alpha",
+      "source": "https://www.samsung.com/uk/watches/galaxy-watch8/buy/",
+      "sha256": "bea0fc825a820e1fb497ce7dbaecc74ead7a92797e90d5ba3aa342e4869d2e2b"
+    },
+    {
+      "slug": "samsung-galaxy-watch8",
+      "color": "Silver",
+      "file": "watches-tablets/samsung-galaxy-watch8-silver.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/global/global-wearable-Galaxy_Watch8_silver_44_Side_Sport_ml_white_1600x864_PC-549979747?wid=1600&fmt=png-alpha",
+      "source": "https://www.samsung.com/uk/watches/galaxy-watch8/buy/",
+      "sha256": "ea9e0aa4ee8c074a1eae9faca4537841cbda634c108241d0b23ce8bbf40c1509"
+    },
+    {
+      "slug": "samsung-galaxy-watch-ultra",
+      "color": "Titanium Gray",
+      "file": "watches-tablets/samsung-galaxy-watch-ultra-titanium-gray.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/global/global-wearable-Galaxy_Watch_Ultra_grey_Side_Marine_orange_1600x864_PC-549933499?wid=1600&fmt=png-alpha",
+      "source": "https://www.samsung.com/uk/watches/galaxy-watch-ultra/buy/",
+      "sha256": "96f138909bff47e37eebb51f86b60db3ef5515d69fb1dff4b18494f3766218cf"
+    },
+    {
+      "slug": "samsung-galaxy-watch-ultra",
+      "color": "Titanium Silver",
+      "file": "watches-tablets/samsung-galaxy-watch-ultra-titanium-silver.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/global/global-wearable-Galaxy_Watch_Ultra_silver_Side_Marine_dark_grey_1600x864_PC-549933300?wid=1600&fmt=png-alpha",
+      "source": "https://www.samsung.com/uk/watches/galaxy-watch-ultra/buy/",
+      "sha256": "2c4d9412c342a13acd16632789841dcdd80792b1c0894f3c188196ca91333701"
+    },
+    {
+      "slug": "samsung-galaxy-watch-ultra",
+      "color": "Titanium White",
+      "file": "watches-tablets/samsung-galaxy-watch-ultra-titanium-white.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/global/global-wearable-Galaxy_Watch_Ultra_white_Side_Marine_white_1600x864_PC-549933057?wid=1600&fmt=png-alpha",
+      "source": "https://www.samsung.com/uk/watches/galaxy-watch-ultra/buy/",
+      "sha256": "56c08a7de84baf36753515bf3bc3f2bc78e30e5ce87b3eeec785faf421e0e98b"
+    },
+    {
+      "slug": "samsung-galaxy-watch-9",
+      "color": "Cream",
+      "file": "watches-tablets/samsung-galaxy-watch-9-cream-40mm.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/global/wearable/f2607/global-wearable-Galaxy_Watch9_Cream_40_Side_Sport_Cream_1600x864_PC-554010176?wid=1600&fmt=png-alpha",
+      "source": "https://www.samsung.com/uk/watches/galaxy-watch9/buy/",
+      "memory": "40mm",
+      "sha256": "de9114f22eca9122848dda199ec58c5901d1b6b5be07843e02e1a800c38bc087"
+    },
+    {
+      "slug": "samsung-galaxy-watch-9",
+      "color": "Graphite",
+      "file": "watches-tablets/samsung-galaxy-watch-9-graphite-40mm.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/global/wearable/f2607/global-wearable-Galaxy_Watch9_Graphite_40_Side_Sport_Black_1600x864_PC-554009076_10159706040894?wid=1600&fmt=png-alpha",
+      "source": "https://www.samsung.com/uk/watches/galaxy-watch9/buy/",
+      "memory": "40mm",
+      "sha256": "ca3aac5f5055a6168d05edd528f80cbf660e5f713ca00c5badda1966b59074b7"
+    },
+    {
+      "slug": "samsung-galaxy-watch-9",
+      "color": "Silver",
+      "file": "watches-tablets/samsung-galaxy-watch-9-silver-44mm.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/f2607/gallery/in-galaxy-watch9-l350-sm-l350nzsains-553764042?wid=1200&hei=1200&fmt=png-alpha",
+      "source": "https://www.samsung.com/in/watches/galaxy-watch/galaxy-watch9-44mm-silver-bluetooth-sm-l350nzsains/buy/",
+      "memory": "44mm",
+      "sha256": "d6f2f67a3eb28b7246670e7ca4b48445d16a8072fb5bdcac9a05ccedafc54e19"
+    },
+    {
+      "slug": "samsung-galaxy-watch-9",
+      "color": "Graphite",
+      "file": "watches-tablets/samsung-galaxy-watch-9-graphite-44mm.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/f2607/gallery/in-galaxy-watch9-l350-sm-l350nzkains-553764007?wid=1200&hei=1200&fmt=png-alpha",
+      "source": "https://www.samsung.com/in/watches/galaxy-watch/galaxy-watch9-44mm-graphite-bluetooth-sm-l350nzkains/buy/",
+      "memory": "44mm",
+      "sha256": "99edfd83f53bb5e4bce32275794d9ee83fdcf3a279e568ccb1ac4ddb9ef6820a"
+    },
+    {
+      "slug": "samsung-galaxy-watch8-classic",
+      "color": "Black",
+      "file": "watches-tablets/samsung-galaxy-watch8-classic-black-46mm.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/in/f2507/gallery/in-galaxy-watch8-classic-l500-sm-l500nzkains-547659988?wid=1200&hei=1200&fmt=png-alpha",
+      "source": "https://www.samsung.com/in/watches/galaxy-watch/galaxy-watch8-classic-46mm-black-bluetooth-sm-l500nzkains/buy/",
+      "memory": "46mm",
+      "sha256": "0bc34a88b9253ffb7b613887a9f56e44a2fe335ff496dc540cf701a858148e53"
+    },
+    {
+      "slug": "samsung-galaxy-watch8-classic",
+      "color": "White",
+      "file": "watches-tablets/samsung-galaxy-watch8-classic-white-46mm.png",
+      "url": "https://images.samsung.com/is/image/samsung/p6pim/ca/f2507/gallery/ca-galaxy-watch8-classic-l500-sm-l500nzwaxac-thumb-547648709?wid=1200&hei=1200&fmt=png-alpha",
+      "source": "https://www.samsung.com/ca/watches/galaxy-watch/galaxy-watch8-classic-46mm-white-bluetooth-sm-l500nzwaxac/",
+      "memory": "46mm",
+      "sha256": "1c9fa89ca99e2f543b3755639c067d4bab6b04287111a9d33c85281a0e9c8d51"
+    }
+  ]
+}

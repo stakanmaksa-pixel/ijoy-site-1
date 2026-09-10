@@ -3726,5 +3726,317 @@
     "y": 131,
     "w": 987,
     "h": 1338
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-fit-5-silver.png": {
+    "width": 580,
+    "height": 800,
+    "x": 95,
+    "y": 68,
+    "w": 390,
+    "h": 664
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-fit-5-purple.png": {
+    "width": 580,
+    "height": 800,
+    "x": 93,
+    "y": 68,
+    "w": 393,
+    "h": 664
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-fit-5-green.png": {
+    "width": 580,
+    "height": 800,
+    "x": 94,
+    "y": 68,
+    "w": 392,
+    "h": 664
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-fit-5-white.png": {
+    "width": 580,
+    "height": 800,
+    "x": 94,
+    "y": 68,
+    "w": 392,
+    "h": 664
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-fit-5-black.png": {
+    "width": 580,
+    "height": 800,
+    "x": 94,
+    "y": 68,
+    "w": 392,
+    "h": 664
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-fit-5-pro-orange.png": {
+    "width": 1160,
+    "height": 1600,
+    "x": 136,
+    "y": 86,
+    "w": 889,
+    "h": 1427
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-fit-5-pro-white.png": {
+    "width": 1160,
+    "height": 1600,
+    "x": 136,
+    "y": 78,
+    "w": 889,
+    "h": 1443
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-fit-5-pro-black.png": {
+    "width": 1160,
+    "height": 1600,
+    "x": 136,
+    "y": 78,
+    "w": 889,
+    "h": 1443
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-ultimate-2-black.png": {
+    "width": 548,
+    "height": 800,
+    "x": 36,
+    "y": 56,
+    "w": 476,
+    "h": 688
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-ultimate-2-blue.png": {
+    "width": 548,
+    "height": 800,
+    "x": 35,
+    "y": 56,
+    "w": 478,
+    "h": 688
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-ultimate-2-green.png": {
+    "width": 548,
+    "height": 800,
+    "x": 34,
+    "y": 55,
+    "w": 480,
+    "h": 690
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-gt-runner-2-racing-legend.png": {
+    "width": 756,
+    "height": 800,
+    "x": 139,
+    "y": 0,
+    "w": 479,
+    "h": 800
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-gt-runner-2-dusk-blue.png": {
+    "width": 1512,
+    "height": 1600,
+    "x": 278,
+    "y": 0,
+    "w": 958,
+    "h": 1600
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-gt-runner-2-dawn-orange.png": {
+    "width": 1512,
+    "height": 1600,
+    "x": 278,
+    "y": 0,
+    "w": 958,
+    "h": 1600
+  },
+  "/catalog/product-photos/watches-tablets/huawei-watch-gt-runner-2-midnight-black.png": {
+    "width": 1512,
+    "height": 1600,
+    "x": 278,
+    "y": 0,
+    "w": 956,
+    "h": 1600
+  },
+  "/catalog/product-photos/watches-tablets/huawei-matepad-mini-spruce-green.png": {
+    "width": 800,
+    "height": 700,
+    "x": 0,
+    "y": 81,
+    "w": 800,
+    "h": 538
+  },
+  "/catalog/product-photos/watches-tablets/huawei-matepad-mini-graphite-black.png": {
+    "width": 800,
+    "height": 700,
+    "x": 0,
+    "y": 81,
+    "w": 800,
+    "h": 538
+  },
+  "/catalog/product-photos/watches-tablets/huawei-matepad-air-sakura-pink.png": {
+    "width": 800,
+    "height": 700,
+    "x": 0,
+    "y": 68,
+    "w": 800,
+    "h": 564
+  },
+  "/catalog/product-photos/watches-tablets/huawei-matepad-air-airy-blue.png": {
+    "width": 800,
+    "height": 700,
+    "x": 0,
+    "y": 68,
+    "w": 800,
+    "h": 564
+  },
+  "/catalog/product-photos/watches-tablets/huawei-matepad-air-white.png": {
+    "width": 800,
+    "height": 700,
+    "x": 0,
+    "y": 68,
+    "w": 800,
+    "h": 564
+  },
+  "/catalog/product-photos/watches-tablets/huawei-matepad-pro-max-blue.png": {
+    "width": 756,
+    "height": 960,
+    "x": 33,
+    "y": 241,
+    "w": 690,
+    "h": 478
+  },
+  "/catalog/product-photos/watches-tablets/huawei-matepad-pro-max-space-gray.png": {
+    "width": 756,
+    "height": 960,
+    "x": 33,
+    "y": 240,
+    "w": 690,
+    "h": 480
+  },
+  "/catalog/product-photos/watches-tablets/xiaomi-pad-7-gray.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 218,
+    "y": 131,
+    "w": 1164,
+    "h": 1337
+  },
+  "/catalog/product-photos/watches-tablets/xiaomi-pad-7-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 218,
+    "y": 131,
+    "w": 1164,
+    "h": 1337
+  },
+  "/catalog/product-photos/watches-tablets/xiaomi-pad-7-green.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 218,
+    "y": 131,
+    "w": 1164,
+    "h": 1337
+  },
+  "/catalog/product-photos/watches-tablets/xiaomi-pad-7-pro-gray.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 218,
+    "y": 130,
+    "w": 1164,
+    "h": 1339
+  },
+  "/catalog/product-photos/watches-tablets/xiaomi-pad-7-pro-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 218,
+    "y": 130,
+    "w": 1164,
+    "h": 1339
+  },
+  "/catalog/product-photos/watches-tablets/xiaomi-pad-7-pro-green.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 218,
+    "y": 130,
+    "w": 1164,
+    "h": 1339
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch8-graphite.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 473,
+    "y": 48,
+    "w": 687,
+    "h": 787
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch8-silver.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 473,
+    "y": 49,
+    "w": 687,
+    "h": 786
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch-ultra-titanium-gray.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 464,
+    "y": 31,
+    "w": 670,
+    "h": 802
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch-ultra-titanium-silver.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 464,
+    "y": 32,
+    "w": 670,
+    "h": 800
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch-ultra-titanium-white.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 464,
+    "y": 32,
+    "w": 670,
+    "h": 800
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch-9-cream-40mm.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 492,
+    "y": 68,
+    "w": 649,
+    "h": 750
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch-9-graphite-40mm.png": {
+    "width": 1600,
+    "height": 864,
+    "x": 492,
+    "y": 67,
+    "w": 650,
+    "h": 752
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch-9-silver-44mm.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 300,
+    "y": 253,
+    "w": 600,
+    "h": 695
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch-9-graphite-44mm.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 300,
+    "y": 253,
+    "w": 600,
+    "h": 695
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch8-classic-black-46mm.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 289,
+    "y": 255,
+    "w": 594,
+    "h": 691
+  },
+  "/catalog/product-photos/watches-tablets/samsung-galaxy-watch8-classic-white-46mm.png": {
+    "width": 1200,
+    "height": 1200,
+    "x": 461,
+    "y": 448,
+    "w": 267,
+    "h": 304
   }
 }
