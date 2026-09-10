@@ -154,8 +154,8 @@ export default function FavoritesPage() {
                     <span className="text-base font-semibold text-foreground">
                       {item.price != null ? formatPrice(item.price) : "Уточняйте у менеджера"}
                     </span>
-                    {!item.inStock && (
-                      <span className="text-xs text-zinc-400">Под заказ</span>
+                    {!item.inStock && item.price != null && (
+                      <span className="text-xs text-zinc-400">Уточняйте у менеджера</span>
                     )}
                   </div>
                 </div>

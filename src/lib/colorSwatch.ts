@@ -3,7 +3,10 @@
 // регистра) → эвристика по ключевым словам внутри названия → серая
 // заглушка, если ничего не подошло.
 
+import { PHONE_COLORS } from "./phoneColors";
+
 const EXACT: Record<string, string> = {
+  ...Object.fromEntries(Object.entries(PHONE_COLORS).map(([key,[,hex]])=>[key,hex])),
   // Approximate on-screen swatches; keep manufacturer colour names in the DB.
   obsidian: "#303030", "obsidian (matte)": "#303030", frost: "#dce6e7",
   pistachio: "#d3ddad", hibiscus: "#df889e", canyon: "#c77858",
@@ -88,6 +91,7 @@ const KEYWORDS: [RegExp, string][] = [
 // сохраняем оригинал (он нужен менеджеру и для точной модификации), а
 // покупателю показываем понятный русский вариант с оригиналом в скобках.
 const RUSSIAN_NAMES: Record<string, string> = {
+  ...Object.fromEntries(Object.entries(PHONE_COLORS).map(([key,[label]])=>[key,label])),
   obsidian: "Обсидиан", "obsidian (matte)": "Матовый обсидиан", frost: "Иней",
   pistachio: "Фисташковый", hibiscus: "Гибискус", canyon: "Каньон",
   olive: "Оливковый", fog: "Туман", berry: "Ягодный", gray: "Серый",

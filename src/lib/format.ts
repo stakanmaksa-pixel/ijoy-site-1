@@ -1,3 +1,5 @@
+export const PRICE_ON_REQUEST = "Уточняйте у менеджера";
+
 export function formatPrice(value: number | string): string {
   const num = typeof value === "string" ? Number(value) : value;
   return new Intl.NumberFormat("ru-RU", {

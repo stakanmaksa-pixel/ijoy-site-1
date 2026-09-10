@@ -1,0 +1,121 @@
+{
+  "huawei-mate-x7": {
+    "Cloud Brocade White": "/catalog/product-photos/phones/huawei-mate-x7-cloud-brocade-white.png",
+    "Nebula Red": "/catalog/product-photos/phones/huawei-mate-x7-nebula-red.png",
+    "Black": "/catalog/product-photos/phones/huawei-mate-x7-black.png"
+  },
+  "huawei-mate-xt-ultimate-design": {
+    "Red": "/catalog/product-photos/phones/huawei-mate-xt-ultimate-design-red.png",
+    "Black": "/catalog/product-photos/phones/huawei-mate-xt-ultimate-design-black.png"
+  },
+  "huawei-mate-80-pro": {
+    "Black": "/catalog/product-photos/phones/huawei-mate-80-pro-black.png",
+    "Green": "/catalog/product-photos/phones/huawei-mate-80-pro-green.png",
+    "Gold": "/catalog/product-photos/phones/huawei-mate-80-pro-gold.png"
+  },
+  "huawei-nova-15-max": {
+    "Blush Gold": "/catalog/product-photos/phones/huawei-nova-15-max-blush-gold.png",
+    "Lake Cyan": "/catalog/product-photos/phones/huawei-nova-15-max-lake-cyan.png",
+    "Golden Black": "/catalog/product-photos/phones/huawei-nova-15-max-golden-black.png"
+  },
+  "huawei-nova-15-pro": {
+    "Mint Green": "/catalog/product-photos/phones/huawei-nova-15-pro-mint-green.png",
+    "Lavender Purple": "/catalog/product-photos/phones/huawei-nova-15-pro-lavender-purple.png",
+    "White": "/catalog/product-photos/phones/huawei-nova-15-pro-white.png",
+    "Black": "/catalog/product-photos/phones/huawei-nova-15-pro-black.png"
+  },
+  "huawei-nova-15": {
+    "Mint Green": "/catalog/product-photos/phones/huawei-nova-15-mint-green.png",
+    "White": "/catalog/product-photos/phones/huawei-nova-15-white.png",
+    "Black": "/catalog/product-photos/phones/huawei-nova-15-black.png"
+  },
+  "huawei-pura-80-pro": {
+    "Glazed Red": "/catalog/product-photos/phones/huawei-pura-80-pro-glazed-red.png",
+    "Glazed White": "/catalog/product-photos/phones/huawei-pura-80-pro-glazed-white.png",
+    "Glazed Black": "/catalog/product-photos/phones/huawei-pura-80-pro-glazed-black.png"
+  },
+  "huawei-pura-80-ultra": {
+    "Prestige Gold": "/catalog/product-photos/phones/huawei-pura-80-ultra-prestige-gold.png",
+    "Golden Black": "/catalog/product-photos/phones/huawei-pura-80-ultra-golden-black.png"
+  },
+  "huawei-pura-80": {
+    "Velvet Gold": "/catalog/product-photos/phones/huawei-pura-80-velvet-gold.png",
+    "Velvet White": "/catalog/product-photos/phones/huawei-pura-80-velvet-white.png",
+    "Velvet Black": "/catalog/product-photos/phones/huawei-pura-80-velvet-black.png"
+  },
+  "huawei-pura-90s-pro-max": {
+    "Blush Gold": "/catalog/product-photos/phones/huawei-pura-90s-pro-max-blush-gold.png",
+    "Orange Ocean": "/catalog/product-photos/phones/huawei-pura-90s-pro-max-orange-ocean.png",
+    "Blaze Purple": "/catalog/product-photos/phones/huawei-pura-90s-pro-max-blaze-purple.png",
+    "Graphite Black": "/catalog/product-photos/phones/huawei-pura-90s-pro-max-graphite-black.png"
+  },
+  "huawei-pura-90s-pro": {
+    "Guava Soda": "/catalog/product-photos/phones/huawei-pura-90s-pro-guava-soda.png",
+    "Orange Soda": "/catalog/product-photos/phones/huawei-pura-90s-pro-orange-soda.png",
+    "Coconut White": "/catalog/product-photos/phones/huawei-pura-90s-pro-coconut-white.png",
+    "Mulberry Black": "/catalog/product-photos/phones/huawei-pura-90s-pro-mulberry-black.png"
+  },
+  "honor-600-lite": {
+    "Sprout Green": "/catalog/product-photos/phones/honor-600-lite-sprout-green.png",
+    "Desert Gold": "/catalog/product-photos/phones/honor-600-lite-desert-gold.png",
+    "Velvet Grey": "/catalog/product-photos/phones/honor-600-lite-velvet-grey.png",
+    "Velvet Black": "/catalog/product-photos/phones/honor-600-lite-velvet-black.png"
+  },
+  "honor-600-pro": {
+    "Golden White": "/catalog/product-photos/phones/honor-600-pro-golden-white.png",
+    "Orange": "/catalog/product-photos/phones/honor-600-pro-orange.png",
+    "Black": "/catalog/product-photos/phones/honor-600-pro-black.png"
+  },
+  "honor-600": {
+    "Orange": "/catalog/product-photos/phones/honor-600-orange.png",
+    "Black": "/catalog/product-photos/phones/honor-600-black.png",
+    "Golden White": "/catalog/product-photos/phones/honor-600-golden-white.png"
+  },
+  "honor-magic-v6": {
+    "Red": "/catalog/product-photos/phones/honor-magic-v6-red.png",
+    "Gold": "/catalog/product-photos/phones/honor-magic-v6-gold.png",
+    "White": "/catalog/product-photos/phones/honor-magic-v6-white.png",
+    "Black": "/catalog/product-photos/phones/honor-magic-v6-black.png"
+  },
+  "honor-magic8-pro": {
+    "Sunrise Gold": "/catalog/product-photos/phones/honor-magic8-pro-sunrise-gold.png",
+    "Sky Cyan": "/catalog/product-photos/phones/honor-magic8-pro-sky-cyan.png",
+    "Black": "/catalog/product-photos/phones/honor-magic8-pro-black.png"
+  },
+  "honor-x9d": {
+    "Reddish Brown": "/catalog/product-photos/phones/honor-x9d-reddish-brown.png",
+    "Midnight Black": "/catalog/product-photos/phones/honor-x9d-midnight-black.png",
+    "Sunrise Gold": "/catalog/product-photos/phones/honor-x9d-sunrise-gold.png",
+    "Forest Green": "/catalog/product-photos/phones/honor-x9d-forest-green.png"
+  },
+  "oneplus-13s": {
+    "Green Silk": "/catalog/product-photos/phones/oneplus-13s-green-silk.png",
+    "Black Velvet": "/catalog/product-photos/phones/oneplus-13s-black-velvet.png",
+    "Pink Satin": "/catalog/product-photos/phones/oneplus-13s-pink-satin.png"
+  },
+  "oneplus-13": {
+    "Midnight Ocean": "/catalog/product-photos/phones/oneplus-13-midnight-ocean.png",
+    "Arctic Dawn": "/catalog/product-photos/phones/oneplus-13-arctic-dawn.png",
+    "Black Eclipse": "/catalog/product-photos/phones/oneplus-13-black-eclipse.png"
+  },
+  "oneplus-15r": {
+    "Mint Breeze": "/catalog/product-photos/phones/oneplus-15r-mint-breeze.png",
+    "Charcoal Black": "/catalog/product-photos/phones/oneplus-15r-charcoal-black.png",
+    "Electric Violet": "/catalog/product-photos/phones/oneplus-15r-electric-violet.png"
+  },
+  "oneplus-15": {
+    "Sand Storm": "/catalog/product-photos/phones/oneplus-15-sand-storm.png",
+    "Ultra Violet": "/catalog/product-photos/phones/oneplus-15-ultra-violet.png",
+    "Infinite Black": "/catalog/product-photos/phones/oneplus-15-infinite-black.png"
+  },
+  "oneplus-nord-5": {
+    "Marble Sands": "/catalog/product-photos/phones/oneplus-nord-5-marble-sands.png",
+    "Dry Ice": "/catalog/product-photos/phones/oneplus-nord-5-dry-ice.png",
+    "Phantom Grey": "/catalog/product-photos/phones/oneplus-nord-5-phantom-grey.png"
+  },
+  "oneplus-nord-ce5": {
+    "Marble Mist": "/catalog/product-photos/phones/oneplus-nord-ce5-marble-mist.png",
+    "Nexus Blue": "/catalog/product-photos/phones/oneplus-nord-ce5-nexus-blue.png",
+    "Black Infinity": "/catalog/product-photos/phones/oneplus-nord-ce5-black-infinity.png"
+  }
+}

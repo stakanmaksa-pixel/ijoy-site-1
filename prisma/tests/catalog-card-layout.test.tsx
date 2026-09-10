@@ -31,7 +31,8 @@ test("variant identity, label, nullable price and stock survive the layout chang
     const html = renderToStaticMarkup(<VariantCard slug="ipad-pro-11-m5" variant={unavailable} />);
     assert(!html.includes("В корзину"));
     assert(html.includes("Добавить в избранное"));
-    assert(html.includes(unavailable.price == null ? "Уточняйте у менеджера" : "Под заказ"));
+    assert.equal((html.match(/Уточняйте у менеджера/g) ?? []).length, 1);
+    assert(!html.includes("Под заказ"));
   }
 });
 

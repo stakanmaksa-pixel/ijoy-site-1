@@ -21,9 +21,13 @@ const phones: Phone[] = [
 export const XIAOMI_PHONE_CATALOG: RefreshProduct[] = phones.map(p=>({
   slug:p.slug,name:p.name,brand:p.slug.startsWith("poco-")?"POCO":"Xiaomi",category:"telefony",
   aliases:p.slug.startsWith("redmi-")?[`xiaomi-${p.slug}`]:[],
-  description:`${p.name} — смартфон с процессором ${p.chip}, экраном ${p.screen} и аккумулятором ${p.battery}. Выберите объём оперативной и встроенной памяти и цвет. Фото демонстрирует цветовую линейку модели.`,
+  description:`${p.name} — смартфон с процессором ${p.chip}, экраном ${p.screen} и аккумулятором ${p.battery}. Выберите объём оперативной и встроенной памяти и цвет. Для каждой расцветки показаны отдельные фотографии устройства.`,
   highlights:[p.screen,p.chip,`Аккумулятор ${p.battery}; зарядка до ${p.charging}`,`Подключение ${p.network}`],
   specs:{"Дисплей":p.screen,"Процессор":p.chip,"Память":p.sizes.join(" / "),"Обозначение памяти":"Первое число — оперативная память (ГБ), второе — накопитель","Аккумулятор":p.battery,"Зарядка":`До ${p.charging}; доступная мощность зависит от зарядного устройства и условий`,"Сотовая связь":p.network,"Цвета":p.colors.join(", "),"SIM":"Формат SIM, поддержка eSIM и частоты зависят от региональной поставки; уточняйте перед покупкой","Комплектация":"Смартфон и документация; наличие кабеля, адаптера питания и чехла зависит от поставки","Важно":"Характеристики указаны для официальной международной версии. Доступность цветов, памяти и отдельных функций зависит от рынка"},
   sources:[p.source??`https://www.mi.com/global/product/${p.slug}/specs/`],
-  variants:p.sizes.flatMap(memory=>p.colors.map(color=>({memory,color,region:null,image:(photos as Record<string,string>)[p.slug]}))),
+  variants:p.sizes.flatMap(memory=>p.colors.map(color=>{
+    const gallery=(photos as Record<string,Record<string,string[]>>)[p.slug]?.[color];
+    if(!gallery?.length)throw new Error(`Missing color photo: ${p.slug} / ${color}`);
+    return {memory,color,region:null,image:gallery[0],images:gallery};
+  })),
 }));

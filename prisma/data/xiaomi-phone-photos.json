@@ -1,17 +1,227 @@
 {
-  "poco-f9-ultra": "/catalog/product-photos/phones/poco-f9-ultra-colors.png",
-  "poco-c81-pro": "/catalog/product-photos/phones/poco-c81-pro-colors.png",
-  "poco-f8-pro": "/catalog/product-photos/phones/poco-f8-pro-colors.png",
-  "poco-f8-ultra": "/catalog/product-photos/phones/poco-f8-ultra-colors.png",
-  "poco-x8-pro-max": "/catalog/product-photos/phones/poco-x8-pro-max-colors.png",
-  "poco-x8-pro": "/catalog/product-photos/phones/poco-x8-pro-colors.png",
-  "redmi-note-15-5g": "/catalog/product-photos/phones/redmi-note-15-5g-colors.png",
-  "redmi-note-15-pro-5g": "/catalog/product-photos/phones/redmi-note-15-pro-5g-colors.png",
-  "redmi-note-15-pro-plus-5g": "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-colors.png",
-  "redmi-note-15-pro": "/catalog/product-photos/phones/redmi-note-15-pro-colors.png",
-  "redmi-note-15": "/catalog/product-photos/phones/redmi-note-15-colors.png",
-  "xiaomi-17-ultra": "/catalog/product-photos/phones/xiaomi-17-ultra-colors.png",
-  "xiaomi-17t-pro": "/catalog/product-photos/phones/xiaomi-17t-pro-colors.png",
-  "xiaomi-17t": "/catalog/product-photos/phones/xiaomi-17t-colors.png",
-  "xiaomi-17": "/catalog/product-photos/phones/xiaomi-17-colors.jpg"
+  "poco-f9-ultra": {
+    "Black": [
+      "/catalog/product-photos/phones/poco-f9-ultra-black.png",
+      "/catalog/product-photos/phones/poco-f9-ultra-black-side.png"
+    ],
+    "Red": [
+      "/catalog/product-photos/phones/poco-f9-ultra-red.png",
+      "/catalog/product-photos/phones/poco-f9-ultra-red-side.png"
+    ]
+  },
+  "poco-c81-pro": {
+    "Gold": [
+      "/catalog/product-photos/phones/poco-c81-pro-gold.png",
+      "/catalog/product-photos/phones/poco-c81-pro-gold-side.png"
+    ],
+    "Green": [
+      "/catalog/product-photos/phones/poco-c81-pro-green.png",
+      "/catalog/product-photos/phones/poco-c81-pro-green-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/poco-c81-pro-black.png",
+      "/catalog/product-photos/phones/poco-c81-pro-black-side.png"
+    ]
+  },
+  "poco-f8-pro": {
+    "Titanium Silver": [
+      "/catalog/product-photos/phones/poco-f8-pro-titanium-silver.png",
+      "/catalog/product-photos/phones/poco-f8-pro-titanium-silver-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/poco-f8-pro-black.png",
+      "/catalog/product-photos/phones/poco-f8-pro-black-side.png"
+    ],
+    "Blue": [
+      "/catalog/product-photos/phones/poco-f8-pro-blue.png",
+      "/catalog/product-photos/phones/poco-f8-pro-blue-side.png"
+    ]
+  },
+  "poco-f8-ultra": {
+    "Denim Blue": [
+      "/catalog/product-photos/phones/poco-f8-ultra-denim-blue.png",
+      "/catalog/product-photos/phones/poco-f8-ultra-denim-blue-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/poco-f8-ultra-black.png",
+      "/catalog/product-photos/phones/poco-f8-ultra-black-side.png"
+    ]
+  },
+  "poco-x8-pro-max": {
+    "Black": [
+      "/catalog/product-photos/phones/poco-x8-pro-max-black.png",
+      "/catalog/product-photos/phones/poco-x8-pro-max-black-side.png"
+    ],
+    "White": [
+      "/catalog/product-photos/phones/poco-x8-pro-max-white.png",
+      "/catalog/product-photos/phones/poco-x8-pro-max-white-side.png"
+    ],
+    "Blue": [
+      "/catalog/product-photos/phones/poco-x8-pro-max-blue.png",
+      "/catalog/product-photos/phones/poco-x8-pro-max-blue-side.png"
+    ],
+    "Orange": [
+      "/catalog/product-photos/phones/poco-x8-pro-max-orange.jpeg"
+    ]
+  },
+  "poco-x8-pro": {
+    "White": [
+      "/catalog/product-photos/phones/poco-x8-pro-white.png",
+      "/catalog/product-photos/phones/poco-x8-pro-white-side.png"
+    ],
+    "Yellow": [
+      "/catalog/product-photos/phones/poco-x8-pro-yellow.png",
+      "/catalog/product-photos/phones/poco-x8-pro-yellow-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/poco-x8-pro-black.png",
+      "/catalog/product-photos/phones/poco-x8-pro-black-side.png"
+    ],
+    "Mint Green": [
+      "/catalog/product-photos/phones/poco-x8-pro-mint-green.png",
+      "/catalog/product-photos/phones/poco-x8-pro-mint-green-side.png"
+    ]
+  },
+  "redmi-note-15-5g": {
+    "Mist Purple": [
+      "/catalog/product-photos/phones/redmi-note-15-5g-mist-purple.png",
+      "/catalog/product-photos/phones/redmi-note-15-5g-mist-purple-side.png"
+    ],
+    "Glacier Blue": [
+      "/catalog/product-photos/phones/redmi-note-15-5g-glacier-blue.png",
+      "/catalog/product-photos/phones/redmi-note-15-5g-glacier-blue-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/redmi-note-15-5g-black.png",
+      "/catalog/product-photos/phones/redmi-note-15-5g-black-side.png"
+    ]
+  },
+  "redmi-note-15-pro-5g": {
+    "Black": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-5g-black.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-5g-black-side.png"
+    ],
+    "Glacier Blue": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-5g-glacier-blue.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-5g-glacier-blue-side.png"
+    ],
+    "Titanium Color": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-5g-titanium-color.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-5g-titanium-color-side.png"
+    ],
+    "Mist Purple": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-5g-mist-purple.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-5g-mist-purple-side.png"
+    ]
+  },
+  "redmi-note-15-pro-plus-5g": {
+    "Mocha Brown": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-mocha-brown.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-mocha-brown-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-black.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-black-side.png"
+    ],
+    "Glacier Blue": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-glacier-blue.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-glacier-blue-side.png"
+    ]
+  },
+  "redmi-note-15-pro": {
+    "Black": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-black.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-black-side.png"
+    ],
+    "Glacier Blue": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-glacier-blue.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-glacier-blue-side.png"
+    ],
+    "Titanium Color": [
+      "/catalog/product-photos/phones/redmi-note-15-pro-titanium-color.png",
+      "/catalog/product-photos/phones/redmi-note-15-pro-titanium-color-side.png"
+    ]
+  },
+  "redmi-note-15": {
+    "Glacier Blue": [
+      "/catalog/product-photos/phones/redmi-note-15-glacier-blue.png",
+      "/catalog/product-photos/phones/redmi-note-15-glacier-blue-side.png"
+    ],
+    "Forest Green": [
+      "/catalog/product-photos/phones/redmi-note-15-forest-green.png",
+      "/catalog/product-photos/phones/redmi-note-15-forest-green-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/redmi-note-15-black.png",
+      "/catalog/product-photos/phones/redmi-note-15-black-side.png"
+    ],
+    "Purple": [
+      "/catalog/product-photos/phones/redmi-note-15-purple.png",
+      "/catalog/product-photos/phones/redmi-note-15-purple-side.png"
+    ]
+  },
+  "xiaomi-17-ultra": {
+    "White": [
+      "/catalog/product-photos/phones/xiaomi-17-ultra-white.png",
+      "/catalog/product-photos/phones/xiaomi-17-ultra-white-side.png"
+    ],
+    "Starlit Green": [
+      "/catalog/product-photos/phones/xiaomi-17-ultra-starlit-green.png",
+      "/catalog/product-photos/phones/xiaomi-17-ultra-starlit-green-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/xiaomi-17-ultra-black.png",
+      "/catalog/product-photos/phones/xiaomi-17-ultra-black-side.png"
+    ]
+  },
+  "xiaomi-17t-pro": {
+    "Deep Blue": [
+      "/catalog/product-photos/phones/xiaomi-17t-pro-deep-blue.png",
+      "/catalog/product-photos/phones/xiaomi-17t-pro-deep-blue-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/xiaomi-17t-pro-black.png",
+      "/catalog/product-photos/phones/xiaomi-17t-pro-black-side.png"
+    ],
+    "Deep Violet": [
+      "/catalog/product-photos/phones/xiaomi-17t-pro-deep-violet.png",
+      "/catalog/product-photos/phones/xiaomi-17t-pro-deep-violet-side.png"
+    ]
+  },
+  "xiaomi-17t": {
+    "Violet": [
+      "/catalog/product-photos/phones/xiaomi-17t-violet.png",
+      "/catalog/product-photos/phones/xiaomi-17t-violet-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/xiaomi-17t-black.png",
+      "/catalog/product-photos/phones/xiaomi-17t-black-side.png"
+    ],
+    "Blue": [
+      "/catalog/product-photos/phones/xiaomi-17t-blue.png",
+      "/catalog/product-photos/phones/xiaomi-17t-blue-side.png"
+    ],
+    "Opal White": [
+      "/catalog/product-photos/phones/xiaomi-17t-opal-white.png",
+      "/catalog/product-photos/phones/xiaomi-17t-opal-white-side.png"
+    ]
+  },
+  "xiaomi-17": {
+    "Ice Blue": [
+      "/catalog/product-photos/phones/xiaomi-17-ice-blue.png",
+      "/catalog/product-photos/phones/xiaomi-17-ice-blue-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/xiaomi-17-black.png",
+      "/catalog/product-photos/phones/xiaomi-17-black-side.png"
+    ],
+    "Venture Green": [
+      "/catalog/product-photos/phones/xiaomi-17-venture-green.png",
+      "/catalog/product-photos/phones/xiaomi-17-venture-green-side.png"
+    ],
+    "Alpine Pink": [
+      "/catalog/product-photos/phones/xiaomi-17-alpine-pink.png",
+      "/catalog/product-photos/phones/xiaomi-17-alpine-pink-side.png"
+    ]
+  }
 }

@@ -1,0 +1,1729 @@
+{
+  "verifiedAt": "2026-09-10",
+  "method": "Original color-specific manufacturer images; POCO X8 Pro Max Orange from the retailer linked in its source. No AI recoloring or editing.",
+  "entries": [
+    {
+      "slug": "huawei-mate-x7",
+      "color": "Cloud Brocade White",
+      "file": "phones/huawei-mate-x7-cloud-brocade-white.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/mate-x7/specs-white.png",
+      "source": "https://consumer.huawei.com/ru/phones/mate-x7/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-mate-x7-cloud-brocade-white.png",
+      "sha256": "9a4c3e5b0ffb6be85fa9d10ea89337920877d569a70a04505e88ee349426afb5"
+    },
+    {
+      "slug": "huawei-mate-x7",
+      "color": "Nebula Red",
+      "file": "phones/huawei-mate-x7-nebula-red.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/mate-x7/specs-red.png",
+      "source": "https://consumer.huawei.com/ru/phones/mate-x7/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-mate-x7-nebula-red.png",
+      "sha256": "34818434861208cf560113399704249793072fd2c8bd49829335b106d83624f1"
+    },
+    {
+      "slug": "huawei-mate-x7",
+      "color": "Black",
+      "file": "phones/huawei-mate-x7-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/mate-x7/specs-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/mate-x7/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-mate-x7-black.png",
+      "sha256": "c96ce39872909ae0b314320d72bed00527e24c4ccf8e3ae4d92a863fd735bf62"
+    },
+    {
+      "slug": "huawei-mate-xt-ultimate-design",
+      "color": "Red",
+      "file": "phones/huawei-mate-xt-ultimate-design-red.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/admin-image/phones/mate-xt-ultimate-design/specs/red.png",
+      "source": "https://consumer.huawei.com/ru/phones/mate-xt-ultimate-design/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-mate-xt-ultimate-design-red.png",
+      "sha256": "41cebae36c365c9e0d3a46f7dc9ccbd4eff636138d0c53e5cbaccf942addc919"
+    },
+    {
+      "slug": "huawei-mate-xt-ultimate-design",
+      "color": "Black",
+      "file": "phones/huawei-mate-xt-ultimate-design-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/admin-image/phones/mate-xt-ultimate-design/specs/blank.png",
+      "source": "https://consumer.huawei.com/ru/phones/mate-xt-ultimate-design/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-mate-xt-ultimate-design-black.png",
+      "sha256": "d20e75145924021b1f342ede36f1fdaa9cc2b4d1c50a6bc4ba98d89ef8691ab8"
+    },
+    {
+      "slug": "huawei-mate-80-pro",
+      "color": "Black",
+      "file": "phones/huawei-mate-80-pro-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/mate80-pro/specs-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/mate80-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-mate-80-pro-black.png",
+      "sha256": "b37b22e9f7a70ba1a235cfbe38c6672a4c0258402d0d966294c660df37900225"
+    },
+    {
+      "slug": "huawei-mate-80-pro",
+      "color": "Green",
+      "file": "phones/huawei-mate-80-pro-green.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/mate80-pro/specs-green.png",
+      "source": "https://consumer.huawei.com/ru/phones/mate80-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-mate-80-pro-green.png",
+      "sha256": "d5c4d8f7181cb1adb3800abfc87c8cc586956d1ca8614720b5604618f2103245"
+    },
+    {
+      "slug": "huawei-mate-80-pro",
+      "color": "Gold",
+      "file": "phones/huawei-mate-80-pro-gold.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/mate80-pro/specs-gold.png",
+      "source": "https://consumer.huawei.com/ru/phones/mate80-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-mate-80-pro-gold.png",
+      "sha256": "48147ec5cb7503ddaaeaea071429ec0ea5bd9980aa3cea0e057897e7ebd4497e"
+    },
+    {
+      "slug": "huawei-nova-15-max",
+      "color": "Blush Gold",
+      "file": "phones/huawei-nova-15-max-blush-gold.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15-max/specs-blush-gold.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15-max/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-max-blush-gold.png",
+      "sha256": "2eca8492b404299322987a4cf3f6db538b533251e360cb68d1580b377194ea2e"
+    },
+    {
+      "slug": "huawei-nova-15-max",
+      "color": "Lake Cyan",
+      "file": "phones/huawei-nova-15-max-lake-cyan.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15-max/specs-lake-cyan.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15-max/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-max-lake-cyan.png",
+      "sha256": "eaf23d20f55bbb10dda7c18f0a131dd6ff3c2bf0426ca956c56f06025d18e295"
+    },
+    {
+      "slug": "huawei-nova-15-max",
+      "color": "Golden Black",
+      "file": "phones/huawei-nova-15-max-golden-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15-max/specs-golden-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15-max/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-max-golden-black.png",
+      "sha256": "0e13be83096862a206ff74f5bef7a78d1dd12bde18950c00237002d5e9db0890"
+    },
+    {
+      "slug": "huawei-nova-15-pro",
+      "color": "Mint Green",
+      "file": "phones/huawei-nova-15-pro-mint-green.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15-pro/specs-green.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-pro-mint-green.png",
+      "sha256": "98dc778d2f136ad19932b113ab13dd0b053c0f65ce5360e0c008532be631bbdc"
+    },
+    {
+      "slug": "huawei-nova-15-pro",
+      "color": "Lavender Purple",
+      "file": "phones/huawei-nova-15-pro-lavender-purple.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15-pro/specs-purple.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-pro-lavender-purple.png",
+      "sha256": "452eed8182b6bb495e818faaa98eef75dcdf5cfbbfedf7ce445bce81beaee440"
+    },
+    {
+      "slug": "huawei-nova-15-pro",
+      "color": "White",
+      "file": "phones/huawei-nova-15-pro-white.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15-pro/specs-white.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-pro-white.png",
+      "sha256": "f4161c37ed77395771895653e8d4b9582bea0a23d63c475fdb1fc9b483f8e4c7"
+    },
+    {
+      "slug": "huawei-nova-15-pro",
+      "color": "Black",
+      "file": "phones/huawei-nova-15-pro-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15-pro/specs-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-pro-black.png",
+      "sha256": "1fa4ab31791243bb138c685e5765b6523c4435904cae6cebc7ebaf5235fdb046"
+    },
+    {
+      "slug": "huawei-nova-15",
+      "color": "Mint Green",
+      "file": "phones/huawei-nova-15-mint-green.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15/specs-green.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-mint-green.png",
+      "sha256": "f76ca415bdbb839c8dc7b8a3c0dc40f1796f82529ad88034bd2d23cf8bc86f1a"
+    },
+    {
+      "slug": "huawei-nova-15",
+      "color": "White",
+      "file": "phones/huawei-nova-15-white.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15/specs-white.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-white.png",
+      "sha256": "7d24311928ebdbb9169ca3db83816b7d29e1e5720f7a9a66a5464cf19472c5a2"
+    },
+    {
+      "slug": "huawei-nova-15",
+      "color": "Black",
+      "file": "phones/huawei-nova-15-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/nova15/specs-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/nova15/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-nova-15-black.png",
+      "sha256": "ad8b60fadf80b6863549ecbc3768369641e98d377208a987eb0a1132922669db"
+    },
+    {
+      "slug": "huawei-pura-80-pro",
+      "color": "Glazed Red",
+      "file": "phones/huawei-pura-80-pro-glazed-red.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura80-pro/specs-red.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura80-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-80-pro-glazed-red.png",
+      "sha256": "dc37a60c301a4bed98af8df7cabd3f335f505620c5382fcda5170ca61367669c"
+    },
+    {
+      "slug": "huawei-pura-80-pro",
+      "color": "Glazed White",
+      "file": "phones/huawei-pura-80-pro-glazed-white.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura80-pro/specs-white.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura80-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-80-pro-glazed-white.png",
+      "sha256": "7d4235e9dbb03ada0975f8b11c74aab5b3611c58e443002001e97ac9fbee2417"
+    },
+    {
+      "slug": "huawei-pura-80-pro",
+      "color": "Glazed Black",
+      "file": "phones/huawei-pura-80-pro-glazed-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura80-pro/specs-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura80-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-80-pro-glazed-black.png",
+      "sha256": "8cc70c5a7dc2fcac329f55171e2bf38a23d174369c9832462f7317b6ea3ce4a0"
+    },
+    {
+      "slug": "huawei-pura-80-ultra",
+      "color": "Prestige Gold",
+      "file": "phones/huawei-pura-80-ultra-prestige-gold.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura80-ultra/specs-gold.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura80-ultra/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-80-ultra-prestige-gold.png",
+      "sha256": "08a6aa31587090fa5764d3d7118ef774ba0ad78a7f0c01c47017b78cd3322ec0"
+    },
+    {
+      "slug": "huawei-pura-80-ultra",
+      "color": "Golden Black",
+      "file": "phones/huawei-pura-80-ultra-golden-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura80-ultra/specs-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura80-ultra/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-80-ultra-golden-black.png",
+      "sha256": "35b7f82be919263c6fdda729989320834824ee3c564fff0105c42ef2ba304812"
+    },
+    {
+      "slug": "huawei-pura-80",
+      "color": "Velvet Gold",
+      "file": "phones/huawei-pura-80-velvet-gold.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura80/specs-gold.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura80/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-80-velvet-gold.png",
+      "sha256": "7cb704fd9245a4e1b7509ff64ad7b37fd0e0ba0e6e201ce935071c77af01392c"
+    },
+    {
+      "slug": "huawei-pura-80",
+      "color": "Velvet White",
+      "file": "phones/huawei-pura-80-velvet-white.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura80/specs-white.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura80/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-80-velvet-white.png",
+      "sha256": "d41338626b415878a9e1d618f9ff86c613df3b6851e8b51d7199b6cfbf031994"
+    },
+    {
+      "slug": "huawei-pura-80",
+      "color": "Velvet Black",
+      "file": "phones/huawei-pura-80-velvet-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura80/specs-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura80/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-80-velvet-black.png",
+      "sha256": "837a1bc9f51d8ef73d12b9131cae72b6a80ec8b9d72088ff338abd52737abc05"
+    },
+    {
+      "slug": "huawei-pura-90s-pro-max",
+      "color": "Blush Gold",
+      "file": "phones/huawei-pura-90s-pro-max-blush-gold.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura90s-pro-max/specs-blush-gold.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura90s-pro-max/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-90s-pro-max-blush-gold.png",
+      "sha256": "74d94fac35b77f08e43ab0633260e8ea94bdd244b4ea4e07c683fa7e09734425"
+    },
+    {
+      "slug": "huawei-pura-90s-pro-max",
+      "color": "Orange Ocean",
+      "file": "phones/huawei-pura-90s-pro-max-orange-ocean.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura90s-pro-max/specs-orange-ocean.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura90s-pro-max/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-90s-pro-max-orange-ocean.png",
+      "sha256": "fba594d8411d51ba799ac0be39a1a1c65e777132a526a25284f0db59b8b2555c"
+    },
+    {
+      "slug": "huawei-pura-90s-pro-max",
+      "color": "Blaze Purple",
+      "file": "phones/huawei-pura-90s-pro-max-blaze-purple.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura90s-pro-max/specs-blaze-purple.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura90s-pro-max/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-90s-pro-max-blaze-purple.png",
+      "sha256": "c550aacde42cda7bd4315f783dc1b4bdbc5ab3fc67ab2452ef8a1cf22c44226f"
+    },
+    {
+      "slug": "huawei-pura-90s-pro-max",
+      "color": "Graphite Black",
+      "file": "phones/huawei-pura-90s-pro-max-graphite-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura90s-pro-max/specs-graphite-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura90s-pro-max/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-90s-pro-max-graphite-black.png",
+      "sha256": "3e1b056aebca5289921b07d0e9479b798df3106f7be734e86227a74f297987fb"
+    },
+    {
+      "slug": "huawei-pura-90s-pro",
+      "color": "Guava Soda",
+      "file": "phones/huawei-pura-90s-pro-guava-soda.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura90s-pro/specs-guava-soda.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura90s-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-90s-pro-guava-soda.png",
+      "sha256": "0120d099a3dda4ac1110cf011e31ebebbddbfedc5c6f151d9871548d3fe794d1"
+    },
+    {
+      "slug": "huawei-pura-90s-pro",
+      "color": "Orange Soda",
+      "file": "phones/huawei-pura-90s-pro-orange-soda.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura90s-pro/specs-orange-soda.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura90s-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-90s-pro-orange-soda.png",
+      "sha256": "ff90f30fae895a1ee74b64a7f33a4d9ad0a1357777cdf3fec393b39abe401dc3"
+    },
+    {
+      "slug": "huawei-pura-90s-pro",
+      "color": "Coconut White",
+      "file": "phones/huawei-pura-90s-pro-coconut-white.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura90s-pro/specs-coconut-white.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura90s-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-90s-pro-coconut-white.png",
+      "sha256": "b9474c8e78ad8adf6c0e003e5c5ec653123d8da96a70489dc8cb7bd134da2252"
+    },
+    {
+      "slug": "huawei-pura-90s-pro",
+      "color": "Mulberry Black",
+      "file": "phones/huawei-pura-90s-pro-mulberry-black.png",
+      "url": "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura90s-pro/specs-mulberry-black.png",
+      "source": "https://consumer.huawei.com/ru/phones/pura90s-pro/specs/",
+      "asset": "/catalog/product-photos/phones/huawei-pura-90s-pro-mulberry-black.png",
+      "sha256": "0690c97277c99b5d118b53aec945fcc31ef896009933b806fc744a809dae5bec"
+    },
+    {
+      "slug": "honor-600-lite",
+      "color": "Sprout Green",
+      "file": "phones/honor-600-lite-sprout-green.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600-lite/honor-600-lite-id-green-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600-lite/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-lite-sprout-green.png",
+      "sha256": "99e46ab9dae80f4719ce969c63caf26000c58b4de6d30cd324c8afc9a95455b7"
+    },
+    {
+      "slug": "honor-600-lite",
+      "color": "Desert Gold",
+      "file": "phones/honor-600-lite-desert-gold.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600-lite/honor-600-lite-id-gold-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600-lite/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-lite-desert-gold.png",
+      "sha256": "e9c52e5e59bf9b96c2d2be25b637ced386bc6aaf68aca2f0455989202ca1e8c6"
+    },
+    {
+      "slug": "honor-600-lite",
+      "color": "Velvet Grey",
+      "file": "phones/honor-600-lite-velvet-grey.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600-lite/honor-600-lite-id-grey-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600-lite/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-lite-velvet-grey.png",
+      "sha256": "77f45984b236196f8575a62074ea0cc6a149b3cb6f6c30ad3ed026767b094555"
+    },
+    {
+      "slug": "honor-600-lite",
+      "color": "Velvet Black",
+      "file": "phones/honor-600-lite-velvet-black.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600-lite/honor-600-lite-id-black-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600-lite/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-lite-velvet-black.png",
+      "sha256": "5e81ae7b086b219748f83746ca6eaef92986b2a10d3e8e8d99e83ccce64f2af4"
+    },
+    {
+      "slug": "honor-600-pro",
+      "color": "Golden White",
+      "file": "phones/honor-600-pro-golden-white.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600-pro/honor-600-pro-id-white-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600-pro/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-pro-golden-white.png",
+      "sha256": "722ae2cdce68ade57f63d57206439a96d7018acb63602c7f6435edd54b476c6b"
+    },
+    {
+      "slug": "honor-600-pro",
+      "color": "Orange",
+      "file": "phones/honor-600-pro-orange.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600-pro/honor-600-pro-id-orange-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600-pro/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-pro-orange.png",
+      "sha256": "37a1a7c9a6c854d81cf3af47bf9ab0c5ccd99c3ee0c0d5096463636f7657f63b"
+    },
+    {
+      "slug": "honor-600-pro",
+      "color": "Black",
+      "file": "phones/honor-600-pro-black.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600-pro/honor-600-pro-id-black-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600-pro/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-pro-black.png",
+      "sha256": "ba2f8ea2c934d364ec5e57d93267f3a65523935cf14f207d44ee90f8cf804a26"
+    },
+    {
+      "slug": "honor-600",
+      "color": "Orange",
+      "file": "phones/honor-600-orange.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600/honor-600-id-orange-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-orange.png",
+      "sha256": "d7dc26683954368f421eefe77b7902844ccd4a409a8e6b802b12e732f31d1750"
+    },
+    {
+      "slug": "honor-600",
+      "color": "Black",
+      "file": "phones/honor-600-black.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600/honor-600-id-black-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-black.png",
+      "sha256": "c8cf731d65ace8b657a233bf91739e314d66005bf903a7e80f6a58828a9735a5"
+    },
+    {
+      "slug": "honor-600",
+      "color": "Golden White",
+      "file": "phones/honor-600-golden-white.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-600/honor-600-id-white-back.png",
+      "source": "https://www.honor.com/global/phones/honor-600/spec/",
+      "asset": "/catalog/product-photos/phones/honor-600-golden-white.png",
+      "sha256": "25f18100207964ab3bd31e0c3c81771a0284b8680348326f293811ca094bd01c"
+    },
+    {
+      "slug": "honor-magic-v6",
+      "color": "Red",
+      "file": "phones/honor-magic-v6-red.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-magic-v6/honor-magic-v5-id-red.png",
+      "source": "https://www.honor.com/global/phones/honor-magic-v6/spec/",
+      "asset": "/catalog/product-photos/phones/honor-magic-v6-red.png",
+      "sha256": "73b0a3d5c824d5999e813e27b0a323e355ee9334ce327b4ba93395aafa0cf38b"
+    },
+    {
+      "slug": "honor-magic-v6",
+      "color": "Gold",
+      "file": "phones/honor-magic-v6-gold.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-magic-v6/honor-magic-v5-id-gold.png",
+      "source": "https://www.honor.com/global/phones/honor-magic-v6/spec/",
+      "asset": "/catalog/product-photos/phones/honor-magic-v6-gold.png",
+      "sha256": "6e770068aadc6027c2f6d7fb60b61e2dbc077261633a811dfe3697ce582e0f22"
+    },
+    {
+      "slug": "honor-magic-v6",
+      "color": "White",
+      "file": "phones/honor-magic-v6-white.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-magic-v6/honor-magic-v5-id-white.png",
+      "source": "https://www.honor.com/global/phones/honor-magic-v6/spec/",
+      "asset": "/catalog/product-photos/phones/honor-magic-v6-white.png",
+      "sha256": "3efbb484143b6e87e89deae9a0fb1579af14db37173df6847eb47c6978dee837"
+    },
+    {
+      "slug": "honor-magic-v6",
+      "color": "Black",
+      "file": "phones/honor-magic-v6-black.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-magic-v6/honor-magic-v5-id-black.png",
+      "source": "https://www.honor.com/global/phones/honor-magic-v6/spec/",
+      "asset": "/catalog/product-photos/phones/honor-magic-v6-black.png",
+      "sha256": "e1edfec6cba91bae3422797cd01c99583a205c902822111d82131e6757b0b097"
+    },
+    {
+      "slug": "honor-magic8-pro",
+      "color": "Sunrise Gold",
+      "file": "phones/honor-magic8-pro-sunrise-gold.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-magic8-pro/magic8-pro-id-gold-back.png",
+      "source": "https://www.honor.com/global/phones/honor-magic8-pro/spec/",
+      "asset": "/catalog/product-photos/phones/honor-magic8-pro-sunrise-gold.png",
+      "sha256": "e24739d533397545fbf2c040b312def20139dc672b83341070400e238ac6fba0"
+    },
+    {
+      "slug": "honor-magic8-pro",
+      "color": "Sky Cyan",
+      "file": "phones/honor-magic8-pro-sky-cyan.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-magic8-pro/cn/magic8-pro-id-green-back-new.png",
+      "source": "https://www.honor.com/global/phones/honor-magic8-pro/spec/",
+      "asset": "/catalog/product-photos/phones/honor-magic8-pro-sky-cyan.png",
+      "sha256": "6d1562f3a0ae6c0fa8e455d64d53588868331e40c065257127ae5f0381b7569f"
+    },
+    {
+      "slug": "honor-magic8-pro",
+      "color": "Black",
+      "file": "phones/honor-magic8-pro-black.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-magic8-pro/magic8-pro-id-black-back.png",
+      "source": "https://www.honor.com/global/phones/honor-magic8-pro/spec/",
+      "asset": "/catalog/product-photos/phones/honor-magic8-pro-black.png",
+      "sha256": "905235c13673af81d7544c437f40193aeb6c59eed3b934783fbf1e19a5480dfd"
+    },
+    {
+      "slug": "honor-x9d",
+      "color": "Reddish Brown",
+      "file": "phones/honor-x9d-reddish-brown.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-x9d/honor-x9d-red-back.png",
+      "source": "https://www.honor.com/global/phones/honor-x9d/spec/",
+      "asset": "/catalog/product-photos/phones/honor-x9d-reddish-brown.png",
+      "sha256": "d97150ace64f8ea7812b8d0b124eb6a7b6d823b8ce4db824270ef9b42cf6d49d"
+    },
+    {
+      "slug": "honor-x9d",
+      "color": "Midnight Black",
+      "file": "phones/honor-x9d-midnight-black.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-x9d/honor-x9d-black-back.png",
+      "source": "https://www.honor.com/global/phones/honor-x9d/spec/",
+      "asset": "/catalog/product-photos/phones/honor-x9d-midnight-black.png",
+      "sha256": "0a5fde100abd84e2c8cfade796379d6390d33e5fef9d0f45527c95a3a9a095fc"
+    },
+    {
+      "slug": "honor-x9d",
+      "color": "Sunrise Gold",
+      "file": "phones/honor-x9d-sunrise-gold.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-x9d/honor-x9d-gold-back.png",
+      "source": "https://www.honor.com/global/phones/honor-x9d/spec/",
+      "asset": "/catalog/product-photos/phones/honor-x9d-sunrise-gold.png",
+      "sha256": "8c0773861fe2125c266eb84455c27675ec341dddeb6b60e6ec1574a265822645"
+    },
+    {
+      "slug": "honor-x9d",
+      "color": "Forest Green",
+      "file": "phones/honor-x9d-forest-green.png",
+      "url": "https://www-file.honor.com/content/dam/honor/common/product-list/product-series/honor-x9d/honor-x9d-green-back.png",
+      "source": "https://www.honor.com/global/phones/honor-x9d/spec/",
+      "asset": "/catalog/product-photos/phones/honor-x9d-forest-green.png",
+      "sha256": "92a62babf48b881ded0fa6b30b47ac4be9e2d9de31eb89ee850699450cfc1bf8"
+    },
+    {
+      "slug": "oneplus-13s",
+      "color": "Green Silk",
+      "file": "phones/oneplus-13s-green-silk.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/specs/13s/images/OnePlus13S-Green-Silk-1080x1080.png",
+      "source": "https://www.oneplus.com/in/13s/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-13s-green-silk.png",
+      "sha256": "6d523c5fc9c6464da802ddad569e0f1845c43ab9762c1ab9180b8b040616094c"
+    },
+    {
+      "slug": "oneplus-13s",
+      "color": "Black Velvet",
+      "file": "phones/oneplus-13s-black-velvet.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/specs/13s/images/OnePlus13S-Black-Velvet-1080x1080.png",
+      "source": "https://www.oneplus.com/in/13s/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-13s-black-velvet.png",
+      "sha256": "76fbc5ae884f6036bb60f49708e363292c31a5a46255e8580009ec752ee706d6"
+    },
+    {
+      "slug": "oneplus-13s",
+      "color": "Pink Satin",
+      "file": "phones/oneplus-13s-pink-satin.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/specs/13s/images/OnePlus13S-Pink-Satin-1080x1080.png",
+      "source": "https://www.oneplus.com/in/13s/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-13s-pink-satin.png",
+      "sha256": "cf5b4acdac8e3baaec7409e813b92b9414ef64ecb5b25796f3023aed72255818"
+    },
+    {
+      "slug": "oneplus-13",
+      "color": "Midnight Ocean",
+      "file": "phones/oneplus-13-midnight-ocean.png",
+      "url": "https://oasis.opstatics.com/content/dam/oasis/page/2024/global/phones/13/specs/13-blue.png",
+      "source": "https://www.oneplus.com/in/13/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-13-midnight-ocean.png",
+      "sha256": "6da319a1f940147fc6ab1460100b504b92e75523a44ff208ed534d9ebb64eaac"
+    },
+    {
+      "slug": "oneplus-13",
+      "color": "Arctic Dawn",
+      "file": "phones/oneplus-13-arctic-dawn.png",
+      "url": "https://oasis.opstatics.com/content/dam/oasis/page/2024/global/phones/13/specs/13-white.png",
+      "source": "https://www.oneplus.com/in/13/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-13-arctic-dawn.png",
+      "sha256": "e53b1e50a27fdef176c1ab7bf38e27c5dd9195734490ee84f5a8d20dc6ec9394"
+    },
+    {
+      "slug": "oneplus-13",
+      "color": "Black Eclipse",
+      "file": "phones/oneplus-13-black-eclipse.png",
+      "url": "https://oasis.opstatics.com/content/dam/oasis/page/2024/global/phones/13/specs/13-black.png",
+      "source": "https://www.oneplus.com/in/13/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-13-black-eclipse.png",
+      "sha256": "c7882535d65eaf7f236df9a977a02476677708d6347e4752037f7f93ba833cc1"
+    },
+    {
+      "slug": "oneplus-15r",
+      "color": "Mint Breeze",
+      "file": "phones/oneplus-15r-mint-breeze.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/macan/specs/imgs/OnePlus_Macan_Mint-Breeze_1080x1080.png",
+      "source": "https://www.oneplus.com/in/15r/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-15r-mint-breeze.png",
+      "sha256": "3d7e9dd30695538d008bd9a1cb6809465f2eb07175a1cded1093864b55040b73"
+    },
+    {
+      "slug": "oneplus-15r",
+      "color": "Charcoal Black",
+      "file": "phones/oneplus-15r-charcoal-black.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/macan/specs/imgs/OnePlus_Macan_Charcoal-Black_1080x1080.png",
+      "source": "https://www.oneplus.com/in/15r/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-15r-charcoal-black.png",
+      "sha256": "47f2eda852ba8fa629a115b97b986ad39e1c15dc0f6ec532568222129f2cb0fc"
+    },
+    {
+      "slug": "oneplus-15r",
+      "color": "Electric Violet",
+      "file": "phones/oneplus-15r-electric-violet.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/macan/specs/imgs/OnePlus_Macan_Electric-Violet_1080x1080.png",
+      "source": "https://www.oneplus.com/in/15r/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-15r-electric-violet.png",
+      "sha256": "958e4aa541f49cea63fe9c4bda8c419b6e2d98f2e958b942f010f3a60e72bcae"
+    },
+    {
+      "slug": "oneplus-15",
+      "color": "Sand Storm",
+      "file": "phones/oneplus-15-sand-storm.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/15/spec/OnePlus15-sand-1080x1080.png",
+      "source": "https://www.oneplus.com/in/15/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-15-sand-storm.png",
+      "sha256": "f26ec5ddc0c75b80f7107ddd20bd1ff031cdeab0972674c22913bfafd57c1886"
+    },
+    {
+      "slug": "oneplus-15",
+      "color": "Ultra Violet",
+      "file": "phones/oneplus-15-ultra-violet.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/15/spec/OnePlus15-ultra-violet-1080x1080.png",
+      "source": "https://www.oneplus.com/in/15/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-15-ultra-violet.png",
+      "sha256": "0d1a9fac8fdc6e0d441ba20ecfdbf578069d0b9c0649f425b9495510609a6adc"
+    },
+    {
+      "slug": "oneplus-15",
+      "color": "Infinite Black",
+      "file": "phones/oneplus-15-infinite-black.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/15/spec/OnePlus15-black-1080x1080.png",
+      "source": "https://www.oneplus.com/in/15/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-15-infinite-black.png",
+      "sha256": "6379e2f07418d85c512480bdf3b2592612b6fcef00b187b4c6d69affacd478c8"
+    },
+    {
+      "slug": "oneplus-nord-5",
+      "color": "Marble Sands",
+      "file": "phones/oneplus-nord-5-marble-sands.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/nord-5/specs/OnePlusNord5-white.png",
+      "source": "https://www.oneplus.com/in/nord-5/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-nord-5-marble-sands.png",
+      "sha256": "4b0b9f16f8039a501feeabc1bbfc9240ea1b27168ec430e72bd104a7731f2abf"
+    },
+    {
+      "slug": "oneplus-nord-5",
+      "color": "Dry Ice",
+      "file": "phones/oneplus-nord-5-dry-ice.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/nord-5/specs/OnePlusNord5-blue.png",
+      "source": "https://www.oneplus.com/in/nord-5/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-nord-5-dry-ice.png",
+      "sha256": "9242ff2cae9e35348bc2c8830b276e935baeb5983582f858fa465dc003d6e4a7"
+    },
+    {
+      "slug": "oneplus-nord-5",
+      "color": "Phantom Grey",
+      "file": "phones/oneplus-nord-5-phantom-grey.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/nord-5/specs/OnePlusNord5-black.png",
+      "source": "https://www.oneplus.com/in/nord-5/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-nord-5-phantom-grey.png",
+      "sha256": "d179b427ddaed983b1088ce0dddddedb197d6cd53de84df96bc6fb1f36d7acfa"
+    },
+    {
+      "slug": "oneplus-nord-ce5",
+      "color": "Marble Mist",
+      "file": "phones/oneplus-nord-ce5-marble-mist.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/nord-ce5/specs/OnePlusNordCE5_Marble_Mist.png",
+      "source": "https://www.oneplus.com/in/nord-ce5/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-nord-ce5-marble-mist.png",
+      "sha256": "87086768b11751f9f636eb67ca8042d0bb26b900788628f024ae281bd4e19da1"
+    },
+    {
+      "slug": "oneplus-nord-ce5",
+      "color": "Nexus Blue",
+      "file": "phones/oneplus-nord-ce5-nexus-blue.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/nord-ce5/specs/OnePlusNordCE5_Nexus_Blue.png",
+      "source": "https://www.oneplus.com/in/nord-ce5/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-nord-ce5-nexus-blue.png",
+      "sha256": "c5d577343318dc46a8d723edb6c0ec08016dccd2235f8ed41b072e1a638260e7"
+    },
+    {
+      "slug": "oneplus-nord-ce5",
+      "color": "Black Infinity",
+      "file": "phones/oneplus-nord-ce5-black-infinity.png",
+      "url": "https://www.oneplus.com/content/dam/oneplus/2025/product-station/nord-ce5/specs/OnePlusNordCE5_Black_Infinity.png",
+      "source": "https://www.oneplus.com/in/nord-ce5/specs",
+      "asset": "/catalog/product-photos/phones/oneplus-nord-ce5-black-infinity.png",
+      "sha256": "431f69713099519d88fdb88400b2f2929f8665ce13658ce607529cb8fdcb7773"
+    },
+    {
+      "slug": "poco-f9-ultra",
+      "color": "Black",
+      "file": "phones/poco-f9-ultra-black.png",
+      "url": "https://i02.appmifile.com/7_operatorx_operatorx_xm/21/08/2026/1b2a5ab6e18faf510b8565a88e6b60ff.png",
+      "source": "https://www.mi.com/es/product/poco-f9-ultra/buy/",
+      "sourceLabel": "POCO F9 Ultra Negro 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con un diseño suave en la pantalla frontal, tres cámaras en la parte trasera y un logotipo de marca \"POCO\".",
+      "asset": "/catalog/product-photos/phones/poco-f9-ultra-black.png",
+      "sha256": "e6d06696141879040f53e8bbe565082a8dbc9be2365ea934104b7c079b63f64f"
+    },
+    {
+      "slug": "poco-f9-ultra",
+      "color": "Black",
+      "file": "phones/poco-f9-ultra-black-side.png",
+      "url": "https://i02.appmifile.com/498_operatorx_operatorx_xm/21/08/2026/1b91a3f8fc2d9c9ca2ec77aac167f28c.png",
+      "source": "https://www.mi.com/es/product/poco-f9-ultra/buy/",
+      "sourceLabel": "POCO F9 Ultra Negro 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con tres cámaras y el logotipo de la marca en la parte posterior, y un patrón en la pantalla visible en la parte frontal. El diseño general es minimalista y moderno.",
+      "asset": "/catalog/product-photos/phones/poco-f9-ultra-black-side.png",
+      "sha256": "c4facb9de98bb3ad029aff0326a81cd8b6cb3d7c71a50a0c13466cf7ae1f4c44"
+    },
+    {
+      "slug": "poco-f9-ultra",
+      "color": "Red",
+      "file": "phones/poco-f9-ultra-red.png",
+      "url": "https://i02.appmifile.com/809_operatorx_operatorx_xm/21/08/2026/f0c1a827a3bcb2fdc39df0512106e239.png",
+      "source": "https://www.mi.com/es/product/poco-f9-ultra/buy/",
+      "sourceLabel": "POCO F9 Ultra Rojo 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente rojo, con una cámara frontal circular en el lado frontal, y en la parte posterior tiene tres cámaras y un flash, con la marca \"POCO\" marcada en la parte inferior.",
+      "asset": "/catalog/product-photos/phones/poco-f9-ultra-red.png",
+      "sha256": "fff1bc9ffc978f646c8c5ed9f46586e22c0d3ffde3ce14b7f1f0810c52cc6928"
+    },
+    {
+      "slug": "poco-f9-ultra",
+      "color": "Red",
+      "file": "phones/poco-f9-ultra-red-side.png",
+      "url": "https://i02.appmifile.com/663_operatorx_operatorx_xm/21/08/2026/b7e3c35e24ee316c4ba61b80b55b721d.png",
+      "source": "https://www.mi.com/es/product/poco-f9-ultra/buy/",
+      "sourceLabel": "POCO F9 Ultra Rojo 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil rojo, con la pantalla frontal iluminada, tiene tres cámaras y un logotipo de la marca en la parte posterior. El teléfono presenta un diseño moderno, con un fondo negro.",
+      "asset": "/catalog/product-photos/phones/poco-f9-ultra-red-side.png",
+      "sha256": "b1381d5cc8d13297b832d87c20c0bb4bf5aee9192c318821608442313996d2a6"
+    },
+    {
+      "slug": "poco-c81-pro",
+      "color": "Gold",
+      "file": "phones/poco-c81-pro-gold.png",
+      "url": "https://i05.appmifile.com/447_item_es/15/06/2026/4b9f277e306e8212bccf47ceb6797bf1.png",
+      "source": "https://www.mi.com/es/product/poco-c81-pro/buy/",
+      "sourceLabel": "POCO C81 Pro Dorado 4 GB + 128 GB",
+      "sourceImageDescription": "Un teléfono POCO, con pantalla frontal y diseño en la parte posterior, que tiene dos módulos de cámara circulares en la parte trasera, con un color dorado en general.",
+      "asset": "/catalog/product-photos/phones/poco-c81-pro-gold.png",
+      "sha256": "5e99862a850180c32473b56b19567f1ae3d8554eecd608dcb846d552006629ed"
+    },
+    {
+      "slug": "poco-c81-pro",
+      "color": "Gold",
+      "file": "phones/poco-c81-pro-gold-side.png",
+      "url": "https://i05.appmifile.com/638_item_es/15/06/2026/2a61e4141d3b9cd39c920868cd0e6769.png",
+      "source": "https://www.mi.com/es/product/poco-c81-pro/buy/",
+      "sourceLabel": "POCO C81 Pro Dorado 4 GB + 128 GB",
+      "sourceImageDescription": "Un teléfono inteligente dorado, con pantalla frontal y diseño de cámara trasera, cámara doble trasera con la identificación de 13MP. La forma general del teléfono es simple, con un fondo negro.",
+      "asset": "/catalog/product-photos/phones/poco-c81-pro-gold-side.png",
+      "sha256": "9d785ed8d1577eb39eb9e20483e037f6df4c117302f49d1f4324b3e6d435f0d7"
+    },
+    {
+      "slug": "poco-c81-pro",
+      "color": "Green",
+      "file": "phones/poco-c81-pro-green.png",
+      "url": "https://i05.appmifile.com/145_item_es/15/06/2026/95f360b4e41e42d7c17980599d4dafd7.png",
+      "source": "https://www.mi.com/es/product/poco-c81-pro/buy/",
+      "sourceLabel": "POCO C81 Pro Verde 4 GB + 128 GB",
+      "sourceImageDescription": "Un teléfono POCO se muestra por delante y por detrás, de color verde azulado, con un diseño de doble cámara en la parte posterior y una pantalla frontal sin bordes.",
+      "asset": "/catalog/product-photos/phones/poco-c81-pro-green.png",
+      "sha256": "caaf526b63e0309ba31cf699d67969513d3ca5c1b98b96c248e7b7910ef26ab0"
+    },
+    {
+      "slug": "poco-c81-pro",
+      "color": "Green",
+      "file": "phones/poco-c81-pro-green-side.png",
+      "url": "https://i05.appmifile.com/371_item_es/15/06/2026/56b84885d176eaac71048775a67d8986.png",
+      "source": "https://www.mi.com/es/product/poco-c81-pro/buy/",
+      "sourceLabel": "POCO C81 Pro Verde 4 GB + 128 GB",
+      "sourceImageDescription": "Una foto de un teléfono Poco, que muestra su parte trasera y frontal. La parte trasera es de un color azul claro, con una doble cámara, y la pantalla frontal muestra un diseño moderno. En general, presenta un aspecto minimalista y elegante.",
+      "asset": "/catalog/product-photos/phones/poco-c81-pro-green-side.png",
+      "sha256": "80e21589c9f24e6226a3b1e92a234ab0a55976f497ddd808ffb8f705f824b689"
+    },
+    {
+      "slug": "poco-c81-pro",
+      "color": "Black",
+      "file": "phones/poco-c81-pro-black.png",
+      "url": "https://i05.appmifile.com/880_item_es/15/06/2026/416e3d101381d88bc496a67d95f54ab3.png",
+      "source": "https://www.mi.com/es/product/poco-c81-pro/buy/",
+      "sourceLabel": "POCO C81 Pro Negro 4 GB + 128 GB",
+      "sourceImageDescription": "Una exhibición de un teléfono de la marca POCO, con una gran pantalla en la parte frontal, cámaras dobles y el logotipo de la marca en la parte posterior, con un diseño general simple y moderno.",
+      "asset": "/catalog/product-photos/phones/poco-c81-pro-black.png",
+      "sha256": "76bf019b64c51d85ce269c2de3b6a25e9115d7fb31d2c2238ebfd2a4c15374ce"
+    },
+    {
+      "slug": "poco-c81-pro",
+      "color": "Black",
+      "file": "phones/poco-c81-pro-black-side.png",
+      "url": "https://i05.appmifile.com/522_item_es/15/06/2026/a7f05984ea77d12a983362ed6a4fbe76.png",
+      "source": "https://www.mi.com/es/product/poco-c81-pro/buy/",
+      "sourceLabel": "POCO C81 Pro Negro 4 GB + 128 GB",
+      "sourceImageDescription": "Un teléfono Poco negro, con dos cámaras circulares en la parte trasera y una pantalla verde en la parte delantera, con un diseño general simple y moderno.",
+      "asset": "/catalog/product-photos/phones/poco-c81-pro-black-side.png",
+      "sha256": "0f2a580824ae969c40ec5ff0c1ac4b4d572dd204010138305e1eeecfd1e730ae"
+    },
+    {
+      "slug": "poco-f8-pro",
+      "color": "Titanium Silver",
+      "file": "phones/poco-f8-pro-titanium-silver.png",
+      "url": "https://i05.appmifile.com/949_item_es/25/11/2025/9d90e48fa12bfab810a1c8007e2003e0.png",
+      "source": "https://www.mi.com/es/product/poco-f8-pro/buy/",
+      "sourceLabel": "POCO F8 Pro Titanium Silver 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono POCO, con tres cámaras en la parte posterior, y una pantalla de diseño moderno en la parte delantera, con un tono general plateado.",
+      "asset": "/catalog/product-photos/phones/poco-f8-pro-titanium-silver.png",
+      "sha256": "a73b78d322c2f54d1246162cd0db59ce53c74afd1175a7f12a70a8f5da8e5465"
+    },
+    {
+      "slug": "poco-f8-pro",
+      "color": "Titanium Silver",
+      "file": "phones/poco-f8-pro-titanium-silver-side.png",
+      "url": "https://i05.appmifile.com/799_item_es/25/11/2025/a53dd17527fcda94760352376cd282f2.png",
+      "source": "https://www.mi.com/es/product/poco-f8-pro/buy/",
+      "sourceLabel": "POCO F8 Pro Titanium Silver 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono POCO con tres cámaras en la parte posterior y una pantalla frontal que presenta un diseño moderno.",
+      "asset": "/catalog/product-photos/phones/poco-f8-pro-titanium-silver-side.png",
+      "sha256": "9405a5fb47deee1357a0150187daf53a14c19c7b31e324851ddefda2736bb2d8"
+    },
+    {
+      "slug": "poco-f8-pro",
+      "color": "Black",
+      "file": "phones/poco-f8-pro-black.png",
+      "url": "https://i05.appmifile.com/649_item_es/24/11/2025/2ae3d466211c3d61c21a515ea5386910.png",
+      "source": "https://www.mi.com/es/product/poco-f8-pro/buy/",
+      "sourceLabel": "POCO F8 Pro Negro 12 GB + 256 GB",
+      "sourceImageDescription": "La parte posterior del teléfono Poco negro tiene tres cámaras, y la parte frontal muestra un diseño de patrones en amarillo y gris.",
+      "asset": "/catalog/product-photos/phones/poco-f8-pro-black.png",
+      "sha256": "a3ddda912a096ada43d328cc66cb5bc00a11264c283cbdb707793eb3f925d8bf"
+    },
+    {
+      "slug": "poco-f8-pro",
+      "color": "Black",
+      "file": "phones/poco-f8-pro-black-side.png",
+      "url": "https://i05.appmifile.com/828_item_es/24/11/2025/68dc7bbc080f608ce4488bb6c3463091.png",
+      "source": "https://www.mi.com/es/product/poco-f8-pro/buy/",
+      "sourceLabel": "POCO F8 Pro Negro 12 GB + 256 GB",
+      "sourceImageDescription": "Vista frontal y trasera del teléfono POCO negro, con tres cámaras en la parte posterior, la pantalla muestra elementos de diseño moderno.",
+      "asset": "/catalog/product-photos/phones/poco-f8-pro-black-side.png",
+      "sha256": "1e630ce85208aefec73a217a0bbdf8c14b39a5ecdab7dcd08df6374505b3f2ba"
+    },
+    {
+      "slug": "poco-f8-pro",
+      "color": "Blue",
+      "file": "phones/poco-f8-pro-blue.png",
+      "url": "https://i05.appmifile.com/824_item_es/24/11/2025/d57bb101087fdc8102f6ce503b73b51e.png",
+      "source": "https://www.mi.com/es/product/poco-f8-pro/buy/",
+      "sourceLabel": "POCO F8 Pro Azul 12 GB + 256 GB",
+      "sourceImageDescription": "La parte trasera del teléfono POCO muestra tres cámaras, mientras que la parte frontal presenta una pantalla con un diseño de formas geométricas, y el color general es azul claro.",
+      "asset": "/catalog/product-photos/phones/poco-f8-pro-blue.png",
+      "sha256": "1a163f7e6523b18e4f0867b808486c06f3be8c8f01ebf76b15329de0bdafab4b"
+    },
+    {
+      "slug": "poco-f8-pro",
+      "color": "Blue",
+      "file": "phones/poco-f8-pro-blue-side.png",
+      "url": "https://i05.appmifile.com/665_item_es/24/11/2025/3f9b0c4c199428fb111077a7cf3ccea1.png",
+      "source": "https://www.mi.com/es/product/poco-f8-pro/buy/",
+      "sourceLabel": "POCO F8 Pro Azul 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono POCO con tres cámaras en la parte trasera, una gran pantalla en la parte frontal que muestra un diseño geométrico. El color general del teléfono es azul claro.",
+      "asset": "/catalog/product-photos/phones/poco-f8-pro-blue-side.png",
+      "sha256": "8af046f08945a4e12ac4d4578ef42916d7f0e5d10328266c6d4495d13b977829"
+    },
+    {
+      "slug": "poco-f8-ultra",
+      "color": "Denim Blue",
+      "file": "phones/poco-f8-ultra-denim-blue.png",
+      "url": "https://i05.appmifile.com/70_item_es/24/11/2025/ec2c929ae551a7448a345ccf92fee4a7.png",
+      "source": "https://www.mi.com/es/product/poco-f8-ultra/buy/",
+      "sourceLabel": "POCO F8 Ultra Denim Blue 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono POCO, con un patrón geométrico en la pantalla frontal y un diseño de textura azul oscuro en la parte posterior, que incluye un módulo de cámara.",
+      "asset": "/catalog/product-photos/phones/poco-f8-ultra-denim-blue.png",
+      "sha256": "2f640663c8af2db0872655b5d8b7bb6fca5056c8160fd3c614d665cbb832d6ef"
+    },
+    {
+      "slug": "poco-f8-ultra",
+      "color": "Denim Blue",
+      "file": "phones/poco-f8-ultra-denim-blue-side.png",
+      "url": "https://i05.appmifile.com/816_item_es/24/11/2025/dc71eaeaa42b96141e39d9c690da80c4.png",
+      "source": "https://www.mi.com/es/product/poco-f8-ultra/buy/",
+      "sourceLabel": "POCO F8 Ultra Denim Blue 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono POCO con una tapa trasera azul, que tiene tres cámaras en la parte posterior y una pantalla grande en la parte frontal, con un diseño general sencillo y moderno.",
+      "asset": "/catalog/product-photos/phones/poco-f8-ultra-denim-blue-side.png",
+      "sha256": "dd6137eb03e611c07a76fa2c59fb9ad0261f9852ac7d35c1cd8962da09f1c620"
+    },
+    {
+      "slug": "poco-f8-ultra",
+      "color": "Black",
+      "file": "phones/poco-f8-ultra-black.png",
+      "url": "https://i05.appmifile.com/503_item_es/24/11/2025/3167ad3d7952a9de5e5953b431e0cde4.png",
+      "source": "https://www.mi.com/es/product/poco-f8-ultra/buy/",
+      "sourceLabel": "POCO F8 Ultra Negro 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono POCO negro, con patrones geométricos azules y amarillos en la pantalla frontal, y tres cámaras en la parte trasera.",
+      "asset": "/catalog/product-photos/phones/poco-f8-ultra-black.png",
+      "sha256": "ef04f5f1436118e0ad4200aed7648e56fd86088e0ab2d7d019a1d2066af370d3"
+    },
+    {
+      "slug": "poco-f8-ultra",
+      "color": "Black",
+      "file": "phones/poco-f8-ultra-black-side.png",
+      "url": "https://i05.appmifile.com/636_item_es/24/11/2025/19f89d7cfe085146afd73eeb7c3cd698.png",
+      "source": "https://www.mi.com/es/product/poco-f8-ultra/buy/",
+      "sourceLabel": "POCO F8 Ultra Negro 12 GB + 256 GB",
+      "sourceImageDescription": "El teléfono POCO negro muestra la parte frontal y trasera, con tres cámaras en la parte trasera y formas geométricas en la pantalla.",
+      "asset": "/catalog/product-photos/phones/poco-f8-ultra-black-side.png",
+      "sha256": "a5fffe447e7a57fd3496bc1479b037b61aa954893b0ce43e93aec772a923fa32"
+    },
+    {
+      "slug": "poco-x8-pro-max",
+      "color": "Black",
+      "file": "phones/poco-x8-pro-max-black.png",
+      "url": "https://i05.appmifile.com/780_item_es/12/03/2026/0484b60a3bb4ce2ba3e74012a47b36f4.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro-max/buy/",
+      "sourceLabel": "POCO X8 Pro Max Negro 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con una pantalla de perforación central en la parte frontal, dos cámaras y un flash en la parte posterior, y el logotipo de la marca POCO.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-max-black.png",
+      "sha256": "46e051f502344bc1b694496367aa2c5c482686b94ee444947740752e51f1fbad"
+    },
+    {
+      "slug": "poco-x8-pro-max",
+      "color": "Black",
+      "file": "phones/poco-x8-pro-max-black-side.png",
+      "url": "https://i05.appmifile.com/488_item_es/12/03/2026/6afd4d5ce01c5cd1734478d1d04f4401.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro-max/buy/",
+      "sourceLabel": "POCO X8 Pro Max Negro 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con una cámara perforada en la parte frontal de la pantalla, dos cámaras y un flash en la parte trasera, y la marca está identificada como \"POCO\".",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-max-black-side.png",
+      "sha256": "eadb4564ae7c25d802b2ba92ded6498ab1c852d63f0ab4b2f8b8a9cd7debe5cd"
+    },
+    {
+      "slug": "poco-x8-pro-max",
+      "color": "White",
+      "file": "phones/poco-x8-pro-max-white.png",
+      "url": "https://i05.appmifile.com/886_item_es/12/03/2026/ac09af66266cb047413130dd31934293.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro-max/buy/",
+      "sourceLabel": "POCO X8 Pro Max Blanco 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente blanco, con un pequeño orificio en la pantalla frontal para la cámara delantera, y dos cámaras circulares en la parte posterior. El diseño general es sencillo y moderno.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-max-white.png",
+      "sha256": "883d48ec0fb16c15b62b1f63adabd86c2fd65b3afbd0c7b6306b1e845c9fdd74"
+    },
+    {
+      "slug": "poco-x8-pro-max",
+      "color": "White",
+      "file": "phones/poco-x8-pro-max-white-side.png",
+      "url": "https://i05.appmifile.com/622_item_es/12/03/2026/2c9ad8c854ab94b75e3d105afe327673.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro-max/buy/",
+      "sourceLabel": "POCO X8 Pro Max Blanco 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil blanco, con una pantalla negra y una cámara frontal en la parte delantera, y un diseño de doble cámara en la parte trasera, con el logotipo de la marca POCO.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-max-white-side.png",
+      "sha256": "165aacdb35a205198b3a78026cc9ee040e8e410e712c90a2f93df6bbe8d563d9"
+    },
+    {
+      "slug": "poco-x8-pro-max",
+      "color": "Blue",
+      "file": "phones/poco-x8-pro-max-blue.png",
+      "url": "https://i05.appmifile.com/661_item_es/12/03/2026/74327128451f75466a4123b5c34d0bfd.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro-max/buy/",
+      "sourceLabel": "POCO X8 Pro Max Azul 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente azul, con dos lentes de cámara en la parte posterior, una pantalla negra en la parte frontal y una cámara frontal, y un logotipo de la marca \"POCO\" en la parte inferior.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-max-blue.png",
+      "sha256": "1626437fdd5efa68a996a1e886613398565bba96300524398dd9a68fddab4964"
+    },
+    {
+      "slug": "poco-x8-pro-max",
+      "color": "Blue",
+      "file": "phones/poco-x8-pro-max-blue-side.png",
+      "url": "https://i05.appmifile.com/487_item_es/12/03/2026/8f7b825132a6be60d1c3f656f7f0dc23.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro-max/buy/",
+      "sourceLabel": "POCO X8 Pro Max Azul 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil azul, con una doble cámara en la parte trasera y una pantalla perforada en la parte frontal, la pantalla es lisa y reflectante.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-max-blue-side.png",
+      "sha256": "77c705ca349e9d4c8280290cb20a90205139233c452cc7bcd50e389a86403aea"
+    },
+    {
+      "slug": "poco-x8-pro-max",
+      "color": "Orange",
+      "file": "phones/poco-x8-pro-max-orange.jpeg",
+      "url": "https://poco.com.ua/image/catalog/product/1475651/4127614.jpeg",
+      "source": "https://poco.com.ua/ru/smartfon-poco-x8-pro-max-12-256gb-orange-global",
+      "sourceLabel": "POCO X8 Pro Max 12/256Gb Orange (Global)",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-max-orange.jpeg",
+      "sha256": "cfb2c1139c8eabd5505011c332c7c48476e22948580cd646094a22326e1981db"
+    },
+    {
+      "slug": "poco-x8-pro",
+      "color": "White",
+      "file": "phones/poco-x8-pro-white.png",
+      "url": "https://i05.appmifile.com/171_item_es/12/03/2026/52b509600f8ab7b1ff46f59eb548f572.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro/buy/",
+      "sourceLabel": "POCO X8 Pro Blanco 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente blanco, con dos cámaras en la parte posterior, una pantalla lisa en la parte frontal y un pequeño agujero para la cámara frontal. En el lateral del teléfono hay un botón y el logotipo de la marca.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-white.png",
+      "sha256": "eac7ece6ba03a5f52f0c638757180cc5efd2cc60d3c37f64ecb87199976b105e"
+    },
+    {
+      "slug": "poco-x8-pro",
+      "color": "White",
+      "file": "phones/poco-x8-pro-white-side.png",
+      "url": "https://i05.appmifile.com/73_item_es/12/03/2026/41ce9207818593e61a3b983c9d6ff914.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro/buy/",
+      "sourceLabel": "POCO X8 Pro Blanco 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente blanco, con dos cámaras redondas en la parte posterior y una pequeña cámara al lado. La parte superior e inferior del teléfono tiene un diseño sencillo, y en los laterales hay un botón de volumen y un interruptor. La marca del teléfono se encuentra en la parte inferior.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-white-side.png",
+      "sha256": "f9fe9372ad1df8fce1e9e3aa4c0fe12bf4cbd5ff8ddca15647ce74f4b3776e4a"
+    },
+    {
+      "slug": "poco-x8-pro",
+      "color": "Yellow",
+      "file": "phones/poco-x8-pro-yellow.png",
+      "url": "https://i02.appmifile.com/848_operatorx_operatorx_xm/30/06/2026/e7d4a490550655e48cf125a4099b4a14.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro/buy/",
+      "sourceLabel": "POCO X8 Pro Amarillo 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil amarillo y negro, con dos cámaras en la parte posterior, una pantalla negra en la parte frontal y un pequeño agujero en el centro de la parte superior. El diseño general es moderno y elegante.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-yellow.png",
+      "sha256": "a7afb87e232e7fd1ab5f254a512bdecfa649411684533748af1ad3fba0c6fd89"
+    },
+    {
+      "slug": "poco-x8-pro",
+      "color": "Yellow",
+      "file": "phones/poco-x8-pro-yellow-side.png",
+      "url": "https://i02.appmifile.com/64_operatorx_operatorx_xm/30/06/2026/da89149b66d3d8f1eceb7a6662731384.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro/buy/",
+      "sourceLabel": "POCO X8 Pro Amarillo 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil amarillo, con dos cámaras en la parte posterior y el logotipo de la marca POCO, con un diseño sencillo y moderno.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-yellow-side.png",
+      "sha256": "dd42ea7cd9713cda32913ed8856bf6a51ddb5145caf059604512232f01d8c3e6"
+    },
+    {
+      "slug": "poco-x8-pro",
+      "color": "Black",
+      "file": "phones/poco-x8-pro-black.png",
+      "url": "https://i05.appmifile.com/637_item_es/17/03/2026/41b7183b88751c3c24c0c7df1e725f85.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro/buy/",
+      "sourceLabel": "POCO X8 Pro Negro 8 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con un pequeño orificio en la pantalla frontal, dos cámaras en la parte posterior y la marca \"POCO\" en el lateral.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-black.png",
+      "sha256": "41aedad8d8e6a7ebde983be2607c3b88e7c7cdbe36b28d8a66357af990e817c1"
+    },
+    {
+      "slug": "poco-x8-pro",
+      "color": "Black",
+      "file": "phones/poco-x8-pro-black-side.png",
+      "url": "https://i05.appmifile.com/731_item_es/12/03/2026/3737a298885e650c0b9c33101f752778.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro/buy/",
+      "sourceLabel": "POCO X8 Pro Negro 8 GB + 512 GB",
+      "sourceImageDescription": "El teléfono se presenta en negro, con un diseño de doble cámara, un botón rojo en el lateral y la marca \"POCO\". En la parte superior de la pantalla hay una cámara perforada. La apariencia general es moderna y sencilla.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-black-side.png",
+      "sha256": "4c173797786fe8bf227c6d4bfd4ba7db7e6bd6366ba570c62b54d0d65f29daf0"
+    },
+    {
+      "slug": "poco-x8-pro",
+      "color": "Mint Green",
+      "file": "phones/poco-x8-pro-mint-green.png",
+      "url": "https://i05.appmifile.com/344_item_es/12/03/2026/9a6daa1663eb38c8cbdb6ba30423560d.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro/buy/",
+      "sourceLabel": "POCO X8 Pro Verde menta 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono POCO, con una pantalla frontal que tiene un diseño de perforación, y una parte posterior con dos cámaras, el color del teléfono es azul claro.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-mint-green.png",
+      "sha256": "2dfa9df6af37f7d3395b3442ee853c1af909ec47b2f028e7fd117b1f94fcd878"
+    },
+    {
+      "slug": "poco-x8-pro",
+      "color": "Mint Green",
+      "file": "phones/poco-x8-pro-mint-green-side.png",
+      "url": "https://i05.appmifile.com/420_item_es/12/03/2026/52c8a710f6115e79448306847d500e4e.png",
+      "source": "https://www.mi.com/es/product/poco-x8-pro/buy/",
+      "sourceLabel": "POCO X8 Pro Verde menta 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil de color azul claro, con dos cámaras y un flash en la parte posterior, botones de volumen y un interruptor en el lateral, y un puerto de carga en la parte inferior. La marca del teléfono es POCO.",
+      "asset": "/catalog/product-photos/phones/poco-x8-pro-mint-green-side.png",
+      "sha256": "913c071f105d41b4a452e1c69182e8a2a5bb9434c338fc41004ae3a71bbc37b1"
+    },
+    {
+      "slug": "redmi-note-15-5g",
+      "color": "Mist Purple",
+      "file": "phones/redmi-note-15-5g-mist-purple.png",
+      "url": "https://i05.appmifile.com/394_item_es/12/01/2026/d0fea9b5eecf1b4afd535efce5b9715a.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-5g/buy/",
+      "sourceLabel": "REDMI Note 15 5G Morado Claro 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono Redmi muestra la parte delantera y trasera, con un diseño de degradado morado en la parte trasera, equipado con tres cámaras, y la parte delantera muestra una pantalla con un gráfico abstracto.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-5g-mist-purple.png",
+      "sha256": "d1f60caeb1747c2b419232706485846b4753a45e59d4dea26fdbdf882fa3592a"
+    },
+    {
+      "slug": "redmi-note-15-5g",
+      "color": "Mist Purple",
+      "file": "phones/redmi-note-15-5g-mist-purple-side.png",
+      "url": "https://i05.appmifile.com/811_item_es/12/01/2026/0d3280001829b90b92ca910c9c700465.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-5g/buy/",
+      "sourceLabel": "REDMI Note 15 5G Morado Claro 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono inteligente de degradado morado, con cuatro lentes de cámara en la parte posterior y una pantalla que muestra gráficos animados en la parte frontal. El diseño del teléfono es elegante y adecuado para los usuarios modernos.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-5g-mist-purple-side.png",
+      "sha256": "b2c25f957860813657b5bdf3ec2ab083737baaedd80efeab9eb5b85a4f9b8333"
+    },
+    {
+      "slug": "redmi-note-15-5g",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-5g-glacier-blue.png",
+      "url": "https://i05.appmifile.com/19_item_es/12/01/2026/8a1138413b6c6dfade805d45b2f4fa2a.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-5g/buy/",
+      "sourceLabel": "REDMI Note 15 5G Azul glaciar 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente azul, con cuatro cámaras en la parte posterior y una pantalla moderna en el frente, que muestra un patrón de color azul degradado. La marca del teléfono es \"REDMI\" y es compatible con redes 5G.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-5g-glacier-blue.png",
+      "sha256": "e188191c40df47449e2abe071632aef9101d94b8cbe7e1622f1bd1ea91d3258e"
+    },
+    {
+      "slug": "redmi-note-15-5g",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-5g-glacier-blue-side.png",
+      "url": "https://i05.appmifile.com/386_item_es/12/01/2026/f62a492ffa0e6fc05747d9b5a49cd556.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-5g/buy/",
+      "sourceLabel": "REDMI Note 15 5G Azul glaciar 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente azul, con tres cámaras circulares en la parte posterior, y una pantalla de degradado azul en la parte delantera, con la inscripción \"REDMI 5G\" en la parte inferior.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-5g-glacier-blue-side.png",
+      "sha256": "de33f39642160cf530ff239e040f460e4b9b99d06bcbd3eb6a79360a7e8c9767"
+    },
+    {
+      "slug": "redmi-note-15-5g",
+      "color": "Black",
+      "file": "phones/redmi-note-15-5g-black.png",
+      "url": "https://i05.appmifile.com/239_item_es/26/12/2025/05b379eec12519cf58a265d70ad9ae3b.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-5g/buy/",
+      "sourceLabel": "REDMI Note 15 5G Negro 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con un patrón abstracto en la pantalla frontal, la parte posterior tiene cuatro módulos de cámara, marcados con la palabra \"108MP\", y en la parte inferior está la inscripción \"REDMI 5G\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-5g-black.png",
+      "sha256": "eb0d849b4dc9d9fc8729752a16483eb07bf1835f30d4f8207101e350d3b7aee7"
+    },
+    {
+      "slug": "redmi-note-15-5g",
+      "color": "Black",
+      "file": "phones/redmi-note-15-5g-black-side.png",
+      "url": "https://i05.appmifile.com/126_item_es/12/01/2026/6aab78a45659c3549b4279404cf953dc.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-5g/buy/",
+      "sourceLabel": "REDMI Note 15 5G Negro 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro con tres cámaras en la parte trasera, la pantalla frontal muestra un patrón abstracto, y el teléfono tiene la marca \"REDMI 5G\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-5g-black-side.png",
+      "sha256": "af9962860ec1cb15981d91d473a018b0644b95f520ebae02dc1b40c254502795"
+    },
+    {
+      "slug": "redmi-note-15-pro-5g",
+      "color": "Black",
+      "file": "phones/redmi-note-15-pro-5g-black.png",
+      "url": "https://i05.appmifile.com/502_item_es/26/12/2025/f178d0db9e0c143c7fdc5e2a1953d91f.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro 5G Negro 8 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con una cámara frontal circular en la pantalla, y en la parte posterior tiene cuatro módulos de cámara circulares, marcados con \"20MP\". En la parte inferior del teléfono hay la inscripción \"REDMI 5G\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-5g-black.png",
+      "sha256": "f78d2dca2eecbf3ef08f4e079fa921ebfe3dc2243ddc59e9492174debb44e104"
+    },
+    {
+      "slug": "redmi-note-15-pro-5g",
+      "color": "Black",
+      "file": "phones/redmi-note-15-pro-5g-black-side.png",
+      "url": "https://i05.appmifile.com/994_item_es/12/01/2026/caacf636620d4b193e5f098b67b7e3ab.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro 5G Negro 8 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con cuatro cámaras en la parte posterior, una gran pantalla en la parte frontal, que tiene un diseño de perforación central, y el logotipo \"REDMI 5G\" en el cuerpo.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-5g-black-side.png",
+      "sha256": "1113cc8da29c3bd173bc03a1c92956bb6d9b1a9b179ba2bbae6e4b938512add2"
+    },
+    {
+      "slug": "redmi-note-15-pro-5g",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-pro-5g-glacier-blue.png",
+      "url": "https://i05.appmifile.com/221_item_es/26/12/2025/f46562d283e36dd431a84fc531b2f742.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro 5G Azul glaciar 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente azul, con una gran pantalla en la parte frontal, que muestra una cámara frontal circular. En la parte posterior del teléfono hay cuatro módulos de cámara, y en la parte inferior está la inscripción \"REDMI 5G\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-5g-glacier-blue.png",
+      "sha256": "1e1abc5a1fa61a31df55a7d8679d8719d033bf6bcb9675ef8f8a76e1d098784c"
+    },
+    {
+      "slug": "redmi-note-15-pro-5g",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-pro-5g-glacier-blue-side.png",
+      "url": "https://i05.appmifile.com/252_item_es/12/01/2026/fc2c17a9768df3d2a252b8ef5041cb43.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro 5G Azul glaciar 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente azul, con la pantalla visible en la parte frontal y tres cámaras en la parte posterior, con la inscripción \"REDMI 5G\". El diseño en general es moderno y sencillo.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-5g-glacier-blue-side.png",
+      "sha256": "e74269d0b662fb0f1a05154f51c161876fe4e9cb77934d96264974017dc39c82"
+    },
+    {
+      "slug": "redmi-note-15-pro-5g",
+      "color": "Titanium Color",
+      "file": "phones/redmi-note-15-pro-5g-titanium-color.png",
+      "url": "https://i05.appmifile.com/864_item_es/12/01/2026/e6481baef79fc810bdf743ba572c3a7b.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro 5G Titanio 8 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono inteligente dorado, con cuatro cámaras redondas en la parte posterior, y una pantalla moderna en la parte frontal, con un pequeño orificio en el centro. La marca del teléfono es REDMI y es compatible con redes 5G.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-5g-titanium-color.png",
+      "sha256": "8727128bc4275a3ed16f653b791588b843431388a6996800ce565f969adf341a"
+    },
+    {
+      "slug": "redmi-note-15-pro-5g",
+      "color": "Titanium Color",
+      "file": "phones/redmi-note-15-pro-5g-titanium-color-side.png",
+      "url": "https://i05.appmifile.com/685_item_es/12/01/2026/b0251f20262fe0bee722981ba0b1ffe2.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro 5G Titanio 8 GB + 512 GB",
+      "sourceImageDescription": "Un smartphone dorado, con tres cámaras en la parte trasera, que muestra una gran pantalla en la parte frontal, con un recorte circular en la pantalla, y la marca es \"REDMI\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-5g-titanium-color-side.png",
+      "sha256": "7dd2085e5978c057e22a11b4c4ab7808ff1ceaad951f29f9df4477ba55561e08"
+    },
+    {
+      "slug": "redmi-note-15-pro-5g",
+      "color": "Mist Purple",
+      "file": "phones/redmi-note-15-pro-5g-mist-purple.png",
+      "url": "https://i02.appmifile.com/240_item_my/12/01/2026/1b69c85a6676fed09e1fb01d79670a74.png",
+      "source": "https://www.mi.com/my/product/redmi-note-15-pro-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro 5G Mist Purple 8GB+512GB",
+      "sourceImageDescription": "",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-5g-mist-purple.png",
+      "sha256": "a93eee28232ebd95b17d8f7dbd31682758c125327d51a935c1a036feeccbf684"
+    },
+    {
+      "slug": "redmi-note-15-pro-5g",
+      "color": "Mist Purple",
+      "file": "phones/redmi-note-15-pro-5g-mist-purple-side.png",
+      "url": "https://i02.appmifile.com/549_item_my/13/01/2026/128fb6fb3b788fa972598671ea4fa167.png",
+      "source": "https://www.mi.com/my/product/redmi-note-15-pro-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro 5G Mist Purple 8GB+512GB",
+      "sourceImageDescription": "",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-5g-mist-purple-side.png",
+      "sha256": "288917e5e84ccae55f73ac64a79277166efa51aade58800cfd9235564f96a392"
+    },
+    {
+      "slug": "redmi-note-15-pro-plus-5g",
+      "color": "Mocha Brown",
+      "file": "phones/redmi-note-15-pro-plus-5g-mocha-brown.png",
+      "url": "https://i05.appmifile.com/303_item_es/12/01/2026/024b0bec6812cd369c2f4d371cf2eaed.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-plus-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro+ 5G Café Moca 12 GB + 512 GB",
+      "sourceImageDescription": "Una presentación del frente y la parte posterior de un teléfono móvil, con la pantalla en la parte delantera y un acabado de cuero marrón en la parte trasera, equipado con cuatro módulos de cámara en forma de círculo, con la inscripción \"REDMI\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-mocha-brown.png",
+      "sha256": "3406c197e1439b066ff6a34b7b63ef8f446433a45f6aba9029d740f04b8b43b4"
+    },
+    {
+      "slug": "redmi-note-15-pro-plus-5g",
+      "color": "Mocha Brown",
+      "file": "phones/redmi-note-15-pro-plus-5g-mocha-brown-side.png",
+      "url": "https://i05.appmifile.com/776_item_es/12/01/2026/48048adaf9fd391b42dc2abbc2ce0090.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-plus-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro+ 5G Café Moca 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono móvil, con la parte posterior de material de cuero marrón, un marco de metal en los lados, una gran pantalla en la parte frontal y un pequeño orificio en el centro de la parte superior. En la parte posterior del teléfono hay tres cámaras.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-mocha-brown-side.png",
+      "sha256": "c2ae7691ddc6ab7f0c91fc2be9c7deb3a05e3268c57326c98b4bad671db2ad19"
+    },
+    {
+      "slug": "redmi-note-15-pro-plus-5g",
+      "color": "Black",
+      "file": "phones/redmi-note-15-pro-plus-5g-black.png",
+      "url": "https://i05.appmifile.com/604_item_es/26/12/2025/a7ead9b3464382b09205f535bbca1709.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-plus-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro+ 5G Negro 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono negro Redmi se muestra en la parte delantera y trasera, con cuatro cámaras en la parte posterior y una pantalla perforada en el centro en la parte delantera.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-black.png",
+      "sha256": "2d8ee61bf1288d832826b942f012c8eacce0124da2ccbe57d2cf7aef44c83d85"
+    },
+    {
+      "slug": "redmi-note-15-pro-plus-5g",
+      "color": "Black",
+      "file": "phones/redmi-note-15-pro-plus-5g-black-side.png",
+      "url": "https://i05.appmifile.com/126_item_es/12/01/2026/d872a0cdde2e4ff49ebf173db6e3e26a.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-plus-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro+ 5G Negro 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con cuatro cámaras en la parte posterior y una pantalla frontal con un orificio central. En el teléfono hay la inscripción \"REDMI 5G\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-black-side.png",
+      "sha256": "d286bd997bf6e19d374a3aca1c7a5296b29c4b12cc4847ec5b3f9f47e6bb6dc3"
+    },
+    {
+      "slug": "redmi-note-15-pro-plus-5g",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-pro-plus-5g-glacier-blue.png",
+      "url": "https://i05.appmifile.com/800_item_es/26/12/2025/825de3a81c4ca32de6c49843ff042ae3.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-plus-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro+ 5G Azul glaciar 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente azul, con una pantalla frontal que presenta una cámara frontal en forma circular, y en la parte posterior tiene cuatro módulos de cámara, marcados con las palabras \"REDMI\" y \"5G\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-glacier-blue.png",
+      "sha256": "5464c761d310c7f1724d8df19295de0b16c0e41ca5b18e5961b935080f7d7ddf"
+    },
+    {
+      "slug": "redmi-note-15-pro-plus-5g",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-pro-plus-5g-glacier-blue-side.png",
+      "url": "https://i05.appmifile.com/30_item_es/12/01/2026/b99340567cdeb6c4101006763bcddcd1.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro-plus-5g/buy/",
+      "sourceLabel": "REDMI Note 15 Pro+ 5G Azul glaciar 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente azul, mostrando su frente y su parte posterior, con tres cámaras en la parte posterior y una pantalla frontal que muestra un patrón abstracto. El logotipo de la marca del teléfono es \"REDMI\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-glacier-blue-side.png",
+      "sha256": "fe4de50f3648f1a74f3c04069822877fcb741bbb921907aa2c70f30fa73ebbcb"
+    },
+    {
+      "slug": "redmi-note-15-pro",
+      "color": "Black",
+      "file": "phones/redmi-note-15-pro-black.png",
+      "url": "https://i05.appmifile.com/259_item_es/26/12/2025/ea1f2d9b690caeba0f719393dd9de67f.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro/buy/",
+      "sourceLabel": "REDMI Note 15 Pro Negro 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono móvil negro se muestra en la parte frontal, equipado con tres cámaras, con el logotipo \"REDMI\" en la parte posterior, y la pantalla presenta un patrón en tonos oscuros.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-black.png",
+      "sha256": "ce45de562331c6e21d12af609f264fd2634202cc1feb4731b001b575a799593e"
+    },
+    {
+      "slug": "redmi-note-15-pro",
+      "color": "Black",
+      "file": "phones/redmi-note-15-pro-black-side.png",
+      "url": "https://i05.appmifile.com/196_item_es/12/01/2026/119854edfa726a0b4ea9458ebbe77f40.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro/buy/",
+      "sourceLabel": "REDMI Note 15 Pro Negro 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono móvil negro, con tres cámaras en la parte trasera y el logo \"REDMI\", la pantalla frontal es clara y tiene un diseño de orificio central.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-black-side.png",
+      "sha256": "6165da4ff49d24ee24aff45d222f5409147c064afdda0abc635f33345ff9c695"
+    },
+    {
+      "slug": "redmi-note-15-pro",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-pro-glacier-blue.png",
+      "url": "https://i05.appmifile.com/279_item_es/26/12/2025/034863a875a80fbd4a67da9850be82b5.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro/buy/",
+      "sourceLabel": "REDMI Note 15 Pro Azul glaciar 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil azul, con una gran pantalla en el frente, cuatro cámaras en la parte posterior y el logotipo \"REDMI\" en la parte inferior.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-glacier-blue.png",
+      "sha256": "907fc5b618973b073f14434cf395b4721f19f12b35a7d83263b45b93fd385989"
+    },
+    {
+      "slug": "redmi-note-15-pro",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-pro-glacier-blue-side.png",
+      "url": "https://i05.appmifile.com/308_item_es/12/01/2026/152b623f77d0d743e2c550eb605aa520.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro/buy/",
+      "sourceLabel": "REDMI Note 15 Pro Azul glaciar 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil azul, con tres cámaras en la parte trasera, y una cámara frontal circular en la pantalla delantera; el diseño general es sencillo y moderno. El logo de la marca del teléfono está ubicado en la parte trasera.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-glacier-blue-side.png",
+      "sha256": "d30b105fd4e4f746ca43b8de1ab92f9791964bba90a618e74c753444f4ab16d3"
+    },
+    {
+      "slug": "redmi-note-15-pro",
+      "color": "Titanium Color",
+      "file": "phones/redmi-note-15-pro-titanium-color.png",
+      "url": "https://i05.appmifile.com/505_item_es/12/01/2026/148f5d293767f2db44ab6bc224a29c4c.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro/buy/",
+      "sourceLabel": "REDMI Note 15 Pro Titanio 8 GB + 256 GB",
+      "sourceImageDescription": "Un smartphone dorado, con cuatro cámaras en la parte trasera, y una pantalla en la parte frontal que tiene un corte circular, con un patrón abstracto en la pantalla. La marca del teléfono es REDMI.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-titanium-color.png",
+      "sha256": "5b709a5db2df630255c39e6f0cc84f0bd00ace2bcef1b0400f502f64604b994d"
+    },
+    {
+      "slug": "redmi-note-15-pro",
+      "color": "Titanium Color",
+      "file": "phones/redmi-note-15-pro-titanium-color-side.png",
+      "url": "https://i05.appmifile.com/932_item_es/12/01/2026/2ba53c34eeff3f87a8a42d0d0b77458e.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15-pro/buy/",
+      "sourceLabel": "REDMI Note 15 Pro Titanio 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente dorado, con una cámara circular en la pantalla frontal y tres cámaras circulares en la parte posterior, con la marca \"REDMI\" en la parte inferior.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-pro-titanium-color-side.png",
+      "sha256": "b4a91bae96ed4c4d9ffff9e73998f8cbcdeb5fef9bee4e641c8e4a28df6090d1"
+    },
+    {
+      "slug": "redmi-note-15",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-glacier-blue.png",
+      "url": "https://i05.appmifile.com/334_item_es/05/01/2026/7c3826373321f02d294b02d221a5baa5.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15/buy/",
+      "sourceLabel": "REDMI Note 15 Azul Glaciar 8 GB + 128 GB",
+      "sourceImageDescription": "Un teléfono inteligente plateado, con una gran pantalla en la parte frontal, y tres cámaras circulares en la parte posterior, con la marca \"REDMI\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-glacier-blue.png",
+      "sha256": "4ba4407c3b22ebf00d4813e415aee54aa27e7610048c6d9a54e57553993e374c"
+    },
+    {
+      "slug": "redmi-note-15",
+      "color": "Glacier Blue",
+      "file": "phones/redmi-note-15-glacier-blue-side.png",
+      "url": "https://i05.appmifile.com/236_item_es/12/01/2026/2f1b4c72c229030d220de771bd4b7a10.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15/buy/",
+      "sourceLabel": "REDMI Note 15 Azul Glaciar 8 GB + 128 GB",
+      "sourceImageDescription": "Un teléfono inteligente azul, con cuatro cámaras en la parte posterior, que muestra en la parte frontal una pantalla de degradado azul y blanco. La marca del teléfono es \"REDMI\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-glacier-blue-side.png",
+      "sha256": "d70fae44cebf4995dde8fee74f18a1a89acbba386687d0156166365f142e0562"
+    },
+    {
+      "slug": "redmi-note-15",
+      "color": "Forest Green",
+      "file": "phones/redmi-note-15-forest-green.png",
+      "url": "https://i05.appmifile.com/978_item_es/05/01/2026/ce6baceb9632563f0d3c6c55a37e4d92.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15/buy/",
+      "sourceLabel": "REDMI Note 15 Verde Bosque 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente plateado, con una gran pantalla en el frente, que muestra un suave patrón verde. En la parte posterior, tiene cuatro cámaras circulares y en la parte inferior está la marca \"REDMI\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-forest-green.png",
+      "sha256": "0b37f80952efa505a944e65c8b551a59d7822d5a8d7a4d713e482d5ca39eaf1c"
+    },
+    {
+      "slug": "redmi-note-15",
+      "color": "Forest Green",
+      "file": "phones/redmi-note-15-forest-green-side.png",
+      "url": "https://i05.appmifile.com/607_item_es/12/01/2026/734814f7b1dc08e283699ea3a25219f6.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15/buy/",
+      "sourceLabel": "REDMI Note 15 Verde Bosque 8 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente verde, con cuatro cámaras en la parte posterior, muestra una pantalla de cristal líquido en la parte frontal, donde hay un patrón degradado de verde y amarillo. En el lateral del teléfono hay botones y en la parte inferior se encuentra el conector.",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-forest-green-side.png",
+      "sha256": "2b759a23e72a5ff5b58c8090391be074a333219ec1ec88bfc5e3000fcfaa6521"
+    },
+    {
+      "slug": "redmi-note-15",
+      "color": "Black",
+      "file": "phones/redmi-note-15-black.png",
+      "url": "https://i05.appmifile.com/306_item_es/26/12/2025/dbb8dc74954c826ef4f9caafb27bcd8a.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15/buy/",
+      "sourceLabel": "REDMI Note 15 Negro 8 GB + 128 GB",
+      "sourceImageDescription": "Un teléfono negro, con cuatro cámaras en la parte posterior, y una interfaz de pantalla moderna en la parte frontal. El teléfono tiene el logo de \"REDMI\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-black.png",
+      "sha256": "085742491d0894cf271d4e4e2867c554e056f095d6f5baa77cb8e4b9743bba82"
+    },
+    {
+      "slug": "redmi-note-15",
+      "color": "Black",
+      "file": "phones/redmi-note-15-black-side.png",
+      "url": "https://i05.appmifile.com/248_item_es/12/01/2026/87b76b53ce51e353b802b74c98507f7b.png",
+      "source": "https://www.mi.com/es/product/redmi-note-15/buy/",
+      "sourceLabel": "REDMI Note 15 Negro 8 GB + 128 GB",
+      "sourceImageDescription": "Un teléfono negro, con cuatro cámaras en la parte posterior, y una pantalla en la parte frontal que muestra un patrón abstracto, con el logotipo de la marca \"REDMI\".",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-black-side.png",
+      "sha256": "6069f84b97695faf85591acf3acc911864f54f640d5d81120e7967a78c1e90b0"
+    },
+    {
+      "slug": "redmi-note-15",
+      "color": "Purple",
+      "file": "phones/redmi-note-15-purple.png",
+      "url": "https://i02.appmifile.com/603_item_my/04/01/2026/90faa9e2e7bceb9523017da71e5a800b.png",
+      "source": "https://www.mi.com/my/product/redmi-note-15/buy/",
+      "sourceLabel": "REDMI Note 15 Purple 8GB+256GB",
+      "sourceImageDescription": "",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-purple.png",
+      "sha256": "1a58c009972699c2a7ce7ab4f45580a4f612435a3fab564e1017b92ba20f4721"
+    },
+    {
+      "slug": "redmi-note-15",
+      "color": "Purple",
+      "file": "phones/redmi-note-15-purple-side.png",
+      "url": "https://i02.appmifile.com/869_item_my/04/01/2026/9174c337e928a5fac0b1f65ab54310a2.png",
+      "source": "https://www.mi.com/my/product/redmi-note-15/buy/",
+      "sourceLabel": "REDMI Note 15 Purple 8GB+256GB",
+      "sourceImageDescription": "",
+      "asset": "/catalog/product-photos/phones/redmi-note-15-purple-side.png",
+      "sha256": "5db0942dbdba2c7b345e076e0abeb4ab0777095b5fc755b9dd8f8a456bd1da52"
+    },
+    {
+      "slug": "xiaomi-17-ultra",
+      "color": "White",
+      "file": "phones/xiaomi-17-ultra-white.png",
+      "url": "https://i05.appmifile.com/624_item_es/10/02/2026/b6308b3c9f341c2f328d1ba32b2337ac.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17-ultra/buy/",
+      "sourceLabel": "Xiaomi 17 Ultra Blanco 16 GB +1 TB",
+      "sourceImageDescription": "Este es un teléfono inteligente que muestra el diseño de su parte posterior y frontal. La parte posterior tiene un módulo de cámara circular que contiene múltiples lentes, mientras que la parte frontal muestra una pantalla con un color degradado. La apariencia general es sencilla y moderna.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-ultra-white.png",
+      "sha256": "a5f763f9cda8e09bb0dec02b7e8a9387b816efa9037f708b925a82c39d56bc02"
+    },
+    {
+      "slug": "xiaomi-17-ultra",
+      "color": "White",
+      "file": "phones/xiaomi-17-ultra-white-side.png",
+      "url": "https://i05.appmifile.com/803_item_es/10/02/2026/566c250151f3b6cb8454bec88b35dfc6.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17-ultra/buy/",
+      "sourceLabel": "Xiaomi 17 Ultra Blanco 16 GB +1 TB",
+      "sourceImageDescription": "Un teléfono inteligente blanco, con un gran módulo de cámara circular en la parte posterior, y una pantalla frontal que muestra un fondo naranja. El lado del teléfono tiene botones, y el diseño general es moderno y sencillo.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-ultra-white-side.png",
+      "sha256": "4f24ed09fdc458f07e671289021f66471458fa422c5fad15312aab5b90d7dd4e"
+    },
+    {
+      "slug": "xiaomi-17-ultra",
+      "color": "Starlit Green",
+      "file": "phones/xiaomi-17-ultra-starlit-green.png",
+      "url": "https://i05.appmifile.com/944_item_es/10/02/2026/7525ec5cd98b54546b1d81ac15a3ed99.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17-ultra/buy/",
+      "sourceLabel": "Xiaomi 17 Ultra Starlit Green 16 GB+512 GB",
+      "sourceImageDescription": "Un teléfono inteligente verde, con tres lentes de cámara en la parte posterior y una pantalla brillante en la parte frontal. El diseño del teléfono es moderno, con un aspecto general sencillo.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-ultra-starlit-green.png",
+      "sha256": "d9029b00f8556f12859cd87687faa16bfbb4d0bab040a175ab69351a750d26b0"
+    },
+    {
+      "slug": "xiaomi-17-ultra",
+      "color": "Starlit Green",
+      "file": "phones/xiaomi-17-ultra-starlit-green-side.png",
+      "url": "https://i05.appmifile.com/82_item_es/10/02/2026/5a5d03d1d1050c632d5408a81c823939.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17-ultra/buy/",
+      "sourceLabel": "Xiaomi 17 Ultra Starlit Green 16 GB+512 GB",
+      "sourceImageDescription": "Un teléfono inteligente verde, visible tanto en la parte frontal como en la parte posterior. La parte trasera tiene un módulo de cámara circular, que incluye múltiples lentes y el logo de LEICA. La superficie del teléfono tiene adornos brillantes, con un diseño general elegante.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-ultra-starlit-green-side.png",
+      "sha256": "ad9b4396b10c781006b66b9004cf396435a011cb2f33b1a58c83d66234752336"
+    },
+    {
+      "slug": "xiaomi-17-ultra",
+      "color": "Black",
+      "file": "phones/xiaomi-17-ultra-black.png",
+      "url": "https://i05.appmifile.com/42_item_es/10/02/2026/83e53eb14c660ce0189cd3dae258254f.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17-ultra/buy/",
+      "sourceLabel": "Xiaomi 17 Ultra Negro 16 GB+512 GB",
+      "sourceImageDescription": "Un smartphone negro, con tres lentes circulares en la parte trasera y una pantalla dinámica azul en el frente. En el lado del teléfono hay un logotipo de la marca \"xiaomi\".",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-ultra-black.png",
+      "sha256": "e34118232267e7a1233dd18210e885135ea526c846da72834fe0b15fcb1f783c"
+    },
+    {
+      "slug": "xiaomi-17-ultra",
+      "color": "Black",
+      "file": "phones/xiaomi-17-ultra-black-side.png",
+      "url": "https://i05.appmifile.com/999_item_es/10/02/2026/a807331bf197e7445690e00101fdd085.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17-ultra/buy/",
+      "sourceLabel": "Xiaomi 17 Ultra Negro 16 GB+512 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con un módulo de cámara circular grande en la parte posterior, marcado con la palabra \"LEICA\", y una pantalla que muestra un anillo de luz azul en la parte frontal. El diseño del teléfono es sencillo y su forma general es moderna.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-ultra-black-side.png",
+      "sha256": "ec1cefc0081aeaffe4c5d264c911371a65f0ec806db5aa1bc6ff6ffe86111734"
+    },
+    {
+      "slug": "xiaomi-17t-pro",
+      "color": "Deep Blue",
+      "file": "phones/xiaomi-17t-pro-deep-blue.png",
+      "url": "https://i05.appmifile.com/458_item_es/18/05/2026/96ad852af7bd9fc5adcbbda23b5a0ef7.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t-pro/buy/",
+      "sourceLabel": "Xiaomi 17T Pro Azul profundo 12 GB + 1 TB",
+      "sourceImageDescription": "Un teléfono inteligente azul, con cuatro cámaras en la parte posterior, una pantalla grande en la parte frontal y un diseño de perforación central. El diseño general es minimalista y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-pro-deep-blue.png",
+      "sha256": "10168138ad5fa845f2fd09d2f55e2c67fff6f64aead1f2960719aa132239cd2a"
+    },
+    {
+      "slug": "xiaomi-17t-pro",
+      "color": "Deep Blue",
+      "file": "phones/xiaomi-17t-pro-deep-blue-side.png",
+      "url": "https://i05.appmifile.com/351_item_es/18/05/2026/d31f9d0b38bed744d62f39019644b26a.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t-pro/buy/",
+      "sourceLabel": "Xiaomi 17T Pro Azul profundo 12 GB + 1 TB",
+      "sourceImageDescription": "Un teléfono inteligente azul, con tres cámaras visibles en el lateral, una pantalla grande en la parte frontal y un fondo negro.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-pro-deep-blue-side.png",
+      "sha256": "7334eea8c720c33f336c9093c9b56269d9f57d981c340693fc2fbbbf44b0285d"
+    },
+    {
+      "slug": "xiaomi-17t-pro",
+      "color": "Black",
+      "file": "phones/xiaomi-17t-pro-black.png",
+      "url": "https://i05.appmifile.com/108_item_es/18/05/2026/f24e31152cd24a3035376db7268c8d6e.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t-pro/buy/",
+      "sourceLabel": "Xiaomi 17T Pro Negro 12 GB + 1 TB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con tres cámaras en la parte posterior, que muestra una interfaz gráfica en la parte frontal, con un diseño sencillo y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-pro-black.png",
+      "sha256": "df77e2c35b5a0bab70948e1aab8ef36b9f4a1ece251870b7311cca23830350f2"
+    },
+    {
+      "slug": "xiaomi-17t-pro",
+      "color": "Black",
+      "file": "phones/xiaomi-17t-pro-black-side.png",
+      "url": "https://i05.appmifile.com/729_item_es/18/05/2026/f320e219d3949d6e96899ff9ef151540.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t-pro/buy/",
+      "sourceLabel": "Xiaomi 17T Pro Negro 12 GB + 1 TB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con tres lentes de cámara en la parte posterior, una gran pantalla en la parte frontal, y un pequeño orificio en la pantalla para la cámara frontal. El diseño general del teléfono es sencillo y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-pro-black-side.png",
+      "sha256": "b41e8616369987cb378021682c9582d4e4a2d5d06f25f6fa70100aba3efdaeba"
+    },
+    {
+      "slug": "xiaomi-17t-pro",
+      "color": "Deep Violet",
+      "file": "phones/xiaomi-17t-pro-deep-violet.png",
+      "url": "https://i05.appmifile.com/953_item_es/18/05/2026/6788103f4ed244678a3c274894316aa6.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t-pro/buy/",
+      "sourceLabel": "Xiaomi 17T Pro Violeta profundo 12 GB + 1 TB",
+      "sourceImageDescription": "Un teléfono inteligente de color púrpura, con una gran pantalla en la parte frontal y cuatro módulos de cámara en la parte trasera, con un diseño moderno en general.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-pro-deep-violet.png",
+      "sha256": "4715cf901eec5da0c9e78d416b18c3e85c3503a2645255cb4e264749e31ae13b"
+    },
+    {
+      "slug": "xiaomi-17t-pro",
+      "color": "Deep Violet",
+      "file": "phones/xiaomi-17t-pro-deep-violet-side.png",
+      "url": "https://i05.appmifile.com/337_item_es/18/05/2026/bae271c3b9372ecfa19212ffaccc1c96.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t-pro/buy/",
+      "sourceLabel": "Xiaomi 17T Pro Violeta profundo 12 GB + 1 TB",
+      "sourceImageDescription": "Un teléfono inteligente de color púrpura, con una cámara frontal circular en la pantalla y cuatro módulos de cámara en la parte posterior, con un diseño general simple y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-pro-deep-violet-side.png",
+      "sha256": "4b1b85c9992b932e751df010690de8b78e87ac0d862c191e22fb69ffa3948f68"
+    },
+    {
+      "slug": "xiaomi-17t",
+      "color": "Violet",
+      "file": "phones/xiaomi-17t-violet.png",
+      "url": "https://i05.appmifile.com/258_item_es/18/05/2026/a9b3431e64b8beaac604a70cf08fe186.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t/buy/",
+      "sourceLabel": "Xiaomi 17T Violeta 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono inteligente de color púrpura, con un pequeño agujero en el centro de la pantalla frontal y cuatro módulos de cámara en la parte posterior, tiene un diseño general sencillo y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-violet.png",
+      "sha256": "2fad52c36ffb14f0a9af1ab29c5d708af342f061a6c7131865e1c1f6502d78c0"
+    },
+    {
+      "slug": "xiaomi-17t",
+      "color": "Violet",
+      "file": "phones/xiaomi-17t-violet-side.png",
+      "url": "https://i05.appmifile.com/365_item_es/18/05/2026/51070d86c070935d64ec2c4b602b6615.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t/buy/",
+      "sourceLabel": "Xiaomi 17T Violeta 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono inteligente de color púrpura, con cuatro cámaras en la parte trasera, diseño de pantalla completa en el frente, con un pequeño orificio en el centro, tiene un aspecto elegante y refinado.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-violet-side.png",
+      "sha256": "8abee0755cf80bb62f26e3de162129c613a7400ceb36dfed1ebe68a7ceb90430"
+    },
+    {
+      "slug": "xiaomi-17t",
+      "color": "Black",
+      "file": "phones/xiaomi-17t-black.png",
+      "url": "https://i05.appmifile.com/178_item_es/18/05/2026/2e720fa0573d3c48ac68af5dc5cb8820.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t/buy/",
+      "sourceLabel": "Xiaomi 17T Negro 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con un patrón minimalista en la pantalla frontal y cuatro módulos de cámara en la parte posterior, con el logo de LEICA. El diseño general es moderno y los bordes son suaves.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-black.png",
+      "sha256": "f0871c4a42e0c3bf89743e2e7594f38ba468c38e59b40f9e31fd929423f42f9e"
+    },
+    {
+      "slug": "xiaomi-17t",
+      "color": "Black",
+      "file": "phones/xiaomi-17t-black-side.png",
+      "url": "https://i05.appmifile.com/985_item_es/18/05/2026/e924950cc28df1ce8ace8b9353311f9d.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t/buy/",
+      "sourceLabel": "Xiaomi 17T Negro 12 GB + 512 GB",
+      "sourceImageDescription": "Smartphone negro, mostrando la parte posterior y parte delantera, equipado con tres cámaras y un flash, con una cámara frontal de agujero central en la pantalla. Diseño minimalista, apariencia general moderna.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-black-side.png",
+      "sha256": "06b9b9b39341f9d4eb74e9e794ae552b149bb05aee4bc57cd87fc9aa4af541bc"
+    },
+    {
+      "slug": "xiaomi-17t",
+      "color": "Blue",
+      "file": "phones/xiaomi-17t-blue.png",
+      "url": "https://i05.appmifile.com/329_item_es/18/05/2026/b537b37680041f0477f4e69d59ea3285.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t/buy/",
+      "sourceLabel": "Xiaomi 17T Azul 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono inteligente de color azul claro, con cuatro cámaras redondas en la parte posterior, muestra una interfaz minimalista en la parte frontal, y tiene un pequeño agujero para la cámara en el centro de la parte superior.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-blue.png",
+      "sha256": "6cfbad878dbadc8470801d4807c1085b02ed2df0a4fe6c3b52baafd9e52ae80e"
+    },
+    {
+      "slug": "xiaomi-17t",
+      "color": "Blue",
+      "file": "phones/xiaomi-17t-blue-side.png",
+      "url": "https://i05.appmifile.com/244_item_es/18/05/2026/06b3e005cfebec682e6e1f3dc3ff7051.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t/buy/",
+      "sourceLabel": "Xiaomi 17T Azul 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono móvil azul, con cuatro cámaras en la parte posterior, la pantalla muestra un color claro, y el diseño general es sencillo y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-blue-side.png",
+      "sha256": "61fcbe14fecd8f460357d0731bd2cd968192d0e1d71d5c70f7fcc54ac08859a2"
+    },
+    {
+      "slug": "xiaomi-17t",
+      "color": "Opal White",
+      "file": "phones/xiaomi-17t-opal-white.png",
+      "url": "https://i05.appmifile.com/4_item_es/18/05/2026/744f142e9c011280c5abbf2994b4db8b.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t/buy/",
+      "sourceLabel": "Xiaomi 17T Blanco ópalo 12 GB + 256 GB",
+      "sourceImageDescription": "Este es un teléfono inteligente de diseño elegante, con cuatro cámaras y el logotipo de la marca en la parte trasera, y una pantalla minimalista en la parte delantera, con un diseño de perforación central. El color general presenta un efecto de degradado, que se ve moderno y elegante.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-opal-white.png",
+      "sha256": "17688451a879bbeedb1994d8a039a56661cd3c67341d4a37aae0640fc88cae37"
+    },
+    {
+      "slug": "xiaomi-17t",
+      "color": "Opal White",
+      "file": "phones/xiaomi-17t-opal-white-side.png",
+      "url": "https://i05.appmifile.com/509_item_es/18/05/2026/9f93d7cb61303de2e71f9ae4b161feb4.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17t/buy/",
+      "sourceLabel": "Xiaomi 17T Blanco ópalo 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente blanco, con cuatro cámaras en la parte posterior, pantalla completa en el frente y un pequeño orificio para la cámara frontal en la pantalla. El diseño del teléfono es minimalista y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17t-opal-white-side.png",
+      "sha256": "de45ace23f87f26c026c7def03d0cb29ed82082445a0cfc0ae6b57d1ccf6259e"
+    },
+    {
+      "slug": "xiaomi-17",
+      "color": "Ice Blue",
+      "file": "phones/xiaomi-17-ice-blue.png",
+      "url": "https://i05.appmifile.com/906_item_es/10/02/2026/e53f558837c4d8e6deec557e04891af7.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17/buy/",
+      "sourceLabel": "Xiaomi 17 Ice Blue 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil se muestra en la parte delantera y trasera, el color del teléfono es azul claro, la parte posterior tiene cuatro cámaras, y en la parte delantera se muestra un patrón circular de degradado azul.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-ice-blue.png",
+      "sha256": "935353671570a80f6bc07ffd2ec98ead3fdb9f6b27d0d5fa1609e71975649dc0"
+    },
+    {
+      "slug": "xiaomi-17",
+      "color": "Ice Blue",
+      "file": "phones/xiaomi-17-ice-blue-side.png",
+      "url": "https://i05.appmifile.com/619_item_es/10/02/2026/5c1a4f5d5f0891db36ef8aac22b2c7a3.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17/buy/",
+      "sourceLabel": "Xiaomi 17 Ice Blue 12 GB + 256 GB",
+      "sourceImageDescription": "Una presentación del frente y la parte posterior de un teléfono móvil, con tres lentes de cámara en la parte posterior y una pantalla azul en el frente, con un diseño general sencillo y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-ice-blue-side.png",
+      "sha256": "5455507aeca075bd907392c535611156a55d0c0d1743a4f0a45678033e03361d"
+    },
+    {
+      "slug": "xiaomi-17",
+      "color": "Black",
+      "file": "phones/xiaomi-17-black.png",
+      "url": "https://i05.appmifile.com/306_item_es/10/02/2026/25644db3cdb357459d0f31af0221daf4.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17/buy/",
+      "sourceLabel": "Xiaomi 17 Negro 12 GB + 256 GB",
+      "sourceImageDescription": "Este es un teléfono inteligente negro, equipado con cuatro cámaras traseras, que muestra un patrón circular púrpura en la parte frontal. El logotipo de la marca del teléfono es visible en la parte inferior.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-black.png",
+      "sha256": "45bd7c459b8739bfa9f7d960c978d4301420d1e297145e9fe86b363d82b687d9"
+    },
+    {
+      "slug": "xiaomi-17",
+      "color": "Black",
+      "file": "phones/xiaomi-17-black-side.png",
+      "url": "https://i05.appmifile.com/426_item_es/10/02/2026/d8c9684d954e63be3d4dc9bf75103fe2.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17/buy/",
+      "sourceLabel": "Xiaomi 17 Negro 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente negro, con tres cámaras redondas en la parte posterior, un patrón circular morado en la parte frontal y un diseño general sencillo y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-black-side.png",
+      "sha256": "4d2c12fe297f6a21bb08a13ddb163da781927dc5b559b851712c04790fb453e2"
+    },
+    {
+      "slug": "xiaomi-17",
+      "color": "Venture Green",
+      "file": "phones/xiaomi-17-venture-green.png",
+      "url": "https://i05.appmifile.com/732_item_es/10/02/2026/33be7601b490840ac5cff69b88159b0a.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17/buy/",
+      "sourceLabel": "Xiaomi 17 Starlit Green 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono inteligente verde, con una pantalla en la parte frontal que muestra un patrón circular. La parte trasera del teléfono tiene cuatro cámaras, con el logo de LEICA.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-venture-green.png",
+      "sha256": "40a03e02c1b3563f70de4aea0632d92da8ceb730c9dbb74d1e5a88b1097bbe67"
+    },
+    {
+      "slug": "xiaomi-17",
+      "color": "Venture Green",
+      "file": "phones/xiaomi-17-venture-green-side.png",
+      "url": "https://i05.appmifile.com/541_item_es/10/02/2026/c433825cb022ba4c135d708da863ae2e.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17/buy/",
+      "sourceLabel": "Xiaomi 17 Starlit Green 12 GB + 256 GB",
+      "sourceImageDescription": "Un teléfono móvil verde, con un patrón circular degradado en la pantalla, la parte posterior cuenta con tres lentes y un flash, y el diseño general es fluido y moderno.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-venture-green-side.png",
+      "sha256": "e10b6b72bd3f71a99222fe8a43b23b6b9d23256d1d69ec9b9803071bffbc18e7"
+    },
+    {
+      "slug": "xiaomi-17",
+      "color": "Alpine Pink",
+      "file": "phones/xiaomi-17-alpine-pink.png",
+      "url": "https://i05.appmifile.com/134_item_es/10/02/2026/317ddbf12eca3f7f1c7594c191e222df.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17/buy/",
+      "sourceLabel": "Xiaomi 17 Alpine Pink 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono móvil rosa, con cuatro cámaras en la parte posterior y una pantalla que muestra un degradado de rojo a naranja en la parte frontal.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-alpine-pink.png",
+      "sha256": "6253f7af8e7cdc89afb81b2d8ce2942bfbbdba327f40eda0390c7f290335f5cd"
+    },
+    {
+      "slug": "xiaomi-17",
+      "color": "Alpine Pink",
+      "file": "phones/xiaomi-17-alpine-pink-side.png",
+      "url": "https://i05.appmifile.com/721_item_es/10/02/2026/3c65614e0ed10eafe695e99b60076453.png",
+      "source": "https://www.mi.com/es/product/xiaomi-17/buy/",
+      "sourceLabel": "Xiaomi 17 Alpine Pink 12 GB + 512 GB",
+      "sourceImageDescription": "Un teléfono rosa, con tres cámaras en la parte posterior, que muestra una pantalla con un degradado rojo en la parte delantera, con un diseño moderno en general.",
+      "asset": "/catalog/product-photos/phones/xiaomi-17-alpine-pink-side.png",
+      "sha256": "1c27d2fbebfd8fa7a4a0c55e05bc3a36f12d88462bb7deb470e82c76f62bcb8e"
+    }
+  ]
+}

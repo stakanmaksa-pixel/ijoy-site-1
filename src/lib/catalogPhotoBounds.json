@@ -1111,6 +1111,606 @@
     "w": 199,
     "h": 401
   },
+  "/catalog/product-photos/phones/honor-600-black.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-600-golden-white.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-600-lite-desert-gold.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-600-lite-sprout-green.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-600-lite-velvet-black.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-600-lite-velvet-grey.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-600-orange.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-600-pro-black.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-600-pro-golden-white.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-600-pro-orange.png": {
+    "width": 257,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 257,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-magic-v6-black.png": {
+    "width": 412,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 412,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-magic-v6-gold.png": {
+    "width": 412,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 412,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-magic-v6-red.png": {
+    "width": 412,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 412,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-magic-v6-white.png": {
+    "width": 412,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 412,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-magic8-pro-black.png": {
+    "width": 250,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 250,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-magic8-pro-sky-cyan.png": {
+    "width": 250,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 250,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-magic8-pro-sunrise-gold.png": {
+    "width": 250,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 250,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-x9d-forest-green.png": {
+    "width": 252,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 252,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-x9d-midnight-black.png": {
+    "width": 252,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 252,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-x9d-reddish-brown.png": {
+    "width": 252,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 252,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/honor-x9d-sunrise-gold.png": {
+    "width": 252,
+    "height": 532,
+    "x": 0,
+    "y": 0,
+    "w": 252,
+    "h": 532
+  },
+  "/catalog/product-photos/phones/huawei-mate-80-pro-black.png": {
+    "width": 294,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 294,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-mate-80-pro-gold.png": {
+    "width": 294,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 294,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-mate-80-pro-green.png": {
+    "width": 294,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 294,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-mate-x7-black.png": {
+    "width": 300,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 300,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-mate-x7-cloud-brocade-white.png": {
+    "width": 610,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 610,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-mate-x7-nebula-red.png": {
+    "width": 300,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 300,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-mate-xt-ultimate-design-black.png": {
+    "width": 1140,
+    "height": 1672,
+    "x": 0,
+    "y": 0,
+    "w": 976,
+    "h": 1672
+  },
+  "/catalog/product-photos/phones/huawei-mate-xt-ultimate-design-red.png": {
+    "width": 1140,
+    "height": 1672,
+    "x": 0,
+    "y": 0,
+    "w": 976,
+    "h": 1672
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-black.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-max-blush-gold.png": {
+    "width": 296,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 296,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-max-golden-black.png": {
+    "width": 296,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 296,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-max-lake-cyan.png": {
+    "width": 296,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 296,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-mint-green.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-pro-black.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-pro-lavender-purple.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-pro-mint-green.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-pro-white.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-nova-15-white.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-80-pro-glazed-black.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-80-pro-glazed-red.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-80-pro-glazed-white.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-80-ultra-golden-black.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-80-ultra-prestige-gold.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 290,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-80-velvet-black.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 5,
+    "w": 290,
+    "h": 790
+  },
+  "/catalog/product-photos/phones/huawei-pura-80-velvet-gold.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 5,
+    "w": 290,
+    "h": 790
+  },
+  "/catalog/product-photos/phones/huawei-pura-80-velvet-white.png": {
+    "width": 290,
+    "height": 800,
+    "x": 0,
+    "y": 5,
+    "w": 290,
+    "h": 790
+  },
+  "/catalog/product-photos/phones/huawei-pura-90s-pro-coconut-white.png": {
+    "width": 300,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 300,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-90s-pro-guava-soda.png": {
+    "width": 300,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 300,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-90s-pro-max-blaze-purple.png": {
+    "width": 304,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 304,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-90s-pro-max-blush-gold.png": {
+    "width": 304,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 304,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-90s-pro-max-graphite-black.png": {
+    "width": 304,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 304,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-90s-pro-max-orange-ocean.png": {
+    "width": 304,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 304,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-90s-pro-mulberry-black.png": {
+    "width": 300,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 300,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/huawei-pura-90s-pro-orange-soda.png": {
+    "width": 300,
+    "height": 800,
+    "x": 0,
+    "y": 0,
+    "w": 300,
+    "h": 800
+  },
+  "/catalog/product-photos/phones/oneplus-13-arctic-dawn.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 174,
+    "y": 102,
+    "w": 731,
+    "h": 875
+  },
+  "/catalog/product-photos/phones/oneplus-13-black-eclipse.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 173,
+    "y": 103,
+    "w": 732,
+    "h": 875
+  },
+  "/catalog/product-photos/phones/oneplus-13-midnight-ocean.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 174,
+    "y": 103,
+    "w": 731,
+    "h": 874
+  },
+  "/catalog/product-photos/phones/oneplus-13s-black-velvet.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 181,
+    "y": 102,
+    "w": 718,
+    "h": 875
+  },
+  "/catalog/product-photos/phones/oneplus-13s-green-silk.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 181,
+    "y": 102,
+    "w": 718,
+    "h": 875
+  },
+  "/catalog/product-photos/phones/oneplus-13s-pink-satin.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 181,
+    "y": 102,
+    "w": 718,
+    "h": 875
+  },
+  "/catalog/product-photos/phones/oneplus-15-infinite-black.png": {
+    "width": 2160,
+    "height": 2160,
+    "x": 361,
+    "y": 203,
+    "w": 1435,
+    "h": 1752
+  },
+  "/catalog/product-photos/phones/oneplus-15-sand-storm.png": {
+    "width": 2160,
+    "height": 2160,
+    "x": 361,
+    "y": 203,
+    "w": 1435,
+    "h": 1752
+  },
+  "/catalog/product-photos/phones/oneplus-15-ultra-violet.png": {
+    "width": 2160,
+    "height": 2160,
+    "x": 361,
+    "y": 203,
+    "w": 1435,
+    "h": 1752
+  },
+  "/catalog/product-photos/phones/oneplus-15r-charcoal-black.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 177,
+    "y": 100,
+    "w": 727,
+    "h": 874
+  },
+  "/catalog/product-photos/phones/oneplus-15r-electric-violet.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 177,
+    "y": 100,
+    "w": 727,
+    "h": 874
+  },
+  "/catalog/product-photos/phones/oneplus-15r-mint-breeze.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 177,
+    "y": 100,
+    "w": 727,
+    "h": 875
+  },
+  "/catalog/product-photos/phones/oneplus-nord-5-dry-ice.png": {
+    "width": 2160,
+    "height": 2160,
+    "x": 364,
+    "y": 205,
+    "w": 1434,
+    "h": 1749
+  },
+  "/catalog/product-photos/phones/oneplus-nord-5-marble-sands.png": {
+    "width": 2160,
+    "height": 2160,
+    "x": 364,
+    "y": 205,
+    "w": 1434,
+    "h": 1749
+  },
+  "/catalog/product-photos/phones/oneplus-nord-5-phantom-grey.png": {
+    "width": 2160,
+    "height": 2160,
+    "x": 364,
+    "y": 205,
+    "w": 1434,
+    "h": 1749
+  },
+  "/catalog/product-photos/phones/oneplus-nord-ce5-black-infinity.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 181,
+    "y": 103,
+    "w": 719,
+    "h": 874
+  },
+  "/catalog/product-photos/phones/oneplus-nord-ce5-marble-mist.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 180,
+    "y": 102,
+    "w": 721,
+    "h": 876
+  },
+  "/catalog/product-photos/phones/oneplus-nord-ce5-nexus-blue.png": {
+    "width": 1080,
+    "height": 1080,
+    "x": 181,
+    "y": 102,
+    "w": 719,
+    "h": 876
+  },
+  "/catalog/product-photos/phones/poco-c81-pro-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 338,
+    "y": 132,
+    "w": 924,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/poco-c81-pro-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1135,
+    "h": 1340
+  },
   "/catalog/product-photos/phones/poco-c81-pro-colors.png": {
     "width": 1200,
     "height": 600,
@@ -1118,6 +1718,70 @@
     "y": 0,
     "w": 769,
     "h": 600
+  },
+  "/catalog/product-photos/phones/poco-c81-pro-gold-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 338,
+    "y": 132,
+    "w": 924,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/poco-c81-pro-gold.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1135,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/poco-c81-pro-green-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 338,
+    "y": 132,
+    "w": 924,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/poco-c81-pro-green.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1135,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/poco-f8-pro-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 306,
+    "y": 131,
+    "w": 987,
+    "h": 1338
+  },
+  "/catalog/product-photos/phones/poco-f8-pro-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1135,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-f8-pro-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 306,
+    "y": 131,
+    "w": 987,
+    "h": 1338
+  },
+  "/catalog/product-photos/phones/poco-f8-pro-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1135,
+    "h": 1341
   },
   "/catalog/product-photos/phones/poco-f8-pro-colors.png": {
     "width": 1200,
@@ -1127,6 +1791,38 @@
     "w": 832,
     "h": 600
   },
+  "/catalog/product-photos/phones/poco-f8-pro-titanium-silver-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 306,
+    "y": 131,
+    "w": 987,
+    "h": 1338
+  },
+  "/catalog/product-photos/phones/poco-f8-pro-titanium-silver.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1135,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-f8-ultra-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 308,
+    "y": 130,
+    "w": 983,
+    "h": 1339
+  },
+  "/catalog/product-photos/phones/poco-f8-ultra-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 233,
+    "y": 129,
+    "w": 1134,
+    "h": 1341
+  },
   "/catalog/product-photos/phones/poco-f8-ultra-colors.png": {
     "width": 1200,
     "height": 600,
@@ -1134,6 +1830,38 @@
     "y": 0,
     "w": 645,
     "h": 599
+  },
+  "/catalog/product-photos/phones/poco-f8-ultra-denim-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 308,
+    "y": 130,
+    "w": 984,
+    "h": 1339
+  },
+  "/catalog/product-photos/phones/poco-f8-ultra-denim-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 233,
+    "y": 129,
+    "w": 1134,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-f9-ultra-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 342,
+    "y": 132,
+    "w": 915,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/poco-f9-ultra-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1339
   },
   "/catalog/product-photos/phones/poco-f9-ultra-colors.png": {
     "width": 1200,
@@ -1143,6 +1871,38 @@
     "w": 608,
     "h": 600
   },
+  "/catalog/product-photos/phones/poco-f9-ultra-red-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 342,
+    "y": 132,
+    "w": 915,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/poco-f9-ultra-red.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 131,
+    "w": 1136,
+    "h": 1338
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 364,
+    "y": 132,
+    "w": 872,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1135,
+    "h": 1340
+  },
   "/catalog/product-photos/phones/poco-x8-pro-colors.png": {
     "width": 1200,
     "height": 660,
@@ -1150,6 +1910,38 @@
     "y": 0,
     "w": 896,
     "h": 660
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-max-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 364,
+    "y": 130,
+    "w": 872,
+    "h": 1339
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-max-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1135,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-max-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 364,
+    "y": 130,
+    "w": 872,
+    "h": 1339
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-max-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1135,
+    "h": 1341
   },
   "/catalog/product-photos/phones/poco-x8-pro-max-colors.png": {
     "width": 1200,
@@ -1159,6 +1951,94 @@
     "w": 858,
     "h": 660
   },
+  "/catalog/product-photos/phones/poco-x8-pro-max-orange.jpeg": {
+    "width": 1231,
+    "height": 1600,
+    "x": 0,
+    "y": 0,
+    "w": 1231,
+    "h": 1600
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-max-white-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 364,
+    "y": 130,
+    "w": 872,
+    "h": 1339
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-max-white.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1135,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-mint-green-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 549,
+    "y": 132,
+    "w": 501,
+    "h": 1335
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-mint-green.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 364,
+    "y": 132,
+    "w": 872,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-white-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 549,
+    "y": 132,
+    "w": 501,
+    "h": 1335
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-white.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 364,
+    "y": 132,
+    "w": 872,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-yellow-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 466,
+    "y": 131,
+    "w": 667,
+    "h": 1337
+  },
+  "/catalog/product-photos/phones/poco-x8-pro-yellow.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 373,
+    "y": 132,
+    "w": 853,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/redmi-note-15-5g-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 340,
+    "y": 130,
+    "w": 920,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-5g-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1136,
+    "h": 1341
+  },
   "/catalog/product-photos/phones/redmi-note-15-5g-colors.png": {
     "width": 1200,
     "height": 600,
@@ -1166,6 +2046,54 @@
     "y": 0,
     "w": 830,
     "h": 600
+  },
+  "/catalog/product-photos/phones/redmi-note-15-5g-glacier-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 340,
+    "y": 130,
+    "w": 920,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-5g-glacier-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1136,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-5g-mist-purple-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 340,
+    "y": 130,
+    "w": 920,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-5g-mist-purple.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1136,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 340,
+    "y": 130,
+    "w": 920,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
   },
   "/catalog/product-photos/phones/redmi-note-15-colors.png": {
     "width": 1200,
@@ -1175,6 +2103,54 @@
     "w": 966,
     "h": 600
   },
+  "/catalog/product-photos/phones/redmi-note-15-forest-green-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 340,
+    "y": 130,
+    "w": 920,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-forest-green.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-glacier-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 340,
+    "y": 130,
+    "w": 920,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-glacier-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-5g-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 324,
+    "y": 130,
+    "w": 952,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-5g-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1136,
+    "h": 1341
+  },
   "/catalog/product-photos/phones/redmi-note-15-pro-5g-colors.png": {
     "width": 1200,
     "height": 600,
@@ -1182,6 +2158,70 @@
     "y": 0,
     "w": 1037,
     "h": 600
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-5g-glacier-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 324,
+    "y": 130,
+    "w": 952,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-5g-glacier-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1136,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-5g-mist-purple-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 302,
+    "y": 126,
+    "w": 996,
+    "h": 1348
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-5g-mist-purple.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1339
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-5g-titanium-color-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 324,
+    "y": 130,
+    "w": 952,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-5g-titanium-color.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1136,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 324,
+    "y": 129,
+    "w": 952,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
   },
   "/catalog/product-photos/phones/redmi-note-15-pro-colors.png": {
     "width": 1200,
@@ -1191,6 +2231,38 @@
     "w": 883,
     "h": 600
   },
+  "/catalog/product-photos/phones/redmi-note-15-pro-glacier-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 324,
+    "y": 129,
+    "w": 952,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-glacier-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 324,
+    "y": 130,
+    "w": 952,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
+  },
   "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-colors.png": {
     "width": 1200,
     "height": 600,
@@ -1198,6 +2270,70 @@
     "y": 0,
     "w": 883,
     "h": 600
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-glacier-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 324,
+    "y": 130,
+    "w": 952,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-glacier-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-mocha-brown-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 324,
+    "y": 130,
+    "w": 952,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-plus-5g-mocha-brown.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-titanium-color-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 324,
+    "y": 129,
+    "w": 952,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-pro-titanium-color.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/redmi-note-15-purple-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 340,
+    "y": 130,
+    "w": 920,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/redmi-note-15-purple.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1341
   },
   "/catalog/product-photos/phones/sony-xperia-1-vii-black.png": {
     "width": 1200,
@@ -1223,6 +2359,38 @@
     "w": 456,
     "h": 940
   },
+  "/catalog/product-photos/phones/xiaomi-17-alpine-pink-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 348,
+    "y": 127,
+    "w": 905,
+    "h": 1348
+  },
+  "/catalog/product-photos/phones/xiaomi-17-alpine-pink.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 246,
+    "y": 128,
+    "w": 1108,
+    "h": 1344
+  },
+  "/catalog/product-photos/phones/xiaomi-17-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 348,
+    "y": 128,
+    "w": 904,
+    "h": 1346
+  },
+  "/catalog/product-photos/phones/xiaomi-17-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 246,
+    "y": 128,
+    "w": 1108,
+    "h": 1344
+  },
   "/catalog/product-photos/phones/xiaomi-17-colors.jpg": {
     "width": 1200,
     "height": 600,
@@ -1230,6 +2398,38 @@
     "y": 0,
     "w": 879,
     "h": 600
+  },
+  "/catalog/product-photos/phones/xiaomi-17-ice-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 349,
+    "y": 129,
+    "w": 903,
+    "h": 1343
+  },
+  "/catalog/product-photos/phones/xiaomi-17-ice-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 246,
+    "y": 127,
+    "w": 1108,
+    "h": 1347
+  },
+  "/catalog/product-photos/phones/xiaomi-17-ultra-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 311,
+    "y": 131,
+    "w": 977,
+    "h": 1337
+  },
+  "/catalog/product-photos/phones/xiaomi-17-ultra-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
   },
   "/catalog/product-photos/phones/xiaomi-17-ultra-colors.png": {
     "width": 1200,
@@ -1239,6 +2439,86 @@
     "w": 869,
     "h": 600
   },
+  "/catalog/product-photos/phones/xiaomi-17-ultra-starlit-green-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 311,
+    "y": 131,
+    "w": 977,
+    "h": 1337
+  },
+  "/catalog/product-photos/phones/xiaomi-17-ultra-starlit-green.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/xiaomi-17-ultra-white-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 311,
+    "y": 131,
+    "w": 977,
+    "h": 1337
+  },
+  "/catalog/product-photos/phones/xiaomi-17-ultra-white.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 130,
+    "w": 1136,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/xiaomi-17-venture-green-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 349,
+    "y": 128,
+    "w": 903,
+    "h": 1345
+  },
+  "/catalog/product-photos/phones/xiaomi-17-venture-green.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 246,
+    "y": 129,
+    "w": 1108,
+    "h": 1343
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 367,
+    "y": 132,
+    "w": 865,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 230,
+    "y": 129,
+    "w": 1139,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 367,
+    "y": 132,
+    "w": 865,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 230,
+    "y": 129,
+    "w": 1139,
+    "h": 1341
+  },
   "/catalog/product-photos/phones/xiaomi-17t-colors.png": {
     "width": 1200,
     "height": 600,
@@ -1247,6 +2527,38 @@
     "w": 893,
     "h": 599
   },
+  "/catalog/product-photos/phones/xiaomi-17t-opal-white-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 367,
+    "y": 132,
+    "w": 865,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-opal-white.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 230,
+    "y": 129,
+    "w": 1139,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-pro-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 367,
+    "y": 132,
+    "w": 865,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-pro-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 230,
+    "y": 129,
+    "w": 1139,
+    "h": 1341
+  },
   "/catalog/product-photos/phones/xiaomi-17t-pro-colors.png": {
     "width": 1200,
     "height": 600,
@@ -1254,6 +2566,54 @@
     "y": 0,
     "w": 718,
     "h": 600
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-pro-deep-blue-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 367,
+    "y": 132,
+    "w": 865,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-pro-deep-blue.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 231,
+    "y": 129,
+    "w": 1137,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-pro-deep-violet-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 367,
+    "y": 132,
+    "w": 865,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-pro-deep-violet.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 230,
+    "y": 129,
+    "w": 1139,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-violet-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 367,
+    "y": 132,
+    "w": 865,
+    "h": 1336
+  },
+  "/catalog/product-photos/phones/xiaomi-17t-violet.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 230,
+    "y": 129,
+    "w": 1139,
+    "h": 1341
   },
   "/uploads/products/samsung-galaxy-s26-ultra/restore-9ca30cb069-01.webp": {
     "width": 1204,
