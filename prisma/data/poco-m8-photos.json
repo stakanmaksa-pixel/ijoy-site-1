@@ -1,0 +1,30 @@
+{
+  "poco-m8-5g": {
+    "Silver": [
+      "/catalog/product-photos/phones/poco-m8-5g-silver.png",
+      "/catalog/product-photos/phones/poco-m8-5g-silver-side.png"
+    ],
+    "Green": [
+      "/catalog/product-photos/phones/poco-m8-5g-green.png",
+      "/catalog/product-photos/phones/poco-m8-5g-green-side.png"
+    ],
+    "Black": [
+      "/catalog/product-photos/phones/poco-m8-5g-black.png",
+      "/catalog/product-photos/phones/poco-m8-5g-black-side.png"
+    ]
+  },
+  "poco-m8-pro-5g": {
+    "Black": [
+      "/catalog/product-photos/phones/poco-m8-pro-5g-black.png",
+      "/catalog/product-photos/phones/poco-m8-pro-5g-black-side.png"
+    ],
+    "Silver": [
+      "/catalog/product-photos/phones/poco-m8-pro-5g-silver.png",
+      "/catalog/product-photos/phones/poco-m8-pro-5g-silver-side.png"
+    ],
+    "Green": [
+      "/catalog/product-photos/phones/poco-m8-pro-5g-green.png",
+      "/catalog/product-photos/phones/poco-m8-pro-5g-green-side.png"
+    ]
+  }
+}

@@ -71,7 +71,7 @@ export default async function CatalogPage({
     <div>
       <PageHero title="Каталог Гаджетов iJoy Gadget Store" highlight="Гаджетов" />
 
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+      <div className="mx-auto max-w-[1440px] px-4 py-12 sm:px-6">
         {search && (
           <p className="mb-6 text-sm text-zinc-500">
             Результаты поиска по запросу «{search}» — {products.length}{" "}
@@ -82,8 +82,8 @@ export default async function CatalogPage({
           </p>
         )}
 
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-[240px_1fr]">
-          <aside>
+        <div className="grid min-w-0 grid-cols-1 gap-6 md:grid-cols-[220px_minmax(0,1fr)]">
+          <aside className="min-w-0">
             <CatalogAutoForm>
               {search && <input type="hidden" name="q" value={search} />}
               <div>
@@ -185,13 +185,13 @@ export default async function CatalogPage({
             </CatalogAutoForm>
           </aside>
 
-          <section>
+          <section className="min-w-0">
             {products.length === 0 ? (
               <p className="text-sm text-zinc-500">
                 По вашему запросу ничего не найдено.
               </p>
             ) : (
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              <div className="catalog-product-grid">
                 {products.map((p) => (
                   <ProductCard
                     key={p.id}

@@ -29,6 +29,24 @@ body {
   font-family: var(--font-body), Arial, Helvetica, sans-serif;
 }
 
+/* Cards respond to their available column width, not the viewport alone. */
+.catalog-product-grid {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .catalog-product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  }
+}
+.catalog-product-title {
+  text-wrap: pretty;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
 /* В многоуровневом каталоге пользователь листает список пальцем/колесом, но
    отдельный системный ползунок рядом с моделями не нужен и визуально шумит. */
 .scrollbar-none {

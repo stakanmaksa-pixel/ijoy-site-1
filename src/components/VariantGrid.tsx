@@ -195,7 +195,7 @@ export function VariantGrid({
       <div>
         <p className="mb-4 text-sm text-zinc-500">Показано вариантов: {filtered.length}</p>
         {filtered.length > 0 ? (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
+        <div className="catalog-product-grid">
           {filtered.map((variant) => <VariantCard key={variant.id} slug={slug} variant={variant} imageUrl={imageByVariant[variant.id] ?? null} />)}
         </div>
         ) : (

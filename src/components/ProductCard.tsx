@@ -3,6 +3,7 @@ import { formatPrice, PRICE_ON_REQUEST } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CatalogCardFooter } from "@/components/CatalogCardFooter";
 import { ProductPhoto } from "@/components/ProductPhoto";
+import { catalogTitle } from "@/lib/catalogLabels";
 
 export function ProductCard({ name, slug, brand, minPrice, hasStock, defaultVariantId, coverImage, cardVariantId, exactPrice = false }: {
   name: string;
@@ -25,7 +26,7 @@ export function ProductCard({ name, slug, brand, minPrice, hasStock, defaultVari
     </div>
     <div className="flex flex-1 flex-col gap-1 p-3 sm:p-4">
       {brand && <div className="text-xs uppercase tracking-wide text-zinc-400">{brand}</div>}
-      <div className="font-medium leading-6 text-foreground">{name}</div>
+      <div className="catalog-product-title font-medium leading-6 text-foreground">{catalogTitle(name)}</div>
       <CatalogCardFooter priceLabel={minPrice != null ? `${exactPrice ? "" : "от "}${formatPrice(minPrice)}` : PRICE_ON_REQUEST}
         variantId={defaultVariantId} canBuy={minPrice != null && hasStock} inStock={hasStock} />
     </div>

@@ -3630,5 +3630,101 @@
     "y": 37,
     "w": 720,
     "h": 873
+  },
+  "/catalog/product-photos/phones/poco-m8-5g-silver.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 233,
+    "y": 129,
+    "w": 1134,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-m8-5g-silver-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 344,
+    "y": 130,
+    "w": 911,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/poco-m8-5g-green.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 233,
+    "y": 129,
+    "w": 1134,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-m8-5g-green-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 344,
+    "y": 130,
+    "w": 911,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/poco-m8-5g-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 233,
+    "y": 129,
+    "w": 1134,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-m8-5g-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 344,
+    "y": 130,
+    "w": 911,
+    "h": 1340
+  },
+  "/catalog/product-photos/phones/poco-m8-pro-5g-black.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1135,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-m8-pro-5g-black-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 306,
+    "y": 131,
+    "w": 987,
+    "h": 1338
+  },
+  "/catalog/product-photos/phones/poco-m8-pro-5g-silver.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1135,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-m8-pro-5g-silver-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 306,
+    "y": 131,
+    "w": 987,
+    "h": 1338
+  },
+  "/catalog/product-photos/phones/poco-m8-pro-5g-green.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 232,
+    "y": 129,
+    "w": 1135,
+    "h": 1341
+  },
+  "/catalog/product-photos/phones/poco-m8-pro-5g-green-side.png": {
+    "width": 1600,
+    "height": 1600,
+    "x": 306,
+    "y": 131,
+    "w": 987,
+    "h": 1338
   }
 }

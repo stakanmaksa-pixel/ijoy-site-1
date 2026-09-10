@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { CatalogNavNode } from "@/lib/catalog";
+import { catalogMenuLabel, catalogTitle } from "@/lib/catalogLabels";
 
 // Многоуровневое меню каталога (как в STORE77): клик по пункту с
 // подкатегориями открывает следующую колонку справа, клик по конкретной
@@ -71,7 +72,7 @@ export function CatalogMenu({ tree }: { tree: CatalogNavNode[] }) {
                 return (
                   <div
                     key={depth}
-                    className="scrollbar-none flex w-60 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-zinc-100 p-2 last:border-r-0"
+                    className="scrollbar-none flex w-64 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-zinc-100 p-2 last:border-r-0"
                   >
                     {viewAllHref && (
                       <Link
@@ -98,7 +99,7 @@ export function CatalogMenu({ tree }: { tree: CatalogNavNode[] }) {
                                 : "text-foreground hover:bg-zinc-50 hover:text-accent"
                             }`}
                           >
-                            <span>{node.label}</span>
+                            <span className="catalog-product-title min-w-0">{catalogTitle(catalogMenuLabel(node.label, path.slice(0, depth).map(n => n.label)))}</span>
                             <span className="ml-2">›</span>
                           </button>
                         );
@@ -111,7 +112,7 @@ export function CatalogMenu({ tree }: { tree: CatalogNavNode[] }) {
                           onClick={close}
                           className="rounded-lg px-3 py-2 text-sm text-foreground transition-colors hover:bg-zinc-50 hover:text-accent"
                         >
-                          {node.label}
+                          <span className="catalog-product-title">{catalogTitle(catalogMenuLabel(node.label, path.slice(0, depth).map(n => n.label)))}</span>
                         </Link>
                       );
                     })}

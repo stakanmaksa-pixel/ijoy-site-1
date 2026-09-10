@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { CatalogNavNode } from "@/lib/catalog";
+import { catalogMenuLabel, catalogTitle } from "@/lib/catalogLabels";
 
 // Десктопная версия меню каталога — каскад колонок на наведение, как у
 // крупных магазинов электроники (например BigGeek): навёл на раздел —
@@ -45,8 +46,7 @@ export function CatalogMenuDesktop({ tree }: { tree: CatalogNavNode[] }) {
   // если до этого была раскрыта более глубокая ветка — она обрезается
   // (slice), как в обычном каскадном меню.
   function handleHover(depth: number, node: CatalogNavNode) {
-    if (!node.children || node.children.length === 0) return;
-    setPath((prev) => [...prev.slice(0, depth), node]);
+    setPath((prev) => node.children?.length ? [...prev.slice(0, depth), node] : prev.slice(0, depth));
   }
 
   const columns: CatalogNavNode[][] = [tree, ...path.map((n) => n.children ?? [])];
@@ -71,7 +71,7 @@ export function CatalogMenuDesktop({ tree }: { tree: CatalogNavNode[] }) {
             return (
               <div
                 key={depth}
-                className="scrollbar-none flex max-h-[70vh] w-56 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-zinc-100 p-2 last:border-r-0"
+                className="scrollbar-none flex max-h-[70vh] w-64 shrink-0 flex-col gap-0.5 overflow-y-auto border-r border-zinc-100 p-2 last:border-r-0"
               >
                 {viewAllHref && (
                   <Link
@@ -92,7 +92,7 @@ export function CatalogMenuDesktop({ tree }: { tree: CatalogNavNode[] }) {
                   }`;
                   const content = (
                     <>
-                      <span>{node.label}</span>
+                      <span className="catalog-product-title min-w-0">{catalogTitle(catalogMenuLabel(node.label, path.slice(0, depth).map(n => n.label)))}</span>
                       {hasChildren && <span className="text-zinc-400">›</span>}
                     </>
                   );
