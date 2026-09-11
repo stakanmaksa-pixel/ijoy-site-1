@@ -1,4 +1,5 @@
 import { variantImageKey } from "../../src/lib/pickCoverImage";
+import { HEADPHONE_CONTENT, headphoneContentPatch } from "./headphone-content";
 
 export type GamingLifestyleCategory =
   | "igrovye-pristavki"
@@ -78,12 +79,14 @@ function product(
   content: Omit<GamingLifestyleProduct, "images" | "colorImages"> & { photo: string },
 ): GamingLifestyleProduct {
   const { photo, ...item } = content;
+  const headphone = HEADPHONE_CONTENT.find(p => p.slug === item.slug);
   const variantImages: Array<[string, string[]]> = item.variants.map((variant) => [variantImageKey(variant), [photo]]);
   const colorImages: Array<[string, string[]]> = item.variants
     .filter((variant) => variant.color)
     .map((variant) => [variant.color!, [photo]]);
   return {
     ...item,
+    ...(headphone ? headphoneContentPatch(headphone) : {}),
     images: [photo],
     colorImages: Object.fromEntries([...variantImages, ...colorImages]),
   };
@@ -358,20 +361,17 @@ export const GAMING_LIFESTYLE_CATALOG: GamingLifestyleProduct[] = [
     name: "Зарядная станция для DualSense",
     category: "igrovye-aksessuary",
     brand: "Sony PlayStation",
-    description: "Оригинальная зарядная станция для двух контроллеров DualSense. Цена зависит от количества в заказе.",
+    description: "Оригинальная зарядная станция для одновременной зарядки двух контроллеров DualSense. Цена указана за одну станцию; контроллеры приобретаются отдельно.",
     highlights: ["Одновременная зарядка двух DualSense", "Контроллеры подключаются защёлкиванием", "Оригинальный аксессуар PlayStation"],
     specs: {
       "Тип": "Зарядная станция для контроллеров",
       "Совместимость": "DualSense для PlayStation 5",
       "Ёмкость": "До двух контроллеров одновременно",
-      "Цена": "Указана для выбранной минимальной партии",
+      "Цена": "За 1 зарядную станцию; контроллеры не входят в комплект",
     },
     photo: GAMING_LIFESTYLE_ASSETS.dualsenseCharge,
     variants: [
       v("Зарядная станция (Оригинал) — 1 шт", 3000, "1 шт", "White", "Для DualSense"),
-      v("Зарядная станция (Оригинал) — от 10 шт", 2950, "от 10 шт", "White", "Для DualSense"),
-      v("Зарядная станция (Оригинал) — от 20 шт", 2900, "от 20 шт", "White", "Для DualSense"),
-      v("Зарядная станция (Оригинал) — от 100 шт", 2750, "от 100 шт", "White", "Для DualSense"),
     ],
   }),
   product({

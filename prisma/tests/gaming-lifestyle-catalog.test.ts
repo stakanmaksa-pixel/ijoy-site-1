@@ -34,7 +34,7 @@ function priceOf(rawLabel: string) {
 
 test("all requested gaming and lifestyle cards, variants, prices and local photos are present", async () => {
   assert.equal(GAMING_LIFESTYLE_CATALOG.length, 36);
-  assert.equal(GAMING_LIFESTYLE_CATALOG.flatMap((product) => product.variants).length, 91);
+  assert.equal(GAMING_LIFESTYLE_CATALOG.flatMap((product) => product.variants).length, 88);
   assert.equal(new Set(GAMING_LIFESTYLE_CATALOG.map((product) => product.slug)).size, 36);
   const labels = GAMING_LIFESTYLE_CATALOG.flatMap((product) => product.variants.map((variant) => variant.rawLabel));
   assert.equal(new Set(labels).size, labels.length);
