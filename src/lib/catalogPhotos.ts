@@ -1,6 +1,7 @@
 import { resolveHeadphonePhoto } from "./headphonePhotos";
 import bounds from "./catalogPhotoBounds.json";
 import appleWatchPhotos from "./appleWatchPhotoReplacements.json";
+import accessoryBounds from "./accessoryPhotoBounds.json";
 
 export type PhotoBounds = { width: number; height: number; x: number; y: number; w: number; h: number };
 
@@ -39,5 +40,5 @@ export function resolveCatalogPhoto(url: string, slug?: string, region?: string 
 }
 
 export function catalogPhotoBounds(url: string): PhotoBounds | null {
-  return (bounds as Record<string, PhotoBounds>)[url] ?? null;
+  return (accessoryBounds as Record<string, PhotoBounds>)[url] ?? (bounds as Record<string, PhotoBounds>)[url] ?? null;
 }

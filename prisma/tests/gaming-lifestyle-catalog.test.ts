@@ -60,7 +60,8 @@ test("every exact variant has a stable visible product photo", () => {
     for (const variant of product.variants) {
       const image = pickVariantImages(product.images, product.colorImages, variant)[0];
       assert(image, `${product.name}: ${variant.rawLabel}`);
-      assert(product.images.map(url => resolveCatalogPhoto(url, undefined, variant.region)).includes(image!), `${product.name}: ${variant.rawLabel}`);
+      const assigned = [...product.images, ...Object.values(product.colorImages).flat()];
+      assert(assigned.map(url => resolveCatalogPhoto(url, undefined, variant.region)).includes(image!), `${product.name}: ${variant.rawLabel}`);
     }
   }
 });

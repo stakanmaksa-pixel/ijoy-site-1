@@ -1,5 +1,6 @@
 import { variantImageKey } from "../../src/lib/pickCoverImage";
 import { HEADPHONE_CONTENT, headphoneContentPatch } from "./headphone-content";
+import { accessoryVariantPhoto } from "./accessory-variant-photos";
 
 export type GamingLifestyleCategory =
   | "igrovye-pristavki"
@@ -80,14 +81,16 @@ function product(
 ): GamingLifestyleProduct {
   const { photo, ...item } = content;
   const headphone = HEADPHONE_CONTENT.find(p => p.slug === item.slug);
-  const variantImages: Array<[string, string[]]> = item.variants.map((variant) => [variantImageKey(variant), [photo]]);
+  const imageFor = (variant: GamingLifestyleVariant) => accessoryVariantPhoto(item.slug, variant) ?? photo;
+  const variantImages: Array<[string, string[]]> = item.variants.map((variant) => [variantImageKey(variant), [imageFor(variant)]]);
   const colorImages: Array<[string, string[]]> = item.variants
     .filter((variant) => variant.color)
-    .map((variant) => [variant.color!, [photo]]);
+    .filter((variant) => variant.color !== "Limited Edition")
+    .map((variant) => [variant.color!, [imageFor(variant)]]);
   return {
     ...item,
     ...(headphone ? headphoneContentPatch(headphone) : {}),
-    images: [photo],
+    images: [item.variants[0] ? imageFor(item.variants[0]) : photo],
     colorImages: Object.fromEntries([...variantImages, ...colorImages]),
   };
 }
@@ -651,7 +654,7 @@ export const GAMING_LIFESTYLE_CATALOG: GamingLifestyleProduct[] = [
       v("Google Fitbit Air Berry", 10500, null, "Berry", "Стандартная версия"),
       v("Google Fitbit Air Obsidian", 10500, null, "Obsidian", "Стандартная версия"),
       v("Google Fitbit Air Fog", 14500, null, "Fog", "Стандартная версия"),
-      v("Google Fitbit Stephen Curry", 16000, "Stephen Curry Edition", "Blue", "Лимитированное издание"),
+      v("Google Fitbit Stephen Curry", 16000, "Stephen Curry Edition", "Rye", "Лимитированное издание"),
     ],
   }),
   product({

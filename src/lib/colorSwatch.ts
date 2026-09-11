@@ -10,7 +10,7 @@ const EXACT: Record<string, string> = {
   // Approximate on-screen swatches; keep manufacturer colour names in the DB.
   obsidian: "#303030", "obsidian (matte)": "#303030", frost: "#dce6e7",
   pistachio: "#d3ddad", hibiscus: "#df889e", canyon: "#c77858",
-  olive: "#788365", fog: "#d6dcd9", berry: "#ab3859",
+  olive: "#788365", fog: "#d6dcd9", berry: "#ab3859", rye: "#877a66",
   "moonstone gray": "#7d7d80", "platinum silver": "#d8dadd", gray: "#85858a",
   "coral red": "#d78b88", "slate black": "#3a3b3a", "moss green": "#6d765d",
   "orchid purple": "#867195", "titanium gray": "#8d8c88", "titanium silver": "#c7c8c7",
@@ -94,7 +94,7 @@ const RUSSIAN_NAMES: Record<string, string> = {
   ...Object.fromEntries(Object.entries(PHONE_COLORS).map(([key,[label]])=>[key,label])),
   obsidian: "Обсидиан", "obsidian (matte)": "Матовый обсидиан", frost: "Иней",
   pistachio: "Фисташковый", hibiscus: "Гибискус", canyon: "Каньон",
-  olive: "Оливковый", fog: "Туман", berry: "Ягодный", gray: "Серый",
+  olive: "Оливковый", fog: "Туман", berry: "Ягодный", gray: "Серый", rye: "Ржаной",
   "moonstone gray": "Лунный серый", "platinum silver": "Платиновый серебристый",
   "coral red": "Коралловый красный", "slate black": "Сланцевый чёрный",
   "moss green": "Зелёный мох", "orchid purple": "Фиолетовая орхидея",
