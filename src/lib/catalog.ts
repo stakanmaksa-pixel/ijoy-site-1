@@ -120,7 +120,7 @@ export const MODEL_DISPLAY_ORDER = {
     "MacBook Pro 14",
     "MacBook Pro 14 (2025, M5)",
   ],
-  watch: ["Apple Watch Ultra 3", "Apple Watch Series 11", "Apple Watch SE 3"],
+  watch: ["Apple Watch Ultra 4", "Apple Watch Ultra 3", "Apple Watch Series 11", "Apple Watch SE 3"],
   airpods: [
     "AirPods Pro 3",
     "AirPods Pro 2 Type-C",
