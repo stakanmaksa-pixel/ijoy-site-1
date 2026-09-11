@@ -9,6 +9,18 @@ export function isIpadKeyboard(slug: string): boolean {
 
 export const directModelLink = (product: {name:string;slug:string}) => ({label:product.name,href:`/product/${product.slug}`});
 
+/** A single model opens its variant grid; only real multi-model lines need children. */
+export function modelLineMenuNode(
+  label: string,
+  items: { label: string; href: string }[],
+  groupHref?: string,
+): { label: string; href?: string; children?: { label: string; href: string }[] } | null {
+  if (!items.length) return null;
+  return items.length === 1
+    ? { ...items[0], label }
+    : { label, href: groupHref, children: items };
+}
+
 type Offer = { id: string; memory: string | null; color: string | null; region: string | null; price: number | null; inStock: boolean };
 const key = (v: Offer) => JSON.stringify([v.memory, v.color]);
 const memorySize = (value: string | null) => {

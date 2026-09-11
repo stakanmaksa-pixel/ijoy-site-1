@@ -3,7 +3,7 @@ import type { Prisma } from "@/generated/prisma/client";
 import { pickCoverImage, pickVariantImages } from "@/lib/pickCoverImage";
 import { getSamsungPhoneMenuGroup, SAMSUNG_PHONE_MENU_GROUPS } from "@/lib/samsungPhones";
 import { unstable_cache } from "next/cache";
-import { directModelLink, isIpadKeyboard, isSamsungPhone, samsungMemoryColorGrid } from "@/lib/catalogPresentation";
+import { directModelLink, isIpadKeyboard, isSamsungPhone, modelLineMenuNode, samsungMemoryColorGrid } from "@/lib/catalogPresentation";
 import { colorLabel } from "@/lib/colorSwatch";
 
 // ---------------------------------------------------------------------
@@ -257,9 +257,6 @@ type LineMatcher = {
   label: string;
   test: (name: string, brand: string | null) => boolean;
   groupHref?: string;
-  // У Neo один товар с несколькими конфигурациями. В меню он должен вести
-  // сразу в выдачу ноутбуков, а не открывать ещё один уровень меню.
-  alwaysUseGroupHref?: boolean;
   directListing?: boolean;
   order?: readonly string[];
   buildChildren?: (items: CatalogNavProduct[]) => CatalogNavNode[];
@@ -337,7 +334,7 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
   // показывает все модели этой серии в каталоге, наведение/тап — точные
   // конфигурации в следующей колонке.
   noutbuki: [
-    { label: "Apple MacBook Neo", test: (name) => /macbook\s+neo/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Neo", alwaysUseGroupHref: true },
+    { label: "Apple MacBook Neo", test: (name) => /macbook\s+neo/i.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Neo" },
     { label: "Apple MacBook Air M5 13\"", test: (name) => /macbook\s+air/i.test(name) && /m5/i.test(name) && /13/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M5%2013" },
     { label: "Apple MacBook Air M5 15\"", test: (name) => /macbook\s+air/i.test(name) && /m5/i.test(name) && /15/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M5%2015" },
     { label: "Apple MacBook Air M4 13\"", test: (name) => /macbook\s+air/i.test(name) && /m4/i.test(name) && /13/.test(name), groupHref: "/catalog?category=noutbuki&q=MacBook%20Air%20M4%2013" },
@@ -468,11 +465,10 @@ export const getCatalogNavTree = unstable_cache(async (): Promise<CatalogNavNode
             }
             continue;
           }
-          // Одна модель в серии не нуждается в лишней подкатегории:
-          // MacBook Air M5 13" сразу открывает товар, как iPhone 17 Pro Max.
-          groups.push(items.length === 1 && !matcher.alwaysUseGroupHref
-            ? { ...items[0], label: matcher.label }
-            : { label: matcher.label, href: matcher.groupHref, children: items });
+          // Neo and other single-model lines open the complete variant grid,
+          // without a search-results card or an extra desktop/mobile submenu.
+          const node = modelLineMenuNode(matcher.label, items, matcher.groupHref);
+          if (node) groups.push(node);
         }
       }
 
