@@ -6,6 +6,7 @@ import { CompareButton } from "@/components/CompareButton";
 import { ProductOrder } from "@/components/ProductOrder";
 import { pickVariantImages } from "@/lib/pickCoverImage";
 import { groupProductSpecs } from "@/lib/productSpecs";
+import { ProductSpecsAccordion } from "@/components/ProductSpecsAccordion";
 import { headphonePhotoPadding, isHeadphoneProduct } from "@/lib/headphonePhotos";
 import { isSmartGlassesSlug } from "@/lib/smartGlasses";
 import { isGamingLifestyleProduct } from "@/lib/catalogAxes";
@@ -222,6 +223,9 @@ export function ProductDetail({
               <h2 className="font-display text-xl font-semibold text-foreground">
                 Характеристики
               </h2>
+              {productSlug === "iphone-17-pro-max" ? (
+                <ProductSpecsAccordion groups={specGroups} />
+              ) : (
               <div className="mt-6 space-y-8">
                 {specGroups.map((group) => (
                   <section key={group.title}>
@@ -237,6 +241,7 @@ export function ProductDetail({
                   </section>
                 ))}
               </div>
+              )}
             </div>
           )}
         </div>
