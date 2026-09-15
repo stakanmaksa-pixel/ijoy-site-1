@@ -4,6 +4,10 @@
 // вручную по официальным пресс-фото Apple — если появится цвет, которого
 // нет в списке, кружок просто будет серым (см. fallback в CompareTable).
 export const IPHONE_COLOR_SWATCHES: Record<string, string> = {
+  Burgundy: "#6f3444",
+  Glacier: "#cadfe8",
+  "Night Sky": "#222c3b",
+  "Star White": "#f0efed",
   Black: "#3b3c3e",
   Blue: "#3a5a8c",
   Desert: "#cbb493",
@@ -31,6 +35,10 @@ export const IPHONE_COLOR_SWATCHES: Record<string, string> = {
 };
 
 const IPHONE_COLOR_LABELS: Record<string, string> = {
+  Burgundy: "Бордовый",
+  Glacier: "Ледниковый",
+  "Night Sky": "Ночное небо",
+  "Star White": "Звёздный белый",
   "Cosmic Orange": "Космический оранжевый",
   "Deep Blue": "Глубокий синий",
   Silver: "Серебристый",

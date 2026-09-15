@@ -33,6 +33,9 @@ export type CatalogNavNode = {
 // появятся в прайсе, в правильном месте.
 export const MODEL_DISPLAY_ORDER = {
   iphone: [
+    "iPhone 18 Pro Max",
+    "iPhone 18 Pro",
+    "iPhone Duo",
     "iPhone 17 Pro Max",
     "iPhone 17 Pro",
     "iPhone Air",

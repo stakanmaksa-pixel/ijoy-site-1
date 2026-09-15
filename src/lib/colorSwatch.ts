@@ -6,6 +6,7 @@
 import { PHONE_COLORS } from "./phoneColors";
 
 const EXACT: Record<string, string> = {
+  burgundy: "#6f3444", glacier: "#cadfe8", "night sky": "#222c3b", "star white": "#f0efed",
   ...Object.fromEntries(Object.entries(PHONE_COLORS).map(([key,[,hex]])=>[key,hex])),
   // Approximate on-screen swatches; keep manufacturer colour names in the DB.
   obsidian: "#303030", "obsidian (matte)": "#303030", frost: "#dce6e7",
@@ -91,6 +92,7 @@ const KEYWORDS: [RegExp, string][] = [
 // сохраняем оригинал (он нужен менеджеру и для точной модификации), а
 // покупателю показываем понятный русский вариант с оригиналом в скобках.
 const RUSSIAN_NAMES: Record<string, string> = {
+  burgundy: "Бордовый", glacier: "Ледниковый", "night sky": "Ночное небо", "star white": "Звёздный белый",
   ...Object.fromEntries(Object.entries(PHONE_COLORS).map(([key,[label]])=>[key,label])),
   obsidian: "Обсидиан", "obsidian (matte)": "Матовый обсидиан", frost: "Иней",
   pistachio: "Фисташковый", hibiscus: "Гибискус", canyon: "Каньон",

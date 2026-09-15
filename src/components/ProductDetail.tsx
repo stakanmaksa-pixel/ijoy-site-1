@@ -223,7 +223,7 @@ export function ProductDetail({
               <h2 className="font-display text-xl font-semibold text-foreground">
                 Характеристики
               </h2>
-              {productSlug === "iphone-17-pro-max" ? (
+              {["iphone-17-pro-max", "iphone-18-pro-max", "iphone-18-pro", "iphone-duo"].includes(productSlug) ? (
                 <ProductSpecsAccordion groups={specGroups} />
               ) : (
               <div className="mt-6 space-y-8">
