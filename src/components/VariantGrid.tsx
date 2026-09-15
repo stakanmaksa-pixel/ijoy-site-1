@@ -3,6 +3,7 @@
 import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { VariantCard } from "@/components/VariantCard";
 import { colorLabel } from "@/lib/colorSwatch";
+import { sortIphoneVariants } from "@/lib/iphoneVariantOrder";
 import { isSmartGlassesSlug } from "@/lib/smartGlasses";
 import { gamingLifestyleAxisLabel, gamingLifestyleCategoryForProduct } from "@/lib/catalogAxes";
 
@@ -110,13 +111,14 @@ function FilterGroup({
 
 export function VariantGrid({
   slug,
-  variants,
+  variants: inputVariants,
   imageByVariant,
 }: {
   slug: string;
   variants: ProductVariantForGrid[];
   imageByVariant: Record<string, string | null>;
 }) {
+  const variants = useMemo(() => sortIphoneVariants(slug, inputVariants), [slug, inputVariants]);
   const memories = useMemo(() => valuesOf(variants, "memory"), [variants]);
   const colors = useMemo(() => valuesOf(variants, "color"), [variants]);
   const regions = useMemo(() => valuesOf(variants, "region"), [variants]);

@@ -2,6 +2,7 @@ import { resolveHeadphonePhoto } from "./headphonePhotos";
 import bounds from "./catalogPhotoBounds.json";
 import appleWatchPhotos from "./appleWatchPhotoReplacements.json";
 import accessoryBounds from "./accessoryPhotoBounds.json";
+import { iphone2026RuntimePhoto } from "./iphone2026Photos";
 
 export type PhotoBounds = { width: number; height: number; x: number; y: number; w: number; h: number };
 
@@ -22,6 +23,8 @@ const REPLACEMENTS: Record<string, string> = {
 
 // Only known catalogue assets are normalized. Editor uploads keep their framing.
 export function resolveCatalogPhoto(url: string, slug?: string, region?: string | null): string {
+  const iphonePhoto = iphone2026RuntimePhoto(url);
+  if (iphonePhoto !== url) return iphonePhoto;
   // Replace only exact legacy imports; arbitrary editor uploads retain their image and framing.
   const watchPhoto = (appleWatchPhotos as Record<string, string>)[url];
   if (watchPhoto) return watchPhoto;

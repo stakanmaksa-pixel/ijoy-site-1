@@ -5,6 +5,7 @@ import { getSamsungPhoneMenuGroup, SAMSUNG_PHONE_MENU_GROUPS } from "@/lib/samsu
 import { unstable_cache } from "next/cache";
 import { directModelLink, isIpadKeyboard, isSamsungPhone, modelLineMenuNode, samsungMemoryColorGrid } from "@/lib/catalogPresentation";
 import { colorLabel } from "@/lib/colorSwatch";
+import { rankCatalogModel } from "@/lib/iphoneVariantOrder";
 
 // ---------------------------------------------------------------------
 // Многоуровневое меню каталога (бургер-меню на мобильном / выпадающая
@@ -211,9 +212,7 @@ export const MODEL_DISPLAY_ORDER = {
 // (сортировка стабильная) — так что ничего не теряется и не ломается,
 // если модель ещё не добавлена в список выше.
 function rankInList(list: readonly string[] | undefined, name: string): number {
-  if (!list) return Number.MAX_SAFE_INTEGER;
-  const idx = list.indexOf(name);
-  return idx === -1 ? Number.MAX_SAFE_INTEGER : idx;
+  return rankCatalogModel(list, name);
 }
 
 // Тот же выбор списка, что использует меню (см. LINE_MATCHERS/CATEGORY_ORDER
