@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { iphone18Availability } from "@/lib/iphone18Availability";
 import { formatPrice, PRICE_ON_REQUEST } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CatalogCardFooter } from "@/components/CatalogCardFooter";
@@ -28,7 +29,7 @@ export function ProductCard({ name, slug, brand, minPrice, hasStock, defaultVari
       {brand && <div className="text-xs uppercase tracking-wide text-zinc-400">{brand}</div>}
       <div className="catalog-product-title font-medium leading-6 text-foreground">{catalogTitle(name)}</div>
       <CatalogCardFooter priceLabel={minPrice != null ? `${exactPrice ? "" : "от "}${formatPrice(minPrice)}` : PRICE_ON_REQUEST}
-        variantId={defaultVariantId} canBuy={minPrice != null && hasStock} inStock={hasStock} />
+        variantId={defaultVariantId} canBuy={minPrice != null && hasStock} inStock={hasStock} availabilityLabel={iphone18Availability(slug)} />
     </div>
   </Link>;
 }

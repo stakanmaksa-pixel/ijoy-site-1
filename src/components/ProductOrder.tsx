@@ -1,4 +1,5 @@
 "use client";
+import { iphone18Availability } from "@/lib/iphone18Availability";
 
 /* eslint-disable react-hooks/static-components -- локальные селекторы замыкаются на текущее состояние формы */
 
@@ -514,7 +515,7 @@ export function ProductOrder({
               {formatPrice(selected.price)}
               {!selected.inStock && (
                 <span className="ml-2 align-middle text-sm font-normal text-zinc-400">
-                  нет в наличии
+                  {iphone18Availability(productSlug) ?? "нет в наличии"}
                 </span>
               )}
             </>

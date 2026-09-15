@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { iphone18Availability } from "@/lib/iphone18Availability";
 import { formatPrice } from "@/lib/format";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { CatalogCardFooter } from "@/components/CatalogCardFooter";
@@ -32,7 +33,7 @@ export function VariantCard({ slug, variant, imageUrl }: {
     <div className="flex flex-1 flex-col gap-1 p-3 sm:p-4">
       <div className="text-sm text-zinc-500">{label}</div>
       <CatalogCardFooter priceLabel={variant.price != null ? formatPrice(variant.price) : "Уточняйте у менеджера"}
-        variantId={variant.id} canBuy={variant.price != null && variant.inStock} inStock={variant.inStock} />
+        variantId={variant.id} canBuy={variant.price != null && variant.inStock} inStock={variant.inStock} availabilityLabel={iphone18Availability(slug)} />
     </div>
   </Link>;
 }
