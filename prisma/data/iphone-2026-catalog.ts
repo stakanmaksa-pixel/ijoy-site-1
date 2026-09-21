@@ -69,8 +69,26 @@ export const IPHONE_2026_CATALOG = [
   },
 ];
 export type Iphone2026Product = (typeof IPHONE_2026_CATALOG)[number];
+const customerPhotoRoot = "/catalog/product-photos/september-2026";
+const proPhotos: Record<string, string> = {
+  Black: `${customerPhotoRoot}/iphone-18-pro-black.jpg`,
+  Silver: `${customerPhotoRoot}/iphone-18-pro-silver.jpg`,
+  Glacier: `${customerPhotoRoot}/iphone-18-pro-glacier.jpg`,
+  Burgundy: `${customerPhotoRoot}/iphone-18-pro-burgundy.jpg`,
+};
+const duoPhotos: Record<string, string> = {
+  "Night Sky": `${customerPhotoRoot}/iphone-duo-night-sky.jpg`,
+  "Star White": `${customerPhotoRoot}/iphone-duo-star-white.jpg`,
+};
 export function iphone2026Photo(slug: string, color: string) {
-  return `/uploads/products/iphone-2026/${slug}-${color.toLowerCase().replaceAll(" ", "-")}.png`;
+  const image = slug === "iphone-duo" ? duoPhotos[color] : proPhotos[color];
+  if (!image) throw new Error(`Нет фотографии ${slug}, ${color}`);
+  return image;
+}
+export function iphone2026GeneralPhoto(slug: string) {
+  return slug === "iphone-duo"
+    ? `${customerPhotoRoot}/iphone-duo-all-colors.jpg`
+    : `${customerPhotoRoot}/iphone-18-pro-all-colors.jpg`;
 }
 export function iphone2026Variants(product: Iphone2026Product) {
   return memories.flatMap(memory => product.colors.map(color => ({ memory, color, region: null, price: null, inStock: false })));
@@ -79,6 +97,8 @@ type ExistingVariant = { memory: string | null; color: string | null; region: st
 type ExistingProduct = { images: string[]; colorImages: unknown; variants: ExistingVariant[] };
 const normalized = (value: string | null) => (value ?? "").toLowerCase().replace(/\s+/g, "").replace(/гб/g, "gb").replace(/тб/g, "tb");
 const sameConfiguration = (a: ExistingVariant, b: ExistingVariant) => normalized(a.memory) === normalized(b.memory) && normalized(a.color) === normalized(b.color);
+const generatedIphonePhoto = (value: string) =>
+  /^\/(?:uploads\/products\/iphone-2026|api\/catalog\/iphone-2026)\//.test(value);
 /** Add missing configurations only; supplier prices, regions, stock, IDs and custom photos stay intact. */
 export function planIphone2026Addition(product: Iphone2026Product, existing?: ExistingProduct | null) {
   const colorImages: Record<string, string[]> = {};
@@ -89,14 +109,19 @@ export function planIphone2026Addition(product: Iphone2026Product, existing?: Ex
     }
   }
   for (const color of product.colors) {
-    const existingKey = Object.keys(colorImages).find(key => normalized(key) === normalized(color) && colorImages[key].length);
-    if (!colorImages[color]?.length) colorImages[color] = existingKey ? [...colorImages[existingKey]] : [iphone2026Photo(product.slug, color)];
+    const existingKey = Object.keys(colorImages).find(key =>
+      normalized(key) === normalized(color) && colorImages[key].some(image => !generatedIphonePhoto(image)),
+    );
+    colorImages[color] = existingKey ? [...colorImages[existingKey]] : [iphone2026Photo(product.slug, color)];
     for (const old of existing?.variants ?? []) {
-      if (old.color && normalized(old.color) === normalized(color) && !colorImages[old.color]?.length) colorImages[old.color] = [...colorImages[color]];
+      if (old.color && normalized(old.color) === normalized(color) && !colorImages[old.color]?.some(image => !generatedIphonePhoto(image))) {
+        colorImages[old.color] = [...colorImages[color]];
+      }
     }
   }
+  const customImages = existing?.images.filter(image => !generatedIphonePhoto(image)) ?? [];
   return {
-    images: existing?.images.length ? [...existing.images] : [iphone2026Photo(product.slug, product.colors[0])],
+    images: customImages.length ? customImages : [iphone2026GeneralPhoto(product.slug)],
     colorImages,
     variantsToCreate: iphone2026Variants(product).filter(v => !existing?.variants.some(old => sameConfiguration(old, v))),
   };

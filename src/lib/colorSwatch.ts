@@ -7,6 +7,11 @@ import { PHONE_COLORS } from "./phoneColors";
 
 const EXACT: Record<string, string> = {
   burgundy: "#6f3444", glacier: "#cadfe8", "night sky": "#222c3b", "star white": "#f0efed",
+  blueberry: "#46558f", "french gray": "#928f86", "captain blue": "#182c4c", mauve: "#8b6670",
+  "ceramic ultra blue": "#243ccb", "ceramic pink": "#e7c8c2", "dark bronze": "#59412f",
+  "light gold": "#d9cdb4", "radiant gold": "#caa458", "pearl white": "#f4f0e9", "night blue": "#202b45",
+  "modern black": "#242426", "feather sand white": "#eeeae2", "denim blue": "#8fc9df",
+  "ice berry purple": "#9b7483",
   ...Object.fromEntries(Object.entries(PHONE_COLORS).map(([key,[,hex]])=>[key,hex])),
   // Approximate on-screen swatches; keep manufacturer colour names in the DB.
   obsidian: "#303030", "obsidian (matte)": "#303030", frost: "#dce6e7",
@@ -15,7 +20,7 @@ const EXACT: Record<string, string> = {
   "moonstone gray": "#7d7d80", "platinum silver": "#d8dadd", gray: "#85858a",
   "coral red": "#d78b88", "slate black": "#3a3b3a", "moss green": "#6d765d",
   "orchid purple": "#867195", "titanium gray": "#8d8c88", "titanium silver": "#c7c8c7",
-  "titanium color": "#bdb5a6", "mint green": "#c0d1b7", "denim blue": "#5b789b",
+  "titanium color": "#bdb5a6", "mint green": "#c0d1b7",
   "alpine pink": "#e2c9c7", "ice blue": "#c2d6e1", "venture green": "#849b78",
   "starlit green": "#a4bab0", "opal white": "#eeeee7", "deep violet": "#726589",
   "deep blue": "#50698b", "glacier blue": "#bad7e0", "mist purple": "#bab2d1",
@@ -93,6 +98,11 @@ const KEYWORDS: [RegExp, string][] = [
 // покупателю показываем понятный русский вариант с оригиналом в скобках.
 const RUSSIAN_NAMES: Record<string, string> = {
   burgundy: "Бордовый", glacier: "Ледниковый", "night sky": "Ночное небо", "star white": "Звёздный белый",
+  blueberry: "Черничный", "french gray": "Французский серый", "captain blue": "Капитанский синий", mauve: "Розовато-лиловый",
+  "ceramic ultra blue": "Керамический ультрасиний", "ceramic pink": "Керамический розовый",
+  "dark bronze": "Тёмная бронза", "light gold": "Светлое золото", "radiant gold": "Сияющее золото",
+  "pearl white": "Жемчужно-белый", "night blue": "Ночной синий", "modern black": "Современный чёрный",
+  "feather sand white": "Песочно-белый", "denim blue": "Джинсовый синий", "ice berry purple": "Ледяной ягодно-фиолетовый",
   ...Object.fromEntries(Object.entries(PHONE_COLORS).map(([key,[label]])=>[key,label])),
   obsidian: "Обсидиан", "obsidian (matte)": "Матовый обсидиан", frost: "Иней",
   pistachio: "Фисташковый", hibiscus: "Гибискус", canyon: "Каньон",
@@ -101,7 +111,7 @@ const RUSSIAN_NAMES: Record<string, string> = {
   "coral red": "Коралловый красный", "slate black": "Сланцевый чёрный",
   "moss green": "Зелёный мох", "orchid purple": "Фиолетовая орхидея",
   "titanium gray": "Серый титан", "titanium silver": "Серебристый титан",
-  "titanium color": "Титановый", "mint green": "Мятный зелёный", "denim blue": "Джинсовый синий",
+  "titanium color": "Титановый", "mint green": "Мятный зелёный",
   "alpine pink": "Альпийский розовый", "ice blue": "Ледяной голубой", "venture green": "Зелёный",
   "starlit green": "Звёздный зелёный", "opal white": "Опаловый белый", "deep violet": "Тёмно-фиолетовый",
   "deep blue": "Тёмно-синий", "glacier blue": "Ледниковый голубой", "mist purple": "Туманный фиолетовый",

@@ -6,6 +6,7 @@ import { unstable_cache } from "next/cache";
 import { directModelLink, isIpadKeyboard, isSamsungPhone, modelLineMenuNode, samsungMemoryColorGrid } from "@/lib/catalogPresentation";
 import { colorLabel } from "@/lib/colorSwatch";
 import { rankCatalogModel } from "@/lib/iphoneVariantOrder";
+import { usesGeneralProductGallery } from "@/lib/generalProductGallery";
 
 // ---------------------------------------------------------------------
 // Многоуровневое меню каталога (бургер-меню на мобильном / выпадающая
@@ -124,8 +125,10 @@ export const MODEL_DISPLAY_ORDER = {
     "MacBook Pro 14",
     "MacBook Pro 14 (2025, M5)",
   ],
-  watch: ["Apple Watch Ultra 4", "Apple Watch Ultra 3", "Apple Watch Series 11", "Apple Watch SE 3"],
+  watch: ["Apple Watch Ultra 4", "Apple Watch Series 12", "Apple Watch Ultra 3", "Apple Watch Series 11", "Apple Watch SE 3"],
   airpods: [
+    "AirPods 5 Wireless",
+    "AirPods 5",
     "AirPods Pro 3",
     "AirPods Pro 2 Type-C",
     "AirPods 4 ANC",
@@ -186,7 +189,8 @@ export const MODEL_DISPLAY_ORDER = {
     "Вертикальная подставка для PS5",
     "Док-станция для Steam Deck",
   ],
-  fitness: ["Google Fitbit Air", "WHOOP"],
+  fitness: ["Garmin CIRQA Smart Band", "Google Fitbit Air", "WHOOP"],
+  dyson: ["Dyson CameraJet", "Dyson V15 Detect"],
   portableAudio: [
     "Marshall Kilburn III",
     "Marshall Emberton III",
@@ -195,6 +199,8 @@ export const MODEL_DISPLAY_ORDER = {
     "Marshall Woburn III",
   ],
   headphones: [
+    "AirPods 5 Wireless",
+    "AirPods 5",
     "AirPods Pro 3",
     "AirPods Pro 2 Type-C",
     "AirPods 4 ANC",
@@ -204,6 +210,7 @@ export const MODEL_DISPLAY_ORDER = {
     "Sony PULSE Elite",
     "Sony PULSE 3D",
     "Marshall Major V",
+    "HUAWEI FreeClip 2",
   ],
 } as const satisfies Record<string, readonly string[]>;
 
@@ -247,6 +254,7 @@ function resolveOrderList(
   if (categorySlug === "vr-garnitury") return MODEL_DISPLAY_ORDER.vrHeadsets;
   if (categorySlug === "igrovye-aksessuary") return MODEL_DISPLAY_ORDER.gamingAccessories;
   if (categorySlug === "fitnes-braslety") return MODEL_DISPLAY_ORDER.fitness;
+  if (categorySlug === "daisony") return MODEL_DISPLAY_ORDER.dyson;
   if (categorySlug === "portativnaya-akustika") return MODEL_DISPLAY_ORDER.portableAudio;
   if (categorySlug === "naushniki") return MODEL_DISPLAY_ORDER.headphones;
   if (categorySlug === "aksessuary" && /^(?:AirPods|Apple EarPods)/.test(name)) return MODEL_DISPLAY_ORDER.airpods;
@@ -385,6 +393,7 @@ const LINE_MATCHERS: Record<string, LineMatcher[]> = {
   ],
   naushniki: [
     { label: "Наушники AirPods", test: (name) => /airpods|earpods/i.test(name), groupHref: "/catalog?category=naushniki&brand=Apple", order: MODEL_DISPLAY_ORDER.airpods },
+    { label: "HUAWEI", test: (_name, brand) => brand === "HUAWEI", groupHref: "/catalog?category=naushniki&brand=HUAWEI", order: MODEL_DISPLAY_ORDER.headphones },
     { label: "Игровые гарнитуры PlayStation", test: (_name, brand) => brand === "Sony PlayStation", groupHref: "/catalog?category=naushniki&brand=Sony%20PlayStation", order: MODEL_DISPLAY_ORDER.headphones },
     { label: "Marshall", test: (_name, brand) => brand === "Marshall", groupHref: "/catalog?category=naushniki&brand=Marshall", order: MODEL_DISPLAY_ORDER.headphones },
   ],
@@ -404,6 +413,7 @@ const CATEGORY_ORDER: Record<string, readonly string[]> = {
   "vr-garnitury": MODEL_DISPLAY_ORDER.vrHeadsets,
   "igrovye-aksessuary": MODEL_DISPLAY_ORDER.gamingAccessories,
   "fitnes-braslety": MODEL_DISPLAY_ORDER.fitness,
+  daisony: MODEL_DISPLAY_ORDER.dyson,
   "portativnaya-akustika": MODEL_DISPLAY_ORDER.portableAudio,
 };
 
@@ -878,10 +888,12 @@ function toProductSummary(
     defaultVariantId: cheapest?.id ?? null,
     cardVariantId: null as string | null,
     exactPrice: false,
-    coverImage: pickVariantImages(
-      product.images,
-      (product.colorImages as Record<string, string[]> | null) ?? null,
-      cheapest,
-    )[0] ?? null,
+    coverImage: usesGeneralProductGallery(product.slug)
+      ? pickCoverImage(product.images, (product.colorImages as Record<string, string[]> | null) ?? null)
+      : pickVariantImages(
+          product.images,
+          (product.colorImages as Record<string, string[]> | null) ?? null,
+          cheapest,
+        )[0] ?? null,
   };
 }

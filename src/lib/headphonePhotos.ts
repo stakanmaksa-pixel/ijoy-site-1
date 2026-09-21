@@ -1,7 +1,7 @@
 const ROOT = "/catalog/product-photos/audio/";
 
 export function isHeadphoneProduct(slug: string) {
-  return /(?:airpods|earpods|galaxy-buds|headphones|sony-pulse|marshall-major)/i.test(slug);
+  return /(?:airpods|earpods|freeclip|galaxy-buds|headphones|sony-pulse|marshall-major)/i.test(slug);
 }
 
 // Only replace known auto-imported covers, never photographs uploaded by an editor.

@@ -26,7 +26,9 @@ test("exactly three announced iPhones have 40 unpriced memory/colour configurati
       assert.notEqual(colorLabel(v.color), v.color);
     }
   }
-  assert.equal(photos.size, 10);
+  // The customer supplied one exact four-colour Pro set shared by Pro and
+  // Pro Max, plus two Duo finishes. Do not fabricate duplicate assets.
+  assert.equal(photos.size, 6);
   assert.notEqual(colorToHex("Burgundy"), colorToHex("Glacier"));
 });
 
@@ -83,7 +85,8 @@ test("photo resolver picks the exact colour, rejects absent assets and non-image
 
 test("deployment is targeted, backs up before publishing, and preserves existing commerce data", async () => {
   const script = await readFile(new URL("../scripts/sync-iphone-2026-catalog.ts", import.meta.url), "utf8");
-  assert(script.includes("dryRun ? [] : await downloadIphone2026Photos()"));
+  assert(script.includes("Комплектные фотографии проверены"));
+  assert(!script.includes('from "./download-iphone-2026-photos"'));
   assert(script.indexOf("await writeFile(backup") < script.indexOf("await tx.product.create"));
   assert(script.includes("backups/iphone-2026"));
   const update = script.slice(script.indexOf("await tx.product.update"));

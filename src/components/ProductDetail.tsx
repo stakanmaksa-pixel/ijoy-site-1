@@ -12,6 +12,7 @@ import { isSmartGlassesSlug } from "@/lib/smartGlasses";
 import { isGamingLifestyleProduct } from "@/lib/catalogAxes";
 import { ProductPhoto } from "@/components/ProductPhoto";
 import { catalogPhotoBounds, resolveCatalogPhoto } from "@/lib/catalogPhotos";
+import { usesGeneralProductGallery } from "@/lib/generalProductGallery";
 
 type Variant = {
   id: string;
@@ -65,12 +66,17 @@ export function ProductDetail({
     variants.find((v) => v.inStock) ||
     variants[0];
   const [selectedId, setSelectedId] = useState<string | undefined>(initial?.id);
+  const [showGeneralGallery, setShowGeneralGallery] = useState(
+    () => !initialVariantId && Boolean(images?.length) && usesGeneralProductGallery(productSlug),
+  );
 
   const selectedVariant = variants.find((v) => v.id === selectedId);
   const activeColor = selectedVariant?.color ?? null;
   // Сначала ищем фотографию точной модификации (корпус + ремешок + размер),
   // затем фото цвета корпуса и только потом общее фото товара.
-  const galleryImages = pickVariantImages(images ?? [], colorImages ?? null, selectedVariant);
+  const galleryImages = showGeneralGallery
+    ? (images ?? [])
+    : pickVariantImages(images ?? [], colorImages ?? null, selectedVariant);
   // Храним URL, а не индекс: при переключении цвета старый URL отсутствует
   // в новом наборе, поэтому автоматически берётся первое фото нового цвета
   // без дополнительного setState внутри effect.
@@ -184,6 +190,7 @@ export function ProductDetail({
               variants={variants}
               initialVariantId={initialVariantId}
               onSelectedVariantChange={setSelectedId}
+              onVariantInteraction={() => setShowGeneralGallery(false)}
               allowUnavailableSelection={true}
             />
           </div>

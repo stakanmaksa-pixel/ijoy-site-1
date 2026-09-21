@@ -153,6 +153,7 @@ export function ProductOrder({
   variants,
   initialVariantId,
   onSelectedVariantChange,
+  onVariantInteraction,
   allowUnavailableSelection = false,
 }: {
   productName: string;
@@ -167,6 +168,10 @@ export function ProductOrder({
   // чтобы сердечко избранного над фото всегда относилось к тому, что сейчас
   // выбрано, а не к товару вообще. См. ProductDetail.tsx.
   onSelectedVariantChange?: (variantId: string | undefined) => void;
+  // Fires only after a visitor actively changes an option. Product pages with
+  // a model-line cover use this to reveal the exact colour photograph without
+  // treating the initial selection effect as a click.
+  onVariantInteraction?: () => void;
   // Some catalogues list the complete configuration matrix, including offers on request.
   // Browsing those configurations must not imply stock or allow an unpriced purchase.
   allowUnavailableSelection?: boolean;
@@ -224,6 +229,7 @@ export function ProductOrder({
   }, [selected?.id]);
 
   function pick(axis: Axis, value: string) {
+    onVariantInteraction?.();
     setSelection((prev) => {
       const next = { ...prev, [axis]: value };
       const exact = findVariant(variants, next);
@@ -238,6 +244,7 @@ export function ProductOrder({
   }
 
   function pickWatchBand(part: WatchBandPart, value: string) {
+    onVariantInteraction?.();
     setSelection((prev) => {
       const currentBand = parseWatchBand(prev.region);
       const compatible = variants.filter((variant) =>
@@ -264,6 +271,7 @@ export function ProductOrder({
   }
 
   function pickIpadOption(part: IpadOptionPart, value: string) {
+    onVariantInteraction?.();
     setSelection((prev) => {
       const current = parseIpadRegion(prev.region);
       const compatible = variants.filter((variant) => {

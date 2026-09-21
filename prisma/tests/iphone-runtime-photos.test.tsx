@@ -7,10 +7,11 @@ import { sortIphoneVariants, rankCatalogModel } from "../../src/lib/iphoneVarian
 import { pickVariantImages } from "../../src/lib/pickCoverImage";
 import { IPHONE_2026_CATALOG, planIphone2026Addition } from "../data/iphone-2026-catalog";
 
-test("all ten colour assets resolve through runtime delivery, custom uploads stay untouched", () => {
+test("all supplied colour assets resolve to bundled static delivery, custom uploads stay untouched", () => {
   for (const p of IPHONE_2026_CATALOG) {
     const plan = planIphone2026Addition(p);
-    for (const v of plan.variantsToCreate) assert(pickVariantImages(plan.images, plan.colorImages, v)[0].startsWith("/api/catalog/iphone-2026/"));
+    assert(plan.images[0].startsWith("/catalog/product-photos/september-2026/"));
+    for (const v of plan.variantsToCreate) assert(pickVariantImages(plan.images, plan.colorImages, v)[0].startsWith("/catalog/product-photos/september-2026/"));
   }
   assert.equal(iphone2026RuntimePhoto("/uploads/custom.png"), "/uploads/custom.png");
 });

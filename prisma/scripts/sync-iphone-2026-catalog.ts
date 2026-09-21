@@ -1,19 +1,26 @@
 // Add exactly three new iPhones. No reseed and no edits to existing offers/visibility.
 import "dotenv/config";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Prisma, PrismaClient } from "../../src/generated/prisma/client";
-import { IPHONE_2026_CATALOG, IPHONE_2026_SOURCES, planIphone2026Addition } from "../data/iphone-2026-catalog";
-import { downloadIphone2026Photos } from "./download-iphone-2026-photos";
+import { IPHONE_2026_CATALOG, IPHONE_2026_SOURCES, iphone2026GeneralPhoto, iphone2026Photo, planIphone2026Addition } from "../data/iphone-2026-catalog";
 
 const dryRun = process.argv.includes("--dry-run");
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 async function main() {
   const category = await prisma.category.findUnique({ where: { slug: "telefony" } });
   if (!category) throw Error("Категория «Телефоны» не найдена. База не изменена.");
-  // Download all ten originals before publishing any products. Failure leaves the DB untouched.
-  const photos = dryRun ? [] : await downloadIphone2026Photos();
+  // The supplied photographs are bundled with the deployment, so a catalogue
+  // sync no longer depends on a writable runtime upload volume or Apple CDN.
+  const photos = [...new Set(IPHONE_2026_CATALOG.flatMap(product => [
+    iphone2026GeneralPhoto(product.slug),
+    ...product.colors.map(color => iphone2026Photo(product.slug, color)),
+  ]))];
+  for (const photo of photos) {
+    const bytes = await readFile(path.join(process.cwd(), "public", photo.replace(/^\//, "")));
+    if (bytes.length < 10_000 || bytes[0] !== 0xff || bytes[1] !== 0xd8 || bytes[2] !== 0xff) throw Error(`Некорректное фото: ${photo}`);
+  }
   await prisma.$transaction(async tx => {
     const existing = await tx.product.findMany({ where: { slug: { in: IPHONE_2026_CATALOG.map(p => p.slug) } }, include: { variants: true } });
     const plans = IPHONE_2026_CATALOG.map(product => {
@@ -23,7 +30,7 @@ async function main() {
       console.log(`${old ? "EXISTS" : "CREATE"} ${product.name}: новых вариантов ${plan.variantsToCreate.length}; без цены и подтверждённого наличия.`);
       return { product, old, plan };
     });
-    if (dryRun) { console.log("DRY RUN: база и файлы не изменялись. Фотографии загружаются только при применении."); return; }
+    if (dryRun) { console.log("DRY RUN: база и файлы не изменялись. Комплектные фотографии проверены."); return; }
     const folder = path.resolve("backups/iphone-2026");
     await mkdir(folder, { recursive: true });
     const backup = path.join(folder, `before-${Date.now()}.json`);
