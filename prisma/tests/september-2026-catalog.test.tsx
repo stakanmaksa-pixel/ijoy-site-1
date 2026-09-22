@@ -65,6 +65,21 @@ test("repeat planning preserves commerce data and good existing images", () => {
   assert.equal(plan.variantsToCreate.length, 5);
 });
 
+test("Series 12 photo refresh replaces old collage galleries with the supplied single-view photos", () => {
+  const product = SEPTEMBER_2026_PRODUCTS.find((item) => item.slug === "apple-watch-series-12")!;
+  const old = {
+    images: ["/uploads/old-three-panel-collage.jpg"],
+    colorImages: Object.fromEntries(Object.keys(product.colorImages).map((color) => [color, [`/uploads/${color}-collage.jpg`]])),
+    variants: product.variants,
+  };
+
+  const plan = planSeptemberProduct(product, old, { replaceExistingPhotos: true });
+
+  assert.deepEqual(plan.images, product.images);
+  assert.deepEqual(plan.colorImages, product.colorImages);
+  assert.equal(plan.variantsToCreate.length, 0);
+});
+
 test("general model-line photos remain covers until a concrete variant link is opened", () => {
   for (const slug of ["apple-watch-ultra-4", "dyson-camerajet", "iphone-18-pro", "iphone-18-pro-max", "iphone-duo"]) {
     assert(usesGeneralProductGallery(slug));

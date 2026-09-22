@@ -95,7 +95,9 @@ async function main() {
     const productPlans = SEPTEMBER_2026_PRODUCTS.map((product) => {
       const old = oldBySlug.get(product.slug);
       if (old && old.category.slug !== product.category) throw new Error(`${product.slug}: товар находится в другой категории`);
-      const plan = planSeptemberProduct(product, old);
+      const plan = planSeptemberProduct(product, old, {
+        replaceExistingPhotos: product.slug === "apple-watch-series-12",
+      });
       console.log(`${old ? "UPDATE" : "CREATE"} ${product.name}: новых вариантов ${plan.variantsToCreate.length}`);
       return { product, old, plan };
     });

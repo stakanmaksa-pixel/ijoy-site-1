@@ -302,9 +302,13 @@ function existingColorImages(value: unknown): Record<string, string[]> {
   return result;
 }
 
-/** Adds missing variants and photographs without touching prices, stock, IDs or unrelated custom images. */
-export function planSeptemberProduct(product: SeptemberProduct, existing?: ExistingProduct | null) {
-  const colorImages = existingColorImages(existing?.colorImages);
+/** Adds missing variants and photographs without touching prices, stock or IDs. */
+export function planSeptemberProduct(
+  product: SeptemberProduct,
+  existing?: ExistingProduct | null,
+  options: { replaceExistingPhotos?: boolean } = {},
+) {
+  const colorImages = options.replaceExistingPhotos ? {} : existingColorImages(existing?.colorImages);
   for (const [color, supplied] of Object.entries(product.colorImages)) {
     const currentKey = Object.keys(colorImages).find((key) => normalized(key) === normalized(color) && colorImages[key].length);
     if (!currentKey) colorImages[color] = [...supplied];
@@ -314,12 +318,13 @@ export function planSeptemberProduct(product: SeptemberProduct, existing?: Exist
       }
     }
   }
+  const images = options.replaceExistingPhotos || product.forceGeneralImage
+    ? [...product.images]
+    : existing?.images.length
+      ? [...existing.images]
+      : [...product.images];
   return {
-    images: product.forceGeneralImage
-      ? [...product.images]
-      : existing?.images.length
-        ? [...existing.images]
-        : [...product.images],
+    images,
     colorImages,
     variantsToCreate: product.variants.filter((variant) => !existing?.variants.some((old) => sameVariant(old, variant))),
   };
