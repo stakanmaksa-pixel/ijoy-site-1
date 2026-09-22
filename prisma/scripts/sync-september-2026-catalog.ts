@@ -103,7 +103,7 @@ async function main() {
     const iphonePlans = IPHONE_2026_CATALOG.map((product) => {
       const old = oldBySlug.get(product.slug);
       if (old && old.category.slug !== "telefony") throw new Error(`${product.slug}: товар находится в другой категории`);
-      const plan = planIphone2026Addition(product, old);
+      const plan = planIphone2026Addition(product, old, { replaceExistingPhotos: true });
       console.log(`${old ? "PHOTO" : "CREATE"} ${product.name}: новых вариантов ${plan.variantsToCreate.length}`);
       return { product, old, plan };
     });

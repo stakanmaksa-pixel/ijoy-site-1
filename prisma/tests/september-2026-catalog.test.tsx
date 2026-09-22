@@ -91,6 +91,23 @@ test("iPhone 18 and Duo use supplied static photos while keeping the full offer 
   assert.equal(unique.size, 6);
 });
 
+test("September sync can replace broken or invented iPhone 18 galleries with supplied photos", () => {
+  const product = IPHONE_2026_CATALOG.find((item) => item.slug === "iphone-duo")!;
+  const plan = planIphone2026Addition(product, {
+    images: ["/uploads/old-generated-gallery.jpg", "/uploads/another-random-photo.jpg"],
+    colorImages: {
+      "Night Sky": ["/uploads/broken-night-sky.jpg", "/uploads/old-detail.jpg"],
+      "Star White": ["/uploads/old-star-white.jpg"],
+    },
+    variants: [],
+  }, { replaceExistingPhotos: true });
+  assert.deepEqual(plan.images, ["/catalog/product-photos/september-2026/iphone-duo-all-colors.jpg"]);
+  assert.deepEqual(plan.colorImages, {
+    "Night Sky": ["/catalog/product-photos/september-2026/iphone-duo-night-sky.jpg"],
+    "Star White": ["/catalog/product-photos/september-2026/iphone-duo-star-white.jpg"],
+  });
+});
+
 test("deployment script is backed up, transactional and never rewrites prices or stock", async () => {
   const script = await readFile(new URL("../scripts/sync-september-2026-catalog.ts", import.meta.url), "utf8");
   assert(script.includes("Prisma.TransactionIsolationLevel.Serializable"));

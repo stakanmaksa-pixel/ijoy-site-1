@@ -95,33 +95,41 @@ export function iphone2026Variants(product: Iphone2026Product) {
 }
 type ExistingVariant = { memory: string | null; color: string | null; region: string | null };
 type ExistingProduct = { images: string[]; colorImages: unknown; variants: ExistingVariant[] };
+type IphonePhotoOptions = { replaceExistingPhotos?: boolean };
 const normalized = (value: string | null) => (value ?? "").toLowerCase().replace(/\s+/g, "").replace(/гб/g, "gb").replace(/тб/g, "tb");
 const sameConfiguration = (a: ExistingVariant, b: ExistingVariant) => normalized(a.memory) === normalized(b.memory) && normalized(a.color) === normalized(b.color);
 const generatedIphonePhoto = (value: string) =>
   /^\/(?:uploads\/products\/iphone-2026|api\/catalog\/iphone-2026)\//.test(value);
-/** Add missing configurations only; supplier prices, regions, stock, IDs and custom photos stay intact. */
-export function planIphone2026Addition(product: Iphone2026Product, existing?: ExistingProduct | null) {
+/** Add missing configurations only; the photo replacement flag affects images, never commerce data. */
+export function planIphone2026Addition(
+  product: Iphone2026Product,
+  existing?: ExistingProduct | null,
+  options: IphonePhotoOptions = {},
+) {
+  const replaceExistingPhotos = options.replaceExistingPhotos === true;
   const colorImages: Record<string, string[]> = {};
   if (existing?.colorImages && typeof existing.colorImages === "object" && !Array.isArray(existing.colorImages)) {
     for (const [key, value] of Object.entries(existing.colorImages)) {
       if (!Array.isArray(value) || !value.every(v => typeof v === "string")) throw Error(`Invalid photos for ${product.slug}: ${key}`);
-      colorImages[key] = [...value];
+      if (!replaceExistingPhotos) colorImages[key] = [...value];
     }
   }
   for (const color of product.colors) {
-    const existingKey = Object.keys(colorImages).find(key =>
+    const existingKey = replaceExistingPhotos ? undefined : Object.keys(colorImages).find(key =>
       normalized(key) === normalized(color) && colorImages[key].some(image => !generatedIphonePhoto(image)),
     );
     colorImages[color] = existingKey ? [...colorImages[existingKey]] : [iphone2026Photo(product.slug, color)];
-    for (const old of existing?.variants ?? []) {
-      if (old.color && normalized(old.color) === normalized(color) && !colorImages[old.color]?.some(image => !generatedIphonePhoto(image))) {
-        colorImages[old.color] = [...colorImages[color]];
+    if (!replaceExistingPhotos) {
+      for (const old of existing?.variants ?? []) {
+        if (old.color && normalized(old.color) === normalized(color) && !colorImages[old.color]?.some(image => !generatedIphonePhoto(image))) {
+          colorImages[old.color] = [...colorImages[color]];
+        }
       }
     }
   }
   const customImages = existing?.images.filter(image => !generatedIphonePhoto(image)) ?? [];
   return {
-    images: customImages.length ? customImages : [iphone2026GeneralPhoto(product.slug)],
+    images: replaceExistingPhotos || !customImages.length ? [iphone2026GeneralPhoto(product.slug)] : customImages,
     colorImages,
     variantsToCreate: iphone2026Variants(product).filter(v => !existing?.variants.some(old => sameConfiguration(old, v))),
   };
