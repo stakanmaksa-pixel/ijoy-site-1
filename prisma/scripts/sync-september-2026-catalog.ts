@@ -5,14 +5,14 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Prisma, PrismaClient } from "../../src/generated/prisma/client";
+import { createHash } from "node:crypto";
 import { ANDROID_PHONE_CATALOG } from "../data/android-phone-catalog";
-import { APPLE_WATCH_ULTRA4, planUltra4Addition } from "../data/apple-watch-ultra4-catalog";
+import { APPLE_WATCH_ULTRA4, planUltra4Addition, ULTRA4_PHOTO_ENTRIES } from "../data/apple-watch-ultra4-catalog";
 import { IPHONE_2026_CATALOG, planIphone2026Addition } from "../data/iphone-2026-catalog";
 import {
   SEPTEMBER_2026_PHOTO_FILES,
   SEPTEMBER_2026_PRODUCTS,
   SEPTEMBER_2026_SOURCES,
-  ULTRA4_GENERAL_PHOTO,
   planSeptemberProduct,
 } from "../data/september-2026-catalog";
 
@@ -70,6 +70,10 @@ async function validateBundledPhotos() {
   if (bytes.length < 10_000 || !bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) {
     throw new Error("Существующее фото HUAWEI Pura 90s Pro Coconut White повреждено");
   }
+  for (const photo of ULTRA4_PHOTO_ENTRIES) {
+    const photoBytes = await readFile(path.join(process.cwd(), "public", "catalog", "product-photos", photo.file));
+    if (createHash("sha256").update(photoBytes).digest("hex") !== photo.sha256) throw new Error(`Фото Ultra 4 повреждено: ${photo.file}`);
+  }
 }
 
 async function main() {
@@ -113,7 +117,7 @@ async function main() {
     const ultraOld = oldBySlug.get(APPLE_WATCH_ULTRA4.slug);
     if (ultraOld && ultraOld.category.slug !== "chasy") throw new Error("Apple Watch Ultra 4 находится в другой категории");
     const ultraPlan = planUltra4Addition(ultraOld);
-    console.log(`${ultraOld ? "COVER" : "CREATE"} ${APPLE_WATCH_ULTRA4.name}: общий коллаж + ${ultraPlan.variantsToCreate.length} новых вариантов`);
+    console.log(`${ultraOld ? "PHOTOS" : "CREATE"} ${APPLE_WATCH_ULTRA4.name}: ${ULTRA4_PHOTO_ENTRIES.length} фото + ${ultraPlan.variantsToCreate.length} новых вариантов`);
 
     const puraOld = oldBySlug.get(pura.slug);
     if (puraOld && puraOld.category.slug !== "telefony") throw new Error("HUAWEI Pura 90s Pro находится в другой категории");
@@ -167,7 +171,6 @@ async function main() {
       await tx.product.create({ data: {
         ...APPLE_WATCH_ULTRA4,
         ...ultraPhotos,
-        images: [ULTRA4_GENERAL_PHOTO],
         status: "PUBLISHED",
         categoryId: watchCategory.id,
         variants: { create: ultraVariants },
@@ -175,7 +178,6 @@ async function main() {
     } else {
       await tx.product.update({ where: { id: ultraOld.id }, data: {
         ...ultraPhotos,
-        images: [ULTRA4_GENERAL_PHOTO],
         status: "PUBLISHED",
         variants: { create: ultraVariants },
       } });

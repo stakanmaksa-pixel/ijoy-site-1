@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 import { renderToStaticMarkup } from "react-dom/server";
 import sources from "../data/apple-watch-photo-sources.json";
 import replacements from "../../src/lib/appleWatchPhotoReplacements.json";
-import { APPLE_WATCH_ULTRA4, ULTRA4_VARIANTS, planUltra4Addition } from "../data/apple-watch-ultra4-catalog";
+import { APPLE_WATCH_ULTRA4, ULTRA4_PHOTO_ENTRIES, ULTRA4_VARIANTS, planUltra4Addition } from "../data/apple-watch-ultra4-catalog";
 import { resolveCatalogPhoto, catalogPhotoBounds } from "../../src/lib/catalogPhotos";
 import { ProductCard } from "../../src/components/ProductCard";
 import { pickVariantImages, variantImageKey } from "../../src/lib/pickCoverImage";
@@ -47,18 +47,21 @@ test("all Apple Watch photos render at the same 76% height without cover-croppin
   }
 });
 
-test("Ultra4 adds two exact colours with no invented price or stock", () => {
-  assert.equal(ULTRA4_VARIANTS.length, 2);
+test("Ultra4 includes all supplied case and band combinations with no invented price or stock", async () => {
+  assert.equal(ULTRA4_VARIANTS.length, 20);
   const plan = planUltra4Addition();
-  assert.equal(plan.variantsToCreate.length, 2);
-  assert.deepEqual(ULTRA4_VARIANTS.map(v => v.color), ["Black Titanium", "Natural Titanium"]);
+  assert.equal(plan.variantsToCreate.length, 20);
+  assert.deepEqual([...new Set(ULTRA4_VARIANTS.map(v => v.color))], ["Natural Titanium", "Black Titanium"]);
+  assert.equal(new Set(ULTRA4_VARIANTS.map(v => v.region)).size, 10);
   for (const v of ULTRA4_VARIANTS) {
     assert.equal(v.memory, "49 мм");
     assert.equal(v.price, null);
     assert.equal(v.inStock, false);
     assert.deepEqual(pickVariantImages(plan.images, plan.colorImages, v), [v.image]);
-    const source = sources.entries.find(p => `/catalog/product-photos/${p.file}` === v.image)!;
-    assert(source.url.includes("ultra4") && source.sourcePage?.includes("ocean-band"));
+    const source = ULTRA4_PHOTO_ENTRIES.find(p => `/catalog/product-photos/${p.file}` === v.image)!;
+    const bytes = await readFile(new URL(`../../public/catalog/product-photos/${source.file}`, import.meta.url));
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), source.sha256);
+    assert(catalogPhotoBounds(v.image), source.file);
   }
   assert(!JSON.stringify(APPLE_WATCH_ULTRA4).includes("Под заказ"));
   assert(APPLE_WATCH_ULTRA4.specs["Совместимость"].includes("iOS 27"));
@@ -86,7 +89,8 @@ test("Ultra4 sync backs up privately before changes and never resets offers or v
   assert(script.indexOf("await writeFile(backup") < script.indexOf("await tx.product.create"));
   for (const forbidden of ["deleteMany", "productVariant.update", "productVariant.upsert"]) assert(!script.includes(forbidden));
   const update = script.slice(script.indexOf("await tx.product.update"));
-  assert(!update.includes("status:") && !update.includes("price:") && !update.includes("inStock:"));
+  assert(update.includes('status: "PUBLISHED"'));
+  assert(!update.includes("price:") && !update.includes("inStock:"));
 });
 
 test("model menu remains a direct product link and unselected multi-variant products retain the palette", async () => {

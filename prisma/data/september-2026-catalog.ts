@@ -330,7 +330,7 @@ export function planSeptemberProduct(
   };
 }
 
-export const ULTRA4_GENERAL_PHOTO = photo("apple-watch-ultra-4-all-colors.jpg");
+export const ULTRA4_GENERAL_PHOTO = "/catalog/product-photos/apple-watches/apple-watch-ultra-4-natural-titanium-ocean-band-translucent-gray.jpg";
 export const VERIFIED_EXISTING_PRODUCTS = [
   { slug: "huawei-pura-90s-pro", requiredColor: "Coconut White" },
 ] as const;
