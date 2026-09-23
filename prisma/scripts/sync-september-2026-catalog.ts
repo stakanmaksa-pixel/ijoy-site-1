@@ -100,7 +100,7 @@ async function main() {
       const old = oldBySlug.get(product.slug);
       if (old && old.category.slug !== product.category) throw new Error(`${product.slug}: товар находится в другой категории`);
       const plan = planSeptemberProduct(product, old, {
-        replaceExistingPhotos: product.slug === "apple-watch-series-12",
+        replaceExistingPhotos: product.slug === "apple-watch-series-12" || product.slug === "dyson-camerajet",
       });
       console.log(`${old ? "UPDATE" : "CREATE"} ${product.name}: новых вариантов ${plan.variantsToCreate.length}`);
       return { product, old, plan };
