@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { parsePriceListText, parsePriceLine, normalizeForMatch } from "@/lib/priceImport";
+import {
+  canonicalIphoneModel,
+  inactivePreferenceKey,
+  normalizedIphoneRegion,
+  normalizeForMatch,
+  parsePriceLine,
+  parsePriceListText,
+} from "@/lib/priceImport";
 import type { ImportLineStatus } from "@/generated/prisma/client";
 
 // Эндпоинт для Telegram-бота (кнопка «Обновить цены на сайте» в bot_v2.py).
@@ -40,19 +47,34 @@ export async function POST(request: Request) {
   }
 
   const existingVariants = await prisma.productVariant.findMany({
-    where: { rawLabel: { not: null } },
-    select: { id: true, rawLabel: true },
+    select: { id: true, rawLabel: true, memory: true, color: true, region: true, product: { select: { name: true } } },
   });
   const byNormalized = new Map<string, string>();
+  const byConfiguration = new Map<string, string[]>();
   for (const v of existingVariants) {
-    if (!v.rawLabel) continue;
-    // rawLabel в старых записях (например из seed) может ещё содержать
-    // цену в конце строки — отбрасываем её так же, как для входящих строк,
-    // чтобы сопоставление работало независимо от формата хранения.
-    const { parsedModel } = parsePriceLine(v.rawLabel);
-    const key = normalizeForMatch(parsedModel ?? v.rawLabel);
-    byNormalized.set(key, v.id);
+    if (v.rawLabel) {
+      // Старые подписи могли содержать цену в конце строки.
+      const { parsedModel } = parsePriceLine(v.rawLabel);
+      const key = normalizeForMatch(parsedModel ?? v.rawLabel);
+      byNormalized.set(key, v.id);
+    }
+
+    const model = canonicalIphoneModel(v.product.name);
+    const memory = v.memory ? normalizeForMatch(v.memory) : "";
+    const color = v.color ? normalizeForMatch(v.color) : "";
+    const oldLabelRegion = v.rawLabel ? parsePriceLine(v.rawLabel).parsedRegion : null;
+    const region = normalizedIphoneRegion(oldLabelRegion ?? v.region, model);
+    if (!model || !memory || !color || !region) continue;
+    const descriptor = [model, memory, color, normalizeForMatch(region)].join("|");
+    byConfiguration.set(descriptor, [...(byConfiguration.get(descriptor) ?? []), v.id]);
   }
+
+  // If a supplier sends both active and inactive prices for the same exact
+  // configuration, the storefront uses the inactive price as requested.
+  const inactiveKeys = new Set(parsedLines
+    .filter((line) => line.nonActive)
+    .map(inactivePreferenceKey)
+    .filter((key): key is string => Boolean(key)));
 
   const batch = await prisma.priceImportBatch.create({
     data: {
@@ -61,7 +83,24 @@ export async function POST(request: Request) {
       lines: {
         create: parsedLines.map((line) => {
           const key = line.parsedModel ? normalizeForMatch(line.parsedModel) : null;
-          const matchedVariantId = key ? byNormalized.get(key) ?? null : null;
+          let matchedVariantId = key ? byNormalized.get(key) ?? null : null;
+          if (!matchedVariantId && line.phoneModel && line.parsedMemory && line.parsedColor && line.parsedRegion) {
+            const descriptor = [
+              line.phoneModel,
+              normalizeForMatch(line.parsedMemory),
+              normalizeForMatch(line.parsedColor),
+              normalizeForMatch(line.parsedRegion),
+            ].join("|");
+            const candidates = byConfiguration.get(descriptor) ?? [];
+            const sameCondition = candidates.filter((id) => {
+              const variant = existingVariants.find((item) => item.id === id);
+              const storedNonActive = /\bнеактив\b/i.test(`${variant?.rawLabel ?? ""} ${variant?.region ?? ""}`);
+              return storedNonActive === line.nonActive;
+            });
+            if (sameCondition.length === 1) matchedVariantId = sameCondition[0];
+          }
+          const rowKey = inactivePreferenceKey(line);
+          const inactiveOverrides = Boolean(rowKey && inactiveKeys.has(rowKey) && !line.nonActive);
 
           let status: ImportLineStatus = "PENDING";
           let note: string | null = null;
@@ -69,6 +108,12 @@ export async function POST(request: Request) {
           if (line.parsedPrice === null) {
             status = "ERROR";
             note = "Не удалось распознать цену в конце строки";
+          } else if (line.phoneModel && line.parsedMemory && !line.parsedColor) {
+            status = "ERROR";
+            note = "Не удалось определить цвет — не сопоставляем цену с похожей модификацией; уточняйте у менеджера";
+          } else if (inactiveOverrides) {
+            status = "REJECTED";
+            note = "Пропущено: для этого же варианта в прайсе есть цена «НЕАКТИВ»";
           } else if (matchedVariantId) {
             status = "MATCHED";
           }
@@ -93,7 +138,8 @@ export async function POST(request: Request) {
   const total = batch.lines.length;
   const matched = batch.lines.filter((l) => l.status === "MATCHED").length;
   const errors = batch.lines.filter((l) => l.status === "ERROR").length;
-  const unmatched = total - matched - errors;
+  const skipped = batch.lines.filter((l) => l.status === "REJECTED").length;
+  const unmatched = total - matched - errors - skipped;
 
   return NextResponse.json({
     batchId: batch.id,
@@ -101,5 +147,6 @@ export async function POST(request: Request) {
     matched,
     unmatched,
     errors,
+    skipped,
   });
 }

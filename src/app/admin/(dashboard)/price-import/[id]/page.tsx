@@ -10,7 +10,7 @@ const LINE_STATUS_LABEL: Record<string, string> = {
   MATCHED: "Найдено совпадение",
   NEW_VARIANT: "Новая модификация",
   ACCEPTED: "Принято",
-  REJECTED: "Отклонено",
+  REJECTED: "Пропущено / отклонено",
   ERROR: "Ошибка разбора",
 };
 
@@ -115,6 +115,7 @@ export default async function PriceImportBatchPage({
                       <span className="text-red-600">цена не распознана</span>
                     )}
                     {line.parsedMemory && <> · {line.parsedMemory}</>}
+                    {line.parsedColor && <> · {line.parsedColor}</>}
                     {line.parsedRegion && <> · {line.parsedRegion}</>}
                     {line.note && <> · {line.note}</>}
                   </div>
@@ -212,6 +213,7 @@ export default async function PriceImportBatchPage({
                     Цвет
                     <input
                       name="color"
+                      defaultValue={line.parsedColor ?? ""}
                       placeholder="из строки выше"
                       className="w-28 rounded-lg border border-zinc-300 px-2 py-1.5 text-sm"
                     />
@@ -222,7 +224,7 @@ export default async function PriceImportBatchPage({
                     <input
                       name="region"
                       defaultValue={line.parsedRegion ?? ""}
-                      className="w-24 rounded-lg border border-zinc-300 px-2 py-1.5 text-sm"
+                      className="w-48 rounded-lg border border-zinc-300 px-2 py-1.5 text-sm"
                     />
                   </label>
 
