@@ -191,12 +191,15 @@ export function parsePriceListText(text: string): ParsedPriceLine[] {
     const parsed = parsedFields(line, header);
     if (parsed.parsedPrice === null) {
       const model = modelName(line);
-      if (model) header = {
-        model,
-        sim: explicitSim(line),
-        country: countryCode(line),
-        nonActive: /\bнеактив\b/i.test(line),
-      };
+      if (parsed.parsedMemory && parsed.parsedColor && (parsed.phoneModel || header.model)) result.push(parsed);
+      if (model) {
+        header = {
+          model,
+          sim: explicitSim(line),
+          country: countryCode(line),
+          nonActive: /\bнеактив\b/i.test(line),
+        };
+      }
       continue;
     }
     result.push(parsed);
