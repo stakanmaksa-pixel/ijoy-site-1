@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
-import { canonicalIphoneModel, normalizedIphoneSim, normalizedMemory, normalizeForMatch, parsePriceLine } from "@/lib/priceImport";
+import { canonicalIphoneModel, normalizedIphoneSim, normalizedMemory, normalizeForMatch, parsePriceLine, supplierIdentityKey } from "@/lib/priceImport";
 import { acceptLine, acceptAllMatched, applyAsFullPriceList, createVariantFromLine, rejectLine } from "../actions";
 import { ProductPicker, VariantPicker, type ImportVariantOption } from "./ImportPickers";
 
@@ -111,7 +111,7 @@ export default async function PriceImportBatchPage({
           const lineColor = line.parsedColor ? normalizeForMatch(line.parsedColor) : null;
           const lineSim = normalizedIphoneSim(line.parsedRegion, lineModel);
           const rawParsedLine = parsePriceLine(line.rawLine);
-          const sourceLabel = normalizeForMatch(line.parsedModel ?? "");
+          const sourceLabel = supplierIdentityKey(line.parsedModel);
           const productVariants = allProducts
             .filter((product) => lineModel && canonicalIphoneModel(product.name) === lineModel)
             .flatMap((product) => product.variants.map((variant) => ({ product, variant })))
@@ -144,7 +144,7 @@ export default async function PriceImportBatchPage({
               if (rawParsedLine.parsedSku && variant.sku && normalizeForMatch(rawParsedLine.parsedSku) === normalizeForMatch(variant.sku)) return true;
               if (lineModel || !variant.rawLabel || !sourceLabel) return false;
               const storedLabel = parsePriceLine(variant.rawLabel).parsedModel ?? variant.rawLabel;
-              return normalizeForMatch(storedLabel) === sourceLabel;
+              return supplierIdentityKey(storedLabel) === sourceLabel;
             });
           const suggestedVariants = [...new Map(
             [...suggestedPhoneVariants, ...suggestedExactVariants].map(({ product, variant }) => [variant.id, { product, variant }]),

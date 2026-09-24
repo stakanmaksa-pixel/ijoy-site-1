@@ -274,3 +274,19 @@ export function normalizeForMatch(text: string): string {
     .replace(/[^\p{L}\p{N}]+/gu, " ")
     .trim().replace(/\s+/g, " ");
 }
+
+/**
+ * Stable identity for non-iPhone offers: country and Apple part number are
+ * supply details, not storefront options. Keep model/configuration words
+ * (including case size, band size, colour, capacity and SIM text) intact.
+ */
+export function supplierIdentityKey(text: string | null): string | null {
+  if (!text?.trim()) return null;
+  let identity = text
+    .replace(/\p{Regional_Indicator}{2}/gu, " ")
+    .replace(/\bapple\s+watch\s+s(?:eries)?\s*(10|11|12)\b/gi, "Apple Watch Series $1")
+    .replace(/\bapple\s+watch\s+se\s*(2|3)\b/gi, "Apple Watch SE $1");
+  for (const [countryPattern] of COUNTRY_ALIASES) identity = identity.replace(countryPattern, " ");
+  identity = identity.replace(/\b(?=[A-Z0-9]{4,12}\b)(?=[A-Z0-9]*[A-Z])(?=[A-Z0-9]*\d)[A-Z0-9]+\b/g, " ");
+  return normalizeForMatch(identity) || null;
+}

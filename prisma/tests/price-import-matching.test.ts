@@ -5,6 +5,7 @@ import {
   normalizedMemory,
   normalizedIphoneSim,
   parsePriceLine,
+  supplierIdentityKey,
 } from "../../src/lib/priceImport";
 
 test("supplier country is used to infer SIM but does not distinguish the site variant", () => {
@@ -45,4 +46,31 @@ test("inactive-price preference groups equivalent SIM offers independently of co
   const activeKuwait = parsePriceLine("iPhone 17 Pro Max 1TB Blue KW eSIM - 134.100₽");
 
   assert.equal(inactivePreferenceKey(inactiveJapan), inactivePreferenceKey(activeKuwait));
+});
+
+test("supplier identity ignores country and Apple part-number changes, but keeps watch configuration axes", () => {
+  const watchUs = "Apple Watch S11 42 Jet Black S/M MEQT4 🇺🇸";
+  const watchEu = "Apple Watch Series 11 42 Jet Black S/M MEQW4 🇪🇺";
+  const watchDifferentBand = "Apple Watch Series 11 42 Jet Black M/L MEQU4 🇺🇸";
+  assert.equal(supplierIdentityKey(watchUs), supplierIdentityKey(watchEu));
+  assert.notEqual(supplierIdentityKey(watchUs), supplierIdentityKey(watchDifferentBand));
+});
+
+test("supplier identity ignores accessory country while retaining product qualifiers", () => {
+  const singapore = "Apple 40-60W Dynamic Power USB-C 🇸🇬";
+  const europe = "Apple 40-60W Dynamic Power USB-C 🇪🇺";
+  assert.equal(supplierIdentityKey(singapore), supplierIdentityKey(europe));
+  assert.notEqual(
+    supplierIdentityKey("Apple 20W Adapter Copy"),
+    supplierIdentityKey("Apple 20W Adapter"),
+  );
+});
+
+test("supplier identity handles country-specific Apple part numbers in tablets and MacBooks", () => {
+  const ipadUs = "iPad 11 A16 2025 256 Blue Wi-Fi MD4H4 🇺🇸";
+  const ipadHk = "iPad 11 A16 2025 256 Blue Wi-Fi MD4K4 🇭🇰";
+  const macThailand = "MHFH4 MacBook Neo 13 2026 A18 Pro 8 256 Blush 🇹🇭";
+  const macIndia = "MHFJ4 MacBook Neo 13 2026 A18 Pro 8 256 Blush 🇮🇳";
+  assert.equal(supplierIdentityKey(ipadUs), supplierIdentityKey(ipadHk));
+  assert.equal(supplierIdentityKey(macThailand), supplierIdentityKey(macIndia));
 });

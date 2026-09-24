@@ -9,6 +9,7 @@ import {
   normalizeForMatch,
   parsePriceLine,
   parsePriceListText,
+  supplierIdentityKey,
 } from "@/lib/priceImport";
 import type { ImportLineStatus } from "@/generated/prisma/client";
 
@@ -51,7 +52,7 @@ export async function POST(request: Request) {
   const existingVariants = await prisma.productVariant.findMany({
     select: { id: true, sku: true, rawLabel: true, memory: true, color: true, region: true, product: { select: { name: true } } },
   });
-  const byNormalized = new Map<string, string>();
+  const byNormalized = new Map<string, string[]>();
   const bySku = new Map<string, string>();
   const byConfiguration = new Map<string, string[]>();
   const bySimConfiguration = new Map<string, string[]>();
@@ -62,11 +63,8 @@ export async function POST(request: Request) {
   for (const v of existingVariants) {
     const parsedStoredLabel = v.rawLabel ? parsePriceLine(v.rawLabel) : null;
     if (v.sku) bySku.set(normalizeForMatch(v.sku), v.id);
-    if (v.rawLabel) {
-      // Старые подписи могли содержать цену в конце строки.
-      const key = normalizeForMatch(parsedStoredLabel?.parsedModel ?? v.rawLabel);
-      byNormalized.set(key, v.id);
-    }
+    const labelKey = supplierIdentityKey(parsedStoredLabel?.parsedModel ?? v.rawLabel);
+    if (labelKey) addCandidate(byNormalized, labelKey, v.id);
 
     const model = canonicalIphoneModel(v.product.name);
     // Legacy catalog entries are not always consistent: a structured column
@@ -127,7 +125,11 @@ export async function POST(request: Request) {
     let matchedVariantId = line.parsedSku
       ? bySku.get(normalizeForMatch(line.parsedSku)) ?? null
       : null;
-    if (!matchedVariantId && key) matchedVariantId = byNormalized.get(key) ?? null;
+    if (!matchedVariantId && key) {
+      const identityKey = supplierIdentityKey(line.parsedModel);
+      const labelCandidates = identityKey ? byNormalized.get(identityKey) ?? [] : [];
+      if (labelCandidates.length === 1) matchedVariantId = labelCandidates[0];
+    }
     if (!matchedVariantId && line.phoneModel && line.parsedMemory && line.parsedColor && line.parsedRegion) {
       const descriptor = [
         line.phoneModel,
