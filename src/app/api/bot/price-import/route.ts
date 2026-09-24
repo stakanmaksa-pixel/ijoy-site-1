@@ -47,11 +47,13 @@ export async function POST(request: Request) {
   }
 
   const existingVariants = await prisma.productVariant.findMany({
-    select: { id: true, rawLabel: true, memory: true, color: true, region: true, product: { select: { name: true } } },
+    select: { id: true, sku: true, rawLabel: true, memory: true, color: true, region: true, product: { select: { name: true } } },
   });
   const byNormalized = new Map<string, string>();
+  const bySku = new Map<string, string>();
   const byConfiguration = new Map<string, string[]>();
   for (const v of existingVariants) {
+    if (v.sku) bySku.set(normalizeForMatch(v.sku), v.id);
     if (v.rawLabel) {
       // Старые подписи могли содержать цену в конце строки.
       const { parsedModel } = parsePriceLine(v.rawLabel);
@@ -83,7 +85,10 @@ export async function POST(request: Request) {
       lines: {
         create: parsedLines.map((line) => {
           const key = line.parsedModel ? normalizeForMatch(line.parsedModel) : null;
-          let matchedVariantId = key ? byNormalized.get(key) ?? null : null;
+          let matchedVariantId = line.parsedSku
+            ? bySku.get(normalizeForMatch(line.parsedSku)) ?? null
+            : null;
+          if (!matchedVariantId && key) matchedVariantId = byNormalized.get(key) ?? null;
           if (!matchedVariantId && line.phoneModel && line.parsedMemory && line.parsedColor && line.parsedRegion) {
             const descriptor = [
               line.phoneModel,
@@ -94,7 +99,7 @@ export async function POST(request: Request) {
             const candidates = byConfiguration.get(descriptor) ?? [];
             const sameCondition = candidates.filter((id) => {
               const variant = existingVariants.find((item) => item.id === id);
-              const storedNonActive = /\bнеактив\b/i.test(`${variant?.rawLabel ?? ""} ${variant?.region ?? ""}`);
+              const storedNonActive = /(?:^|[^\p{L}])неактив(?=$|[^\p{L}])/iu.test(`${variant?.rawLabel ?? ""} ${variant?.region ?? ""}`);
               return storedNonActive === line.nonActive;
             });
             if (sameCondition.length === 1) matchedVariantId = sameCondition[0];

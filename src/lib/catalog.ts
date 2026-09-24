@@ -190,7 +190,7 @@ export const MODEL_DISPLAY_ORDER = {
     "Док-станция для Steam Deck",
   ],
   fitness: ["Garmin CIRQA Smart Band", "Google Fitbit Air", "WHOOP"],
-  dyson: ["Dyson CameraJet", "Dyson V15 Detect"],
+  dyson: ["Dyson CameraJet", "Dyson Airwrap Complete Long HS05 Copper/Nickel", "Dyson V15 Detect"],
   portableAudio: [
     "Marshall Kilburn III",
     "Marshall Emberton III",

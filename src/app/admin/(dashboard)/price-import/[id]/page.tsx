@@ -201,7 +201,7 @@ export default async function PriceImportBatchPage({
                   </label>
 
                   <label className="flex flex-col gap-1 text-xs text-zinc-600">
-                    Память
+                    {/\bapple\s+watch\b/i.test(line.rawLine) ? "Размер корпуса" : "Память"}
                     <input
                       name="memory"
                       defaultValue={line.parsedMemory ?? ""}
@@ -220,7 +220,7 @@ export default async function PriceImportBatchPage({
                   </label>
 
                   <label className="flex flex-col gap-1 text-xs text-zinc-600">
-                    Регион
+                    {line.parsedRegion && /^(?:XS\/S|S\/M|M\/L|S|M|L)$/i.test(line.parsedRegion) ? "Размер ремешка" : "Регион"}
                     <input
                       name="region"
                       defaultValue={line.parsedRegion ?? ""}

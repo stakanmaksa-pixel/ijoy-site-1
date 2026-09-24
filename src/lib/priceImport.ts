@@ -8,6 +8,7 @@ export interface ParsedPriceLine {
   parsedColor: string | null;
   parsedRegion: string | null;
   parsedPrice: number | null;
+  parsedSku: string | null;
   /** Internal parser metadata; persistence deliberately keeps the original supplier row. */
   phoneModel: string | null;
   nonActive: boolean;
@@ -38,11 +39,20 @@ const COUNTRY_ALIASES: Array<[RegExp, string]> = [
 ];
 const COLOR_ALIASES: Array<[RegExp, string]> = [
   [/\b(?:gla?cier|glaicer)\b/i, "Glacier"], [/\b(?:blurgundy|burgundy)\b/i, "Burgundy"],
+  [/\bjet\s+black\b/i, "Jet Black"], [/\bspace\s+gray\b/i, "Space Gray"],
+  [/\brose\s+gold\b/i, "Rose Gold"],
   [/\bblack\b/i, "Black"], [/\bsilver\b/i, "Silver"], [/\bblue\b/i, "Blue"],
   [/\borange\b/i, "Orange"], [/\bwhite\b/i, "White"], [/\blavender\b/i, "Lavender"],
   [/\bsage\b/i, "Sage"], [/\bgreen\b/i, "Green"], [/\bpink\b/i, "Pink"],
+  [/\bmidnight\b/i, "Midnight"], [/\bstarlight\b/i, "Starlight"],
+  [/\bpurple\b/i, "Purple"], [/\byellow\b/i, "Yellow"], [/\bteal\b/i, "Teal"],
+  [/\bultramarine\b/i, "Ultramarine"], [/\bnatural\b/i, "Natural"],
+  [/\bdesert\b/i, "Desert"], [/\bgold\b/i, "Gold"], [/\bred\b/i, "Red"],
   [/\b(?:night\s+sky)\b/i, "Night Sky"], [/\bstar\s+white\b/i, "Star White"],
 ];
+
+const IGNORE_PRICE_LINE_RE = /\b(?:gadgess?|corning\s+glass|demo|mac\s+studio|garmin\s+venu\s+x1|yandex\s+alice\s+duo\s+max)\b|яндекс\s+алиса\s+дуо\s+макс|\bapple\s+watch\s+(?:se\s*2|s10|series\s*10|ultra\s*2)\b|(?:^|[^\p{L}])(?:актив|демо|перепрош\p{L}*)(?=$|[^\p{L}])/iu;
+const NON_ACTIVE_RE = /(?:^|[^\p{L}])неактив(?=$|[^\p{L}])/iu;
 
 function stripMarkup(value: string) {
   return value.replace(/\*\*/g, "").replace(/^[\s#*_–—-]+|[\s*_]+$/g, "").trim();
@@ -82,6 +92,7 @@ function findPrice(text: string): { value: number | null; start: number | null }
 
 function modelName(text: string): string | null {
   const cleaned = text.replace(/^\p{Regional_Indicator}{2}\s*/u, "").replace(/^[📱📲]\s*/u, "");
+  if (/\biphone\s+air\b/i.test(cleaned)) return "iPhone Air";
   const match = /\b(?:iphone\s*)?(13|14|15|16|17|18)\s*(pro\s*max|pro|max|plus|mini|air|e)?\b/i.exec(cleaned);
   if (!match) return null;
   const suffix = (match[2] ?? "").replace(/\s+/g, " ").toLowerCase();
@@ -91,15 +102,24 @@ function modelName(text: string): string | null {
 }
 
 function memory(text: string): string | null {
+  if (/\bapple\s+watch\b/i.test(text)) {
+    const watchCase = /\b(40|41|42|44|45|46|49)\s*(?:mm|мм)?\b/i.exec(text);
+    if (watchCase) return `${watchCase[1]} мм`;
+  }
   const explicit = /\b(64|128|256|512|1024|1|2|4)\s*(GB|ГБ|TB|ТБ)\b/i.exec(text);
   if (explicit) {
     const amount = explicit[1] === "1024" ? "1" : explicit[1];
     const unit = explicit[2].toUpperCase().startsWith("T") ? "TB" : "GB";
     return `${amount}${unit}`;
   }
-  const bare = /\b(64|128|256|512|1024|1|2|4)\b(?=\s+(?:black|silver|blue|orange|white|glacier|glaicer|burgundy|blurgundy|lavender|sage|green|pink)\b)/i.exec(text);
+  const bare = /\b(64|128|256|512|1024|1|2|4)\b(?=\s+(?:black|silver|blue|orange|white|glacier|glaicer|burgundy|blurgundy|lavender|sage|green|pink|midnight|starlight|purple|yellow|teal|ultramarine|natural|desert|gold|red)\b)/i.exec(text);
   if (!bare) return null;
   return `${bare[1] === "1024" ? "1" : bare[1]}${Number(bare[1]) >= 1024 || Number(bare[1]) <= 4 ? "TB" : "GB"}`;
+}
+
+function watchStrapSize(text: string): string | null {
+  if (!/\bapple\s+watch\b/i.test(text)) return null;
+  return /(?:^|\s)(XS\/S|S\/M|M\/L|S|M|L)(?=\s|$)/i.exec(text)?.[1].toUpperCase() ?? null;
 }
 
 function countryCode(text: string): string | null {
@@ -159,14 +179,20 @@ function parsedFields(rawLine: string, inherited: HeaderContext = { model: null,
   const parsedProduct = modelName(source) ?? inherited.model;
   const parsedMemory = memory(source);
   const parsedColor = COLOR_ALIASES.find(([pattern]) => pattern.test(source))?.[1] ?? null;
+  // Apple part numbers (e.g. MW493, MEQU4) are more reliable than a free-form
+  // title for accessories and watch variants. Avoid short family tokens such
+  // as S10/M4 and capacity/year numbers.
+  const parsedSku = source.match(/\b(?=[A-Z0-9]{4,12}\b)(?=[A-Z0-9]*[A-Z])(?=[A-Z0-9]*\d)[A-Z0-9]+\b/g)?.at(-1) ?? null;
   const country = countryCode(source) ?? inherited.country;
   const sim = explicitSim(source) ?? inherited.sim ?? inferIphoneSim(parsedProduct, country);
-  const parsedRegion = [country, sim].filter(Boolean).join(" · ") || null;
+  const parsedRegion = /\bapple\s+watch\b/i.test(source)
+    ? watchStrapSize(source)
+    : [country, sim].filter(Boolean).join(" · ") || null;
 
   return {
-    rawLine: raw, parsedModel, parsedMemory, parsedColor, parsedRegion, parsedPrice,
+    rawLine: raw, parsedModel, parsedMemory, parsedColor, parsedRegion, parsedPrice, parsedSku,
     phoneModel: parsedProduct,
-    nonActive: /\bнеактив\b/i.test(raw) || inherited.nonActive,
+    nonActive: NON_ACTIVE_RE.test(raw) || inherited.nonActive,
   };
 }
 
@@ -188,6 +214,9 @@ export function parsePriceListText(text: string): ParsedPriceLine[] {
   for (const original of text.split(/\r?\n/u)) {
     const line = stripMarkup(original);
     if (!line) continue;
+    // These are not storefront offers per the supplier's rules: active/demo/
+    // reflashed units and Gadgess glass are handled separately.
+    if (IGNORE_PRICE_LINE_RE.test(line)) continue;
     const parsed = parsedFields(line, header);
     if (parsed.parsedPrice === null) {
       const model = modelName(line);

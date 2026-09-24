@@ -43,7 +43,8 @@ function bandChoice(region: string | null) {
   if (!region) return null;
   // Размер уже выбирается отдельным фильтром, поэтому не дублируем одну и
   // ту же модель ремешка строками S/M, M/L, S, M и L.
-  return region.trim().replace(/\s+(?:XS\/S|S\/M|M\/L|S|M|L)$/i, "");
+  const choice = region.trim().replace(/\s+(?:XS\/S|S\/M|M\/L|S|M|L)$/i, "").trim();
+  return choice || null;
 }
 
 function bandChoiceLabel(value: string) {
@@ -122,7 +123,7 @@ export function VariantGrid({
   const memories = useMemo(() => valuesOf(variants, "memory"), [variants]);
   const colors = useMemo(() => valuesOf(variants, "color"), [variants]);
   const regions = useMemo(() => valuesOf(variants, "region"), [variants]);
-  const isWatch = variants.some((variant) => /(?:loop|band)/i.test(variant.region ?? ""));
+  const isWatch = /^apple-watch-/.test(slug) || variants.some((variant) => /(?:loop|band)/i.test(variant.region ?? ""));
   const isGalaxyWatch = /^samsung-galaxy-watch-/.test(slug);
   const isIpad = /^(?:ipad-|samsung-galaxy-tab-)/.test(slug);
   const isSmartGlasses = isSmartGlassesSlug(slug);
