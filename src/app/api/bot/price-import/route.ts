@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import {
   canonicalIphoneModel,
+  buildAcceptedIphoneMappings,
+  iphoneOfferMatchKey,
   inactivePreferenceKey,
   normalizedMemory,
   normalizedIphoneRegion,
@@ -39,6 +41,10 @@ export async function POST(request: Request) {
     typeof body === "object" && body !== null && typeof (body as Record<string, unknown>).text === "string"
       ? ((body as Record<string, unknown>).text as string)
       : "";
+  const source =
+    typeof body === "object" && body !== null && typeof (body as Record<string, unknown>).source === "string"
+      ? ((body as Record<string, unknown>).source as string).trim().slice(0, 120)
+      : "telegram-bot";
 
   if (!text.trim()) {
     return NextResponse.json({ error: "empty text" }, { status: 400 });
@@ -52,6 +58,39 @@ export async function POST(request: Request) {
   const existingVariants = await prisma.productVariant.findMany({
     select: { id: true, sku: true, rawLabel: true, memory: true, color: true, region: true, product: { select: { name: true } } },
   });
+  const acceptedPriceRows = await prisma.priceImportLine.findMany({
+    where: { status: "ACCEPTED", matchedVariantId: { not: null } },
+    select: {
+      matchedVariantId: true,
+      rawLine: true,
+      parsedModel: true,
+      parsedMemory: true,
+      parsedColor: true,
+      parsedRegion: true,
+    },
+  });
+  const acceptedVariantIds = [...new Set(acceptedPriceRows
+    .map((line) => line.matchedVariantId)
+    .filter((id): id is string => Boolean(id)))];
+  const acceptedVariants = acceptedVariantIds.length
+    ? await prisma.productVariant.findMany({
+      where: { id: { in: acceptedVariantIds } },
+      select: { id: true, product: { select: { name: true } } },
+    })
+    : [];
+  const acceptedProductNameByVariant = new Map(acceptedVariants.map((variant) => [variant.id, variant.product.name]));
+  const learnedIphoneMappings = buildAcceptedIphoneMappings(acceptedPriceRows.flatMap((line) => {
+    const variantId = line.matchedVariantId;
+    const model = variantId ? acceptedProductNameByVariant.get(variantId) : null;
+    return model && variantId ? [{
+      model,
+      memory: line.parsedMemory,
+      color: line.parsedColor,
+      region: line.parsedRegion,
+      nonActive: /(?:^|[^\p{L}])неактив(?=$|[^\p{L}])/iu.test(line.rawLine),
+      variantId,
+    }] : [];
+  }));
   const byNormalized = new Map<string, string[]>();
   const bySku = new Map<string, string>();
   const byConfiguration = new Map<string, string[]>();
@@ -125,6 +164,13 @@ export async function POST(request: Request) {
     let matchedVariantId = line.parsedSku
       ? bySku.get(normalizeForMatch(line.parsedSku)) ?? null
       : null;
+    const learnedKey = iphoneOfferMatchKey(
+      line.phoneModel, line.parsedMemory, line.parsedColor, line.parsedRegion, line.nonActive,
+    );
+    if (!matchedVariantId && learnedKey) {
+      const learnedVariantId = learnedIphoneMappings.get(learnedKey);
+      if (learnedVariantId && variantByIdExisting.has(learnedVariantId)) matchedVariantId = learnedVariantId;
+    }
     if (!matchedVariantId && key) {
       const identityKey = supplierIdentityKey(line.parsedModel);
       const labelCandidates = identityKey ? byNormalized.get(identityKey) ?? [] : [];
@@ -216,7 +262,7 @@ export async function POST(request: Request) {
 
   const batch = await prisma.priceImportBatch.create({
     data: {
-      source: "telegram-bot",
+      source: source || "telegram-bot",
       rawText: text,
       lines: {
         create: preparedLines,

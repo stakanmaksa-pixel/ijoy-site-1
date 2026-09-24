@@ -149,7 +149,14 @@ export default async function PriceImportBatchPage({
           const suggestedVariants = [...new Map(
             [...suggestedPhoneVariants, ...suggestedExactVariants].map(({ product, variant }) => [variant.id, { product, variant }]),
           ).values()];
-          const visibleVariants = suggestedVariants.length ? suggestedVariants : memoryColorVariants;
+          // If legacy variants have empty/inconsistent memory or colour columns,
+          // still make the existing model's options selectable for deliberate
+          // manual mapping instead of sending the admin straight to "create".
+          const visibleVariants = suggestedVariants.length
+            ? suggestedVariants
+            : memoryColorVariants.length
+              ? memoryColorVariants
+              : productVariants;
           const pickerOptions: ImportVariantOption[] = visibleVariants.map(({ product, variant }) => ({
             id: variant.id,
             productName: product.name,
@@ -161,8 +168,14 @@ export default async function PriceImportBatchPage({
               : variant.region ?? parsePriceLine(variant.rawLabel ?? "").parsedRegion,
             price: variant.price == null ? null : Number(variant.price),
           }));
-          const pickerQuery = [lineModel?.replace(/^iPhone\s+/i, ""), line.parsedMemory, line.parsedColor, lineSim]
-            .filter(Boolean).join(" ") || line.parsedModel || "";
+          const pickerQuery = [
+            lineModel?.replace(/^iPhone\s+/i, ""),
+            ...(suggestedVariants.length
+              ? [line.parsedMemory, line.parsedColor, lineSim]
+              : memoryColorVariants.length
+                ? [line.parsedMemory, line.parsedColor]
+                : []),
+          ].filter(Boolean).join(" ") || line.parsedModel || "";
 
           return (
             <div key={line.id} className="rounded-2xl border border-zinc-200 p-4">
@@ -203,7 +216,7 @@ export default async function PriceImportBatchPage({
                     />
                   ) : (
                     <p className="mt-3 rounded-lg bg-amber-50 p-3 text-xs text-amber-800">
-                      Точной модификации автоматически не найдено. Найди товар ниже; цена не будет назначена похожему цвету или памяти.
+                      Точного совпадения автоматически не найдено. Выбери существующую модификацию вручную; создавай новую только если такой конфигурации действительно нет на сайте.
                       {lineModel && <> В карточке «{lineModel}» найдено {productVariants.length} вариантов; память и цвет совпали у {memoryColorVariants.length}.</>}
                     </p>
                   )}

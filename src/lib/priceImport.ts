@@ -51,7 +51,7 @@ const COLOR_ALIASES: Array<[RegExp, string]> = [
   [/\b(?:night\s+sky)\b/i, "Night Sky"], [/\bstar\s+white\b/i, "Star White"],
 ];
 
-const IGNORE_PRICE_LINE_RE = /\b(?:gadgess?|corning\s+glass|demo|mac\s+studio|garmin\s+venu\s+x1|yandex\s+alice\s+duo\s+max)\b|яндекс\s+алиса\s+дуо\s+макс|\bapple\s+watch\s+(?:se\s*2|s10|series\s*10|ultra\s*2)\b|(?:^|[^\p{L}])(?:актив|демо|перепрош\p{L}*)(?=$|[^\p{L}])/iu;
+const IGNORE_PRICE_LINE_RE = /\b(?:gadgess?|corning\s+glass|demo|mac\s+studio|garmin\s+venu\s+x1|yandex\s+alice\s+duo\s+max)\b|яндекс\s+алиса\s+дуо\s+макс|\bapple\s+watch\s+(?:se\s*2|s10|series\s*10|ultra\s*2)\b|(?:^|[^\p{L}])(?:предактив|актив|демо|перепрош\p{L}*)(?=$|[^\p{L}])/iu;
 const NON_ACTIVE_RE = /(?:^|[^\p{L}])неактив(?=$|[^\p{L}])/iu;
 
 function stripMarkup(value: string) {
@@ -241,6 +241,10 @@ export function parsePriceListText(text: string): ParsedPriceLine[] {
   for (const original of text.split(/\r?\n/u)) {
     const line = stripMarkup(original);
     if (!line) continue;
+    if (line === "[[PRICE_SOURCE_BOUNDARY]]") {
+      header = { model: null, sim: null, country: null, nonActive: false };
+      continue;
+    }
     // These are not storefront offers per the supplier's rules: active/demo/
     // reflashed units and Gadgess glass are handled separately.
     if (IGNORE_PRICE_LINE_RE.test(line)) continue;
@@ -289,4 +293,54 @@ export function supplierIdentityKey(text: string | null): string | null {
   for (const [countryPattern] of COUNTRY_ALIASES) identity = identity.replace(countryPattern, " ");
   identity = identity.replace(/\b(?=[A-Z0-9]{4,12}\b)(?=[A-Z0-9]*[A-Z])(?=[A-Z0-9]*\d)[A-Z0-9]+\b/g, " ");
   return normalizeForMatch(identity) || null;
+}
+
+/** Country-neutral identity for learning an admin-confirmed iPhone mapping. */
+export function iphoneOfferMatchKey(
+  model: string | null,
+  memoryValue: string | null,
+  colorValue: string | null,
+  regionValue: string | null,
+  nonActive = false,
+): string | null {
+  const canonicalModel = canonicalIphoneModel(model ?? "");
+  const canonicalMemory = normalizedMemory(memoryValue);
+  if (!canonicalModel || !canonicalMemory || !colorValue?.trim()) return null;
+  const sim = normalizedIphoneSim(regionValue, canonicalModel) ?? regionValue;
+  if (!sim) return null;
+  return [
+    canonicalModel,
+    canonicalMemory,
+    normalizeForMatch(colorValue),
+    normalizeForMatch(sim),
+    nonActive ? "inactive" : "regular",
+  ].join("|");
+}
+
+export type AcceptedIphoneMapping = {
+  model: string | null;
+  memory: string | null;
+  color: string | null;
+  region: string | null;
+  nonActive?: boolean;
+  variantId: string;
+};
+
+/** Keep only mappings that have one consistent, previously accepted target. */
+export function buildAcceptedIphoneMappings(rows: AcceptedIphoneMapping[]): Map<string, string> {
+  const targets = new Map<string, Set<string>>();
+  for (const row of rows) {
+    const key = iphoneOfferMatchKey(row.model, row.memory, row.color, row.region, row.nonActive);
+    if (!key) continue;
+    const ids = targets.get(key) ?? new Set<string>();
+    ids.add(row.variantId);
+    targets.set(key, ids);
+  }
+  const mappings = new Map<string, string>();
+  for (const [key, ids] of targets) {
+    if (ids.size !== 1) continue;
+    const [variantId] = ids;
+    if (variantId) mappings.set(key, variantId);
+  }
+  return mappings;
 }

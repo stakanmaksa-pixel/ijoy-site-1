@@ -1,10 +1,13 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  buildAcceptedIphoneMappings,
   inactivePreferenceKey,
+  iphoneOfferMatchKey,
   normalizedMemory,
   normalizedIphoneSim,
   parsePriceLine,
+  parsePriceListText,
   supplierIdentityKey,
 } from "../../src/lib/priceImport";
 
@@ -32,6 +35,43 @@ test("explicit SIM types remain distinct across markets", () => {
 test("memory values saved with or without the unit share a canonical key", () => {
   assert.equal(normalizedMemory("256"), normalizedMemory("256GB"));
   assert.equal(normalizedMemory("1 TB"), normalizedMemory("1TB"));
+});
+
+test("collector source boundary prevents a header from another channel leaking into this price row", () => {
+  const rows = parsePriceListText(
+    "iPhone 17\n256 Blue - 77.200₽\n[[PRICE_SOURCE_BOUNDARY]]\n256 Blue - 78.100₽",
+  );
+
+  assert.equal(rows.length, 2);
+  assert.equal(rows[0].phoneModel, "iPhone 17");
+  assert.equal(rows[1].phoneModel, null);
+});
+
+test("Cartel-style section headings preserve eSIM context and thousand-separated prices", () => {
+  const rows = parsePriceListText([
+    "📲 iPhone 18 Pro (eSim)",
+    "🇦🇪 18 Pro 256 Silver (eSim) - 124.000 (НЕАКТИВ)",
+    "18 Pro 512 Black (eSim) - 153.000 (НЕАКТИВ)",
+    "18 Pro 256 Black (eSim) - 125.000 (предактив, запак)",
+    "iPhone 18 Pro",
+    "18 Pro 256 Black - 124.000 (предактив, запак)",
+    "18 Pro 256 Black - 155.000 (НЕАКТИВ)",
+  ].join("\n"));
+
+  assert.equal(rows.length, 3);
+  assert.deepEqual(rows.map((row) => row.parsedPrice), [124000, 153000, 155000]);
+  assert.deepEqual(rows.map((row) => row.parsedRegion), ["eSIM", "eSIM", null]);
+  assert.deepEqual(rows.map((row) => row.nonActive), [true, true, true]);
+  assert.deepEqual(rows.map((row) => row.phoneModel), ["iPhone 18 Pro", "iPhone 18 Pro", "iPhone 18 Pro"]);
+});
+
+test("supplier country and a section heading do not replace an explicit SIM configuration", () => {
+  const rows = parsePriceListText([
+    "iPhone 18 Pro Max (eSim)",
+    "18 Pro Max 256 Silver 🇯🇵 eSim - 151.000 (НЕАКТИВ)",
+    "18 Pro Max 256 Burgundy 🇮🇳 1 Sim + eSim - 168.000 (НЕАКТИВ)",
+  ].join("\n"));
+  assert.deepEqual(rows.map((row) => row.parsedRegion), ["eSIM", "SIM+eSIM"]);
 });
 
 test("legacy raw-label variants still expose model dimensions when columns are blank", () => {
@@ -73,4 +113,31 @@ test("supplier identity handles country-specific Apple part numbers in tablets a
   const macIndia = "MHFJ4 MacBook Neo 13 2026 A18 Pro 8 256 Blush 🇮🇳";
   assert.equal(supplierIdentityKey(ipadUs), supplierIdentityKey(ipadHk));
   assert.equal(supplierIdentityKey(macThailand), supplierIdentityKey(macIndia));
+});
+
+test("an admin-confirmed iPhone mapping is reused across supplier countries but not across SIM types", () => {
+  const learned = buildAcceptedIphoneMappings([
+    { model: "iPhone 17 Pro Max", memory: "1TB", color: "Blue", region: "JP · eSIM", variantId: "esim-variant" },
+    { model: "iPhone 17 Pro Max", memory: "1 TB", color: "Blue", region: "KW · eSIM", variantId: "esim-variant" },
+    { model: "iPhone 17 Pro Max", memory: "1TB", color: "Blue", region: "SIM+eSIM", variantId: "physical-esim-variant" },
+  ]);
+  assert.equal(learned.get(iphoneOfferMatchKey("iPhone 17 Pro Max", "1TB", "Blue", "eSIM")!), "esim-variant");
+  assert.equal(learned.get(iphoneOfferMatchKey("iPhone 17 Pro Max", "1TB", "Blue", "SIM+eSIM")!), "physical-esim-variant");
+});
+
+test("conflicting admin-confirmed mappings are not auto-learned", () => {
+  const learned = buildAcceptedIphoneMappings([
+    { model: "iPhone 17", memory: "256GB", color: "Blue", region: "eSIM", variantId: "variant-a" },
+    { model: "iPhone 17", memory: "256GB", color: "Blue", region: "eSIM", variantId: "variant-b" },
+  ]);
+  assert.equal(learned.get(iphoneOfferMatchKey("iPhone 17", "256", "Blue", "eSIM")!), undefined);
+});
+
+test("learned mappings keep inactive offers separate from regular offers", () => {
+  const learned = buildAcceptedIphoneMappings([
+    { model: "iPhone 17", memory: "256GB", color: "Blue", region: "eSIM", variantId: "regular" },
+    { model: "iPhone 17", memory: "256GB", color: "Blue", region: "eSIM", nonActive: true, variantId: "inactive" },
+  ]);
+  assert.equal(learned.get(iphoneOfferMatchKey("iPhone 17", "256GB", "Blue", "eSIM")!), "regular");
+  assert.equal(learned.get(iphoneOfferMatchKey("iPhone 17", "256GB", "Blue", "eSIM", true)!), "inactive");
 });

@@ -53,6 +53,12 @@ services:
       PORT: 3000
     ports:
       - "3000:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/bot/price-import').then(r=>process.exit(r.status===405?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
     volumes:
       # Фото товаров, загруженные через админку, хранятся тут отдельно от
       # образа приложения — иначе очередной `docker compose ... --build`
@@ -64,7 +70,38 @@ services:
       migrate:
         condition: service_completed_successfully
 
+  # Optional collector that reads Telegram sources; for Cartel it requests the
+  # full price list with the explicitly named button. The session itself has
+  # normal account permissions if compromised. Enable with
+  # `--profile automated-prices`; authorize it once with the instructions in
+  # docs/telegram-price-collector.md. It only creates a pending import batch.
+  telegram-price-collector:
+    profiles: ["automated-prices"]
+    build:
+      context: ./telegram-price-collector
+    restart: unless-stopped
+    environment:
+      TELEGRAM_API_ID: ${TELEGRAM_API_ID:-}
+      TELEGRAM_API_HASH: ${TELEGRAM_API_HASH:-}
+      TELEGRAM_DB_ENCRYPTION_KEY: ${TELEGRAM_DB_ENCRYPTION_KEY:-}
+      TELEGRAM_SOURCE_CHANNELS: ${TELEGRAM_SOURCE_CHANNELS:-}
+      TELEGRAM_SCHEDULE: ${TELEGRAM_SCHEDULE:-11:00,14:00,17:30}
+      TELEGRAM_TIMEZONE: ${TELEGRAM_TIMEZONE:-Europe/Moscow}
+      TELEGRAM_DATABASE: /data/tdlib-database
+      SITE_API_URL: http://app:3000
+      SITE_API_TOKEN: ${BOT_API_TOKEN:?укажите BOT_API_TOKEN в .env}
+      POLL_INTERVAL_SECONDS: ${TELEGRAM_POLL_INTERVAL_SECONDS:-30}
+      TELEGRAM_INITIAL_LOOKBACK_HOURS: ${TELEGRAM_INITIAL_LOOKBACK_HOURS:-24}
+      TELEGRAM_QUIET_MINUTES: ${TELEGRAM_QUIET_MINUTES:-5}
+      TELEGRAM_SLOT_GRACE_MINUTES: ${TELEGRAM_SLOT_GRACE_MINUTES:-30}
+    volumes:
+      - telegram_session:/data
+    depends_on:
+      app:
+        condition: service_healthy
+
 volumes:
   postgres_data:
   uploads_data:
   catalog_backups:
+  telegram_session:
