@@ -13,6 +13,7 @@ test("supplier country is used to infer SIM but does not distinguish the site va
 
   assert.equal(japan.parsedMemory, "1TB");
   assert.equal(japan.parsedColor, "Blue");
+  assert.equal(japan.parsedRegion, "eSIM");
   assert.equal(normalizedIphoneSim(japan.parsedRegion, japan.phoneModel), "eSIM");
   assert.equal(normalizedIphoneSim(kuwait.parsedRegion, kuwait.phoneModel), "eSIM");
 });
@@ -23,6 +24,7 @@ test("explicit SIM types remain distinct across markets", () => {
 
   assert.equal(normalizedIphoneSim(esim.parsedRegion, esim.phoneModel), "eSIM");
   assert.equal(normalizedIphoneSim(physicalAndEsim.parsedRegion, physicalAndEsim.phoneModel), "SIM+eSIM");
+  assert.equal(physicalAndEsim.parsedRegion, "SIM+eSIM");
   assert.equal(normalizedIphoneSim("SIM_ESIM", physicalAndEsim.phoneModel), "SIM+eSIM");
 });
 

@@ -211,7 +211,9 @@ function parsedFields(rawLine: string, inherited: HeaderContext = { model: null,
   const sim = explicitSim(source) ?? inherited.sim ?? inferIphoneSim(parsedProduct, country);
   const parsedRegion = /\bapple\s+watch\b/i.test(source)
     ? watchStrapSize(source)
-    : [country, sim].filter(Boolean).join(" · ") || null;
+    : parsedProduct?.startsWith("iPhone ")
+      ? sim
+      : [country, sim].filter(Boolean).join(" · ") || null;
 
   return {
     rawLine: raw, parsedModel, parsedMemory, parsedColor, parsedRegion, parsedPrice, parsedSku,

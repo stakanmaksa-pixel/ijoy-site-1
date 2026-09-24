@@ -55,6 +55,10 @@ export async function POST(request: Request) {
   const bySku = new Map<string, string>();
   const byConfiguration = new Map<string, string[]>();
   const bySimConfiguration = new Map<string, string[]>();
+  const addCandidate = (index: Map<string, string[]>, key: string, id: string) => {
+    const ids = index.get(key) ?? [];
+    if (!ids.includes(id)) index.set(key, [...ids, id]);
+  };
   for (const v of existingVariants) {
     const parsedStoredLabel = v.rawLabel ? parsePriceLine(v.rawLabel) : null;
     if (v.sku) bySku.set(normalizeForMatch(v.sku), v.id);
@@ -65,20 +69,35 @@ export async function POST(request: Request) {
     }
 
     const model = canonicalIphoneModel(v.product.name);
-    // Older catalog rows sometimes have empty structured columns, although
-    // rawLabel already contains the complete supplier configuration.
-    const memory = normalizedMemory(v.memory) ?? normalizedMemory(parsedStoredLabel?.parsedMemory ?? null) ?? "";
-    const storedColor = v.color ?? parsedStoredLabel?.parsedColor;
-    const color = storedColor ? normalizeForMatch(storedColor) : "";
-    const oldLabelRegion = parsedStoredLabel?.parsedRegion ?? null;
-    const region = normalizedIphoneRegion(oldLabelRegion ?? v.region, model);
-    if (!model || !memory || !color || !region) continue;
-    const descriptor = [model, memory, color, normalizeForMatch(region)].join("|");
-    byConfiguration.set(descriptor, [...(byConfiguration.get(descriptor) ?? []), v.id]);
-    const sim = normalizedIphoneSim(oldLabelRegion ?? v.region, model);
-    if (sim) {
-      const simDescriptor = [model, memory, color, normalizeForMatch(sim)].join("|");
-      bySimConfiguration.set(simDescriptor, [...(bySimConfiguration.get(simDescriptor) ?? []), v.id]);
+    // Legacy catalog entries are not always consistent: a structured column
+    // can be populated but stale/invalid while rawLabel has the right value.
+    // Index every reliable representation instead of letting one mask another.
+    const memories = [...new Set([
+      normalizedMemory(v.memory),
+      normalizedMemory(parsedStoredLabel?.parsedMemory ?? null),
+    ].filter((value): value is string => Boolean(value)))];
+    const colors = [...new Set([
+      v.color ? normalizeForMatch(v.color) : null,
+      parsedStoredLabel?.parsedColor ? normalizeForMatch(parsedStoredLabel.parsedColor) : null,
+    ].filter((value): value is string => Boolean(value)))];
+    const regions = [...new Set([v.region, parsedStoredLabel?.parsedRegion ?? null]
+      .map((value) => normalizedIphoneRegion(value, model))
+      .filter((value): value is string => Boolean(value)))];
+    const sims = [...new Set([v.region, parsedStoredLabel?.parsedRegion ?? null]
+      .map((value) => normalizedIphoneSim(value, model))
+      .filter((value): value is string => Boolean(value)))];
+    if (!model) continue;
+    for (const memory of memories) {
+      for (const color of colors) {
+        for (const region of regions) {
+          const descriptor = [model, memory, color, normalizeForMatch(region)].join("|");
+          addCandidate(byConfiguration, descriptor, v.id);
+        }
+        for (const sim of sims) {
+          const simDescriptor = [model, memory, color, normalizeForMatch(sim)].join("|");
+          addCandidate(bySimConfiguration, simDescriptor, v.id);
+        }
+      }
     }
   }
 

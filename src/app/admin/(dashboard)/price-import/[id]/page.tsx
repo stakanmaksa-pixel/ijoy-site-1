@@ -118,18 +118,23 @@ export default async function PriceImportBatchPage({
             ;
           const memoryColorVariants = productVariants.filter(({ variant }) => {
               const stored = parsePriceLine(variant.rawLabel ?? "");
-              const storedMemory = normalizedMemory(variant.memory) ?? normalizedMemory(stored.parsedMemory);
-              const storedColor = variant.color ?? stored.parsedColor;
-              if (lineMemory && storedMemory !== lineMemory) return false;
-              if (lineColor && normalizeForMatch(storedColor ?? "") !== lineColor) return false;
+              const storedMemories = [normalizedMemory(variant.memory), normalizedMemory(stored.parsedMemory)];
+              const storedColors = [variant.color, stored.parsedColor]
+                .filter((value): value is string => Boolean(value))
+                .map(normalizeForMatch);
+              if (lineMemory && !storedMemories.includes(lineMemory)) return false;
+              if (lineColor && !storedColors.includes(lineColor)) return false;
               return true;
             });
           const suggestedPhoneVariants = memoryColorVariants
             .filter(({ variant }) => {
               if (lineSim) {
-                const storedRegion = parsePriceLine(variant.rawLabel ?? "").parsedRegion ?? variant.region;
-                const stored = normalizedIphoneSim(storedRegion, lineModel);
-                if (stored !== lineSim) return false;
+                const storedLabelRegion = parsePriceLine(variant.rawLabel ?? "").parsedRegion;
+                const storedSims = [
+                  normalizedIphoneSim(storedLabelRegion, lineModel),
+                  normalizedIphoneSim(variant.region, lineModel),
+                ];
+                if (!storedSims.includes(lineSim)) return false;
               }
               return true;
             });
@@ -149,9 +154,11 @@ export default async function PriceImportBatchPage({
             id: variant.id,
             productName: product.name,
             productSlug: product.slug,
-            memory: variant.memory ?? parsePriceLine(variant.rawLabel ?? "").parsedMemory,
+            memory: normalizedMemory(variant.memory) ?? normalizedMemory(parsePriceLine(variant.rawLabel ?? "").parsedMemory),
             color: variant.color ?? parsePriceLine(variant.rawLabel ?? "").parsedColor,
-            region: variant.region ?? parsePriceLine(variant.rawLabel ?? "").parsedRegion,
+            region: lineModel
+              ? normalizedIphoneSim(variant.region, lineModel) ?? normalizedIphoneSim(parsePriceLine(variant.rawLabel ?? "").parsedRegion, lineModel)
+              : variant.region ?? parsePriceLine(variant.rawLabel ?? "").parsedRegion,
             price: variant.price == null ? null : Number(variant.price),
           }));
           const pickerQuery = [lineModel?.replace(/^iPhone\s+/i, ""), line.parsedMemory, line.parsedColor, lineSim]
