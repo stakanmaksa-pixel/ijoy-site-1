@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
+import { canonicalIphoneModel, normalizedIphoneSim, normalizeForMatch, parsePriceLine } from "@/lib/priceImport";
 import { acceptLine, acceptAllMatched, applyAsFullPriceList, createVariantFromLine, rejectLine } from "../actions";
+import { ProductPicker, VariantPicker, type ImportVariantOption } from "./ImportPickers";
 
 export const dynamic = "force-dynamic";
 
@@ -63,14 +65,16 @@ export default async function PriceImportBatchPage({
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold text-zinc-900">
+        <h1 className="text-xl font-semibold text-zinc-900">
             Партия от{" "}
             {new Intl.DateTimeFormat("ru-RU", {
               dateStyle: "medium",
               timeStyle: "short",
             }).format(batch.createdAt)}
           </h1>
-          <p className="mt-1 text-sm text-zinc-500">{batch.lines.length} позиций в прайсе</p>
+          <p className="mt-1 text-sm text-zinc-500">
+            {batch.lines.length} позиций · {matchedCount} совпадений найдено автоматически
+          </p>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -95,13 +99,53 @@ export default async function PriceImportBatchPage({
         </div>
       </div>
       <p className="mt-3 max-w-2xl text-xs leading-5 text-zinc-500">
-        При полном прайсе модели, которых нет в файле, сохраняются на сайте, но их цена заменяется на «Уточняйте у менеджера».
+        Сначала проверь автоматические совпадения и нажми «Принять все совпавшие». Для iPhone учитываются модель, память, цвет и тип SIM; страна используется для определения SIM, но не мешает совпадению.
       </p>
 
       <div className="mt-6 flex flex-col gap-3">
         {batch.lines.map((line) => {
           const matchedVariant = line.matchedVariantId ? variantById.get(line.matchedVariantId) : null;
           const isDecided = line.status === "ACCEPTED" || line.status === "REJECTED";
+          const lineModel = canonicalIphoneModel(line.parsedModel ?? "");
+          const lineMemory = line.parsedMemory ? normalizeForMatch(line.parsedMemory) : null;
+          const lineColor = line.parsedColor ? normalizeForMatch(line.parsedColor) : null;
+          const lineSim = normalizedIphoneSim(line.parsedRegion, lineModel);
+          const rawParsedLine = parsePriceLine(line.rawLine);
+          const sourceLabel = normalizeForMatch(line.parsedModel ?? "");
+          const suggestedPhoneVariants = allProducts
+            .filter((product) => lineModel && canonicalIphoneModel(product.name) === lineModel)
+            .flatMap((product) => product.variants.map((variant) => ({ product, variant })))
+            .filter(({ variant }) => {
+              if (lineMemory && normalizeForMatch(variant.memory ?? "") !== lineMemory) return false;
+              if (lineColor && normalizeForMatch(variant.color ?? "") !== lineColor) return false;
+              if (lineSim) {
+                const stored = normalizedIphoneSim(parsePriceLine(variant.rawLabel ?? "").parsedRegion ?? variant.region, lineModel);
+                if (stored !== lineSim) return false;
+              }
+              return true;
+            });
+          const suggestedExactVariants = allProducts
+            .flatMap((product) => product.variants.map((variant) => ({ product, variant })))
+            .filter(({ variant }) => {
+              if (rawParsedLine.parsedSku && variant.sku && normalizeForMatch(rawParsedLine.parsedSku) === normalizeForMatch(variant.sku)) return true;
+              if (lineModel || !variant.rawLabel || !sourceLabel) return false;
+              const storedLabel = parsePriceLine(variant.rawLabel).parsedModel ?? variant.rawLabel;
+              return normalizeForMatch(storedLabel) === sourceLabel;
+            });
+          const suggestedVariants = [...new Map(
+            [...suggestedPhoneVariants, ...suggestedExactVariants].map(({ product, variant }) => [variant.id, { product, variant }]),
+          ).values()];
+          const pickerOptions: ImportVariantOption[] = suggestedVariants.map(({ product, variant }) => ({
+            id: variant.id,
+            productName: product.name,
+            productSlug: product.slug,
+            memory: variant.memory,
+            color: variant.color,
+            region: variant.region ?? parsePriceLine(variant.rawLabel ?? "").parsedRegion,
+            price: variant.price == null ? null : Number(variant.price),
+          }));
+          const pickerQuery = [lineModel?.replace(/^iPhone\s+/i, ""), line.parsedMemory, line.parsedColor, lineSim]
+            .filter(Boolean).join(" ") || line.parsedModel || "";
 
           return (
             <div key={line.id} className="rounded-2xl border border-zinc-200 p-4">
@@ -132,26 +176,19 @@ export default async function PriceImportBatchPage({
                   <input type="hidden" name="lineId" value={line.id} />
                   <input type="hidden" name="batchId" value={batch.id} />
 
-                  <select
-                    name="variantId"
-                    defaultValue={line.matchedVariantId ?? ""}
-                    required
-                    className="min-w-[260px] rounded-lg border border-zinc-300 px-2 py-1.5 text-sm"
-                  >
-                    <option value="" disabled>
-                      Выберите модификацию…
-                    </option>
-                    {allProducts.map((product) => (
-                      <optgroup key={product.id} label={product.name}>
-                        {product.variants.map((v) => (
-                          <option key={v.id} value={v.id}>
-                            {[v.memory, v.color, v.region].filter(Boolean).join(" · ") || "без атрибутов"} —{" "}
-                            {v.price != null ? formatPrice(Number(v.price)) : "цена не указана"}
-                          </option>
-                        ))}
-                      </optgroup>
-                    ))}
-                  </select>
+                  {pickerOptions.length > 0 ? (
+                    <VariantPicker
+                      options={pickerOptions}
+                      suggestedIds={pickerOptions.map((option) => option.id)}
+                      selectedId={line.matchedVariantId}
+                      initialQuery={pickerQuery}
+                      submitLabel="Применить цену"
+                    />
+                  ) : (
+                    <p className="mt-3 rounded-lg bg-amber-50 p-3 text-xs text-amber-800">
+                      Точной модификации автоматически не найдено. Найди товар ниже; цена не будет назначена похожему цвету или памяти.
+                    </p>
+                  )}
 
                   {matchedVariant && (
                     <span className="text-xs text-zinc-500">
@@ -164,12 +201,6 @@ export default async function PriceImportBatchPage({
                     </span>
                   )}
 
-                  <button
-                    type="submit"
-                    className="rounded-full bg-emerald-600 px-3 py-1.5 text-xs text-white hover:bg-emerald-500"
-                  >
-                    Применить цену
-                  </button>
                 </form>
               )}
 
@@ -181,24 +212,11 @@ export default async function PriceImportBatchPage({
                   <input type="hidden" name="lineId" value={line.id} />
                   <input type="hidden" name="batchId" value={batch.id} />
 
-                  <label className="flex flex-col gap-1 text-xs text-zinc-600">
-                    Или создать модификацию у товара
-                    <select
-                      name="productId"
-                      required
-                      defaultValue=""
-                      className="min-w-[180px] rounded-lg border border-zinc-300 px-2 py-1.5 text-sm"
-                    >
-                      <option value="" disabled>
-                        Выберите товар…
-                      </option>
-                      {allProducts.map((product) => (
-                        <option key={product.id} value={product.id}>
-                          {product.name}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
+                  <ProductPicker
+                    products={allProducts.map(({ id, name, slug }) => ({ id, name, slug }))}
+                    initialQuery={lineModel?.replace(/^iPhone\s+/i, "") ?? line.parsedModel ?? ""}
+                    submitLabel="Создать и принять"
+                  />
 
                   <label className="flex flex-col gap-1 text-xs text-zinc-600">
                     {/\bapple\s+watch\b/i.test(line.rawLine) ? "Размер корпуса" : "Память"}
@@ -228,12 +246,6 @@ export default async function PriceImportBatchPage({
                     />
                   </label>
 
-                  <button
-                    type="submit"
-                    className="rounded-full bg-zinc-900 px-3 py-1.5 text-xs text-white hover:bg-zinc-700"
-                  >
-                    Создать и принять
-                  </button>
                 </form>
               )}
 

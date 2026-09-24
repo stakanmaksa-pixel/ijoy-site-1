@@ -4,6 +4,7 @@ import {
   canonicalIphoneModel,
   inactivePreferenceKey,
   normalizedIphoneRegion,
+  normalizedIphoneSim,
   normalizeForMatch,
   parsePriceLine,
   parsePriceListText,
@@ -52,6 +53,7 @@ export async function POST(request: Request) {
   const byNormalized = new Map<string, string>();
   const bySku = new Map<string, string>();
   const byConfiguration = new Map<string, string[]>();
+  const bySimConfiguration = new Map<string, string[]>();
   for (const v of existingVariants) {
     if (v.sku) bySku.set(normalizeForMatch(v.sku), v.id);
     if (v.rawLabel) {
@@ -69,6 +71,11 @@ export async function POST(request: Request) {
     if (!model || !memory || !color || !region) continue;
     const descriptor = [model, memory, color, normalizeForMatch(region)].join("|");
     byConfiguration.set(descriptor, [...(byConfiguration.get(descriptor) ?? []), v.id]);
+    const sim = normalizedIphoneSim(oldLabelRegion ?? v.region, model);
+    if (sim) {
+      const simDescriptor = [model, memory, color, normalizeForMatch(sim)].join("|");
+      bySimConfiguration.set(simDescriptor, [...(bySimConfiguration.get(simDescriptor) ?? []), v.id]);
+    }
   }
 
   // If a supplier sends both active and inactive prices for the same exact
@@ -78,63 +85,116 @@ export async function POST(request: Request) {
     .map(inactivePreferenceKey)
     .filter((key): key is string => Boolean(key)));
 
+  const variantByIdExisting = new Map(existingVariants.map((variant) => [variant.id, variant]));
+  const filterByCondition = (candidateIds: string[], nonActive: boolean) => {
+    const hasDedicatedInactiveVariant = candidateIds.some((id) => {
+      const variant = variantByIdExisting.get(id);
+      return /(?:^|[^\p{L}])неактив(?=$|[^\p{L}])/iu.test(`${variant?.rawLabel ?? ""} ${variant?.region ?? ""}`);
+    });
+    if (nonActive && !hasDedicatedInactiveVariant) return candidateIds;
+    return candidateIds.filter((id) => {
+      const variant = variantByIdExisting.get(id);
+      const storedNonActive = /(?:^|[^\p{L}])неактив(?=$|[^\p{L}])/iu.test(`${variant?.rawLabel ?? ""} ${variant?.region ?? ""}`);
+      return storedNonActive === nonActive;
+    });
+  };
+
+  const preparedLines = parsedLines.map((line) => {
+    const key = line.parsedModel ? normalizeForMatch(line.parsedModel) : null;
+    let matchedVariantId = line.parsedSku
+      ? bySku.get(normalizeForMatch(line.parsedSku)) ?? null
+      : null;
+    if (!matchedVariantId && key) matchedVariantId = byNormalized.get(key) ?? null;
+    if (!matchedVariantId && line.phoneModel && line.parsedMemory && line.parsedColor && line.parsedRegion) {
+      const descriptor = [
+        line.phoneModel,
+        normalizeForMatch(line.parsedMemory),
+        normalizeForMatch(line.parsedColor),
+        normalizeForMatch(line.parsedRegion),
+      ].join("|");
+      const candidates = byConfiguration.get(descriptor) ?? [];
+      const compatible = filterByCondition(candidates, line.nonActive);
+      if (compatible.length === 1) matchedVariantId = compatible[0];
+
+      // The site may store "eSIM" while a supplier row says "JP · eSIM".
+      if (!matchedVariantId) {
+        const sim = normalizedIphoneSim(line.parsedRegion, line.phoneModel);
+        if (sim) {
+          const simDescriptor = [
+            line.phoneModel,
+            normalizeForMatch(line.parsedMemory),
+            normalizeForMatch(line.parsedColor),
+            normalizeForMatch(sim),
+          ].join("|");
+          const simCandidates = filterByCondition(bySimConfiguration.get(simDescriptor) ?? [], line.nonActive);
+          if (simCandidates.length === 1) matchedVariantId = simCandidates[0];
+        }
+      }
+    }
+
+    const rowKey = inactivePreferenceKey(line);
+    const inactiveOverrides = Boolean(rowKey && inactiveKeys.has(rowKey) && !line.nonActive);
+    let status: ImportLineStatus = "PENDING";
+    let note: string | null = null;
+
+    if (line.parsedPrice === null) {
+      status = "ERROR";
+      note = "Не удалось распознать цену в конце строки";
+    } else if (line.phoneModel && line.parsedMemory && !line.parsedColor) {
+      status = "ERROR";
+      note = "Не удалось определить цвет — не сопоставляем цену с похожей модификацией; уточняйте у менеджера";
+    } else if (inactiveOverrides) {
+      status = "REJECTED";
+      note = "Пропущено: для этой модификации в прайсе есть цена «НЕАКТИВ»";
+    } else if (matchedVariantId) {
+      status = "MATCHED";
+    }
+
+    return {
+      rawLine: line.rawLine,
+      parsedModel: line.parsedModel,
+      parsedMemory: line.parsedMemory,
+      parsedColor: line.parsedColor,
+      parsedRegion: line.parsedRegion,
+      parsedPrice: line.parsedPrice,
+      matchedVariantId,
+      status,
+      note,
+    };
+  });
+
+  // Different source countries can collapse to one storefront SIM variant.
+  // Select the lowest remaining offer so bulk approval cannot overwrite it
+  // later with a higher country-specific price.
+  const indexesByVariant = new Map<string, number[]>();
+  preparedLines.forEach((line, index) => {
+    if (line.status !== "MATCHED" || !line.matchedVariantId) return;
+    indexesByVariant.set(line.matchedVariantId, [...(indexesByVariant.get(line.matchedVariantId) ?? []), index]);
+  });
+  for (const indexes of indexesByVariant.values()) {
+    if (indexes.length < 2) continue;
+    const winnerIndex = indexes.reduce((best, index) => {
+      const currentPrice = preparedLines[index].parsedPrice ?? Number.POSITIVE_INFINITY;
+      const bestPrice = preparedLines[best].parsedPrice ?? Number.POSITIVE_INFINITY;
+      if (currentPrice < bestPrice) return index;
+      if (currentPrice === bestPrice && parsedLines[index].nonActive && !parsedLines[best].nonActive) return index;
+      return best;
+    }, indexes[0]);
+    const bestPrice = preparedLines[winnerIndex].parsedPrice;
+    preparedLines[winnerIndex].note = `Минимальная цена из ${indexes.length} предложений для этой модификации и SIM`;
+    for (const index of indexes) {
+      if (index === winnerIndex) continue;
+      preparedLines[index].status = "REJECTED";
+      preparedLines[index].note = `Пропущено: для этой модификации выбрана более низкая цена ${bestPrice?.toLocaleString("ru-RU")} ₽`;
+    }
+  }
+
   const batch = await prisma.priceImportBatch.create({
     data: {
       source: "telegram-bot",
       rawText: text,
       lines: {
-        create: parsedLines.map((line) => {
-          const key = line.parsedModel ? normalizeForMatch(line.parsedModel) : null;
-          let matchedVariantId = line.parsedSku
-            ? bySku.get(normalizeForMatch(line.parsedSku)) ?? null
-            : null;
-          if (!matchedVariantId && key) matchedVariantId = byNormalized.get(key) ?? null;
-          if (!matchedVariantId && line.phoneModel && line.parsedMemory && line.parsedColor && line.parsedRegion) {
-            const descriptor = [
-              line.phoneModel,
-              normalizeForMatch(line.parsedMemory),
-              normalizeForMatch(line.parsedColor),
-              normalizeForMatch(line.parsedRegion),
-            ].join("|");
-            const candidates = byConfiguration.get(descriptor) ?? [];
-            const sameCondition = candidates.filter((id) => {
-              const variant = existingVariants.find((item) => item.id === id);
-              const storedNonActive = /(?:^|[^\p{L}])неактив(?=$|[^\p{L}])/iu.test(`${variant?.rawLabel ?? ""} ${variant?.region ?? ""}`);
-              return storedNonActive === line.nonActive;
-            });
-            if (sameCondition.length === 1) matchedVariantId = sameCondition[0];
-          }
-          const rowKey = inactivePreferenceKey(line);
-          const inactiveOverrides = Boolean(rowKey && inactiveKeys.has(rowKey) && !line.nonActive);
-
-          let status: ImportLineStatus = "PENDING";
-          let note: string | null = null;
-
-          if (line.parsedPrice === null) {
-            status = "ERROR";
-            note = "Не удалось распознать цену в конце строки";
-          } else if (line.phoneModel && line.parsedMemory && !line.parsedColor) {
-            status = "ERROR";
-            note = "Не удалось определить цвет — не сопоставляем цену с похожей модификацией; уточняйте у менеджера";
-          } else if (inactiveOverrides) {
-            status = "REJECTED";
-            note = "Пропущено: для этого же варианта в прайсе есть цена «НЕАКТИВ»";
-          } else if (matchedVariantId) {
-            status = "MATCHED";
-          }
-
-          return {
-            rawLine: line.rawLine,
-            parsedModel: line.parsedModel,
-            parsedMemory: line.parsedMemory,
-            parsedColor: line.parsedColor,
-            parsedRegion: line.parsedRegion,
-            parsedPrice: line.parsedPrice,
-            matchedVariantId,
-            status,
-            note,
-          };
-        }),
+        create: preparedLines,
       },
     },
     include: { lines: true },

@@ -171,6 +171,16 @@ export function normalizedIphoneRegion(text: string | null, model: string | null
   return [country, sim].filter(Boolean).join(" · ") || null;
 }
 
+/**
+ * The storefront usually distinguishes iPhone variants by SIM configuration,
+ * while supplier rows may additionally include a country code. Keep country
+ * for SIM inference, but match the variant on the SIM configuration itself.
+ */
+export function normalizedIphoneSim(text: string | null, model: string | null): string | null {
+  if (!text) return null;
+  return explicitSim(text) ?? inferIphoneSim(model, countryCode(text));
+}
+
 function parsedFields(rawLine: string, inherited: HeaderContext = { model: null, sim: null, country: null, nonActive: false }): ParsedPriceLine {
   const raw = stripMarkup(rawLine);
   const { value: parsedPrice, start } = findPrice(raw);
@@ -196,12 +206,13 @@ function parsedFields(rawLine: string, inherited: HeaderContext = { model: null,
   };
 }
 
-/** A non-inactive duplicate is ignored only when the same exact offer also has a non-active price. */
+/** Prefer non-active rows for the same site variant, independent of supplier country. */
 export function inactivePreferenceKey(line: ParsedPriceLine): string | null {
   if (!line.parsedMemory || !line.parsedColor || !line.parsedRegion) return null;
   const model = line.phoneModel ?? modelName(line.parsedModel ?? "");
   if (!model) return null;
-  return [model, line.parsedMemory, line.parsedColor, line.parsedRegion].join("|").toLowerCase();
+  const sim = normalizedIphoneSim(line.parsedRegion, model) ?? line.parsedRegion;
+  return [model, line.parsedMemory, line.parsedColor, sim].map((part) => part.toLowerCase()).join("|");
 }
 
 export function parsePriceLine(line: string): ParsedPriceLine {
