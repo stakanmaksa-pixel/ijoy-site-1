@@ -135,7 +135,7 @@ export function canonicalIphoneModel(text: string): string | null {
 
 function explicitSim(text: string): string | null {
   if (/\b(?:2\s*(?:physical\s*)?sim|dual\s*nano[- ]?sim|2\s*nano)/i.test(text)) return "2 SIM";
-  if (/\b(?:1\s*sim\s*\+\s*e\s*sim|nano[- ]?sim\s*\+\s*e\s*sim|sim\s*\+\s*e\s*sim)/i.test(text)) return "SIM+eSIM";
+  if (/\b(?:1\s*sim\s*\+\s*e\s*sim|nano[- ]?sim\s*\+\s*e\s*sim|sim\s*\+\s*e\s*sim|sim\s*[_-]\s*e\s*sim|sim\s+esim)\b/i.test(text)) return "SIM+eSIM";
   if (/\besim\b/i.test(text)) return "eSIM";
   return null;
 }
@@ -179,6 +179,20 @@ export function normalizedIphoneRegion(text: string | null, model: string | null
 export function normalizedIphoneSim(text: string | null, model: string | null): string | null {
   if (!text) return null;
   return explicitSim(text) ?? inferIphoneSim(model, countryCode(text));
+}
+
+/** Canonical storage key; older catalogue rows may store only the number. */
+export function normalizedMemory(text: string | null): string | null {
+  if (!text?.trim()) return null;
+  const normalized = normalizeForMatch(text);
+  const bare = /^(\d+)$/.exec(normalized);
+  if (bare) {
+    const amount = Number(bare[1]);
+    return `${amount}${amount <= 4 ? "tb" : "gb"}`;
+  }
+  const capacity = /^(\d+)\s*(gb|tb)$/.exec(normalized);
+  if (!capacity) return normalized;
+  return `${capacity[1]}${capacity[2]}`;
 }
 
 function parsedFields(rawLine: string, inherited: HeaderContext = { model: null, sim: null, country: null, nonActive: false }): ParsedPriceLine {

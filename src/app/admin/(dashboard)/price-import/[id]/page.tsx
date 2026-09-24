@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
-import { canonicalIphoneModel, normalizedIphoneSim, normalizeForMatch, parsePriceLine } from "@/lib/priceImport";
+import { canonicalIphoneModel, normalizedIphoneSim, normalizedMemory, normalizeForMatch, parsePriceLine } from "@/lib/priceImport";
 import { acceptLine, acceptAllMatched, applyAsFullPriceList, createVariantFromLine, rejectLine } from "../actions";
 import { ProductPicker, VariantPicker, type ImportVariantOption } from "./ImportPickers";
 
@@ -107,19 +107,28 @@ export default async function PriceImportBatchPage({
           const matchedVariant = line.matchedVariantId ? variantById.get(line.matchedVariantId) : null;
           const isDecided = line.status === "ACCEPTED" || line.status === "REJECTED";
           const lineModel = canonicalIphoneModel(line.parsedModel ?? "");
-          const lineMemory = line.parsedMemory ? normalizeForMatch(line.parsedMemory) : null;
+          const lineMemory = normalizedMemory(line.parsedMemory);
           const lineColor = line.parsedColor ? normalizeForMatch(line.parsedColor) : null;
           const lineSim = normalizedIphoneSim(line.parsedRegion, lineModel);
           const rawParsedLine = parsePriceLine(line.rawLine);
           const sourceLabel = normalizeForMatch(line.parsedModel ?? "");
-          const suggestedPhoneVariants = allProducts
+          const productVariants = allProducts
             .filter((product) => lineModel && canonicalIphoneModel(product.name) === lineModel)
             .flatMap((product) => product.variants.map((variant) => ({ product, variant })))
+            ;
+          const memoryColorVariants = productVariants.filter(({ variant }) => {
+              const stored = parsePriceLine(variant.rawLabel ?? "");
+              const storedMemory = normalizedMemory(variant.memory) ?? normalizedMemory(stored.parsedMemory);
+              const storedColor = variant.color ?? stored.parsedColor;
+              if (lineMemory && storedMemory !== lineMemory) return false;
+              if (lineColor && normalizeForMatch(storedColor ?? "") !== lineColor) return false;
+              return true;
+            });
+          const suggestedPhoneVariants = memoryColorVariants
             .filter(({ variant }) => {
-              if (lineMemory && normalizeForMatch(variant.memory ?? "") !== lineMemory) return false;
-              if (lineColor && normalizeForMatch(variant.color ?? "") !== lineColor) return false;
               if (lineSim) {
-                const stored = normalizedIphoneSim(parsePriceLine(variant.rawLabel ?? "").parsedRegion ?? variant.region, lineModel);
+                const storedRegion = parsePriceLine(variant.rawLabel ?? "").parsedRegion ?? variant.region;
+                const stored = normalizedIphoneSim(storedRegion, lineModel);
                 if (stored !== lineSim) return false;
               }
               return true;
@@ -135,12 +144,13 @@ export default async function PriceImportBatchPage({
           const suggestedVariants = [...new Map(
             [...suggestedPhoneVariants, ...suggestedExactVariants].map(({ product, variant }) => [variant.id, { product, variant }]),
           ).values()];
-          const pickerOptions: ImportVariantOption[] = suggestedVariants.map(({ product, variant }) => ({
+          const visibleVariants = suggestedVariants.length ? suggestedVariants : memoryColorVariants;
+          const pickerOptions: ImportVariantOption[] = visibleVariants.map(({ product, variant }) => ({
             id: variant.id,
             productName: product.name,
             productSlug: product.slug,
-            memory: variant.memory,
-            color: variant.color,
+            memory: variant.memory ?? parsePriceLine(variant.rawLabel ?? "").parsedMemory,
+            color: variant.color ?? parsePriceLine(variant.rawLabel ?? "").parsedColor,
             region: variant.region ?? parsePriceLine(variant.rawLabel ?? "").parsedRegion,
             price: variant.price == null ? null : Number(variant.price),
           }));
@@ -179,7 +189,7 @@ export default async function PriceImportBatchPage({
                   {pickerOptions.length > 0 ? (
                     <VariantPicker
                       options={pickerOptions}
-                      suggestedIds={pickerOptions.map((option) => option.id)}
+                      suggestedIds={suggestedVariants.map(({ variant }) => variant.id)}
                       selectedId={line.matchedVariantId}
                       initialQuery={pickerQuery}
                       submitLabel="Применить цену"
@@ -187,6 +197,7 @@ export default async function PriceImportBatchPage({
                   ) : (
                     <p className="mt-3 rounded-lg bg-amber-50 p-3 text-xs text-amber-800">
                       Точной модификации автоматически не найдено. Найди товар ниже; цена не будет назначена похожему цвету или памяти.
+                      {lineModel && <> В карточке «{lineModel}» найдено {productVariants.length} вариантов; память и цвет совпали у {memoryColorVariants.length}.</>}
                     </p>
                   )}
 

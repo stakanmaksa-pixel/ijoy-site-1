@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   inactivePreferenceKey,
+  normalizedMemory,
   normalizedIphoneSim,
   parsePriceLine,
 } from "../../src/lib/priceImport";
@@ -22,6 +23,19 @@ test("explicit SIM types remain distinct across markets", () => {
 
   assert.equal(normalizedIphoneSim(esim.parsedRegion, esim.phoneModel), "eSIM");
   assert.equal(normalizedIphoneSim(physicalAndEsim.parsedRegion, physicalAndEsim.phoneModel), "SIM+eSIM");
+  assert.equal(normalizedIphoneSim("SIM_ESIM", physicalAndEsim.phoneModel), "SIM+eSIM");
+});
+
+test("memory values saved with or without the unit share a canonical key", () => {
+  assert.equal(normalizedMemory("256"), normalizedMemory("256GB"));
+  assert.equal(normalizedMemory("1 TB"), normalizedMemory("1TB"));
+});
+
+test("legacy raw-label variants still expose model dimensions when columns are blank", () => {
+  const legacyVariant = parsePriceLine("iPhone 17 256GB Blue ESIM");
+  assert.equal(normalizedMemory(legacyVariant.parsedMemory), normalizedMemory("256"));
+  assert.equal(legacyVariant.parsedColor, "Blue");
+  assert.equal(normalizedIphoneSim(legacyVariant.parsedRegion, legacyVariant.phoneModel), "eSIM");
 });
 
 test("inactive-price preference groups equivalent SIM offers independently of country", () => {

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import {
   canonicalIphoneModel,
   inactivePreferenceKey,
+  normalizedMemory,
   normalizedIphoneRegion,
   normalizedIphoneSim,
   normalizeForMatch,
@@ -55,18 +56,21 @@ export async function POST(request: Request) {
   const byConfiguration = new Map<string, string[]>();
   const bySimConfiguration = new Map<string, string[]>();
   for (const v of existingVariants) {
+    const parsedStoredLabel = v.rawLabel ? parsePriceLine(v.rawLabel) : null;
     if (v.sku) bySku.set(normalizeForMatch(v.sku), v.id);
     if (v.rawLabel) {
       // Старые подписи могли содержать цену в конце строки.
-      const { parsedModel } = parsePriceLine(v.rawLabel);
-      const key = normalizeForMatch(parsedModel ?? v.rawLabel);
+      const key = normalizeForMatch(parsedStoredLabel?.parsedModel ?? v.rawLabel);
       byNormalized.set(key, v.id);
     }
 
     const model = canonicalIphoneModel(v.product.name);
-    const memory = v.memory ? normalizeForMatch(v.memory) : "";
-    const color = v.color ? normalizeForMatch(v.color) : "";
-    const oldLabelRegion = v.rawLabel ? parsePriceLine(v.rawLabel).parsedRegion : null;
+    // Older catalog rows sometimes have empty structured columns, although
+    // rawLabel already contains the complete supplier configuration.
+    const memory = normalizedMemory(v.memory) ?? normalizedMemory(parsedStoredLabel?.parsedMemory ?? null) ?? "";
+    const storedColor = v.color ?? parsedStoredLabel?.parsedColor;
+    const color = storedColor ? normalizeForMatch(storedColor) : "";
+    const oldLabelRegion = parsedStoredLabel?.parsedRegion ?? null;
     const region = normalizedIphoneRegion(oldLabelRegion ?? v.region, model);
     if (!model || !memory || !color || !region) continue;
     const descriptor = [model, memory, color, normalizeForMatch(region)].join("|");
@@ -108,7 +112,7 @@ export async function POST(request: Request) {
     if (!matchedVariantId && line.phoneModel && line.parsedMemory && line.parsedColor && line.parsedRegion) {
       const descriptor = [
         line.phoneModel,
-        normalizeForMatch(line.parsedMemory),
+        normalizedMemory(line.parsedMemory) ?? "",
         normalizeForMatch(line.parsedColor),
         normalizeForMatch(line.parsedRegion),
       ].join("|");
@@ -122,7 +126,7 @@ export async function POST(request: Request) {
         if (sim) {
           const simDescriptor = [
             line.phoneModel,
-            normalizeForMatch(line.parsedMemory),
+            normalizedMemory(line.parsedMemory) ?? "",
             normalizeForMatch(line.parsedColor),
             normalizeForMatch(sim),
           ].join("|");
