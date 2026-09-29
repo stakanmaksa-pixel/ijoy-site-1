@@ -12,8 +12,11 @@ import {
   parsePriceLine,
   parsePriceListText,
   supplierIdentityKey,
+  uniqueUnspecifiedIphoneVariantId,
 } from "@/lib/priceImport";
 import type { ImportLineStatus } from "@/generated/prisma/client";
+
+const MAX_IMPORT_BYTES = 2_000_000;
 
 // Эндпоинт для Telegram-бота (кнопка «Обновить цены на сайте» в bot_v2.py).
 // Бот присылает сюда сырой текст прайса — мы его парсим и складываем в
@@ -30,9 +33,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
+  const contentLength = Number(request.headers.get("content-length"));
+  if (Number.isFinite(contentLength) && contentLength > MAX_IMPORT_BYTES) {
+    return NextResponse.json({ error: "price list exceeds 2 MB" }, { status: 413 });
+  }
+
   let body: unknown;
   try {
-    body = await request.json();
+    const rawBody = await request.text();
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_IMPORT_BYTES) {
+      return NextResponse.json({ error: "price list exceeds 2 MB" }, { status: 413 });
+    }
+    body = JSON.parse(rawBody);
   } catch {
     return NextResponse.json({ error: "invalid json" }, { status: 400 });
   }
@@ -95,6 +107,7 @@ export async function POST(request: Request) {
   const bySku = new Map<string, string>();
   const byConfiguration = new Map<string, string[]>();
   const bySimConfiguration = new Map<string, string[]>();
+  const byPhoneConfiguration = new Map<string, string[]>();
   const addCandidate = (index: Map<string, string[]>, key: string, id: string) => {
     const ids = index.get(key) ?? [];
     if (!ids.includes(id)) index.set(key, [...ids, id]);
@@ -126,6 +139,8 @@ export async function POST(request: Request) {
     if (!model) continue;
     for (const memory of memories) {
       for (const color of colors) {
+        const phoneDescriptor = [model, memory, color].join("|");
+        addCandidate(byPhoneConfiguration, phoneDescriptor, v.id);
         for (const region of regions) {
           const descriptor = [model, memory, color, normalizeForMatch(region)].join("|");
           addCandidate(byConfiguration, descriptor, v.id);
@@ -200,6 +215,21 @@ export async function POST(request: Request) {
           const simCandidates = filterByCondition(bySimConfiguration.get(simDescriptor) ?? [], line.nonActive);
           if (simCandidates.length === 1) matchedVariantId = simCandidates[0];
         }
+      }
+
+      // Some catalog variants predate SIM metadata. Match an explicit supplier
+      // SIM to a generic variant only when model, memory and color identify one
+      // sole unspecified option; never guess among multiple SIM variants.
+      if (!matchedVariantId && line.phoneModel && line.parsedMemory && line.parsedColor && line.parsedRegion) {
+        const phoneDescriptor = [
+          line.phoneModel,
+          normalizedMemory(line.parsedMemory) ?? "",
+          normalizeForMatch(line.parsedColor),
+        ].join("|");
+        const genericCandidates = (byPhoneConfiguration.get(phoneDescriptor) ?? [])
+          .map((id) => variantByIdExisting.get(id))
+          .filter((variant): variant is NonNullable<typeof variant> => Boolean(variant));
+        matchedVariantId = uniqueUnspecifiedIphoneVariantId(genericCandidates, line.phoneModel);
       }
     }
 

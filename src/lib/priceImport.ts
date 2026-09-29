@@ -344,3 +344,20 @@ export function buildAcceptedIphoneMappings(rows: AcceptedIphoneMapping[]): Map<
   }
   return mappings;
 }
+
+/**
+ * A supplier may include an explicit SIM type while a legacy catalog variant
+ * has no SIM metadata. Allow that mapping only when the exact model/memory/
+ * color bucket contains one sole variant and that variant is truly unspecified.
+ */
+export function uniqueUnspecifiedIphoneVariantId(
+  candidates: Array<{ id: string; region: string | null; rawLabel: string | null }>,
+  model: string,
+): string | null {
+  if (candidates.length !== 1) return null;
+  const candidate = candidates[0];
+  if (!candidate) return null;
+  const labelRegion = candidate.rawLabel ? parsePriceLine(candidate.rawLabel).parsedRegion : null;
+  if (normalizedIphoneSim(candidate.region, model) || normalizedIphoneSim(labelRegion, model)) return null;
+  return candidate.id;
+}

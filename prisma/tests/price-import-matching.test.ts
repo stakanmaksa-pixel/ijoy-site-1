@@ -9,6 +9,7 @@ import {
   parsePriceLine,
   parsePriceListText,
   supplierIdentityKey,
+  uniqueUnspecifiedIphoneVariantId,
 } from "../../src/lib/priceImport";
 
 test("supplier country is used to infer SIM but does not distinguish the site variant", () => {
@@ -20,6 +21,15 @@ test("supplier country is used to infer SIM but does not distinguish the site va
   assert.equal(japan.parsedRegion, "eSIM");
   assert.equal(normalizedIphoneSim(japan.parsedRegion, japan.phoneModel), "eSIM");
   assert.equal(normalizedIphoneSim(kuwait.parsedRegion, kuwait.phoneModel), "eSIM");
+});
+
+test("iPhone 18 Pro 512 Black AE eSIM row is parsed into the expected exact configuration", () => {
+  const row = parsePriceLine("iPhone 18 Pro 512 Black AE eSim - 152.200₽");
+  assert.equal(row.phoneModel, "iPhone 18 Pro");
+  assert.equal(row.parsedMemory, "512GB");
+  assert.equal(row.parsedColor, "Black");
+  assert.equal(row.parsedRegion, "eSIM");
+  assert.equal(row.parsedPrice, 152200);
 });
 
 test("explicit SIM types remain distinct across markets", () => {
@@ -79,6 +89,47 @@ test("legacy raw-label variants still expose model dimensions when columns are b
   assert.equal(normalizedMemory(legacyVariant.parsedMemory), normalizedMemory("256"));
   assert.equal(legacyVariant.parsedColor, "Blue");
   assert.equal(normalizedIphoneSim(legacyVariant.parsedRegion, legacyVariant.phoneModel), "eSIM");
+});
+
+test("explicit SIM maps to a sole legacy variant with unspecified SIM, but never guesses across variants", () => {
+  assert.equal(uniqueUnspecifiedIphoneVariantId(
+    [{ id: "legacy", region: null, rawLabel: null }],
+    "iPhone 18 Pro",
+  ), "legacy");
+  assert.equal(uniqueUnspecifiedIphoneVariantId(
+    [{ id: "esim", region: "eSIM", rawLabel: null }],
+    "iPhone 18 Pro",
+  ), null);
+  assert.equal(uniqueUnspecifiedIphoneVariantId(
+    [
+      { id: "legacy", region: null, rawLabel: null },
+      { id: "esim", region: "eSIM", rawLabel: null },
+    ],
+    "iPhone 18 Pro",
+  ), null);
+});
+
+test("the remaining iPhone 18 Pro Max Glacier and Black offers map only to a sole SIM-unspecified variant", () => {
+  const glacier = parsePriceLine("iPhone 18 Pro Max 1Tb Glacier 1 Sim + eSim - 222.200₽");
+  const black = parsePriceLine("iPhone 18 Pro Max 2Tb Black AE eSim - 280.200₽");
+
+  assert.equal(glacier.phoneModel, "iPhone 18 Pro Max");
+  assert.equal(glacier.parsedMemory, "1TB");
+  assert.equal(glacier.parsedColor, "Glacier");
+  assert.equal(glacier.parsedRegion, "SIM+eSIM");
+  assert.equal(glacier.parsedPrice, 222200);
+  assert.equal(uniqueUnspecifiedIphoneVariantId(
+    [{ id: "glacier-1tb", region: null, rawLabel: null }], glacier.phoneModel!,
+  ), "glacier-1tb");
+
+  assert.equal(black.phoneModel, "iPhone 18 Pro Max");
+  assert.equal(black.parsedMemory, "2TB");
+  assert.equal(black.parsedColor, "Black");
+  assert.equal(black.parsedRegion, "eSIM");
+  assert.equal(black.parsedPrice, 280200);
+  assert.equal(uniqueUnspecifiedIphoneVariantId(
+    [{ id: "black-2tb", region: null, rawLabel: null }], black.phoneModel!,
+  ), "black-2tb");
 });
 
 test("inactive-price preference groups equivalent SIM offers independently of country", () => {
