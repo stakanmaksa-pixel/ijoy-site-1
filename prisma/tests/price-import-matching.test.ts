@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
+  buildAcceptedSupplierMappings,
   buildAcceptedIphoneMappings,
   inactivePreferenceKey,
   iphoneOfferMatchKey,
@@ -57,7 +58,7 @@ test("collector source boundary prevents a header from another channel leaking i
   assert.equal(rows[1].phoneModel, null);
 });
 
-test("Cartel-style section headings preserve eSIM context and thousand-separated prices", () => {
+test("Cartel-style section headings preserve eSIM while condition-marked offers are skipped", () => {
   const rows = parsePriceListText([
     "📲 iPhone 18 Pro (eSim)",
     "🇦🇪 18 Pro 256 Silver (eSim) - 124.000 (НЕАКТИВ)",
@@ -164,6 +165,52 @@ test("supplier identity handles country-specific Apple part numbers in tablets a
   const macIndia = "MHFJ4 MacBook Neo 13 2026 A18 Pro 8 256 Blush 🇮🇳";
   assert.equal(supplierIdentityKey(ipadUs), supplierIdentityKey(ipadHk));
   assert.equal(supplierIdentityKey(macThailand), supplierIdentityKey(macIndia));
+});
+
+test("admin-confirmed non-iPhone supplier identities are learned without country, SKU or condition notes", () => {
+  const learned = buildAcceptedSupplierMappings([
+    { sourceLabel: "Apple Watch S11 42 Space Gray M/L MEQX4 🇺🇸", variantId: "watch" },
+    { sourceLabel: "Apple Watch S11 42 Space Gray M/L MEQX4 🇦🇺", variantId: "watch" },
+    { sourceLabel: "AirPods Pro 3", variantId: "pods" },
+    { sourceLabel: "iPhone 17 256 Black JP eSIM", variantId: "iphone" },
+  ]);
+
+  assert.equal(learned.get(supplierIdentityKey("Apple Watch Series 11 42 Space Gray M/L 🇪🇺 (Порвано ушко)")!), "watch");
+  assert.equal(learned.get(supplierIdentityKey("AirPods Pro 3 🇺🇸")!), "pods");
+  assert.equal(learned.has(supplierIdentityKey("iPhone 17 256 Black JP eSIM")!), false);
+  assert.notEqual(supplierIdentityKey("AirPods 5"), supplierIdentityKey("AirPods 5 Wireless"));
+});
+
+test("conflicting confirmed supplier mappings remain unresolved", () => {
+  const learned = buildAcceptedSupplierMappings([
+    { sourceLabel: "Apple 40-60W Dynamic Power USB-C 🇸🇬", variantId: "one" },
+    { sourceLabel: "Apple 40-60W Dynamic Power USB-C 🇪🇺", variantId: "two" },
+  ]);
+
+  assert.equal(learned.has(supplierIdentityKey("Apple 40-60W Dynamic Power USB-C 🇰🇷")!), false);
+});
+
+test("requested product families remain importable and condition-marked offers are excluded", () => {
+  const rows = parsePriceListText([
+    "Apple Watch S10 42 Jet Black S/M MWW3 🇺🇸 - 26.200₽",
+    "Mac Studio 2025 M4 Max 36 512 Silver 🇺🇸 - 270.200₽",
+    "Часы Garmin Venu X1 Black 010-02980-02 - 55.200₽",
+    "Яндекс Алиса Дуо Макс Черная - 44.200₽",
+    "AirPods 5 - 12.400₽",
+    "AirPods 5 Wireless - 15.500₽",
+  ].join("\n"));
+
+  assert.equal(rows.length, 6);
+  assert.deepEqual(rows.map((row) => row.parsedPrice), [26200, 270200, 55200, 44200, 12400, 15500]);
+  assert.notEqual(supplierIdentityKey(rows[4].parsedModel), supplierIdentityKey(rows[5].parsedModel));
+
+  const conditionRows = parsePriceListText([
+    "iPhone 16 128 Black 🇮🇳 (Актив, новый, запечатанный) - 59.900₽",
+    "Apple Watch SE3 40 Starlight 2025 S/M MEH34 🇺🇸 (мятое ушко) - 19.900₽",
+    "iPad Air 8 11 M4 256 Purple Wi-Fi MH394 🇭🇰 (Чуть мятая коробка) - 71.200₽",
+    "iPhone 16 Pro 256 White 🇺🇸 (Demo, перепрошитая, новая) - 84.700₽",
+  ].join("\n"));
+  assert.equal(conditionRows.length, 0);
 });
 
 test("an admin-confirmed iPhone mapping is reused across supplier countries but not across SIM types", () => {

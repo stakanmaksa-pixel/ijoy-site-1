@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import {
   canonicalIphoneModel,
   buildAcceptedIphoneMappings,
+  buildAcceptedSupplierMappings,
   iphoneOfferMatchKey,
   inactivePreferenceKey,
   normalizedMemory,
@@ -103,8 +104,13 @@ export async function POST(request: Request) {
       variantId,
     }] : [];
   }));
+  const learnedSupplierMappings = buildAcceptedSupplierMappings(acceptedPriceRows.flatMap((line) => {
+    const variantId = line.matchedVariantId;
+    const sourceLabel = line.parsedModel ?? parsePriceLine(line.rawLine).parsedModel;
+    return sourceLabel && variantId ? [{ sourceLabel, variantId }] : [];
+  }));
   const byNormalized = new Map<string, string[]>();
-  const bySku = new Map<string, string>();
+  const bySku = new Map<string, string[]>();
   const byConfiguration = new Map<string, string[]>();
   const bySimConfiguration = new Map<string, string[]>();
   const byPhoneConfiguration = new Map<string, string[]>();
@@ -114,7 +120,7 @@ export async function POST(request: Request) {
   };
   for (const v of existingVariants) {
     const parsedStoredLabel = v.rawLabel ? parsePriceLine(v.rawLabel) : null;
-    if (v.sku) bySku.set(normalizeForMatch(v.sku), v.id);
+    if (v.sku) addCandidate(bySku, normalizeForMatch(v.sku), v.id);
     const labelKey = supplierIdentityKey(parsedStoredLabel?.parsedModel ?? v.rawLabel);
     if (labelKey) addCandidate(byNormalized, labelKey, v.id);
 
@@ -176,9 +182,16 @@ export async function POST(request: Request) {
 
   const preparedLines = parsedLines.map((line) => {
     const key = line.parsedModel ? normalizeForMatch(line.parsedModel) : null;
-    let matchedVariantId = line.parsedSku
-      ? bySku.get(normalizeForMatch(line.parsedSku)) ?? null
+    const supplierIdentity = line.parsedModel ? supplierIdentityKey(line.parsedModel) : null;
+    const learnedSupplierVariantId = !line.phoneModel && supplierIdentity
+      ? learnedSupplierMappings.get(supplierIdentity) ?? null
       : null;
+    const skuCandidates = line.parsedSku ? bySku.get(normalizeForMatch(line.parsedSku)) ?? [] : [];
+    let matchedVariantId = learnedSupplierVariantId && variantByIdExisting.has(learnedSupplierVariantId)
+      ? learnedSupplierVariantId
+      : skuCandidates.length === 1
+        ? skuCandidates[0] ?? null
+        : null;
     const learnedKey = iphoneOfferMatchKey(
       line.phoneModel, line.parsedMemory, line.parsedColor, line.parsedRegion, line.nonActive,
     );

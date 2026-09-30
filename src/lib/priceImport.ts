@@ -51,8 +51,9 @@ const COLOR_ALIASES: Array<[RegExp, string]> = [
   [/\b(?:night\s+sky)\b/i, "Night Sky"], [/\bstar\s+white\b/i, "Star White"],
 ];
 
-const IGNORE_PRICE_LINE_RE = /\b(?:gadgess?|corning\s+glass|demo|mac\s+studio|garmin\s+venu\s+x1|yandex\s+alice\s+duo\s+max)\b|яндекс\s+алиса\s+дуо\s+макс|\bapple\s+watch\s+(?:se\s*2|s10|series\s*10|ultra\s*2)\b|(?:^|[^\p{L}])(?:предактив|актив|демо|перепрош\p{L}*)(?=$|[^\p{L}])/iu;
+const IGNORE_PRICE_LINE_RE = /\b(?:gadgess?|corning\s+glass)\b|\bapple\s+watch\s+(?:se\s*2|ultra\s*2)\b|(?:^|[^\p{L}])(?:предактив|актив|демо|перепрош\p{L}*|мят\p{L}*|порван\p{L}*|поврежд\p{L}*|сломан\p{L}*)(?=$|[^\p{L}])/iu;
 const NON_ACTIVE_RE = /(?:^|[^\p{L}])неактив(?=$|[^\p{L}])/iu;
+const CONDITION_NOTE_RE = /\([^)]*(?:актив|неактив|предактив|демо|перепрош|запечатан|распакован|мят|порван|ушк|коробк)[^)]*\)/giu;
 
 function stripMarkup(value: string) {
   return value.replace(/\*\*/g, "").replace(/^[\s#*_–—-]+|[\s*_]+$/g, "").trim();
@@ -245,8 +246,8 @@ export function parsePriceListText(text: string): ParsedPriceLine[] {
       header = { model: null, sim: null, country: null, nonActive: false };
       continue;
     }
-    // These are not storefront offers per the supplier's rules: active/demo/
-    // reflashed units and Gadgess glass are handled separately.
+    // Condition-marked offers are explicitly excluded; known model families
+    // such as Watch S10, Mac Studio, Garmin and Yandex remain importable.
     if (IGNORE_PRICE_LINE_RE.test(line)) continue;
     const parsed = parsedFields(line, header);
     if (parsed.parsedPrice === null) {
@@ -286,13 +287,38 @@ export function normalizeForMatch(text: string): string {
  */
 export function supplierIdentityKey(text: string | null): string | null {
   if (!text?.trim()) return null;
-  let identity = text
+  let identity = text.replace(CONDITION_NOTE_RE, " ")
     .replace(/\p{Regional_Indicator}{2}/gu, " ")
     .replace(/\bapple\s+watch\s+s(?:eries)?\s*(10|11|12)\b/gi, "Apple Watch Series $1")
     .replace(/\bapple\s+watch\s+se\s*(2|3)\b/gi, "Apple Watch SE $1");
   for (const [countryPattern] of COUNTRY_ALIASES) identity = identity.replace(countryPattern, " ");
   identity = identity.replace(/\b(?=[A-Z0-9]{4,12}\b)(?=[A-Z0-9]*[A-Z])(?=[A-Z0-9]*\d)[A-Z0-9]+\b/g, " ");
   return normalizeForMatch(identity) || null;
+}
+
+export type AcceptedSupplierMapping = {
+  sourceLabel: string | null;
+  variantId: string;
+};
+
+/** Learn stable non-iPhone supplier labels only after an admin confirms a target. */
+export function buildAcceptedSupplierMappings(rows: AcceptedSupplierMapping[]): Map<string, string> {
+  const targets = new Map<string, Set<string>>();
+  for (const row of rows) {
+    if (!row.sourceLabel || canonicalIphoneModel(row.sourceLabel)) continue;
+    const key = supplierIdentityKey(row.sourceLabel);
+    if (!key) continue;
+    const ids = targets.get(key) ?? new Set<string>();
+    ids.add(row.variantId);
+    targets.set(key, ids);
+  }
+  const mappings = new Map<string, string>();
+  for (const [key, ids] of targets) {
+    if (ids.size !== 1) continue;
+    const [variantId] = ids;
+    if (variantId) mappings.set(key, variantId);
+  }
+  return mappings;
 }
 
 /** Country-neutral identity for learning an admin-confirmed iPhone mapping. */
