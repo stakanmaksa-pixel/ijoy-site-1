@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
-import { canonicalIphoneModel, isPriceOnRequest, normalizedIphoneSim, normalizedMemory, normalizeForMatch, parsePriceLine, supplierIdentityKey } from "@/lib/priceImport";
+import { canonicalIphoneModel, describeMacBookConfiguration, isPriceOnRequest, normalizedIphoneSim, normalizedMemory, normalizeForMatch, parsePriceLine, supplierIdentityKey } from "@/lib/priceImport";
 import { acceptLine, acceptAllMatched, applyAsFullPriceList, createVariantFromLine, rejectLine } from "../actions";
 import { ProductPicker, VariantPicker, type ImportVariantOption } from "./ImportPickers";
 
@@ -119,6 +119,14 @@ export default async function PriceImportBatchPage({
       <div className="mt-6 flex flex-col gap-3">
         {batch.lines.map((line) => {
           const matchedVariant = line.matchedVariantId ? variantById.get(line.matchedVariantId) : null;
+          const sourceMacBook = describeMacBookConfiguration(line.parsedModel, line.parsedMemory, line.parsedColor);
+          const catalogMacBook = matchedVariant && sourceMacBook
+            ? describeMacBookConfiguration(
+              [matchedVariant.product.name, matchedVariant.rawLabel].filter(Boolean).join(" · "),
+              matchedVariant.memory,
+              matchedVariant.color,
+            )
+            : null;
           const isDecided = line.status === "ACCEPTED" || line.status === "REJECTED";
           const lineModel = canonicalIphoneModel(line.parsedModel ?? "");
           const lineMemory = normalizedMemory(line.parsedMemory);
@@ -166,14 +174,23 @@ export default async function PriceImportBatchPage({
           // If legacy variants have empty/inconsistent memory or colour columns,
           // still make the existing model's options selectable for deliberate
           // manual mapping instead of sending the admin straight to "create".
-          const visibleVariants = suggestedVariants.length
+          const fallbackVariants = suggestedVariants.length
             ? suggestedVariants
             : memoryColorVariants.length
               ? memoryColorVariants
               : productVariants;
+          const visibleVariants = matchedVariant && !fallbackVariants.some(({ variant }) => variant.id === matchedVariant.id)
+            ? [{ product: matchedVariant.product, variant: matchedVariant }, ...fallbackVariants]
+            : fallbackVariants;
           const pickerOptions: ImportVariantOption[] = visibleVariants.map(({ product, variant }) => ({
             id: variant.id,
-            productName: product.name,
+            productName: sourceMacBook
+              ? describeMacBookConfiguration(
+                [product.name, variant.rawLabel].filter(Boolean).join(" · "),
+                variant.memory,
+                variant.color,
+              )?.label ?? product.name
+              : product.name,
             productSlug: product.slug,
             memory: normalizedMemory(variant.memory) ?? normalizedMemory(parsePriceLine(variant.rawLabel ?? "").parsedMemory),
             color: variant.color ?? parsePriceLine(variant.rawLabel ?? "").parsedColor,
@@ -196,6 +213,11 @@ export default async function PriceImportBatchPage({
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div className="min-w-0">
                   <div className="font-mono text-sm text-zinc-900">{line.rawLine}</div>
+                  {sourceMacBook && (
+                    <div className="mt-1 text-sm font-medium text-zinc-800">
+                      Из прайса: {sourceMacBook.label}
+                    </div>
+                  )}
                   <div className="mt-1 text-xs text-zinc-500">
                     {isPriceOnRequest(line.rawLine) ? (
                       <>цена: Уточняйте у менеджера</>
@@ -230,22 +252,33 @@ export default async function PriceImportBatchPage({
                       initialQuery={pickerQuery}
                       submitLabel={isPriceOnRequest(line.rawLine) ? "Подтвердить: уточняйте у менеджера" : "Применить цену"}
                     />
-                  ) : (
+                  ) : !matchedVariant ? (
                     <p className="mt-3 rounded-lg bg-amber-50 p-3 text-xs text-amber-800">
                       Точного совпадения автоматически не найдено. Выбери существующую модификацию вручную; создавай новую только если такой конфигурации действительно нет на сайте.
                       {lineModel && <> В карточке «{lineModel}» найдено {productVariants.length} вариантов; память и цвет совпали у {memoryColorVariants.length}.</>}
                     </p>
-                  )}
+                  ) : null}
 
                   {matchedVariant && (
-                    <span className="text-xs text-zinc-500">
-                      совпало с «{matchedVariant.product.name}
-                      {matchedVariant.memory ? `, ${matchedVariant.memory}` : ""}» (сейчас{" "}
-                      {matchedVariant.price != null
-                        ? formatPrice(Number(matchedVariant.price))
-                        : "цена не указана"}
-                      )
-                    </span>
+                    <div className="basis-full text-xs text-zinc-600">
+                      <p>
+                        Товар сайта: {catalogMacBook?.label ?? [matchedVariant.product.name, matchedVariant.memory, matchedVariant.color, matchedVariant.region].filter(Boolean).join(" · ")}
+                        {matchedVariant.sku && <> · артикул {matchedVariant.sku}</>}
+                        {" · сейчас "}{matchedVariant.price != null ? formatPrice(Number(matchedVariant.price)) : "цена не указана"}
+                      </p>
+                      {sourceMacBook && (!catalogMacBook?.chip || !catalogMacBook.ram) && (
+                        <p className="mt-1 text-amber-800">
+                          В карточке сайта не указаны чип или ОЗУ. Проверьте эту модификацию перед применением цены.
+                        </p>
+                      )}
+                      {sourceMacBook && catalogMacBook &&
+                        ((catalogMacBook.chip && catalogMacBook.chip !== sourceMacBook.chip) ||
+                          (catalogMacBook.ram && catalogMacBook.ram !== sourceMacBook.ram)) && (
+                          <p className="mt-1 font-semibold text-red-700">
+                            Внимание: чип или ОЗУ товара сайта отличаются от прайса. Не применяйте эту цену к выбранной модификации.
+                          </p>
+                        )}
+                    </div>
                   )}
 
                 </form>

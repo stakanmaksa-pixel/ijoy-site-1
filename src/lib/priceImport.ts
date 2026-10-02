@@ -398,7 +398,30 @@ function macbookChip(text: string | null): string | null {
 function macbookRam(text: string | null): string | null {
   if (!text) return null;
   const source = /\b(?:M5(?:\s*(?:Pro|Max))?|A18(?:\s*Pro)?)\s*[, ]\s*(\d{1,3})\s*(?:GB|ГБ|\/|\s)/i.exec(text)?.[1];
-  return source ?? /^(\d{1,3})\s*(?:GB|ГБ)\b/i.exec(text)?.[1] ?? null;
+  return source ?? /\b(8|16|24|32|36|48|64|96|128)\s*(?:GB|ГБ)\s*[/,]\s*(?:256|512|1|2|4)\s*(?:GB|ГБ|TB|ТБ)/i.exec(text)?.[1]
+    ?? /^(8|16|24|32|36|48|64|96|128)\s*(?:GB|ГБ)\b/i.exec(text)?.[1] ?? null;
+}
+
+/** Human-readable laptop identity, without silently inventing missing catalog fields. */
+export function describeMacBookConfiguration(
+  model: string | null,
+  memoryText: string | null,
+  color: string | null,
+): { label: string; chip: string | null; ram: string | null } | null {
+  const family = macbookFamily(model);
+  if (!family) return null;
+  const chip = macbookChip(model);
+  const ram = macbookRam(memoryText) ?? macbookRam(model);
+  const storage = storageKey(memoryText) ?? memory(model ?? "");
+  const [kind, inches] = family.split("-");
+  const label = [
+    `MacBook ${kind === "neo" ? "Neo" : kind === "air" ? "Air" : "Pro"}${inches ? ` ${inches}″` : ""}`,
+    chip?.toUpperCase().replace(" PRO", " Pro").replace(" MAX", " Max") ?? "чип не указан",
+    ram ? `${ram} ГБ ОЗУ` : "ОЗУ не указано",
+    storage ? `${storage.toUpperCase()} SSD` : "накопитель не указан",
+    color,
+  ].filter(Boolean).join(" · ");
+  return { label, chip, ram };
 }
 
 /** Require family, chip, RAM, SSD and finish before matching a MacBook offer. */

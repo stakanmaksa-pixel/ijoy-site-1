@@ -7,6 +7,7 @@ import {
   appleWatchModel,
   buildAcceptedSupplierMappings,
   buildAcceptedIphoneMappings,
+  describeMacBookConfiguration,
   inactivePreferenceKey,
   isPriceOnRequest,
   matchAirPodsMaxVariant,
@@ -152,6 +153,16 @@ test("MacBook matching checks chip, RAM, SSD, display size and color", () => {
     id: "neo", productName: "MacBook Neo", memory: "8GB / 512GB SSD",
     color: "Citrus", region: null, rawLabel: null,
   }]), "neo");
+});
+
+test("MacBook preview names the chip and RAM instead of showing only 13 and 512GB", () => {
+  const line = parsePriceLine("MDHE4 MacBook Air 13 2026 M5 16 512 Midnight HK - 114.300₽");
+  const source = describeMacBookConfiguration(line.parsedModel, line.parsedMemory, line.parsedColor);
+  assert.equal(source?.label, "MacBook Air 13″ · M5 · 16 ГБ ОЗУ · 512GB SSD · Midnight");
+  const catalog = describeMacBookConfiguration("MacBook Air 13", "512GB", "Midnight");
+  assert.match(catalog?.label ?? "", /чип не указан · ОЗУ не указано/);
+  const fullCatalog = describeMacBookConfiguration("MacBook Air 13-inch (M5)", "16GB \/ 512GB SSD", "Midnight");
+  assert.match(fullCatalog?.label ?? "", /M5 · 16 ГБ ОЗУ · 512GB SSD/);
 });
 
 test("iPad matching respects chip generation, size, finish and Wi-Fi versus LTE", () => {
