@@ -35,6 +35,11 @@ function approvedFamily(rawLabel: string): ProductFamily | null {
     const fit = /\b(S-M|L-XL)\b/i.exec(label)?.[1]?.toUpperCase();
     return { name: "Garmin CIRQA Smart Band", brand: "Garmin", category: "fitnes-braslety", region: fit === "S-M" ? "S/M" : "L/XL" };
   }
+  const series12 = /^Apple Watch S12 (42|46) (Space Gray|Black)\b.*\b(S\/M|M\/L)\b/i.exec(label);
+  if (series12) {
+    const band = series12[2].toLowerCase() === "black" ? "Black Sport Band" : "Navy Blue Sport Band";
+    return { name: "Apple Watch Series 12", brand: "Apple", category: "chasy", region: band + " " + series12[3].toUpperCase() };
+  }
   if (/^Plaud Note NB-100\b/i.test(label)) return { name: "Plaud Note NB-100", brand: "Plaud", category: "aksessuary" };
   if (/^Plaud Note Pro\b/i.test(label)) return { name: "Plaud Note Pro", brand: "Plaud", category: "aksessuary" };
   const fenix = /^(Fenix (?:9 Pro Solar|9 Pro|9|8 Pro|8))(?=\s|$)/i.exec(label);
@@ -97,6 +102,7 @@ export function approvedSecondSupplierProducts(...texts: string[]): ApprovedSupp
       };
       const color = colorFromLabel(rawLabel, line.parsedColor);
       const memory = /^Plaud\b/i.test(family.name) ? "64GB"
+        : family.name === "Apple Watch Series 12" ? line.parsedMemory
         : family.name === "MacBook Pro 16-inch (M5)" ? "36GB / " + line.parsedMemory + " SSD" : null;
       const googleColor = /^Google Speaker\b/i.test(family.name)
         ? rawLabel.replace(/^Google Speaker\s+/i, "").trim()

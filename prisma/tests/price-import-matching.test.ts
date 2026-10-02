@@ -109,6 +109,12 @@ test("approved product additions exclude Fold 7 and unresolved CIRQA colors", ()
   const cirqa = products.find((product) => product.name === "Garmin CIRQA Smart Band");
   assert.deepEqual(cirqa?.variants.map((variant) => variant.region).sort(), ["L/XL", "S/M"]);
   assert.deepEqual(cirqa?.variants.map((variant) => variant.color), ["Black", "Black"]);
+  const series12 = products.find((product) => product.slug === "apple-watch-series-12");
+  assert.equal(series12?.variants.length, 4);
+  assert(series12?.variants.some((variant) =>
+    variant.memory === "46 мм" && variant.color === "Space Gray" &&
+    variant.region === "Navy Blue Sport Band S/M",
+  ));
   const aura = products.find((product) => product.name === "Harman Kardon Aura Studio 5");
   assert.equal(aura?.variants.some((variant) => variant.color === "White"), true);
 });
