@@ -1,9 +1,22 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { approvedSecondSupplierProducts } from "../data/approved-second-supplier";
 import {
+  appleWatchModel,
   buildAcceptedSupplierMappings,
   buildAcceptedIphoneMappings,
   inactivePreferenceKey,
+  isPriceOnRequest,
+  matchAirPodsMaxVariant,
+  matchAppleTv2022Variant,
+  matchAppleWatchVariant,
+  matchCanonG7Variant,
+  matchCirqaBlackVariant,
+  matchMacBookVariant,
+  matchIPadVariant,
+  matchSamsungVariant,
   iphoneOfferMatchKey,
   normalizedMemory,
   normalizedIphoneSim,
@@ -12,6 +25,156 @@ import {
   supplierIdentityKey,
   uniqueUnspecifiedIphoneVariantId,
 } from "../../src/lib/priceImport";
+
+test("the entire second supplier feed is parsed without leaking iPhone headers into other categories", () => {
+  const root = path.join(process.cwd(), "prisma", "tests", "fixtures");
+  const main = parsePriceListText(readFileSync(path.join(root, "second-supplier-2026-10-02.txt"), "utf8"));
+  const dyson = parsePriceListText(readFileSync(path.join(root, "second-supplier-dyson-2026-10-02.txt"), "utf8"));
+  assert.equal(main.length, 511);
+  assert.equal(dyson.length, 81);
+  assert.equal(main.filter((line) => line.phoneModel).length, 219);
+  assert.equal(dyson.filter((line) => line.phoneModel).length, 0);
+  assert.equal(main.filter((line) => line.parsedPrice === null && !isPriceOnRequest(line.rawLine)).length, 0);
+  assert.equal(main.filter((line) => /^(?:от\s*\d+\s*шт|микс\s+от)/iu.test(line.rawLine)).length, 0);
+
+  const delivery = main.find((line) => line.rawLine === "17 Air 256GB Black 🇯🇵 73800 🚚");
+  assert.equal(delivery?.parsedPrice, 73800);
+  assert.equal(delivery?.phoneModel, "iPhone Air");
+  const mac = main.find((line) => line.rawLine.startsWith("MacBook MDHE4 Air 13"));
+  assert.equal(mac?.phoneModel, null);
+  assert.equal(mac?.parsedMemory, "512GB");
+  const request = main.find((line) => line.rawLine.includes("Google Fitbit Air Berry"));
+  assert.equal(request?.parsedModel, "Google Fitbit Air Berry");
+  assert.equal(request?.parsedPrice, null);
+  assert.equal(isPriceOnRequest(request?.rawLine ?? ""), true);
+  assert.equal(isPriceOnRequest("Fenix 9 Pro 51mm Black inReach — 0"), true);
+  assert.equal(dyson.find((line) => line.rawLine.includes("Dyson V8 Absolute SV25 (Silver Yellow) -25.500"))?.parsedPrice, 25500);
+});
+
+test("old iPhone SIM rules do not bleed into generation 18, and Chinese 16e follows owner confirmation", () => {
+  assert.equal(parsePriceLine("15 128GB Black 🇮🇳 53800").parsedRegion, "SIM+eSIM");
+  assert.equal(parsePriceLine("16e 256GB Black 🇨🇳 44500").parsedRegion, "2 SIM");
+  assert.equal(parsePriceLine("18 Pro 256 Black 🇮🇳 120000").parsedRegion, null);
+  assert.equal(parsePriceLine("18 Pro 256 Black 🇦🇪 eSim - 120000").parsedRegion, "eSIM");
+});
+
+test("Samsung matching keeps model, capacity, finish and country distinct", () => {
+  const line = parsePriceLine("S26 Ultra 12/512Gb (SM-S948B) Cobalt Violet 🇵🇦 - 91400₽");
+  const candidates = [
+    { id: "right", productName: "Samsung Galaxy S26 Ultra", memory: "12/512GB", color: "Cobalt Violet", region: "PA", rawLabel: null },
+    { id: "wrong-country", productName: "Samsung Galaxy S26 Ultra", memory: "12/512GB", color: "Cobalt Violet", region: "RU", rawLabel: null },
+    { id: "wrong-color", productName: "Samsung Galaxy S26 Ultra", memory: "12/512GB", color: "Black", region: "PA", rawLabel: null },
+    { id: "wrong-model", productName: "Samsung Galaxy S26", memory: "12/512GB", color: "Cobalt Violet", region: "PA", rawLabel: null },
+  ];
+  assert.equal(matchSamsungVariant(line, candidates), "right");
+  assert.equal(matchSamsungVariant(line, [{ ...candidates[0]!, id: "a" }, { ...candidates[0]!, id: "b" }]), null);
+  assert.equal(parsePriceLine("S25 FE 5G 8/128Gb (SM-S731B) JetBlack 🇮🇳 - 37400₽").parsedColor, "Jet Black");
+});
+
+test("Canon Graphite is the existing Black variant, not a new finish", () => {
+  const line = parsePriceLine("Canon PowerShot G7 X Mark III (Graphite) -120.500");
+  const candidates = [
+    { id: "black", productName: "Canon PowerShot G7 X Mark III", memory: null, color: "Black", region: "Стандартная версия", rawLabel: null },
+    { id: "silver", productName: "Canon PowerShot G7 X Mark III", memory: null, color: "Silver", region: "Русский язык", rawLabel: null },
+  ];
+  assert.equal(matchCanonG7Variant(line, candidates), "black");
+  assert.equal(matchCanonG7Variant(line, [candidates[0]!, { ...candidates[0]!, id: "other-black" }]), null);
+});
+
+test("Series 12 case color is not replaced by its differently colored band", () => {
+  const line = parsePriceLine("Apple Watch S12 46 Space Gray AC Navy Blue Sport Band S/M MJEH4 44000");
+  assert.equal(line.parsedColor, "Space Gray");
+  const candidates = [
+    { id: "right", productName: "Apple Watch Series 12", memory: "46 мм", color: "Space Gray", region: "Sport Band S/M", rawLabel: null },
+    { id: "wrong-size", productName: "Apple Watch Series 12", memory: "46 мм", color: "Space Gray", region: "Sport Band M/L", rawLabel: null },
+    { id: "wrong-finish", productName: "Apple Watch Series 12", memory: "46 мм", color: "Black", region: "Sport Band S/M", rawLabel: null },
+  ];
+  assert.equal(matchAppleWatchVariant(line, candidates), "right");
+});
+
+test("Space Gray remains distinct from plain Gray in tablet offers", () => {
+  assert.equal(parsePriceLine("iPad Air 8 11 128GB Space Gray Wi-Fi MH304 60000").parsedColor, "Space Gray");
+});
+
+test("approved product additions exclude Fold 7 and unresolved CIRQA colors", () => {
+  const root = path.join(process.cwd(), "prisma", "tests", "fixtures");
+  const products = approvedSecondSupplierProducts(
+    readFileSync(path.join(root, "second-supplier-2026-10-02.txt"), "utf8"),
+    readFileSync(path.join(root, "second-supplier-dyson-2026-10-02.txt"), "utf8"),
+  );
+  assert.equal(products.some((product) => /fold\s*7/i.test(product.name)), false);
+  const macbook = products.find((product) => product.slug === "macbook-pro-16-m5");
+  assert.equal(macbook?.name, "MacBook Pro 16-inch (M5)");
+  assert.equal(macbook?.variants[0]?.memory, "36GB / 2TB SSD");
+  const cirqa = products.find((product) => product.name === "Garmin CIRQA Smart Band");
+  assert.deepEqual(cirqa?.variants.map((variant) => variant.region).sort(), ["L/XL", "S/M"]);
+  assert.deepEqual(cirqa?.variants.map((variant) => variant.color), ["Black", "Black"]);
+  const aura = products.find((product) => product.name === "Harman Kardon Aura Studio 5");
+  assert.equal(aura?.variants.some((variant) => variant.color === "White"), true);
+});
+
+test("only the approved black CIRQA strap sizes match automatically", () => {
+  const candidates = [
+    { id: "sm", productName: "Garmin CIRQA Smart Band", memory: null, color: "Black", region: "S/M", rawLabel: null },
+    { id: "lxl", productName: "Garmin CIRQA Smart Band", memory: null, color: "Black", region: "L/XL", rawLabel: null },
+    { id: "old", productName: "Garmin CIRQA Smart Band", memory: null, color: "Black", region: null, rawLabel: null },
+  ];
+  assert.equal(matchCirqaBlackVariant(parsePriceLine("Cirqa Black S-M — 27 500"), candidates), "sm");
+  assert.equal(matchCirqaBlackVariant(parsePriceLine("Cirqa Black L-XL — 29 000"), candidates), "lxl");
+  assert.equal(matchCirqaBlackVariant(parsePriceLine("Cirqa Gray S-M — 27 500"), candidates), null);
+  assert.equal(matchCirqaBlackVariant(parsePriceLine("Cirqa Mauve (RED) L-XL — 23 700"), candidates), null);
+});
+
+test("MacBook matching checks chip, RAM, SSD, display size and color", () => {
+  const source = parsePriceLine("MacBook MDHE4 Air 13 Midnight (M5, 16GB, 512GB) 2026 115500 🚚");
+  const candidates = [
+    { id: "right", productName: "MacBook Air 13-inch (M5)", memory: "16GB / 512GB SSD", color: "Midnight", region: null, rawLabel: null },
+    { id: "wrong-chip", productName: "MacBook Air 13-inch (M4)", memory: "16GB / 512GB SSD", color: "Midnight", region: null, rawLabel: null },
+    { id: "wrong-size", productName: "MacBook Air 15-inch (M5)", memory: "16GB / 512GB SSD", color: "Midnight", region: null, rawLabel: null },
+    { id: "wrong-ram", productName: "MacBook Air 13-inch (M5)", memory: "24GB / 512GB SSD", color: "Midnight", region: null, rawLabel: null },
+    { id: "wrong-ssd", productName: "MacBook Air 13-inch (M5)", memory: "16GB / 1TB SSD", color: "Midnight", region: null, rawLabel: null },
+  ];
+  assert.equal(source.parsedMemory, "512GB");
+  assert.equal(matchMacBookVariant(source, candidates), "right");
+  const max = parsePriceLine("MacBook MGED4 Pro 16 Space Black (M5 Max,36GB,2TB)2026 324000");
+  assert.equal(matchMacBookVariant(max, [{
+    id: "max", productName: "MacBook Pro 16-inch (M5)", memory: "36GB / 2TB SSD",
+    color: "Space Black", region: "M5 Max · 2026", rawLabel: null,
+  }]), "max");
+  const neo = parsePriceLine("MacBook MHFE4 Neo Citrus (A18, 8GB, 512GB) 2026 68500 🚚");
+  assert.equal(matchMacBookVariant(neo, [{
+    id: "neo", productName: "MacBook Neo", memory: "8GB / 512GB SSD",
+    color: "Citrus", region: null, rawLabel: null,
+  }]), "neo");
+});
+
+test("iPad matching respects chip generation, size, finish and Wi-Fi versus LTE", () => {
+  const source = parsePriceLine("iPad Air 8 11 128GB Space Gray Wi-Fi MH304 60000");
+  const candidates = [
+    { id: "right", productName: "iPad Air 11-inch (M4)", memory: "128GB", color: "Space Gray", region: null, rawLabel: null },
+    { id: "wrong-chip", productName: "iPad Air 11-inch (M3)", memory: "128GB", color: "Space Gray", region: null, rawLabel: null },
+    { id: "wrong-size", productName: "iPad Air 13-inch (M4)", memory: "128GB", color: "Space Gray", region: null, rawLabel: null },
+    { id: "wrong-storage", productName: "iPad Air 11-inch (M4)", memory: "256GB", color: "Space Gray", region: null, rawLabel: null },
+    { id: "wrong-color", productName: "iPad Air 11-inch (M4)", memory: "128GB", color: "Blue", region: null, rawLabel: null },
+    { id: "wrong-radio", productName: "iPad Air 11-inch (M4)", memory: "128GB", color: "Space Gray", region: "LTE", rawLabel: null },
+  ];
+  assert.equal(matchIPadVariant(source, candidates), "right");
+  assert.equal(matchIPadVariant(parsePriceLine("iPad Air 8 11 128GB Space Gray LTE MH304 60000"), [candidates[0]!]), null);
+  const base = parsePriceLine("iPad 11 128GB Silver Wi-Fi (2025) 40500");
+  assert.equal(matchIPadVariant(base, [{
+    id: "base", productName: "iPad (A16)", memory: "128GB", color: "Silver", region: null, rawLabel: null,
+  }]), "base");
+});
+
+test("Apple TV 4K 64 GB from 2022 maps to the existing third generation", () => {
+  const line = parsePriceLine("Apple TV 4K 64Gb (MN873) 2022 -19.200");
+  const candidates = [
+    { id: "64", productName: "Apple TV 4K (3-го поколения)", memory: "64GB", color: null, region: null, rawLabel: null },
+    { id: "128", productName: "Apple TV 4K (3-го поколения)", memory: "128GB", color: null, region: null, rawLabel: null },
+  ];
+  assert.equal(matchAppleTv2022Variant(line, candidates), "64");
+  assert.equal(matchAppleTv2022Variant(parsePriceLine("Apple TV 4K 64Gb 2021 -19.200"), candidates), null);
+});
 
 test("supplier country is used to infer SIM but does not distinguish the site variant", () => {
   const japan = parsePriceLine("iPhone 17 Pro Max 1TB Blue JP eSIM - 134.200₽");
@@ -146,6 +309,66 @@ test("supplier identity ignores country and Apple part-number changes, but keeps
   const watchDifferentBand = "Apple Watch Series 11 42 Jet Black M/L MEQU4 🇺🇸";
   assert.equal(supplierIdentityKey(watchUs), supplierIdentityKey(watchEu));
   assert.notEqual(supplierIdentityKey(watchUs), supplierIdentityKey(watchDifferentBand));
+});
+
+test("Apple Watch offers match on generation, case, finish and strap instead of requiring SKU equality", () => {
+  const line = parsePriceLine("Apple Watch S10 42 Jet Black S/M MWWF3 🇺🇸 - 26.200₽");
+  assert.equal(line.parsedMemory, "42 мм");
+  assert.equal(line.parsedColor, "Jet Black");
+  assert.equal(line.parsedRegion, "S/M");
+  assert.equal(line.parsedSku, "MWWF3");
+  assert.equal(appleWatchModel("Apple Watch Series 10"), "Apple Watch Series 10");
+
+  const candidates = [
+    { id: "right", productName: "Apple Watch Series 10", memory: "42 мм", color: "Jet Black", region: "Sport Band (Black) S/M", rawLabel: null },
+    { id: "wrong-fit", productName: "Apple Watch Series 10", memory: "42 мм", color: "Jet Black", region: "Sport Band (Black) M/L", rawLabel: null },
+    { id: "wrong-model", productName: "Apple Watch Series 11", memory: "42 мм", color: "Jet Black", region: "Sport Band (Black) S/M", rawLabel: null },
+  ];
+  assert.equal(matchAppleWatchVariant(line, candidates), "right");
+});
+
+test("Apple Watch matching preserves Denim and Loop strap distinctions and refuses ambiguity", () => {
+  const denim = parsePriceLine("Apple Watch S10 42 Silver Denim M/L MWWC3 🇺🇸 - 26.200₽");
+  const loop = parsePriceLine("Apple Watch S10 42 Silver Loop MWWD3 🇺🇸 - 26.200₽");
+  const candidates = [
+    { id: "denim", productName: "Apple Watch Series 10", memory: "42 мм", color: "Silver", region: "Silver Denim M/L", rawLabel: null },
+    { id: "loop", productName: "Apple Watch Series 10", memory: "42 мм", color: "Silver", region: "Milanese Loop", rawLabel: null },
+  ];
+  assert.equal(matchAppleWatchVariant(denim, candidates), "denim");
+  assert.equal(matchAppleWatchVariant(loop, candidates), "loop");
+  assert.equal(matchAppleWatchVariant(loop, [candidates[1]!, { ...candidates[1]!, id: "loop-duplicate" }]), null);
+});
+
+test("Apple Watch Ultra rows match the exact titanium finish and band descriptor", () => {
+  const line = parsePriceLine("Apple Watch Ultra 4 49 Black Ocean Band Translucent Black MJAY4 🇦🇺 - 77.700₽");
+  const candidates = [
+    { id: "black-band", productName: "Apple Watch Ultra 4", memory: "49 мм", color: "Black Titanium", region: "Ocean Band (Translucent Black)", rawLabel: null },
+    { id: "black-gray-band", productName: "Apple Watch Ultra 4", memory: "49 мм", color: "Black Titanium", region: "Ocean Band (Translucent Gray)", rawLabel: null },
+    { id: "natural-band", productName: "Apple Watch Ultra 4", memory: "49 мм", color: "Natural Titanium", region: "Ocean Band (Translucent Black)", rawLabel: null },
+  ];
+  assert.equal(matchAppleWatchVariant(line, candidates), "black-band");
+});
+
+test("watch matching does not ignore an unavailable strap fit or case-size mismatch", () => {
+  const line = parsePriceLine("Apple Watch S12 42 Space Gray M/L MJE94 🇮🇳 - 43.200₽");
+  const currentOptions = [
+    { id: "42-sm", productName: "Apple Watch Series 12", memory: "42 мм", color: "Space Gray", region: "Navy Blue Sport Band S/M", rawLabel: null },
+    { id: "46-ml", productName: "Apple Watch Series 12", memory: "46 мм", color: "Space Gray", region: "Navy Blue Sport Band M/L", rawLabel: null },
+  ];
+  assert.equal(matchAppleWatchVariant(line, currentOptions), null);
+});
+
+test("AirPods Max matching keeps 2020 Lightning, 2024 USB-C and Max 2 as separate editions", () => {
+  const starlight = parsePriceLine("AirPods Max Starlight 2024 USB-C - 38.200₽");
+  const purple = parsePriceLine("AirPods Max Purple 2024 USB-C - 38.200₽");
+  const candidates = [
+    { id: "starlight-2020", productName: "AirPods Max", memory: null, color: "Starlight", region: "Lightning", rawLabel: null },
+    { id: "starlight-2024", productName: "AirPods Max", memory: null, color: "Starlight", region: "USB-C", rawLabel: null },
+    { id: "purple-2024", productName: "AirPods Max", memory: null, color: "Purple", region: "USB-C", rawLabel: null },
+    { id: "purple-max-2", productName: "AirPods Max 2", memory: null, color: "Purple", region: "USB-C", rawLabel: null },
+  ];
+  assert.equal(matchAirPodsMaxVariant(starlight, candidates), "starlight-2024");
+  assert.equal(matchAirPodsMaxVariant(purple, candidates), "purple-2024");
 });
 
 test("supplier identity ignores accessory country while retaining product qualifiers", () => {

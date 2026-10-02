@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
+import { isPriceOnRequest } from "@/lib/priceImport";
 import type { ImportBatchStatus } from "@/generated/prisma/client";
 
 function revalidateStorefront() {
@@ -41,12 +42,13 @@ export async function acceptLine(formData: FormData) {
   const variantId = String(formData.get("variantId") ?? "");
 
   const line = await prisma.priceImportLine.findUnique({ where: { id: lineId } });
-  if (!line || !variantId || line.parsedPrice === null) return;
+  if (!line || !variantId || (line.parsedPrice === null && !isPriceOnRequest(line.rawLine))) return;
 
   await prisma.productVariant.update({
     where: { id: variantId },
     data: {
-      price: line.parsedPrice,
+      price: isPriceOnRequest(line.rawLine) ? null : line.parsedPrice,
+      inStock: !isPriceOnRequest(line.rawLine),
       rawLabel: line.parsedModel ?? line.rawLine,
     },
   });
@@ -79,11 +81,12 @@ export async function acceptAllMatched(formData: FormData) {
   });
 
   for (const line of lines) {
-    if (!line.matchedVariantId || line.parsedPrice === null) continue;
+    if (!line.matchedVariantId || (line.parsedPrice === null && !isPriceOnRequest(line.rawLine))) continue;
     await prisma.productVariant.update({
       where: { id: line.matchedVariantId },
       data: {
-        price: line.parsedPrice,
+        price: isPriceOnRequest(line.rawLine) ? null : line.parsedPrice,
+        inStock: !isPriceOnRequest(line.rawLine),
         rawLabel: line.parsedModel ?? line.rawLine,
       },
     });
@@ -117,40 +120,75 @@ export async function applyAsFullPriceList(formData: FormData) {
   const batchId = String(formData.get("batchId") ?? "");
   if (!batchId) return;
 
-  const lines = await prisma.priceImportLine.findMany({ where: { batchId } });
-  const acceptedIds = lines
-    .filter((line) => line.status === "ACCEPTED" && line.matchedVariantId)
-    .map((line) => line.matchedVariantId!);
-  const matched = lines.filter(
-    (line) => line.status === "MATCHED" && line.matchedVariantId && line.parsedPrice !== null,
-  );
-
-  for (const line of matched) {
-    await prisma.productVariant.update({
-      where: { id: line.matchedVariantId! },
-      data: { price: line.parsedPrice!, rawLabel: line.parsedModel ?? line.rawLine },
-    });
-    await prisma.priceImportLine.update({
-      where: { id: line.id },
-      data: { status: "ACCEPTED" },
-    });
-    acceptedIds.push(line.matchedVariantId!);
-  }
-
-  // Важно: не меняем Product.status и не удаляем варианты. Новые модели
-  // остаются видимыми, даже если их временно нет у поставщика.
-  await prisma.productVariant.updateMany({
-    where: {
-      product: { status: "PUBLISHED" },
-      ...(acceptedIds.length > 0 ? { id: { notIn: acceptedIds } } : {}),
-    },
-    data: { price: null },
-  });
-
-  await prisma.priceImportBatch.update({
+  const batch = await prisma.priceImportBatch.findUnique({
     where: { id: batchId },
-    data: { reviewedAt: new Date(), reviewedById: admin.id },
+    select: { source: true },
   });
+  if (!batch) return;
+
+  const lines = await prisma.priceImportLine.findMany({ where: { batchId } });
+  const unresolved = lines.some((line) =>
+    line.status !== "ACCEPTED" && line.status !== "REJECTED" &&
+    !(line.status === "MATCHED" && line.matchedVariantId && (line.parsedPrice !== null || isPriceOnRequest(line.rawLine))),
+  );
+  if (unresolved || lines.length === 0) return;
+
+  const matched = lines.filter(
+    (line) => line.status === "MATCHED" && line.matchedVariantId && (line.parsedPrice !== null || isPriceOnRequest(line.rawLine)),
+  );
+  const currentVariantIds = new Set(lines
+    .filter((line) =>
+      (line.status === "ACCEPTED" || line.status === "MATCHED" || line.status === "REJECTED") &&
+      line.matchedVariantId && (line.parsedPrice !== null || isPriceOnRequest(line.rawLine)),
+    )
+    .map((line) => line.matchedVariantId!));
+  if (currentVariantIds.size === 0) return;
+
+  // Only variants previously confirmed from this same feed are considered
+  // managed by it. A missing row must never erase prices from unrelated items.
+  const previouslyAccepted = await prisma.priceImportLine.findMany({
+    where: {
+      status: "ACCEPTED",
+      matchedVariantId: { not: null },
+      batch: { is: { source: batch.source } },
+    },
+    select: { matchedVariantId: true },
+  });
+  const managedVariantIds = new Set([
+    ...previouslyAccepted.map((line) => line.matchedVariantId).filter((id): id is string => Boolean(id)),
+    ...currentVariantIds,
+  ]);
+  const missingVariantIds = [...managedVariantIds].filter((id) => !currentVariantIds.has(id));
+
+  await prisma.$transaction(async (tx) => {
+    for (const line of matched) {
+      await tx.productVariant.update({
+        where: { id: line.matchedVariantId! },
+        data: {
+          price: isPriceOnRequest(line.rawLine) ? null : line.parsedPrice!,
+          inStock: !isPriceOnRequest(line.rawLine),
+          rawLabel: line.parsedModel ?? line.rawLine,
+        },
+      });
+      await tx.priceImportLine.update({
+        where: { id: line.id },
+        data: { status: "ACCEPTED" },
+      });
+    }
+
+    if (missingVariantIds.length > 0) {
+      await tx.productVariant.updateMany({
+        where: { id: { in: missingVariantIds } },
+        data: { price: null, inStock: false },
+      });
+    }
+
+    await tx.priceImportBatch.update({
+      where: { id: batchId },
+      data: { reviewedAt: new Date(), reviewedById: admin.id },
+    });
+  });
+
   await recomputeBatchStatus(batchId);
   revalidatePath(`/admin/price-import/${batchId}`);
   revalidatePath("/admin/price-import");
@@ -174,7 +212,7 @@ export async function createVariantFromLine(formData: FormData) {
   const region = String(formData.get("region") ?? "").trim();
 
   const line = await prisma.priceImportLine.findUnique({ where: { id: lineId } });
-  if (!line || !productId || line.parsedPrice === null) return;
+  if (!line || !productId || (line.parsedPrice === null && !isPriceOnRequest(line.rawLine))) return;
 
   const variant = await prisma.productVariant.create({
     data: {
@@ -182,7 +220,8 @@ export async function createVariantFromLine(formData: FormData) {
       memory: memory || null,
       color: color || null,
       region: region || null,
-      price: line.parsedPrice,
+      price: isPriceOnRequest(line.rawLine) ? null : line.parsedPrice,
+      inStock: !isPriceOnRequest(line.rawLine),
       rawLabel: line.parsedModel ?? line.rawLine,
     },
   });

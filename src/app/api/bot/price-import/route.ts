@@ -1,11 +1,21 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import {
+  appleWatchModel,
   canonicalIphoneModel,
   buildAcceptedIphoneMappings,
   buildAcceptedSupplierMappings,
+  matchAirPodsMaxVariant,
+  matchAppleTv2022Variant,
+  matchCanonG7Variant,
+  matchCirqaBlackVariant,
+  matchMacBookVariant,
+  matchIPadVariant,
   iphoneOfferMatchKey,
   inactivePreferenceKey,
+  isPriceOnRequest,
+  matchAppleWatchVariant,
+  matchSamsungVariant,
   normalizedMemory,
   normalizedIphoneRegion,
   normalizedIphoneSim,
@@ -121,6 +131,7 @@ export async function POST(request: Request) {
   for (const v of existingVariants) {
     const parsedStoredLabel = v.rawLabel ? parsePriceLine(v.rawLabel) : null;
     if (v.sku) addCandidate(bySku, normalizeForMatch(v.sku), v.id);
+    if (parsedStoredLabel?.parsedSku) addCandidate(bySku, normalizeForMatch(parsedStoredLabel.parsedSku), v.id);
     const labelKey = supplierIdentityKey(parsedStoredLabel?.parsedModel ?? v.rawLabel);
     if (labelKey) addCandidate(byNormalized, labelKey, v.id);
 
@@ -167,6 +178,14 @@ export async function POST(request: Request) {
     .filter((key): key is string => Boolean(key)));
 
   const variantByIdExisting = new Map(existingVariants.map((variant) => [variant.id, variant]));
+  const supplierVariantCandidates = existingVariants.map((variant) => ({
+    id: variant.id,
+    productName: variant.product.name,
+    memory: variant.memory,
+    color: variant.color,
+    region: variant.region,
+    rawLabel: variant.rawLabel,
+  }));
   const filterByCondition = (candidateIds: string[], nonActive: boolean) => {
     const hasDedicatedInactiveVariant = candidateIds.some((id) => {
       const variant = variantByIdExisting.get(id);
@@ -181,6 +200,7 @@ export async function POST(request: Request) {
   };
 
   const preparedLines = parsedLines.map((line) => {
+    const managerPrice = isPriceOnRequest(line.rawLine);
     const key = line.parsedModel ? normalizeForMatch(line.parsedModel) : null;
     const supplierIdentity = line.parsedModel ? supplierIdentityKey(line.parsedModel) : null;
     const learnedSupplierVariantId = !line.phoneModel && supplierIdentity
@@ -204,6 +224,16 @@ export async function POST(request: Request) {
       const labelCandidates = identityKey ? byNormalized.get(identityKey) ?? [] : [];
       if (labelCandidates.length === 1) matchedVariantId = labelCandidates[0];
     }
+    if (!matchedVariantId && appleWatchModel(line.parsedModel)) {
+      matchedVariantId = matchAppleWatchVariant(line, supplierVariantCandidates);
+    }
+    if (!matchedVariantId) matchedVariantId = matchAirPodsMaxVariant(line, supplierVariantCandidates);
+    if (!matchedVariantId) matchedVariantId = matchSamsungVariant(line, supplierVariantCandidates);
+    if (!matchedVariantId) matchedVariantId = matchCanonG7Variant(line, supplierVariantCandidates);
+    if (!matchedVariantId) matchedVariantId = matchAppleTv2022Variant(line, supplierVariantCandidates);
+    if (!matchedVariantId) matchedVariantId = matchCirqaBlackVariant(line, supplierVariantCandidates);
+    if (!matchedVariantId) matchedVariantId = matchMacBookVariant(line, supplierVariantCandidates);
+    if (!matchedVariantId) matchedVariantId = matchIPadVariant(line, supplierVariantCandidates);
     if (!matchedVariantId && line.phoneModel && line.parsedMemory && line.parsedColor && line.parsedRegion) {
       const descriptor = [
         line.phoneModel,
@@ -251,7 +281,7 @@ export async function POST(request: Request) {
     let status: ImportLineStatus = "PENDING";
     let note: string | null = null;
 
-    if (line.parsedPrice === null) {
+    if (line.parsedPrice === null && !managerPrice) {
       status = "ERROR";
       note = "Не удалось распознать цену в конце строки";
     } else if (line.phoneModel && line.parsedMemory && !line.parsedColor) {
@@ -264,13 +294,15 @@ export async function POST(request: Request) {
       status = "MATCHED";
     }
 
+    if (managerPrice && status === "MATCHED") note = "Уточняйте у менеджера — числовая цена не указана";
+
     return {
       rawLine: line.rawLine,
       parsedModel: line.parsedModel,
       parsedMemory: line.parsedMemory,
       parsedColor: line.parsedColor,
       parsedRegion: line.parsedRegion,
-      parsedPrice: line.parsedPrice,
+      parsedPrice: managerPrice ? null : line.parsedPrice,
       matchedVariantId,
       status,
       note,
@@ -295,11 +327,15 @@ export async function POST(request: Request) {
       return best;
     }, indexes[0]);
     const bestPrice = preparedLines[winnerIndex].parsedPrice;
-    preparedLines[winnerIndex].note = `Минимальная цена из ${indexes.length} предложений для этой модификации и SIM`;
+    preparedLines[winnerIndex].note = bestPrice === null
+      ? `Из ${indexes.length} предложений выбрано «Уточняйте у менеджера»`
+      : `Минимальная цена из ${indexes.length} предложений для этой модификации и SIM`;
     for (const index of indexes) {
       if (index === winnerIndex) continue;
       preparedLines[index].status = "REJECTED";
-      preparedLines[index].note = `Пропущено: для этой модификации выбрана более низкая цена ${bestPrice?.toLocaleString("ru-RU")} ₽`;
+      preparedLines[index].note = bestPrice === null
+        ? "Пропущено: для этой модификации выбрано «Уточняйте у менеджера»"
+        : `Пропущено: для этой модификации выбрана более низкая цена ${bestPrice.toLocaleString("ru-RU")} ₽`;
     }
   }
 

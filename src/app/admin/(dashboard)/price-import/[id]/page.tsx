@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
-import { canonicalIphoneModel, normalizedIphoneSim, normalizedMemory, normalizeForMatch, parsePriceLine, supplierIdentityKey } from "@/lib/priceImport";
+import { canonicalIphoneModel, isPriceOnRequest, normalizedIphoneSim, normalizedMemory, normalizeForMatch, parsePriceLine, supplierIdentityKey } from "@/lib/priceImport";
 import { acceptLine, acceptAllMatched, applyAsFullPriceList, createVariantFromLine, rejectLine } from "../actions";
 import { ProductPicker, VariantPicker, type ImportVariantOption } from "./ImportPickers";
 
@@ -60,6 +60,15 @@ export default async function PriceImportBatchPage({
 
   const variantById = new Map(matchedVariants.map((v) => [v.id, v]));
   const matchedCount = batch.lines.filter((l) => l.status === "MATCHED").length;
+  const unresolvedCount = batch.lines.filter((line) =>
+    line.status !== "ACCEPTED" && line.status !== "REJECTED" &&
+    !(line.status === "MATCHED" && line.matchedVariantId && (line.parsedPrice !== null || isPriceOnRequest(line.rawLine))),
+  ).length;
+  const hasApplicableRows = batch.lines.some((line) =>
+    (line.status === "ACCEPTED" || line.status === "MATCHED") &&
+    line.matchedVariantId && (line.parsedPrice !== null || isPriceOnRequest(line.rawLine)),
+  );
+  const canApplyFullPrice = unresolvedCount === 0 && hasApplicableRows;
 
   return (
     <div>
@@ -90,16 +99,21 @@ export default async function PriceImportBatchPage({
             <input type="hidden" name="batchId" value={batch.id} />
             <button
               type="submit"
-              className="rounded-full border border-accent px-4 py-2 text-sm font-medium text-accent hover:bg-accent hover:text-white"
-              title="Используйте только для полного прайса поставщика"
+              disabled={!canApplyFullPrice}
+              className="rounded-full border border-accent px-4 py-2 text-sm font-medium text-accent hover:bg-accent hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+              title="Цены снимутся только у ранее подтверждённых позиций этого источника, которых нет в текущем прайсе"
             >
-              Применить как полный прайс
+              {unresolvedCount > 0
+                ? `Сначала разберите строки (${unresolvedCount})`
+                : hasApplicableRows
+                  ? "Применить полный прайс"
+                  : "Нет совпавших позиций для применения"}
             </button>
           </form>
         </div>
       </div>
       <p className="mt-3 max-w-2xl text-xs leading-5 text-zinc-500">
-        Сначала проверь автоматические совпадения и нажми «Принять все совпавшие». Для iPhone учитываются модель, память, цвет и тип SIM; страна используется для определения SIM, но не мешает совпадению.
+        Для применения полного прайса сначала разреши все строки без совпадения. Отсутствующим в сегодняшнем прайсе позициям этого источника цена снимется («Уточняйте у менеджера»); другие товары каталога не затрагиваются. Если на один вариант найдено несколько цен, применяется минимальная. Для iPhone учитываются модель, память, цвет и тип SIM.
       </p>
 
       <div className="mt-6 flex flex-col gap-3">
@@ -183,7 +197,9 @@ export default async function PriceImportBatchPage({
                 <div className="min-w-0">
                   <div className="font-mono text-sm text-zinc-900">{line.rawLine}</div>
                   <div className="mt-1 text-xs text-zinc-500">
-                    {line.parsedPrice !== null ? (
+                    {isPriceOnRequest(line.rawLine) ? (
+                      <>цена: Уточняйте у менеджера</>
+                    ) : line.parsedPrice !== null ? (
                       <>распознанная цена: {formatPrice(Number(line.parsedPrice))}</>
                     ) : (
                       <span className="text-red-600">цена не распознана</span>
@@ -201,7 +217,7 @@ export default async function PriceImportBatchPage({
                 </span>
               </div>
 
-              {!isDecided && line.parsedPrice !== null && (
+              {!isDecided && (line.parsedPrice !== null || isPriceOnRequest(line.rawLine)) && (
                 <form action={acceptLine} className="mt-3 flex flex-wrap items-center gap-2">
                   <input type="hidden" name="lineId" value={line.id} />
                   <input type="hidden" name="batchId" value={batch.id} />
@@ -212,7 +228,7 @@ export default async function PriceImportBatchPage({
                       suggestedIds={suggestedVariants.map(({ variant }) => variant.id)}
                       selectedId={line.matchedVariantId}
                       initialQuery={pickerQuery}
-                      submitLabel="Применить цену"
+                      submitLabel={isPriceOnRequest(line.rawLine) ? "Подтвердить: уточняйте у менеджера" : "Применить цену"}
                     />
                   ) : (
                     <p className="mt-3 rounded-lg bg-amber-50 p-3 text-xs text-amber-800">
@@ -235,7 +251,7 @@ export default async function PriceImportBatchPage({
                 </form>
               )}
 
-              {!isDecided && !matchedVariant && line.parsedPrice !== null && (
+              {!isDecided && !matchedVariant && (line.parsedPrice !== null || isPriceOnRequest(line.rawLine)) && (
                 <form
                   action={createVariantFromLine}
                   className="mt-3 flex flex-wrap items-end gap-2 rounded-xl border border-dashed border-zinc-300 p-3"

@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { ProductDetail } from "../../src/components/ProductDetail";
 import { usesGeneralProductGallery } from "../../src/lib/generalProductGallery";
 import { pickVariantImages } from "../../src/lib/pickCoverImage";
+import { matchAppleWatchVariant, parsePriceLine } from "../../src/lib/priceImport";
 import { IPHONE_2026_CATALOG, planIphone2026Addition } from "../data/iphone-2026-catalog";
 import {
   SEPTEMBER_2026_PHOTO_FILES,
@@ -47,7 +48,43 @@ test("official names map the supplied S26 FE, CIRQA, Series 12 and FreeClip colo
   assert(bySlug.get("garmin-cirqa-smart-band")!.colorImages["French Gray"][0].includes("french-gray"));
   assert(bySlug.get("apple-watch-series-12")!.colorImages["Night Blue"][0].includes("night-blue"));
   assert(bySlug.get("huawei-freeclip-2")!.colorImages["Denim Blue"][0].includes("denim-blue"));
-  assert.equal(bySlug.get("apple-watch-series-12")!.variants.length, 16);
+  const series12 = bySlug.get("apple-watch-series-12")!;
+  assert.equal(series12.variants.length, 19);
+  assert(series12.variants.some((variant) =>
+    variant.memory === "46 мм" && variant.color === "Space Gray" && variant.region === "Navy Blue Sport Band S/M",
+  ));
+  const expectedVariant = series12.variants.find((variant) =>
+    variant.memory === "42 мм" && variant.color === "Space Gray" && variant.region === "Navy Blue Sport Band M/L",
+  );
+  assert(expectedVariant);
+  const supplierLine = parsePriceLine("Apple Watch S12 42 Space Gray M/L MJE94 🇮🇳 - 43.200₽");
+  const candidates = series12.variants.map((variant, index) => ({
+    id: String(index),
+    productName: series12.name,
+    ...variant,
+    rawLabel: null,
+  }));
+  const matchedId = matchAppleWatchVariant(supplierLine, candidates);
+  assert(matchedId);
+  assert.deepEqual(candidates.find((candidate) => candidate.id === matchedId), {
+    id: matchedId,
+    productName: "Apple Watch Series 12",
+    memory: "42 мм",
+    color: "Space Gray",
+    region: "Navy Blue Sport Band M/L",
+    price: null,
+    inStock: false,
+    rawLabel: null,
+  });
+  const existingVariants = series12.variants.filter((variant) =>
+    variant !== expectedVariant,
+  );
+  const syncPlan = planSeptemberProduct(series12, {
+    images: series12.images,
+    colorImages: series12.colorImages,
+    variants: existingVariants,
+  });
+  assert.deepEqual(syncPlan.variantsToCreate, [expectedVariant]);
 });
 
 test("repeat planning preserves commerce data and good existing images", () => {
