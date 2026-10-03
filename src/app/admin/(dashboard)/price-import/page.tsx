@@ -17,12 +17,19 @@ const STATUS_CLASS: Record<string, string> = {
   REJECTED: "bg-zinc-200 text-zinc-600",
 };
 
-export default async function PriceImportListPage() {
+export default async function PriceImportListPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ confirmed?: string }>;
+}) {
+  const { confirmed } = await searchParams;
   const batches = await prisma.priceImportBatch.findMany({
     orderBy: { createdAt: "desc" },
     include: { _count: { select: { lines: true } } },
     take: 50,
   });
+  const confirmedBatch = batches.find((batch) => batch.id === confirmed &&
+    (batch.status === "PARTIALLY_APPLIED" || batch.status === "APPLIED"));
 
   return (
     <div>
@@ -32,6 +39,11 @@ export default async function PriceImportListPage() {
         Telegram-боте. Цены не применяются автоматически — каждую партию нужно
         открыть и подтвердить (или отклонить) вручную.
       </p>
+      {confirmedBatch && (
+        <p className="mt-4 rounded-xl bg-emerald-50 p-3 text-sm text-emerald-800">
+          Совпавшие позиции подтверждены. Остальные строки этой партии можно проверить позже.
+        </p>
+      )}
 
       <div className="mt-6 flex flex-col gap-2">
         {batches.map((batch) => (
@@ -48,6 +60,7 @@ export default async function PriceImportListPage() {
                 }).format(batch.createdAt)}
               </div>
               <div className="text-sm text-zinc-500">{batch._count.lines} позиций</div>
+              <div className="mt-1 text-xs text-zinc-400">Источник: {batch.source}</div>
             </div>
             <span
               className={`rounded-full px-3 py-1 text-xs ${STATUS_CLASS[batch.status] ?? "bg-zinc-100 text-zinc-700"}`}

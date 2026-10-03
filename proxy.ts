@@ -15,6 +15,9 @@ export function proxy(request: NextRequest) {
   const adminId = verifySessionToken(token);
 
   if (!adminId) {
+    if (request.method === "POST" && pathname.startsWith("/admin/price-import")) {
+      console.warn(`[price-import] POST blocked by proxy: session cookie ${token ? "invalid" : "missing"}`);
+    }
     const loginUrl = new URL("/admin/login", request.url);
     loginUrl.searchParams.set("next", pathname);
     return NextResponse.redirect(loginUrl);

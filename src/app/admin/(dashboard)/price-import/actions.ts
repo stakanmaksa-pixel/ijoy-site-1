@@ -1,10 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 import { isPriceOnRequest } from "@/lib/priceImport";
-import type { ImportBatchStatus } from "@/generated/prisma/client";
+import { planMatchedPriceUpdates } from "@/lib/priceImportBulk";
+import { Prisma, type ImportBatchStatus } from "@/generated/prisma/client";
 
 function revalidateStorefront() {
   revalidatePath("/");
@@ -79,33 +81,57 @@ export async function acceptAllMatched(formData: FormData) {
   const lines = await prisma.priceImportLine.findMany({
     where: { batchId, status: "MATCHED" },
   });
+  const plan = planMatchedPriceUpdates(lines);
+  if (plan.lineIds.length === 0) redirect("/admin/price-import");
 
-  for (const line of lines) {
-    if (!line.matchedVariantId || (line.parsedPrice === null && !isPriceOnRequest(line.rawLine))) continue;
-    await prisma.productVariant.update({
-      where: { id: line.matchedVariantId },
-      data: {
-        price: isPriceOnRequest(line.rawLine) ? null : line.parsedPrice,
-        inStock: !isPriceOnRequest(line.rawLine),
-        rawLabel: line.parsedModel ?? line.rawLine,
-      },
-    });
-    await prisma.priceImportLine.update({
-      where: { id: line.id },
-      data: { status: "ACCEPTED" },
-    });
+  console.info(`[price-import] bulk accept started batch=${batchId} lines=${plan.lineIds.length} variants=${plan.variants.length}`);
+  try {
+    await prisma.$transaction(async (tx) => {
+      const stillMatched = await tx.priceImportLine.count({
+        where: { batchId, id: { in: plan.lineIds }, status: "MATCHED" },
+      });
+      if (stillMatched !== plan.lineIds.length) throw new Error("Строки прайса изменились во время подтверждения");
+
+      const values = plan.variants.map((variant) => Prisma.sql`(
+        ${variant.id}, ${variant.price}::numeric, ${variant.inStock}, ${variant.rawLabel}
+      )`);
+      const updatedVariants = await tx.$executeRaw(Prisma.sql`
+        UPDATE "ProductVariant" AS variant
+        SET "price" = incoming.price,
+            "inStock" = incoming.in_stock,
+            "rawLabel" = incoming.raw_label,
+            "updatedAt" = NOW()
+        FROM (VALUES ${Prisma.join(values)}) AS incoming(id, price, in_stock, raw_label)
+        WHERE variant.id = incoming.id
+      `);
+      if (updatedVariants !== plan.variants.length) throw new Error("Не все модификации найдены; цены не применены");
+
+      const accepted = await tx.priceImportLine.updateMany({
+        where: { batchId, id: { in: plan.lineIds }, status: "MATCHED" },
+        data: { status: "ACCEPTED" },
+      });
+      if (accepted.count !== plan.lineIds.length) throw new Error("Не все строки подтверждены; цены не применены");
+
+      const unresolved = await tx.priceImportLine.count({
+        where: { batchId, status: { notIn: ["ACCEPTED", "REJECTED"] } },
+      });
+      await tx.priceImportBatch.update({
+        where: { id: batchId },
+        data: {
+          status: unresolved === 0 ? "APPLIED" : "PARTIALLY_APPLIED",
+          reviewedAt: new Date(),
+          reviewedById: admin.id,
+        },
+      });
+    }, { maxWait: 10_000, timeout: 60_000 });
+  } catch (error) {
+    console.error(`[price-import] bulk accept rolled back batch=${batchId}`, error);
+    throw error;
   }
 
-  await prisma.priceImportBatch.update({
-    where: { id: batchId },
-    data: { reviewedAt: new Date(), reviewedById: admin.id },
-  });
-
-  await recomputeBatchStatus(batchId);
-
-  revalidatePath(`/admin/price-import/${batchId}`);
-  revalidatePath("/admin/price-import");
+  console.info(`[price-import] bulk accept committed batch=${batchId} lines=${plan.lineIds.length}`);
   revalidateStorefront();
+  redirect(`/admin/price-import?confirmed=${encodeURIComponent(batchId)}`);
 }
 
 /**
