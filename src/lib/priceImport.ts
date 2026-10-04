@@ -57,7 +57,7 @@ const COLOR_ALIASES: Array<[RegExp, string]> = [
   [/\bnavy\b/i, "Navy"], [/\bmint\b/i, "Mint"],
   [/\bmauve\b/i, "Mauve"], [/\bgr[ae]y\b/i, "Gray"],
   [/\b(?:gla?cier|glaicer)\b/i, "Glacier"], [/\b(?:blurgundy|burgundy)\b/i, "Burgundy"],
-  [/\brose\s+gold\b/i, "Rose Gold"],
+  [/\brose\s+gold\b/i, "Rose Gold"], [/\bbronze\b/i, "Bronze"],
   [/\bblack\b/i, "Black"], [/\bsilver\b/i, "Silver"], [/\bblue\b/i, "Blue"],
   [/\borange\b/i, "Orange"], [/\bwhite\b/i, "White"], [/\blavender\b/i, "Lavender"],
   [/\bsage\b/i, "Sage"], [/\bgreen\b/i, "Green"], [/\bpink\b/i, "Pink"],
@@ -161,7 +161,7 @@ function watchStrapSize(text: string): string | null {
 }
 
 function supplierWatchCaseColor(text: string): string | null {
-  const match = /\bapple\s+watch\s+(?:(?:series\s*|s\s*)\d+|se\s*\d+|ultra\s*\d+)\s+(?:40|41|42|44|45|46|49)\s*(?:mm|мм)?\s+(jet\s+black|space\s+gray|rose\s+gold|natural|silver|black|starlight|midnight|white|gold)\b/i.exec(text);
+  const match = /\bapple\s+watch\s+(?:(?:series\s*|s\s*)\d+|se\s*\d+|ultra\s*\d+)\s+(?:40|41|42|44|45|46|49)\s*(?:mm|мм)?\s+(jet\s+black|space\s+gray|rose\s+gold|natural|silver|black|starlight|midnight|white|gold|bronze)\b/i.exec(text);
   if (!match) return null;
   const value = match[1].toLowerCase().replace(/\s+/g, " ");
   return ({ "jet black": "Jet Black", "space gray": "Space Gray", "rose gold": "Rose Gold" } as Record<string, string>)[value]
@@ -453,6 +453,12 @@ function ipadFamily(text: string | null): string | null {
   if (!text) return null;
   const source = normalizeForMatch(text);
   if (/^ipad 11\b/.test(source) || /^ipad a16\b/.test(source)) return "base-a16";
+  const numberedAir = /^ipad air (6|7) (11|13) m(2|3)\b/.exec(source);
+  if (numberedAir) {
+    if ((numberedAir[1] === "6" && numberedAir[3] !== "2") ||
+      (numberedAir[1] === "7" && numberedAir[3] !== "3")) return null;
+    return `air-${numberedAir[2]}-m${numberedAir[3]}`;
+  }
   const air8 = /^ipad air 8 (11|13)\b/.exec(source);
   if (air8) return "air-" + air8[1] + "-m4";
   const air = /^ipad air (11|13)(?: inch)?\b/.exec(source);
