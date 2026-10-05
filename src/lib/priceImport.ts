@@ -220,6 +220,18 @@ const ULTRA4_BUNDLE_BY_SKU: Record<string, { color: string; band: string; family
   MJAQ4: { color: "Natural Titanium", band: "Trail Loop (Sand)", family: "trail loop", fit: "M/L" },
 };
 
+// Apple's Series 12 finish names and Sport Band colors come from its official
+// catalog. These exact supplier part numbers identify the sold case/band/fit
+// bundles; "Gold" and "Bronze" alone are not sufficient to select a band.
+const SERIES12_BUNDLE_BY_SKU: Record<string, { size: string; sourceColor: string; color: string; band: string; fit: string }> = {
+  MJED4: { size: "42", sourceColor: "Gold", color: "Light Gold", band: "Sand Sport Band", fit: "S/M" },
+  MJEF4: { size: "42", sourceColor: "Bronze", color: "Dark Bronze", band: "Olive Sport Band", fit: "S/M" },
+  MJEN4: { size: "46", sourceColor: "Gold", color: "Light Gold", band: "Sand Sport Band", fit: "S/M" },
+  MJEP4: { size: "46", sourceColor: "Gold", color: "Light Gold", band: "Sand Sport Band", fit: "M/L" },
+  MJEQ4: { size: "46", sourceColor: "Bronze", color: "Dark Bronze", band: "Olive Sport Band", fit: "S/M" },
+  MJEU4: { size: "46", sourceColor: "Bronze", color: "Dark Bronze", band: "Olive Sport Band", fit: "M/L" },
+};
+
 /**
  * Match Apple Watch rows only when model, case size and case color identify a
  * single catalog option. Any strap details present in the supplier row must
@@ -235,6 +247,22 @@ export function matchAppleWatchVariant(
   const caseSize = appleWatchCaseSize(line.parsedMemory) ?? appleWatchCaseSize(line.parsedModel);
   const sourceColor = appleWatchCaseColor(line.parsedColor);
   if (!model || !caseSize || !sourceColor) return null;
+
+  const series12Bundle = line.parsedSku ? SERIES12_BUNDLE_BY_SKU[line.parsedSku.toUpperCase()] : null;
+  if (series12Bundle) {
+    const source = normalizeForMatch(line.parsedModel ?? "");
+    const explicitBand = /\b(sand|olive|burgundy)\s+sport\s+band\b/.exec(source)?.[1];
+    if (model !== "Apple Watch Series 12" || caseSize !== series12Bundle.size ||
+      sourceColor !== normalizeForMatch(series12Bundle.sourceColor) ||
+      watchStrapSize(line.parsedModel ?? "") !== series12Bundle.fit ||
+      (explicitBand && !normalizeForMatch(series12Bundle.band).startsWith(explicitBand))) return null;
+    const exact = candidates.filter((candidate) =>
+      appleWatchModel(candidate.productName) === model &&
+      appleWatchCaseSize(candidate.memory) === caseSize &&
+      normalizeForMatch(candidate.color ?? "") === normalizeForMatch(series12Bundle.color) &&
+      normalizeForMatch(candidate.region ?? "") === normalizeForMatch(`${series12Bundle.band} ${series12Bundle.fit}`));
+    return exact.length === 1 ? exact[0].id : null;
+  }
 
   const knownBundle = line.parsedSku ? ULTRA4_BUNDLE_BY_SKU[line.parsedSku.toUpperCase()] : null;
   if (knownBundle) {

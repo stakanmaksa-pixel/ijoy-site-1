@@ -10,6 +10,8 @@ export const SEPTEMBER_2026_SOURCES = [
   "https://www.garmin.com/en-US/newsroom/press-release/wearables-health/meet-cirqa-smart-band-the-screen-free-health-and-fitness-tracker-from-garmin/",
   "https://www.garmin.com/en-US/p/1989182/",
   "https://consumer.huawei.com/cn/headphones/freeclip2/specs/",
+  "https://www.apple.com/au/newsroom/2026/09/introducing-apple-watch-series-12-with-the-all-new-health-sensing-system/",
+  "https://www.apple.com/au/os/watchos/",
 ] as const;
 
 export const SEPTEMBER_2026_PHOTO_FILES = [
@@ -83,7 +85,7 @@ const appleWatchFinishes = [
   ["Night Blue", "Navy Blue Sport Band", "apple-watch-series-12-night-blue.jpg"],
   ["Pearl White", "Sand Sport Band", "apple-watch-series-12-pearl-white.jpg"],
   ["Dark Bronze", "Olive Sport Band", "apple-watch-series-12-dark-bronze.jpg"],
-  ["Light Gold", "Burgundy Sport Band", "apple-watch-series-12-light-gold.jpg"],
+  ["Light Gold", "Sand Sport Band", "apple-watch-series-12-light-gold.jpg"],
   ["Black", "Black Sport Band", "apple-watch-series-12-black.jpg"],
   ["Space Gray", "Navy Blue Sport Band", "apple-watch-series-12-space-gray.jpg"],
   ["Radiant Gold", "Radiant Gold Milanese Loop", "apple-watch-series-12-radiant-gold.jpg"],
@@ -188,10 +190,10 @@ export const SEPTEMBER_2026_PRODUCTS: SeptemberProduct[] = [
     variants: appleWatchFinishes.flatMap(([finish, band]) => [
       unpriced("42 мм", finish, `${band} S/M`),
       ...(finish === "Space Gray" ? [unpriced("42 мм", finish, `${band} M/L`)] : []),
-      ...(["Space Gray", "Black"].includes(finish) ? [unpriced("46 мм", finish, `${band} S/M`)] : []),
+      ...(["Space Gray", "Black", "Light Gold", "Dark Bronze"].includes(finish) ? [unpriced("46 мм", finish, `${band} S/M`)] : []),
       unpriced("46 мм", finish, `${band} M/L`),
     ]),
-    sources: [SEPTEMBER_2026_SOURCES[3]],
+    sources: [SEPTEMBER_2026_SOURCES[3], SEPTEMBER_2026_SOURCES[8], SEPTEMBER_2026_SOURCES[9]],
   },
   {
     category: "naushniki",

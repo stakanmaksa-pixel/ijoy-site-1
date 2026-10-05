@@ -78,9 +78,6 @@ export function ownerPriceCategory(line: ParsedPriceLine): { category: PriceCate
   ].join("|"))) return null;
   if (/^iPad 11 A16 2025 256 Yellow Wi-Fi\b/i.test(model) ||
     /^iPad Air 7 11 M3 512 Purple Wi-Fi\b/i.test(model)) return null;
-  // The owner has not confirmed whether these shorthand finishes mean the
-  // Light Gold/Dark Bronze sport-band versions in the catalog.
-  if (/^Apple Watch S12 (?:42|46) (?:Gold|Bronze)\b/i.test(model)) return null;
   if (line.phoneModel) return { category: "iPhone", markup: 4000 };
   if (/^iPad\b/i.test(model)) return { category: "iPad", markup: 4000 };
   if (/^Apple Watch\b/i.test(model) && !/^Apple Watch\s+(?:S\s*10|Series\s*10|Ultra\s*2)\b/i.test(model)) {

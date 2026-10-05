@@ -32,6 +32,9 @@ function stockApproval(candidate: CatalogPriceCandidate): boolean {
   if (candidate.productName === "Apple Watch Series 12" &&
     candidate.memory === "42 мм" && candidate.color === "Space Gray" &&
     candidate.region === "Navy Blue Sport Band M/L") return true;
+  if (candidate.productName === "Apple Watch Series 12" && [
+    "MJED4", "MJEF4", "MJEN4", "MJEP4", "MJEQ4", "MJEU4",
+  ].includes(candidate.sku ?? "")) return true;
   if (candidate.productName === "Apple Watch Ultra 4" && candidate.memory === "49 мм" &&
     ((candidate.color === "Black Titanium" && candidate.region === "Ocean Band (Translucent Black)") ||
       (candidate.color === "Natural Titanium" && candidate.region === "Trail Loop (Sand)"))) return true;

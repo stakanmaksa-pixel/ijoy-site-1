@@ -3,6 +3,7 @@ import { test } from "node:test";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { approvedSecondSupplierProducts } from "../data/approved-second-supplier";
+import { SEPTEMBER_2026_PRODUCTS } from "../data/september-2026-catalog";
 import {
   appleWatchModel,
   buildAcceptedSupplierMappings,
@@ -386,6 +387,47 @@ test("watch matching does not ignore an unavailable strap fit or case-size misma
     { id: "46-ml", productName: "Apple Watch Series 12", memory: "46 мм", color: "Space Gray", region: "Navy Blue Sport Band M/L", rawLabel: null },
   ];
   assert.equal(matchAppleWatchVariant(line, currentOptions), null);
+});
+
+test("Series 12 supplier part numbers map shorthand Gold and Bronze only to the exact Apple case and Sport Band", () => {
+  const bundles = [
+    ["MJED4", "42", "Gold", "Light Gold", "Sand Sport Band", "S/M"],
+    ["MJEF4", "42", "Bronze", "Dark Bronze", "Olive Sport Band", "S/M"],
+    ["MJEN4", "46", "Gold", "Light Gold", "Sand Sport Band", "S/M"],
+    ["MJEP4", "46", "Gold", "Light Gold", "Sand Sport Band", "M/L"],
+    ["MJEQ4", "46", "Bronze", "Dark Bronze", "Olive Sport Band", "S/M"],
+    ["MJEU4", "46", "Bronze", "Dark Bronze", "Olive Sport Band", "M/L"],
+  ] as const;
+  const candidates = bundles.flatMap(([sku, size, , color, band, fit]) => [
+    { id: sku, productName: "Apple Watch Series 12", memory: `${size} мм`, color, region: `${band} ${fit}`, rawLabel: null },
+    { id: `${sku}-wrong-band`, productName: "Apple Watch Series 12", memory: `${size} мм`, color, region: `Burgundy Sport Band ${fit}`, rawLabel: null },
+  ]);
+  for (const [sku, size, shortColor] of bundles) {
+    const row = `Apple Watch S12 ${size} ${shortColor} ${bundles.find((item) => item[0] === sku)![5]} ${sku} 🇦🇺 - 40.000₽`;
+    assert.equal(matchAppleWatchVariant(parsePriceLine(row), candidates), sku, row);
+  }
+  assert.equal(matchAppleWatchVariant(parsePriceLine("Apple Watch S12 42 Gold S/M MJED4 🇦🇺 - 37.900₽"), [
+    { id: "wrong-band", productName: "Apple Watch Series 12", memory: "42 мм", color: "Light Gold", region: "Burgundy Sport Band S/M", rawLabel: null },
+  ]), null);
+  assert.equal(matchAppleWatchVariant(parsePriceLine("Apple Watch S12 42 Bronze S/M MJED4 🇦🇺 - 37.900₽"), candidates), null);
+  assert.equal(matchAppleWatchVariant(parsePriceLine("Apple Watch S12 46 Gold M/L MJED4 🇦🇺 - 40.200₽"), candidates), null);
+  assert.equal(matchAppleWatchVariant(parsePriceLine("Apple Watch S12 42 Gold S/M MJED4 🇦🇺 - 37.900₽"), [
+    candidates[0]!, { ...candidates[0]!, id: "duplicate" },
+  ]), null);
+});
+
+test("Series 12 template uses the official case finishes and only the approved Gold/Bronze band sizes", () => {
+  const product = SEPTEMBER_2026_PRODUCTS.find((item) => item.slug === "apple-watch-series-12");
+  assert(product);
+  assert(product.sources.some((source) => source.includes("apple.com/au/newsroom/2026/09/introducing-apple-watch-series-12")));
+  const gold = product.variants.filter((variant) => variant.color === "Light Gold");
+  const bronze = product.variants.filter((variant) => variant.color === "Dark Bronze");
+  assert.deepEqual(gold.map((variant) => `${variant.memory} ${variant.region}`), [
+    "42 мм Sand Sport Band S/M", "46 мм Sand Sport Band S/M", "46 мм Sand Sport Band M/L",
+  ]);
+  assert.deepEqual(bronze.map((variant) => `${variant.memory} ${variant.region}`), [
+    "42 мм Olive Sport Band S/M", "46 мм Olive Sport Band S/M", "46 мм Olive Sport Band M/L",
+  ]);
 });
 
 test("AirPods Max matching keeps 2020 Lightning, 2024 USB-C and Max 2 as separate editions", () => {
