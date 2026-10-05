@@ -25,6 +25,21 @@ const diagnose = process.argv.includes("--diagnose");
 const allowPartial = process.argv.includes("--allow-partial");
 const approvedHash = process.argv.find((arg) => arg.startsWith("--approve="))?.slice("--approve=".length);
 
+function stockApproval(candidate: CatalogPriceCandidate): boolean {
+  if (candidate.productName === "AirPods 5 Wireless") return true;
+  if (candidate.productName === "Apple Watch Series 12" &&
+    candidate.color === "Black" && ["42 мм", "46 мм"].includes(candidate.memory ?? "")) return true;
+  if (candidate.productName === "Apple Watch Series 12" &&
+    candidate.memory === "42 мм" && candidate.color === "Space Gray" &&
+    candidate.region === "Navy Blue Sport Band M/L") return true;
+  if (candidate.productName === "Apple Watch Ultra 4" && candidate.memory === "49 мм" &&
+    ((candidate.color === "Black Titanium" && candidate.region === "Ocean Band (Translucent Black)") ||
+      (candidate.color === "Natural Titanium" && candidate.region === "Trail Loop (Sand)"))) return true;
+  if (["iPhone 18 Pro", "iPhone 18 Pro Max"].includes(candidate.productName) &&
+    ["eSIM", "SIM+eSIM"].includes(candidate.region ?? "")) return true;
+  return false;
+}
+
 function describeUnmatched(line: ParsedPriceLine, candidates: CatalogPriceCandidate[]): string {
   const sku = normalizeForMatch(line.parsedSku ?? "");
   const skuMatches = sku ? candidates.filter((candidate) =>
@@ -93,18 +108,19 @@ async function main() {
       if (decision.variantId) count.matched += 1;
       counts.set(decision.category, count);
     }
-    console.log("Источник: 04.10.2026. Только существующие модификации, только цены; новые товары и остатки не затрагиваются.");
+    console.log("Источник: 04.10.2026. Только существующие модификации; новые товары не создаются, отсутствие строк не обнуляет цены.");
     for (const [category, count] of counts) console.log(`${category}: ${count.matched}/${count.source} строк сопоставлено`);
     console.log(`Уникальных модификаций: ${changes.length}; без совпадения: ${unmatched.length}`);
     const unavailable = changes.filter((change) => !stockById.get(change.variant.id));
-    if (unavailable.length) console.log(`ВНИМАНИЕ: ${unavailable.length} найденных модификаций сейчас помечены «нет в наличии». Скрипт меняет только цену, не наличие.`);
+    const unapprovedAvailability = unavailable.filter((change) => !stockApproval(change.variant));
+    if (unavailable.length) console.log(`ДОСТУПНОСТЬ: ${unavailable.length} найденных модификаций сейчас помечены «нет в наличии»; ${unapprovedAvailability.length} не разрешено включать автоматически.`);
     if (diagnose) for (const change of unavailable) console.log(`НЕТ В НАЛИЧИИ: ${change.variant.productName} | ${change.variant.memory ?? ""} | ${change.variant.color ?? ""} | ${change.variant.region ?? ""} | ${change.variant.id}`);
     for (const decision of unmatched) console.log(`НЕТ СОВПАДЕНИЯ: ${decision.line.rawLine} — ${decision.reason}`);
     if (diagnose) for (const decision of unmatched) console.log(`ДИАГНОЗ: ${decision.line.rawLine} — ${describeUnmatched(decision.line, candidates)}`);
     for (const change of changes) {
-      console.log(`ЦЕНА: ${change.variant.productName} | ${change.variant.memory ?? ""} | ${change.variant.color ?? ""} | ${change.variant.region ?? ""} | ${change.variant.id} | ${change.variant.price ?? "—"} → ${change.newPrice} ₽ | поставщик ${change.supplierPrice} ₽ | ${change.sources.length} предложений`);
+      console.log(`ЦЕНА: ${change.variant.productName} | ${change.variant.memory ?? ""} | ${change.variant.color ?? ""} | ${change.variant.region ?? ""} | ${change.variant.id} | ${change.variant.price ?? "—"} → ${change.newPrice} ₽ | поставщик ${change.supplierPrice} ₽ | ${change.sources.length} предложений${stockById.get(change.variant.id) ? "" : " | сейчас нет в наличии"}`);
     }
-    const plan = changes.map((change) => ({ id: change.variant.id, oldPrice: change.variant.price, newPrice: change.newPrice }));
+    const plan = changes.map((change) => ({ id: change.variant.id, oldPrice: change.variant.price, newPrice: change.newPrice, oldStock: stockById.get(change.variant.id), newStock: true }));
     const planHash = createHash("sha256").update(JSON.stringify({ input, plan })).digest("hex").slice(0, 16);
     console.log(`Контрольный код плана: ${planHash}`);
     if (!apply) {
@@ -113,25 +129,26 @@ async function main() {
     }
     if (approvedHash !== planHash) throw new Error("План изменился или не указан --approve=<контрольный код>; база не изменена");
     if (unmatched.length && !allowPartial) throw new Error("Есть строки без совпадения; нужна отдельная проверка и явный --allow-partial");
+    if (unapprovedAvailability.length) throw new Error("Найдены не согласованные с владельцем изменения наличия; база не изменена");
     if (!changes.length) throw new Error("Нет совпавших модификаций; записывать нечего");
 
     // The migrate service mounts /app/backups on a durable Docker volume.
     const backupDir = path.resolve("backups/owner-price-2026-10-04");
     await mkdir(backupDir, { recursive: true });
     const backupPath = path.join(backupDir, `before-${new Date().toISOString().replace(/[:.]/g, "-")}-${planHash}.json`);
-    await writeFile(backupPath, JSON.stringify({ sourcePath, planHash, createdAt: new Date().toISOString(), changes }, null, 2), { flag: "wx" });
+    await writeFile(backupPath, JSON.stringify({ sourcePath, planHash, createdAt: new Date().toISOString(), plan, changes }, null, 2), { flag: "wx" });
     console.log(`Резервная копия текущих цен: ${backupPath}`);
 
     await prisma.$transaction(async (tx) => {
       for (const change of changes) {
         const updated = await tx.productVariant.updateMany({
-          where: { id: change.variant.id, price: change.variant.price },
-          data: { price: new Prisma.Decimal(change.newPrice) },
+          where: { id: change.variant.id, price: change.variant.price, inStock: stockById.get(change.variant.id) },
+          data: { price: new Prisma.Decimal(change.newPrice), inStock: true },
         });
         if (updated.count !== 1) throw new Error(`Цена модификации ${change.variant.id} изменилась после проверки; вся запись отменена`);
       }
     }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable, timeout: 120_000 });
-    console.log(`ПРИМЕНЕНО: ${changes.length} цен. Остальные товары не изменены.`);
+    console.log(`ПРИМЕНЕНО: ${changes.length} цен, разрешённые позиции отмечены в наличии. Остальные товары не изменены.`);
   } finally {
     await prisma.$disconnect();
   }

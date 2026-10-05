@@ -212,6 +212,14 @@ export type SupplierVariantCandidate = {
   rawLabel: string | null;
 };
 
+// The supplier abbreviates these Australian Ultra 4 bundles. MJAY4 is the
+// translucent-black Ocean Band, while MJAQ4 is the Sand (not Desert) Trail
+// Loop in M/L. Match only those exact catalog configurations by part number.
+const ULTRA4_BUNDLE_BY_SKU: Record<string, { color: string; band: string; family: string; fit: string | null }> = {
+  MJAY4: { color: "Black Titanium", band: "Ocean Band (Translucent Black)", family: "ocean band", fit: null },
+  MJAQ4: { color: "Natural Titanium", band: "Trail Loop (Sand)", family: "trail loop", fit: "M/L" },
+};
+
 /**
  * Match Apple Watch rows only when model, case size and case color identify a
  * single catalog option. Any strap details present in the supplier row must
@@ -227,6 +235,20 @@ export function matchAppleWatchVariant(
   const caseSize = appleWatchCaseSize(line.parsedMemory) ?? appleWatchCaseSize(line.parsedModel);
   const sourceColor = appleWatchCaseColor(line.parsedColor);
   if (!model || !caseSize || !sourceColor) return null;
+
+  const knownBundle = line.parsedSku ? ULTRA4_BUNDLE_BY_SKU[line.parsedSku.toUpperCase()] : null;
+  if (knownBundle) {
+    if (model !== "Apple Watch Ultra 4" || caseSize !== "49" ||
+      sourceColor !== appleWatchCaseColor(knownBundle.color) ||
+      !normalizeForMatch(line.parsedModel ?? "").includes(knownBundle.family) ||
+      (knownBundle.fit && watchStrapSize(line.parsedModel ?? "") !== knownBundle.fit)) return null;
+    const exact = candidates.filter((candidate) =>
+      appleWatchModel(candidate.productName) === model &&
+      appleWatchCaseSize(candidate.memory) === caseSize &&
+      normalizeForMatch(candidate.color ?? "") === normalizeForMatch(knownBundle.color) &&
+      normalizeForMatch(candidate.region ?? "") === normalizeForMatch(knownBundle.band));
+    return exact.length === 1 ? exact[0].id : null;
+  }
 
   const matches = candidates.filter((candidate) => {
     const stored = candidate.rawLabel ? parsePriceLine(candidate.rawLabel) : null;

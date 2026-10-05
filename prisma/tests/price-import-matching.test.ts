@@ -366,6 +366,19 @@ test("Apple Watch Ultra rows match the exact titanium finish and band descriptor
   assert.equal(matchAppleWatchVariant(line, candidates), "black-band");
 });
 
+test("Australian Ultra 4 bundle SKUs correct the supplier's abbreviated band names", () => {
+  const candidates = [
+    { id: "black", productName: "Apple Watch Ultra 4", memory: "49 мм", color: "Black Titanium", region: "Ocean Band (Translucent Black)", rawLabel: null },
+    { id: "black-gray", productName: "Apple Watch Ultra 4", memory: "49 мм", color: "Black Titanium", region: "Ocean Band (Translucent Gray)", rawLabel: null },
+    { id: "natural-sand", productName: "Apple Watch Ultra 4", memory: "49 мм", color: "Natural Titanium", region: "Trail Loop (Sand)", rawLabel: null },
+    { id: "natural-desert", productName: "Apple Watch Ultra 4", memory: "49 мм", color: "Natural Titanium", region: "Alpine Loop (Desert)", rawLabel: null },
+  ];
+  assert.equal(matchAppleWatchVariant(parsePriceLine("Apple Watch Ultra 4 49 Black Black Ocean Band MJAY4 🇦🇺 - 68.900₽"), candidates), "black");
+  assert.equal(matchAppleWatchVariant(parsePriceLine("Apple Watch Ultra 4 49 Natural Desert Trail Loop M/L MJAQ4 🇦🇺 - 72.900₽"), candidates), "natural-sand");
+  assert.equal(matchAppleWatchVariant(parsePriceLine("Apple Watch Ultra 4 49 Black Black Ocean Band MJAQ4 🇦🇺 - 68.900₽"), candidates), null);
+  assert.equal(matchAppleWatchVariant(parsePriceLine("Apple Watch Ultra 4 49 Natural Desert Trail Loop M/L MJAQ4 🇦🇺 - 72.900₽"), [candidates[3]!]), null);
+});
+
 test("watch matching does not ignore an unavailable strap fit or case-size mismatch", () => {
   const line = parsePriceLine("Apple Watch S12 42 Space Gray M/L MJE94 🇮🇳 - 43.200₽");
   const currentOptions = [

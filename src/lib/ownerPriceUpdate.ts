@@ -46,10 +46,41 @@ const HEADPHONE_NAMES: Array<[RegExp, string]> = [
   [/^AirPods 5 Wireless\b/i, "AirPods 5 Wireless"],
   [/^AirPods Pro 3\b/i, "AirPods Pro 3"],
 ];
+const OWNER_DECLINED_PHONES = new Set([
+  "iPhone 13|256gb|red", "iPhone 14|256gb|red",
+  "iPhone 15|128gb|green", "iPhone 15|128gb|yellow",
+  "iPhone 15|512gb|blue", "iPhone 15|512gb|green",
+  "iPhone 15|512gb|pink", "iPhone 15|512gb|yellow",
+  "iPhone 16 E|512gb|black", "iPhone 16 E|512gb|white",
+]);
+
+function iphoneColorKey(value: string | null, model: string): string {
+  let color = normalizeForMatch(value ?? "");
+  // Existing catalog labels use Apple's full finish names. Restrict these
+  // aliases to the exact generations where that name denotes the same color.
+  if (/^iPhone 16 Pro(?: Max)?$/.test(model)) color = color.replace(/ titanium$/, "");
+  if (/^iPhone 17 Pro(?: Max)?$/.test(model)) {
+    if (color === "deep blue") color = "blue";
+    if (color === "cosmic orange") color = "orange";
+  }
+  return color;
+}
 
 /** Only explicitly priced families from this owner request; everything else stays untouched. */
 export function ownerPriceCategory(line: ParsedPriceLine): { category: PriceCategory; markup: number } | null {
   const model = line.parsedModel ?? "";
+  // On 5 October the owner explicitly declined creation of these four
+  // missing product families. Keep their offers out of this one-off update.
+  if (/^iPhone 15 (?:Plus|Pro)\b/i.test(model) ||
+    /^iPad Air (?:6 13 M2|8 13 M4)\b/i.test(model)) return null;
+  if (line.phoneModel && OWNER_DECLINED_PHONES.has([
+    line.phoneModel, normalizedMemory(line.parsedMemory), normalizeForMatch(line.parsedColor ?? ""),
+  ].join("|"))) return null;
+  if (/^iPad 11 A16 2025 256 Yellow Wi-Fi\b/i.test(model) ||
+    /^iPad Air 7 11 M3 512 Purple Wi-Fi\b/i.test(model)) return null;
+  // The owner has not confirmed whether these shorthand finishes mean the
+  // Light Gold/Dark Bronze sport-band versions in the catalog.
+  if (/^Apple Watch S12 (?:42|46) (?:Gold|Bronze)\b/i.test(model)) return null;
   if (line.phoneModel) return { category: "iPhone", markup: 4000 };
   if (/^iPad\b/i.test(model)) return { category: "iPad", markup: 4000 };
   if (/^Apple Watch\b/i.test(model) && !/^Apple Watch\s+(?:S\s*10|Series\s*10|Ultra\s*2)\b/i.test(model)) {
@@ -65,7 +96,7 @@ export function ownerPriceCategory(line: ParsedPriceLine): { category: PriceCate
 function exactIphoneMatch(line: ParsedPriceLine, candidates: CatalogPriceCandidate[]): string | null {
   const model = canonicalIphoneModel(line.phoneModel ?? "");
   const memory = normalizedMemory(line.parsedMemory);
-  const color = normalizeForMatch(line.parsedColor ?? "");
+  const color = model ? iphoneColorKey(line.parsedColor, model) : "";
   const sim = normalizedIphoneSim(line.parsedRegion, model);
   // Do not infer an absent SIM from a generation-independent country guess.
   if (!model || !memory || !color || !sim) return null;
@@ -73,7 +104,7 @@ function exactIphoneMatch(line: ParsedPriceLine, candidates: CatalogPriceCandida
     const stored = candidate.rawLabel ? parsePriceLine(candidate.rawLabel) : null;
     if (canonicalIphoneModel(candidate.productName) !== model) return false;
     if (normalizedMemory(candidate.memory ?? stored?.parsedMemory ?? null) !== memory) return false;
-    if (normalizeForMatch(candidate.color ?? stored?.parsedColor ?? "") !== color) return false;
+    if (iphoneColorKey(candidate.color ?? stored?.parsedColor ?? null, model) !== color) return false;
     const candidateSim = normalizedIphoneSim(candidate.region, model)
       ?? normalizedIphoneSim(candidate.rawLabel, model);
     return candidateSim === sim;
