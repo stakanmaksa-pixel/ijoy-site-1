@@ -27,7 +27,12 @@ export async function loginAction(formData: FormData) {
   cookieStore.set(ADMIN_COOKIE_NAME, token, {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    // Public HTTP deployments cannot send Secure cookies back to the app.
+    // Keep the production-safe default; allow an explicit deployment override
+    // when TLS is terminated nowhere and the app is intentionally served over HTTP.
+    secure: process.env.ADMIN_COOKIE_SECURE === "false"
+      ? false
+      : process.env.NODE_ENV === "production",
     maxAge: ADMIN_COOKIE_MAX_AGE,
     path: "/",
   });
