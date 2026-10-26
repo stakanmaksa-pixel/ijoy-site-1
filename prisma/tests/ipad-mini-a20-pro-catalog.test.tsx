@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { renderToStaticMarkup } from "react-dom/server";
-import { MINI_A20_SLUG, MINI_A20_CONTENT, MINI_A20_VARIANTS, MINI_A20_IMAGES, MINI_A20_COLOR_IMAGES, MINI_A20_PHOTO_ASSETS, miniA20Photo, miniA20OptionKey, planMiniA20Addition } from "../data/ipad-mini-a20-pro-catalog";
+import { MINI_A20_SLUG, MINI_A20_CONTENT, MINI_A20_VARIANTS, MINI_A20_IMAGES, MINI_A20_COLOR_IMAGES, MINI_A20_PHOTO_ASSETS, isRetiredMiniA17Product, miniA20Photo, miniA20OptionKey, planMiniA20Addition } from "../data/ipad-mini-a20-pro-catalog";
 import { MINI_SLUG, MINI_OPTIONS } from "../data/ipad-mini-catalog";
 import { validateMiniA20Photo } from "../scripts/download-ipad-mini-a20-pro-photos";
 import { VariantGrid } from "../../src/components/VariantGrid";
@@ -64,11 +64,27 @@ test("information distinguishes processors by storage, launch from local stock, 
   assert(!getCompatibleAccessoryBundle(MINI_A20_SLUG)?.slugs.some(slug => slug.includes("keyboard")));
 });
 
-test("navigation puts the new mini before A17 Pro without removing the older generation", async () => {
+test("only the new mini remains in navigation; A17 Pro records and variants remain available for history", async () => {
   const source = await readFile(path.join(process.cwd(), "src/lib/catalog.ts"), "utf8");
   const newer = source.indexOf('"Apple iPad mini (A20 Pro, 2026)"');
   const older = source.indexOf('"Apple iPad mini (A17 Pro)"');
-  assert(newer >= 0 && older > newer);
+  assert(newer >= 0 && older === -1);
+  assert(!source.includes('"iPad Mini 7"'));
+  assert.equal(MINI_SLUG, "ipad-mini-a17-pro");
+  assert.equal(MINI_OPTIONS.length, 24);
+});
+
+test("retirement targets only Apple mini A17 Pro and known Mini 7 aliases, never A20 or other models", () => {
+  const tablet = (name: string, slug = "legacy-mini", brand: string | null = "Apple", category = "planshety") => ({ name, slug, brand, category: { slug: category } });
+  for (const model of [tablet("Apple iPad mini (A17 Pro)"), tablet("iPad Mini 7"), tablet("iPad mini (A17 Pro, 2024)"), tablet("iPad mini", "ipad-mini-a17-pro")]) assert(isRetiredMiniA17Product(model), model.name);
+  for (const model of [tablet(MINI_A20_CONTENT.name, MINI_A20_SLUG), tablet("iPad mini (A20 Pro)", "ipad-mini-a17-pro"), tablet("iPad mini 6"), tablet("iPad Pro 11 M5"), tablet("iPad Mini 7", "other", "Samsung"), tablet("iPad Mini 7", "other", "Apple", "aksessuary"), tablet("iPad mini (A17 Pro)", MINI_A20_SLUG)]) assert.equal(isRetiredMiniA17Product(model), false, model.name);
+});
+
+test("generic imports and legacy maintenance cannot reintroduce the retired A17 Pro", async () => {
+  const official = await readFile(path.join(process.cwd(), "prisma/official-catalog.ts"), "utf8");
+  assert(!official.includes('slug: "ipad-mini-a17-pro"'));
+  const legacy = await readFile(path.join(process.cwd(), "prisma/scripts/sync-ipad-mini-catalog.ts"), "utf8");
+  assert(legacy.includes('...MINI_CONTENT, status: "HIDDEN"'));
 });
 
 test("storefront renders all 20 options, glass/connectivity filters, specs and request price", () => {

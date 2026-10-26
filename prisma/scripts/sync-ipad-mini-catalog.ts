@@ -38,7 +38,8 @@ async function main() {
     ];
     if (dryRun) return log;
     const category = await tx.category.findUniqueOrThrow({ where: { slug: "planshety" } });
-    const content = { ...MINI_CONTENT, status: "PUBLISHED" as const, categoryId: category.id, images: MINI_IMAGES, colorImages: MINI_COLOR_IMAGES };
+    // A17 Pro was retired by the owner; historical maintenance must not republish it.
+    const content = { ...MINI_CONTENT, status: "HIDDEN" as const, categoryId: category.id, images: MINI_IMAGES, colorImages: MINI_COLOR_IMAGES };
     if (primary) {
       await tx.product.update({ where: { id: primary.id }, data: content });
     } else {

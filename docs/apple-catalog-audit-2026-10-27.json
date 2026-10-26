@@ -10,7 +10,8 @@
     "variantCount": 20,
     "newPrice": null,
     "newInStock": false,
-    "preserves": ["ipad-mini-a17-pro", "existing offer IDs", "existing prices", "existing stock"],
+    "preserves": ["existing offer IDs", "existing prices", "existing stock", "order history"],
+    "ownerDecision": "iPad mini A17 Pro убрать с витрины: HIDDEN, без удаления карточек, вариантов и истории заказов. Новый A20 Pro остаётся.",
     "sources": ["https://www.apple.com/ipad-mini/specs/", "https://www.apple.com/shop/buy-ipad/ipad-mini", "https://www.apple.com/newsroom/2026/10/apple-gives-ipad-mini-its-biggest-update-ever/"]
   },
   "alreadyRepresentedLocally": [

@@ -11,6 +11,7 @@ import path from "node:path";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../../src/generated/prisma/client";
 import { variantImageKey } from "../../src/lib/pickCoverImage";
+import { MINI_A20_SLUG, MINI_A20_VARIANTS, miniA20OptionKey, isRetiredMiniA17Product } from "../data/ipad-mini-a20-pro-catalog";
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 const failures: string[] = [];
@@ -234,7 +235,6 @@ async function checkIpadsAndPencils() {
     { slug: "ipad-air-11-m4", variants: 32, memories: 4, colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
     { slug: "ipad-air-13-m4", variants: 32, memories: 4, colors: ["Space Gray", "Blue", "Purple", "Starlight"] },
     { slug: "ipad-a16", variants: 24, memories: 3, colors: ["Blue", "Pink", "Yellow", "Silver"] },
-    { slug: "ipad-mini-a17-pro", variants: 24, memories: 3, colors: ["Blue", "Purple", "Starlight", "Space Gray"] },
   ] as const;
   for (const expectedIpad of standardIpads) {
     const product = await prisma.product.findUnique({ where: { slug: expectedIpad.slug }, include: { variants: true } });
@@ -270,6 +270,24 @@ async function checkIpadsAndPencils() {
     if (hashes.size !== expectedIpad.colors.length) failures.push(`${product.name}: у каждого цвета должно быть своё фото`);
     else console.log(`OK   ${product.name}: ${expectedIpad.variants} вариантов и ${expectedIpad.colors.length} точных фото`);
   }
+
+  const currentMini = await prisma.product.findUnique({ where: { slug: MINI_A20_SLUG }, include: { variants: true } });
+  if (!currentMini || currentMini.status !== "PUBLISHED") {
+    failures.push("iPad mini A20 Pro: новая модель не опубликована");
+  } else {
+    const keys = new Set(currentMini.variants.map(miniA20OptionKey));
+    if (currentMini.variants.length !== 20 || keys.size !== 20 || keys.has(null) || MINI_A20_VARIANTS.some(option => !keys.has(miniA20OptionKey(option)))) {
+      failures.push("iPad mini A20 Pro: ожидалось 20 допустимых конфигураций памяти, цвета, подключения и стекла");
+    }
+    const imageMap = (currentMini.colorImages as Record<string, string[]> | null) ?? {};
+    for (const variant of currentMini.variants) await assertFile(currentMini.name, imageMap[variantImageKey(variant)]?.[0] ?? imageMap[variant.color ?? ""]?.[0]);
+    console.log("CHECK iPad mini A20 Pro: новая модель и её фотографии проверены");
+  }
+  const publishedAppleTablets = await prisma.product.findMany({
+    where: { status: "PUBLISHED", brand: { equals: "Apple", mode: "insensitive" }, category: { slug: "planshety" } },
+    select: { slug: true, name: true, brand: true, category: { select: { slug: true } } },
+  });
+  for (const product of publishedAppleTablets.filter(isRetiredMiniA17Product)) failures.push(`${product.slug}: старый iPad mini A17 Pro всё ещё опубликован`);
 
   const publishedM5 = await prisma.product.findMany({
     where: {

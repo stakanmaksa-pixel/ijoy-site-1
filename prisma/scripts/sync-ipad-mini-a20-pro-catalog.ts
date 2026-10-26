@@ -1,18 +1,18 @@
-// Safe by default: --plan-only needs no database; --dry-run reads it; --apply writes ONLY this generation.
+// Safe by default: --apply updates A20 Pro and hides the owner's retired A17 Pro; never deletes records.
 import "dotenv/config";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Prisma, PrismaClient } from "../../src/generated/prisma/client";
 import { validateMiniA20Photo } from "./download-ipad-mini-a20-pro-photos";
-import { MINI_A20_SLUG, MINI_A20_NAME, MINI_A20_SOURCES, MINI_A20_CONTENT, MINI_A20_VARIANTS, MINI_A20_IMAGES, MINI_A20_COLOR_IMAGES, MINI_A20_PHOTO_ASSETS, miniA20OptionKey, planMiniA20Addition } from "../data/ipad-mini-a20-pro-catalog";
+import { MINI_A20_SLUG, MINI_A20_NAME, MINI_A20_SOURCES, MINI_A20_CONTENT, MINI_A20_VARIANTS, MINI_A20_IMAGES, MINI_A20_COLOR_IMAGES, MINI_A20_PHOTO_ASSETS, RETIRED_MINI_A17_SLUGS, isRetiredMiniA17Product, miniA20OptionKey, planMiniA20Addition } from "../data/ipad-mini-a20-pro-catalog";
 
 async function main() {
   const args = new Set(process.argv.slice(2));
   if ([...args].some(arg => !["--apply", "--dry-run", "--plan-only"].includes(arg)) || args.size > 1) throw Error("Укажите один режим: --plan-only, --dry-run или --apply. Без флага выполняется только dry-run.");
   for (const photo of MINI_A20_PHOTO_ASSETS) validateMiniA20Photo(await readFile(path.join(process.cwd(), "public", photo.file.slice(1))));
   if (args.has("--plan-only")) {
-    console.log(JSON.stringify({ mode: "PLAN ONLY — без подключения к базе", slug: MINI_A20_SLUG, ...MINI_A20_CONTENT, variants: MINI_A20_VARIANTS, photos: MINI_A20_PHOTO_ASSETS, sources: MINI_A20_SOURCES }, null, 2));
+    console.log(JSON.stringify({ mode: "PLAN ONLY — без подключения к базе", slug: MINI_A20_SLUG, ...MINI_A20_CONTENT, variants: MINI_A20_VARIANTS, photos: MINI_A20_PHOTO_ASSETS, sources: MINI_A20_SOURCES, retirement: { slugs: RETIRED_MINI_A17_SLUGS, status: "HIDDEN", deletes: false } }, null, 2));
     return;
   }
   if (!process.env.DATABASE_URL) throw Error("DATABASE_URL не задан. База не изменялась. Для проверки без базы используйте --plan-only.");
@@ -28,13 +28,20 @@ async function main() {
       const old = aliases[0];
       if (old && (old.categoryId !== category.id || old.brand !== "Apple")) throw Error("Карточка с таким slug относится к другой категории или бренду. Изменения отменены.");
       const variantsToCreate = planMiniA20Addition(old?.variants ?? []);
+      const tabletIdentities = await tx.product.findMany({
+        where: { categoryId: category.id, brand: { equals: "Apple", mode: "insensitive" } },
+        select: { id: true, slug: true, name: true, brand: true, status: true, category: { select: { slug: true } } },
+      });
+      const retire = tabletIdentities.filter(item => item.status !== "HIDDEN" && isRetiredMiniA17Product(item));
       console.log(`${old ? "UPDATE" : "CREATE"} ${MINI_A20_NAME}: новых конфигураций ${variantsToCreate.length}, всего 20. Новые — без цены и без подтверждённого наличия.`);
+      for (const item of retire) console.log(`${apply ? "HIDE" : "PLAN HIDE"} ${item.name} (${item.slug}): только скрытие, без удаления вариантов, цен и заказов.`);
       if (!apply) { console.log("DRY RUN: база и резервные копии не изменялись."); return; }
 
       const directory = path.resolve("backups/ipad-mini-a20-pro");
       await mkdir(directory, { recursive: true });
       const backup = path.join(directory, `before-${Date.now()}.json`);
-      await writeFile(backup, JSON.stringify({ target: MINI_A20_SLUG, before: old ?? null, sources: MINI_A20_SOURCES }, null, 2), { flag: "wx" });
+      const retiredBefore = retire.length ? await tx.product.findMany({ where: { id: { in: retire.map(item => item.id) } }, include: { variants: true } }) : [];
+      await writeFile(backup, JSON.stringify({ target: MINI_A20_SLUG, before: old ?? null, retiredBefore, sources: MINI_A20_SOURCES }, null, 2), { flag: "wx" });
       console.log(`BACKUP ${backup}`);
       // Preserve owner photographs when the target already has its own gallery.
       const images = old?.images.length ? old.images : MINI_A20_IMAGES;
@@ -53,7 +60,13 @@ async function main() {
         const current = after.find(item => item.id === before.id);
         if (!current || current.price?.toString() !== before.price?.toString() || current.inStock !== before.inStock || current.memory !== before.memory || current.color !== before.color || current.region !== before.region || current.sku !== before.sku || current.rawLabel !== before.rawLabel) throw Error("Существующее предложение изменилось. Транзакция отменена.");
       }
-      console.log(`OK ${MINI_A20_SLUG}: 20 конфигураций. Старый mini A17 Pro, другие товары, цены и наличие не изменены.`);
+      if (retire.length) {
+        const hidden = await tx.product.updateMany({ where: { id: { in: retire.map(item => item.id) }, categoryId: category.id }, data: { status: "HIDDEN" } });
+        if (hidden.count !== retire.length) throw Error("Не все старые mini скрыты. Транзакция отменена.");
+        const remaining = await tx.product.count({ where: { id: { in: retire.map(item => item.id) }, status: { not: "HIDDEN" } } });
+        if (remaining) throw Error("Проверка скрытия A17 Pro не пройдена. Транзакция отменена.");
+      }
+      console.log(`OK ${MINI_A20_SLUG}: 20 конфигураций. Скрыто старых mini A17 Pro: ${retire.length}. Варианты, история заказов, цены и наличие сохранены.`);
     }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable, timeout: 60000 });
   } finally { await prisma.$disconnect(); }
 }

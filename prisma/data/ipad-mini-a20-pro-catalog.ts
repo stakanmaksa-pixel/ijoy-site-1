@@ -101,7 +101,17 @@ export function miniA20OptionKey(option: Omit<ExistingMiniOption, "id">): string
   return [storage, color, /cellular/i.test(connection) ? "cellular" : "wifi", nano ? "nano" : "standard"].join("|");
 }
 
-/** Add missing configurations only. Never replace A17 Pro or edit existing offers/IDs/prices/stock. */
+export const RETIRED_MINI_A17_SLUGS = ["ipad-mini-a17-pro", "ipad-mini-7", "ipad-mini7"] as const;
+const retiredMiniNames = new Set(["ipadminia17pro", "ipadminia17pro2024", "ipadmini7", "ipadmini72024"]);
+/** Owner retired A17 Pro from the storefront; preserve records and order references. */
+export function isRetiredMiniA17Product(product: { slug: string; name: string; brand: string | null; category: { slug: string } }) {
+  if (product.slug === MINI_A20_SLUG || product.category.slug !== "planshety" || product.brand?.trim().toLowerCase() !== "apple") return false;
+  const name = product.name.toLowerCase().replace(/^apple\s+/, "").replace(/[^a-zа-яё0-9]/g, "");
+  if (name.includes("a20")) return false;
+  return (RETIRED_MINI_A17_SLUGS as readonly string[]).includes(product.slug) || retiredMiniNames.has(name);
+}
+
+/** Add missing A20 configurations only; retirement changes product visibility, never offer data. */
 export function planMiniA20Addition(existing: ExistingMiniOption[]) {
   const seen = new Set<string>();
   for (const option of existing) {
