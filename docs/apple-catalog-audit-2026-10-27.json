@@ -1,0 +1,73 @@
+{
+  "checkedAt": "2026-10-27",
+  "scope": "Основные аппаратные линейки Apple и новые анонсы. Не полный аудит всех аксессуаров, региональных SKU, ПО и сервисов.",
+  "localEvidence": "Проверены определения товаров в prisma/data, prisma/official-catalog.ts, prisma/scripts и навигация src/lib/catalog.ts. Живая серверная БД недоступна; публикация и наличие на сервере не подтверждены.",
+  "newMini": {
+    "slug": "ipad-mini-a20-pro",
+    "status": "implemented_pending_server_sync",
+    "announcementDate": "2026-10-26",
+    "appleAvailabilityDate": "2026-11-06",
+    "variantCount": 20,
+    "newPrice": null,
+    "newInStock": false,
+    "preserves": ["ipad-mini-a17-pro", "existing offer IDs", "existing prices", "existing stock"],
+    "sources": ["https://www.apple.com/ipad-mini/specs/", "https://www.apple.com/shop/buy-ipad/ipad-mini", "https://www.apple.com/newsroom/2026/10/apple-gives-ipad-mini-its-biggest-update-ever/"]
+  },
+  "alreadyRepresentedLocally": [
+    { "family": "iPhone 18 Pro / Pro Max, iPhone Duo", "evidence": "prisma/data/iphone-2026-catalog.ts", "source": "https://www.apple.com/iphone/" },
+    { "family": "Apple Watch Series 12, Ultra 4, SE 3", "evidence": ["prisma/data/september-2026-catalog.ts", "prisma/data/apple-watch-ultra4-catalog.ts", "prisma/official-catalog.ts"], "source": "https://www.apple.com/watch/" },
+    { "family": "AirPods 5 / Wireless, AirPods Pro 3, AirPods Max 2", "evidence": ["prisma/data/september-2026-catalog.ts", "prisma/official-catalog.ts", "src/lib/catalog.ts"], "source": "https://www.apple.com/airpods/" },
+    { "family": "MacBook Neo, MacBook Air M5, MacBook Pro M5", "evidence": ["prisma/official-catalog.ts", "prisma/data/approved-second-supplier.ts", "src/lib/catalog.ts"], "note": "Наличие карточек не означает аудит каждой конфигурации CPU/RAM/SSD." },
+    { "family": "iPad Pro M5, iPad Air M4, iPad A16", "evidence": ["prisma/scripts/sync-ipad-catalog.ts", "prisma/official-catalog.ts", "src/lib/catalog.ts"], "source": "https://www.apple.com/ipad/" }
+  ],
+  "missingOrNewGenerationNotFoundLocally": [
+    {
+      "name": "Apple TV 4K (4-го поколения, A19)",
+      "announcementDate": "2026-10-13", "appleAvailabilityDate": "2026-11-13",
+      "localEvidence": "Есть только 3-е поколение (2022/A15) в prisma/scripts/reorganize-catalog.ts и sync-tv-box-photos.ts. Нельзя переименовывать старую карточку и переносить её цены на новую.",
+      "source": "https://www.apple.com/newsroom/2026/10/apple-unveils-the-new-apple-tv-4k/"
+    },
+    {
+      "name": "HomePod mini 2", "announcementDate": "2026-10-13", "appleAvailabilityDate": "2026-10-30",
+      "source": "https://www.apple.com/newsroom/2026/10/apple-announces-the-next-generation-of-homepod-mini/"
+    },
+    {
+      "name": "Apple HomeView и HomeView (Wall Mounted)", "announcementDate": "2026-10-13", "appleAvailabilityDate": "2026-11-13",
+      "note": "Настольная и настенная модели; функции Siri AI, регионы и языки требуют отдельной проверки при добавлении.",
+      "source": "https://www.apple.com/newsroom/2026/10/meet-apple-homeview-a-new-way-to-enjoy-entertainment-and-manage-the-home/"
+    },
+    {
+      "name": "Apple Home Collection", "announcementDate": "2026-10-13", "appleAvailability": "С декабря 2026; отдельные аксессуары — в начале 2027",
+      "note": "Линейка в сотрудничестве с LG Electronics и Schneider Electric, а не все устройства собственного производства Apple. Не выдавать анонс за наличие в магазине.",
+      "source": "https://www.apple.com/uk/newsroom/2026/10/introducing-apple-home-collection-a-new-lineup-of-smart-home-accessories/"
+    },
+    {
+      "name": "Smart Folio TechWoven для нового iPad mini", "announcementDate": "2026-10-26", "appleAvailabilityDate": "2026-11-06",
+      "note": "Navy Blue и Taupe; отдельный аксессуар, без согласования новую карточку не создавали.",
+      "source": "https://www.apple.com/newsroom/2026/10/apple-gives-ipad-mini-its-biggest-update-ever/"
+    },
+    {
+      "name": "Mac mini M6 / M5 Pro", "announcementDate": "2026-08-25", "appleAvailabilityDate": "2026-09-22",
+      "source": "https://www.apple.com/newsroom/2026/08/apple-unveils-a-more-powerful-mac-mini-featuring-the-all-new-m6-and-m5-pro/"
+    },
+    {
+      "name": "Mac Studio M5 Max / M5 Ultra", "announcementDate": "2026-08-25", "appleAvailabilityDate": "2026-09-22",
+      "note": "Упоминание Mac Studio M4 Max в старом прайсе не является карточкой нового поколения.",
+      "source": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra/"
+    },
+    {
+      "name": "Studio Display (2026) и Studio Display XDR", "appleAvailabilityDate": "2026-03-11",
+      "source": "https://www.apple.com/newsroom/2026/03/apple-unveils-new-studio-display-and-all-new-studio-display-xdr/"
+    },
+    {
+      "name": "AirTag нового поколения (2026)", "announcementDate": "2026-01-26",
+      "source": "https://www.apple.com/newsroom/2026/01/apple-introduces-new-airtag-with-expanded-range-and-improved-findability/"
+    },
+    {
+      "name": "Apple Vision Pro с M5", "classification": "current_line_not_new_today",
+      "source": "https://www.apple.com/apple-vision-pro/"
+    }
+  ],
+  "otherAdditionsApproved": false,
+  "otherAdditionsApplied": false
+}

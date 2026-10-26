@@ -84,6 +84,8 @@ export const MODEL_DISPLAY_ORDER = {
   samsungTablets: ["Samsung Galaxy Tab S11 Ultra", "Samsung Galaxy Tab S11", "Samsung Galaxy Tab S10+", "Samsung Galaxy Tab S10 Lite", "Samsung Galaxy Tab S10 FE", "Samsung Galaxy Tab S10 FE+", "Samsung Galaxy Tab A11", "Samsung Galaxy Tab A11+"],
   samsungWatches: ["Samsung Galaxy Watch Ultra 2", "Samsung Galaxy Watch 9"],
   ipad: [
+    "Apple iPad mini (A20 Pro, 2026)",
+    "iPad mini (A20 Pro)",
     "Apple iPad Pro 11″ M5 (2025)",
     "Apple iPad Pro 13″ M5 (2025)",
     "Apple iPad Air 11″ M4 (2026)",

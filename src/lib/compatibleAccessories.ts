@@ -11,6 +11,7 @@ const IPAD_PENCIL_PRO_SLUGS = new Set([
   "ipad-air-11-m4",
   "ipad-air-13-m4",
   "ipad-mini-a17-pro",
+  "ipad-mini-a20-pro",
 ]);
 
 const IPAD_KEYBOARD_BY_SLUG: Record<string, string> = {
