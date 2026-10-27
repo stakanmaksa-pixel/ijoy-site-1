@@ -1,0 +1,42 @@
+[
+  {
+    "file": "/catalog/product-photos/owner-price-2026-10-27/mac-mini-m6.jpg",
+    "url": "https://www.apple.com/newsroom/images/2026/08/apple-unveils-a-more-powerful-mac-mini-featuring-the-all-new-m6-and-m5-pro/article/Apple-Mac-mini-hero-260825_big.jpg.large.jpg",
+    "bytes": 25470,
+    "type": "image/jpeg",
+    "sha256": "47b463c4798f883862501c3580e54862e3d3ac618e58c867b1b707b594987555"
+  },
+  {
+    "file": "/catalog/product-photos/owner-price-2026-10-27/garmin-venu-x1-black.jpg",
+    "url": "https://res.garmin.com/pl_PL/products/010-02980-02/v/cf-lg.jpg",
+    "bytes": 36928,
+    "type": "image/jpeg",
+    "sha256": "f4866bee09a7916789e90bca9d1ac792dddeb56b679bc03a7233537e96307f6b"
+  },
+  {
+    "file": "/catalog/product-photos/owner-price-2026-10-27/dji-osmo-action-6-standard.png",
+    "url": "https://se-cdn.djiits.com/tpc/uploads/spu/cover/12bba4939cd4f341e741cdf5d2c8d9b0@ultra.png?format=webp",
+    "bytes": 229847,
+    "type": "image/png",
+    "sha256": "44b0dd57eed8b6688e328223961eda78985828414a19ca09b38b7d360c06d9fa"
+  },
+  {
+    "file": "/catalog/product-photos/owner-price-2026-10-27/magsafe-1m.jpg",
+    "url": "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MGD74?wid=890&hei=890&fmt=jpeg&qlt=90&.v=1755025001125",
+    "bytes": 30831,
+    "type": "image/jpeg",
+    "sha256": "f33542f19335fa3c86ff803cb8ca87951430dfb85f3ff35ef240906047e1903f"
+  },
+  {
+    "file": "/catalog/product-photos/owner-price-2026-10-27/yandex-max-green.png",
+    "url": "https://cdn-viewer.diplodoc.com/docs-assets/alice/rev/r21823929/ru/station/_assets/compare/station-max-new-green.png",
+    "bytes": 20103,
+    "sha256": "4ed613f2e3dd5f45fd09abe7d3fc36c8c69a0705978952b3a4ea6935ec2022ad"
+  },
+  {
+    "file": "/catalog/product-photos/owner-price-2026-10-27/fold8-lavender.jpg",
+    "url": "https://images.samsung.com/is/image/samsung/assets/latin/f2607/specs/Galaxy-Z-Fold8_Lavender_163x346.jpg?$163_346_PNG$",
+    "bytes": 4882,
+    "sha256": "dfcff760d84b0046fbf597750a38ef1aea5df3afdd72fe42165599c74ac1a75c"
+  }
+]

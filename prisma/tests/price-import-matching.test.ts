@@ -426,7 +426,7 @@ test("Series 12 template uses the official case finishes and only the approved G
     "42 мм Sand Sport Band S/M", "46 мм Sand Sport Band S/M", "46 мм Sand Sport Band M/L",
   ]);
   assert.deepEqual(bronze.map((variant) => `${variant.memory} ${variant.region}`), [
-    "42 мм Olive Sport Band S/M", "46 мм Olive Sport Band S/M", "46 мм Olive Sport Band M/L",
+    "42 мм Olive Sport Band S/M", "42 мм Olive Sport Band M/L", "46 мм Olive Sport Band S/M", "46 мм Olive Sport Band M/L",
   ]);
 });
 

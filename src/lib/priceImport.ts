@@ -63,6 +63,7 @@ const COLOR_ALIASES: Array<[RegExp, string]> = [
   [/\bsage\b/i, "Sage"], [/\bgreen\b/i, "Green"], [/\bpink\b/i, "Pink"],
   [/\bmidnight\b/i, "Midnight"], [/\bstarlight\b/i, "Starlight"],
   [/\bcitrus\b/i, "Citrus"], [/\bblush\b/i, "Blush"],
+  [/\bindigo\b/i, "Indigo"],
   [/\bpurple\b/i, "Purple"], [/\byellow\b/i, "Yellow"], [/\bteal\b/i, "Teal"],
   [/\bultramarine\b/i, "Ultramarine"], [/\bnatural\b/i, "Natural"],
   [/\bdesert\b/i, "Desert"], [/\bgold\b/i, "Gold"], [/\bred\b/i, "Red"],
@@ -80,7 +81,7 @@ const CONDITION_NOTE_RE = /\([^)]*(?:актив|неактив|предакти�
 const APPLE_PART_NUMBER_RE = /\b(?:M[A-Z0-9]{4,5}|Z1[A-Z0-9]{6,10})\b/g;
 
 function hasApplePartNumber(text: string): boolean {
-  return /\b(?:apple|ipad|macbook|airpods)\b/i.test(text);
+  return /\b(?:apple|ipad|macbook|mac\s+(?:mini|studio)|airpods)\b/i.test(text);
 }
 
 function stripMarkup(value: string) {
@@ -141,6 +142,13 @@ function memory(text: string): string | null {
     const watchCase = /\b(40|41|42|44|45|46|49)\s*(?:mm|мм)?\b/i.exec(text);
     if (watchCase) return `${watchCase[1]} мм`;
   }
+  // Unitless supplier formats: Samsung S25 12/256 S931B; MacBook M5 16 512 Sky Blue.
+  const samsungCapacity = /^(?:Samsung\s+)?(?:Galaxy\s+)?(?:S\d+|Z\s*Fold\s*\d+)\b/i.test(text)
+    ? /\b\d{1,2}\s*\/\s*(64|128|256|512|1024|1|2)\s*(GB|ГБ|TB|ТБ)?(?=\s|$)/i.exec(text) : null;
+  if (samsungCapacity) return `${samsungCapacity[1]}${samsungCapacity[2]?.toUpperCase().startsWith("T") || Number(samsungCapacity[1]) <= 2 ? "TB" : "GB"}`;
+  const macCapacity = /\b(?:macbook|mac\s+mini)\b/i.test(text)
+    ? /\b(?:M\d(?:\s+(?:Pro|Max|Ultra))?|A\d+(?:\s+Pro)?)\s+\d{1,3}\s+(256|512|1|2|4)\s*(GB|TB)?\b/i.exec(text) : null;
+  if (macCapacity) return `${macCapacity[1]}${macCapacity[2]?.toUpperCase() ?? (Number(macCapacity[1]) <= 4 ? "TB" : "GB")}`;
   // MacBooks list RAM before SSD capacity: (M5, 16GB, 512GB).
   const macStorage = /\bmacbook\b/i.test(text)
     ? [...text.matchAll(/\b(64|128|256|512|1024|1|2|4)\s*(GB|ГБ|TB|ТБ)\b/gi)].at(-1) ?? null
@@ -224,6 +232,8 @@ const ULTRA4_BUNDLE_BY_SKU: Record<string, { color: string; band: string; family
 // catalog. These exact supplier part numbers identify the sold case/band/fit
 // bundles; "Gold" and "Bronze" alone are not sufficient to select a band.
 const SERIES12_BUNDLE_BY_SKU: Record<string, { size: string; sourceColor: string; color: string; band: string; fit: string }> = {
+  MJEC4: { size: "42", sourceColor: "Black", color: "Black", band: "Black Sport Band", fit: "M/L" },
+  MJEG4: { size: "42", sourceColor: "Bronze", color: "Dark Bronze", band: "Olive Sport Band", fit: "M/L" },
   MJED4: { size: "42", sourceColor: "Gold", color: "Light Gold", band: "Sand Sport Band", fit: "S/M" },
   MJEF4: { size: "42", sourceColor: "Bronze", color: "Dark Bronze", band: "Olive Sport Band", fit: "S/M" },
   MJEN4: { size: "46", sourceColor: "Gold", color: "Light Gold", band: "Sand Sport Band", fit: "S/M" },
@@ -335,7 +345,7 @@ export function matchAirPodsMaxVariant(
 function samsungModel(text: string | null): string | null {
   if (!text) return null;
   const name = text.replace(/^samsung\s+galaxy\s+/i, "").replace(/^galaxy\s+/i, "");
-  const match = /^(S(?:25|26)(?:\s*FE(?:\s*5G)?|\s*Ultra|\+)?|Z\s*Fold\s*7)(?=\s|$)/i.exec(name);
+  const match = /^(S(?:25|26)(?:\s*FE(?:\s*5G)?|\s*Ultra|\+)?|Z\s*Fold\s*[78](?:\s*Ultra)?)(?=\s|$)/i.exec(name);
   if (!match) return null;
   return match[1].toLowerCase().replace(/\s+/g, "").replace(/fe(?:5g)?$/, "fe5g");
 }
@@ -365,7 +375,7 @@ export function matchSamsungVariant(
   const storage = storageKey(line.parsedMemory);
   if (!model || !color || !storage) return null;
   const source = line.parsedModel ?? "";
-  const ram = /\b(\d+)\s*\/\s*\d+\s*(?:GB|ГБ|TB|ТБ)\b/i.exec(source)?.[1] ?? null;
+  const ram = /\b(\d+)\s*\/\s*\d+\s*(?:(?:GB|ГБ|TB|ТБ)\b|(?=\s|$))/i.exec(source)?.[1] ?? null;
   const country = countryCode(source);
 
   const matches = candidates.filter((candidate) => {
@@ -501,7 +511,7 @@ export function matchMacBookVariant(
 
 function ipadFamily(text: string | null): string | null {
   if (!text) return null;
-  const source = normalizeForMatch(text);
+  const source = normalizeForMatch(text).replace(/^apple\s+/, "");
   if (/^ipad 11\b/.test(source) || /^ipad a16\b/.test(source)) return "base-a16";
   const numberedAir = /^ipad air (6|7) (11|13) m(2|3)\b/.exec(source);
   if (numberedAir) {
@@ -527,7 +537,7 @@ function ipadFamily(text: string | null): string | null {
 function ipadConnection(text: string | null): "wifi" | "cellular" | null {
   if (!text) return null;
   if (/\b(?:LTE|Cellular|5G)\b/i.test(text)) return "cellular";
-  if (/\bWi[\s-]?Fi\b/i.test(text)) return "wifi";
+  if (/\bWi[\s-]?Fi\b/i.test(text.replace(/[‑–—]/g, "-"))) return "wifi";
   return null;
 }
 

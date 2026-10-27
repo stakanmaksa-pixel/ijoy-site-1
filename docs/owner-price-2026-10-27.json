@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-27",
+  "source": "prisma/data/owner-price-2026-10-27.txt",
+  "sha256": "6dc9fb52d1130367c982d4e0c51cd2782819868ec1678b52f4044bd0843d36b0",
+  "sourceRows": 249,
+  "parsedRows": 225,
+  "eligibleRows": 205,
+  "markups": {
+    "iPhone": 4000,
+    "iPad": 4000,
+    "Apple Watch": 3000,
+    "AirPods Max 2": 3000,
+    "Аксессуары и наушники": 1500,
+    "MacBook": 6000,
+    "Mac mini": 6000,
+    "Samsung": 5000,
+    "Garmin": 7000,
+    "Fitbit": 1500,
+    "DJI": 1500,
+    "PlayStation": 4000,
+    "Контроллеры": 1000,
+    "Яндекс": 2000
+  },
+  "ownerConfirmations": {
+    "specialConditions": "Owner explicitly confirmed skipping special conditions; only ordinary new offers are updated.",
+    "dji": "PLUS 1500, not minus",
+    "macMini": "PLUS 6000, same as laptops",
+    "s25Silver": "Silver Shadow only on S25 12/256 S931B",
+    "newProducts": [
+      "MagSafe Qi2.2 1m",
+      "Mac mini M6 16/256 Silver",
+      "Garmin Venu X1 Black 010-02980-02",
+      "DJI Osmo Action 6 Standard Combo",
+      "Samsung Galaxy Z Fold8 512GB Lavender",
+      "Яндекс Станция Макс Green"
+    ],
+    "newS12": [
+      "42 Black M/L MJEC4",
+      "42 Dark Bronze Olive Sport Band M/L MJEG4"
+    ],
+    "additionalIphone18Sim": [
+      "Pro 512GB Silver eSIM",
+      "Pro 512GB Glacier SIM+eSIM",
+      "Pro Max 256GB Glacier SIM+eSIM",
+      "Pro Max 512GB Glacier SIM+eSIM",
+      "Pro Max 1TB Black SIM+eSIM",
+      "Pro Max 1TB Burgundy eSIM"
+    ],
+    "macbook24gb1tb": "Air 13 Midnight/Starlight/Sky Blue; Air 15 Silver/Starlight/Sky Blue"
+  },
+  "approvedPreparation": {
+    "products": 11,
+    "options": 44
+  },
+  "deferredRows": [
+    "AirPods Max Space Gray 2020 Lightning - 33.900₽",
+    "AirPods Max Silver 2020 Lightning - 33.900₽",
+    "AirPods Max Sky Blue 2020 Lightning - 33.900₽",
+    "AirPods Max Pink 2020 Lightning - 36.200₽",
+    "AirPods Max Starlight 2024 USB-C - 35.800₽",
+    "AirPods Max Blue 2024 USB-C - 36.200₽",
+    "AirPods Max Purple 2024 USB-C - 35.000₽",
+    "AirPods Max Orange 2024 USB-C - 36.500₽",
+    "Apple Watch S10 46 Silver Denim S/M MWWL3 🇺🇸 - 25.200₽",
+    "Apple Watch S10 46 Silver Loop MWWN3 🇺🇸 - 25.200₽",
+    "iPad 11 A16 2025 256 Yellow Wi-Fi MD4J4 🇺🇸 - 47.400₽",
+    "iPad Air 7 11 M3 512 Purple Wi-Fi MCAE4 🇨🇳 - 74.200₽",
+    "iPad Air 8 13 M4 128 Space Gray 5G MH9D4 🇺🇸 - 80.500₽",
+    "iPad Air 8 13 M4 128 Blue Wi-Fi MH5P4 🇨🇦 - 74.900₽",
+    "iPhone 13 256 Red 🇪🇺 - 50.700₽",
+    "iPhone 15 128 Green 🇪🇺 - 55.000₽",
+    "iPhone 15 128 Yellow 🇪🇺 - 57.200₽",
+    "iPhone 15 512 Green 🇪🇺 - 69.900₽",
+    "iPhone 15 512 Yellow 🇪🇺 - 67.700₽",
+    "iPhone 16e 512 Black 🇮🇳 - 53.100₽"
+  ],
+  "conditionPolicy": "Existing importer excludes activated, preactivated, demo and damaged packaging offers; ordinary offers are not repriced from those rows.",
+  "absencePolicy": "Existing prices and stock not represented by this feed are preserved.",
+  "availabilityPolicy": "Existing stock preserved except the explicitly approved preparation options; those are made available when their current supplier row receives a price.",
+  "dataSafety": "Read-only by default. --apply requires the exact reviewed source hash; all catalog preparations and prices share a Serializable transaction, a private before snapshot, and post-write checks. Any unresolved matching stops the entire write.",
+  "sources": {
+    "watchBlack": "https://www.apple.com/ae/shop/buy-watch/apple-watch",
+    "watchBronze": "https://www.apple.com/ae/shop/buy-watch/apple-watch/42mm-gps-dark-bronze-aluminium-olive-sport-band",
+    "magsafe": "https://www.apple.com/shop/product/mgd74ll/a/magsafe-charger-1-m",
+    "macMini": "https://support.apple.com/en-gb/128108",
+    "garmin": "https://www.garmin.com/pl-PL/p/1510465/",
+    "dji": "https://store.dji.com/uk/product/osmo-action-6?set_region=GB&site=brandsite&vid=207351",
+    "yandex": "https://alice.yandex.ru/support/ru/station/meet/characteristics-max",
+    "fold8": "https://www.samsung.com/latin/smartphones/galaxy-z-fold8/specs/"
+  },
+  "serverAppliedByAgent": false,
+  "databaseVerification": "Not performed locally; run the deployment command on the owner-operated server."
+}

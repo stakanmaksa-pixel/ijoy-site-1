@@ -10,11 +10,18 @@ import {
   type SupplierVariantCandidate,
 } from "./priceImport";
 
-export type PriceCategory = "iPhone" | "iPad" | "Apple Watch" | "AirPods Max 2" | "Аксессуары и наушники";
+export type PriceCategory = "iPhone" | "iPad" | "Apple Watch" | "AirPods Max 2" | "Аксессуары и наушники"
+  | "MacBook" | "Mac mini" | "Samsung" | "Garmin" | "Fitbit" | "DJI" | "PlayStation" | "Контроллеры" | "Яндекс";
+export type PriceScope = { category: PriceCategory; markup: number };
+export type OwnerPriceRules = {
+  category: (line: ParsedPriceLine) => PriceScope | null;
+  match: (line: ParsedPriceLine, candidates: CatalogPriceCandidate[], category: PriceCategory) => string | null | undefined;
+};
 export type CatalogPriceCandidate = SupplierVariantCandidate & {
   productSlug: string;
   sku: string | null;
   price: number | null;
+  chip?: string | null;
 };
 export type PriceDecision = {
   line: ParsedPriceLine;
@@ -49,10 +56,13 @@ const ACCESSORY_SLUGS: Array<[RegExp, string]> = [
   [/^Apple 240W USB-C Cable 2M\b/i, "apple-240w-usb-c-cable-2m"],
   [/^Apple 20W Adapter Copy\b/i, "apple-20w-adapter-copy"],
   [/^Apple 25W MagSafe Charger 2M\b/i, "apple-25w-magsafe-charger-qi22"],
+  [/^Apple 25W MagSafe Charger 1M\b/i, "apple-25w-magsafe-charger-1m-qi22"],
   [/^Apple 40-60W Dynamic Power USB-C\b/i, "apple-dynamic-power-usb-c-40-60w"],
   [/^Apple Magic Keyboard White USB-C\b/i, "apple-magic-keyboard-usb-c"],
 ];
 const HEADPHONE_NAMES: Array<[RegExp, string]> = [
+  [/^AirPods 4 USB-C$/i, "AirPods 4"],
+  [/^AirPods 5$/i, "AirPods 5"],
   [/^EarPods USB-C White\b/i, "Apple EarPods USB-C"],
   [/^AirPods 4 ANC\b/i, "AirPods 4 ANC"],
   [/^AirPods 5 Wireless\b/i, "AirPods 5 Wireless"],
@@ -147,16 +157,18 @@ function exactMax2Match(line: ParsedPriceLine, candidates: CatalogPriceCandidate
   return matches.length === 1 ? matches[0].id : null;
 }
 
-export function planOwnerPriceUpdate(lines: ParsedPriceLine[], candidates: CatalogPriceCandidate[]) {
+export function planOwnerPriceUpdate(lines: ParsedPriceLine[], candidates: CatalogPriceCandidate[], rules?: OwnerPriceRules) {
   const variantById = new Map(candidates.map((variant) => [variant.id, variant]));
   const decisions: PriceDecision[] = [];
   const changesById = new Map<string, PriceChange>();
   for (const line of lines) {
-    const scope = ownerPriceCategory(line);
+    const scope = rules ? rules.category(line) : ownerPriceCategory(line);
     if (!scope) continue;
     let variantId: string | null = null;
     if (line.parsedPrice !== null && line.parsedPrice > 0) {
-      if (scope.category === "iPhone") variantId = exactIphoneMatch(line, candidates);
+      const custom = rules?.match(line, candidates, scope.category);
+      if (custom !== undefined) variantId = custom;
+      else if (scope.category === "iPhone") variantId = exactIphoneMatch(line, candidates);
       else if (scope.category === "iPad") variantId = matchIPadVariant(line, candidates);
       else if (scope.category === "Apple Watch") variantId = matchAppleWatchVariant(line, candidates);
       else if (scope.category === "AirPods Max 2") variantId = exactMax2Match(line, candidates);

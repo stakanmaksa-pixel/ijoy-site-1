@@ -49,7 +49,7 @@ test("official names map the supplied S26 FE, CIRQA, Series 12 and FreeClip colo
   assert(bySlug.get("apple-watch-series-12")!.colorImages["Night Blue"][0].includes("night-blue"));
   assert(bySlug.get("huawei-freeclip-2")!.colorImages["Denim Blue"][0].includes("denim-blue"));
   const series12 = bySlug.get("apple-watch-series-12")!;
-  assert.equal(series12.variants.length, 19);
+  assert.equal(series12.variants.length, 23);
   assert(series12.variants.some((variant) =>
     variant.memory === "46 мм" && variant.color === "Space Gray" && variant.region === "Navy Blue Sport Band S/M",
   ));

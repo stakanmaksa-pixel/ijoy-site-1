@@ -189,7 +189,7 @@ export const SEPTEMBER_2026_PRODUCTS: SeptemberProduct[] = [
     colorImages: Object.fromEntries(appleWatchFinishes.map(([finish, , file]) => [finish, [photo(file)]])),
     variants: appleWatchFinishes.flatMap(([finish, band]) => [
       unpriced("42 мм", finish, `${band} S/M`),
-      ...(finish === "Space Gray" ? [unpriced("42 мм", finish, `${band} M/L`)] : []),
+      ...(["Space Gray", "Black", "Dark Bronze"].includes(finish) ? [unpriced("42 мм", finish, `${band} M/L`)] : []),
       ...(["Space Gray", "Black", "Light Gold", "Dark Bronze"].includes(finish) ? [unpriced("46 мм", finish, `${band} S/M`)] : []),
       unpriced("46 мм", finish, `${band} M/L`),
     ]),
