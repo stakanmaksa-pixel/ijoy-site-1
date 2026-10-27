@@ -31,6 +31,18 @@ export type PriceChange = {
   sources: string[];
 };
 
+/** Recheck an approved watch option inside the write transaction, including a new option. */
+export function assertWatchBundleSnapshot(
+  matches: Array<{ id: string; sku: string | null }>,
+  expected: { sku: string; existingId: string | null; currentSku: string | null },
+) {
+  if (matches.length !== (expected.existingId ? 1 : 0) ||
+    (matches[0]?.id ?? null) !== expected.existingId ||
+    (matches[0]?.sku ?? null) !== expected.currentSku) {
+    throw new Error(`${expected.sku}: модификация изменилась после проверки`);
+  }
+}
+
 const ACCESSORY_SLUGS: Array<[RegExp, string]> = [
   [/^Apple USB-C - Lightning 1M\b/i, "apple-usb-c-lightning-cable-1m"],
   [/^Apple 60W USB-C Cable 1M\b/i, "apple-60w-usb-c-cable-1m"],

@@ -8,6 +8,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { Prisma, PrismaClient } from "../../src/generated/prisma/client";
 import { matchAppleWatchVariant, parsePriceListText } from "../../src/lib/priceImport";
 import { SEPTEMBER_2026_PRODUCTS } from "../data/september-2026-catalog";
+import { assertWatchBundleSnapshot } from "../../src/lib/ownerPriceUpdate";
 
 const slug = "apple-watch-series-12";
 const partNumbers = ["MJED4", "MJEF4", "MJEN4", "MJEP4", "MJEQ4", "MJEU4"] as const;
@@ -82,8 +83,7 @@ async function main() {
           normalize(candidate.memory) === normalize(action.variant.memory) &&
           normalize(candidate.color) === normalize(action.variant.color) &&
           normalize(candidate.region) === normalize(action.variant.region));
-        if (exact.length !== (action.existingId ? 1 : 0) || exact[0]?.id !== action.existingId ||
-          (exact[0]?.sku ?? null) !== action.currentSku) throw new Error(`${action.sku}: модификация изменилась после проверки`);
+        assertWatchBundleSnapshot(exact, action);
         if (await tx.productVariant.findUnique({ where: { sku: action.sku } })) throw new Error(`${action.sku}: артикул занят`);
         if (action.existingId) {
           await tx.productVariant.update({ where: { id: action.existingId }, data: { sku: action.sku } });

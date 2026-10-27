@@ -23,6 +23,7 @@ const input = readFileSync(sourcePath, "utf8");
 const apply = process.argv.includes("--apply");
 const diagnose = process.argv.includes("--diagnose");
 const allowPartial = process.argv.includes("--allow-partial");
+const verify = process.argv.includes("--verify");
 const approvedHash = process.argv.find((arg) => arg.startsWith("--approve="))?.slice("--approve=".length);
 
 function stockApproval(candidate: CatalogPriceCandidate): boolean {
@@ -85,6 +86,7 @@ function describeUnmatched(line: ParsedPriceLine, candidates: CatalogPriceCandid
 }
 
 async function main() {
+  if (verify && (apply || allowPartial || approvedHash)) throw new Error("--verify — только проверка, без --apply, --approve и --allow-partial");
   const lines = parsePriceListText(input);
   if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL отсутствует: без базы нельзя сверить модификации или изменить цены");
   const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
@@ -120,6 +122,13 @@ async function main() {
     if (diagnose) for (const change of unavailable) console.log(`НЕТ В НАЛИЧИИ: ${change.variant.productName} | ${change.variant.memory ?? ""} | ${change.variant.color ?? ""} | ${change.variant.region ?? ""} | ${change.variant.id}`);
     for (const decision of unmatched) console.log(`НЕТ СОВПАДЕНИЯ: ${decision.line.rawLine} — ${decision.reason}`);
     if (diagnose) for (const decision of unmatched) console.log(`ДИАГНОЗ: ${decision.line.rawLine} — ${describeUnmatched(decision.line, candidates)}`);
+    if (verify) {
+      const wrong = changes.filter(change => change.variant.price !== change.newPrice || !stockById.get(change.variant.id));
+      for (const change of wrong) console.log(`НЕ ПРИМЕНЕНО: ${change.variant.productName} / ${change.variant.memory ?? ""} / ${change.variant.color ?? ""} / ${change.variant.region ?? ""}: ${change.variant.price ?? "без цены"} вместо ${change.newPrice} ₽; наличие ${stockById.get(change.variant.id)}`);
+      if (unmatched.length || wrong.length || !changes.length) throw new Error(`Проверка цен не пройдена: без совпадения ${unmatched.length}, неверных цен/наличия ${wrong.length}. База не изменена.`);
+      console.log(`ПРОВЕРЕНО: все ${decisions.length} согласованных строк сопоставлены; ${changes.length} модификаций имеют нужные цены и наличие, включая отдельные SIM iPhone 18.`);
+      return;
+    }
     for (const change of changes) {
       console.log(`ЦЕНА: ${change.variant.productName} | ${change.variant.memory ?? ""} | ${change.variant.color ?? ""} | ${change.variant.region ?? ""} | ${change.variant.id} | ${change.variant.price ?? "—"} → ${change.newPrice} ₽ | поставщик ${change.supplierPrice} ₽ | ${change.sources.length} предложений${stockById.get(change.variant.id) ? "" : " | сейчас нет в наличии"}`);
     }
@@ -134,6 +143,10 @@ async function main() {
     if (unmatched.length && !allowPartial) throw new Error("Есть строки без совпадения; нужна отдельная проверка и явный --allow-partial");
     if (unapprovedAvailability.length) throw new Error("Найдены не согласованные с владельцем изменения наличия; база не изменена");
     if (!changes.length) throw new Error("Нет совпавших модификаций; записывать нечего");
+    if (changes.every(change => change.variant.price === change.newPrice && stockById.get(change.variant.id))) {
+      console.log("Все согласованные цены и наличие уже применены; повторная запись не нужна.");
+      return;
+    }
 
     // The migrate service mounts /app/backups on a durable Docker volume.
     const backupDir = path.resolve("backups/owner-price-2026-10-04");
